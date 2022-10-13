@@ -1,0 +1,23 @@
+project:
+  type: website
+editor:
+  render-on-save: true
+execute:
+  freeze: auto  # re-render only when source changes
+
+website:
+  title: "geodata-harvester"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+
