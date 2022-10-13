@@ -1,0 +1,19 @@
+---
+title: "Python"
+---
+
+<center><a><img src="images/Python_jupyter_logo.png" alt="SIH and AgReFed logo" width="50%"/></a></center>
+
+## Pipeline Overview
+
+<center><a><img src="images/pipeline.png" alt="Schematic Pipeline Overview" width="100%"/></a></center>
+
+
+<br><br>
+
+<center>**MORE TO COME SOON**</center>
+
+<br><br>
+
+
+If you like to test the pre-release of the Geodata-Harvester or are happy to get involved as early open-source Python contributor, please contact: [Sebastian Haan](mailto:sebastian.haan@sydney.edu.au)
