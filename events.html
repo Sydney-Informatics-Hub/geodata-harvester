@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Events and News from the AgReFed Geodata_Harvester Project">
 
-<title>Geodata-Harvester</title>
+<title>Geodata-Harvester - Events</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">Home</a>
+    <a class="nav-link" href="./index.html">Home</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html">About</a>
@@ -92,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./R_dataharvester.html">R-Package</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./events.html">Events</a>
+    <a class="nav-link active" href="./events.html" aria-current="page">Events</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -109,9 +110,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-it" id="toc-what-is-it" class="nav-link active" data-scroll-target="#what-is-it">What is it?</a></li>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
-  <li><a href="#functionality" id="toc-functionality" class="nav-link" data-scroll-target="#functionality">Functionality</a></li>
+  <li><a href="#autumn-2022" id="toc-autumn-2022" class="nav-link active" data-scroll-target="#autumn-2022">Autumn 2022</a>
+  <ul class="collapse">
+  <li><a href="#october-2022" id="toc-october-2022" class="nav-link" data-scroll-target="#october-2022">October 2022</a></li>
+  <li><a href="#november-2022" id="toc-november-2022" class="nav-link" data-scroll-target="#november-2022">November 2022</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -120,10 +123,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Geodata-Harvester</h1>
-<p class="subtitle lead">Jumpstart your analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes.</p>
+<h1 class="title">Events</h1>
 </div>
 
+<div>
+  <div class="description">
+    <p>Events and News from the AgReFed Geodata_Harvester Project</p>
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -135,49 +142,20 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<center>
-<a><img src="images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"></a>
-</center>
-<section id="what-is-it" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-it">What is it?</h2>
-<p>The Geodata-Harvester project enables researchers with reusable workflows and provides open-source software for automatic data extraction from a wide range of data sources including spatial-temporal processing. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning models. All data layer maps are automatically extracted and aligned for a specific region and time period.</p>
+<section id="autumn-2022" class="level2">
+<h2 class="anchored" data-anchor-id="autumn-2022">Autumn 2022</h2>
+<section id="october-2022" class="level3">
+<h3 class="anchored" data-anchor-id="october-2022">October 2022</h3>
+<p>Point of contact: Sebastian Haan</p>
+<p>Presenting the AgReFed Geodata-Harvester at the <a href="https://conference.eresearch.edu.au/">eResearch Australia Conference</a></p>
 </section>
-<section id="data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
-<p>The following data sources are currently integrated:</p>
-<ul>
-<li>Soil and Landscape Grid of Australia (SLGA)</li>
-<li>SILO Climate Database (Australia)</li>
-<li>National Digital Elevation Model (DEM)</li>
-<li>Digital Earth Australia (DEA) Geoscience Earth Observations</li>
-<li>Radiometric Data (Australia)</li>
-<li>Google Earth Engine Data (account needed)</li>
-</ul>
-</section>
-<section id="functionality" class="level2">
-<h2 class="anchored" data-anchor-id="functionality">Functionality</h2>
-<p>The main goal of the Data Harvester is to enable researchers with reusable workflows for automatic data extraction and processing:</p>
-<ol type="1">
-<li>Retrieve: automatically access geospatial and soil data sources, minimal handling of individual APIs</li>
-<li>Process: Spatial and temporal processing, filter, mask, reduce and convert data</li>
-<li>Output: download data as GeoTIFF and ready-made data frames for use in additional modelling and machine learning workflows</li>
-</ol>
-<p>Data-Harvester is designed as a modular and maintainable project in the form of a multi-stage pipeline by providing explicit boundaries among tasks. To encourage interaction and experimentation with the pipeline, we provide multiple frontend notebooks and use case scenarios as Jupyter and R notebooks, as well as standalone Python and R packages. The core features are:</p>
-<ul>
-<li>automatic data retrieval from geospatial APIs for given locations and dates</li>
-<li>data experimentation frontends via Jupyter and R notebooks</li>
-<li>enables reusable workflows via interactive widgets and YAML files to save/load settings.</li>
-<li>automatic geospatial-temporal processing</li>
-<li>support for multiple temporal aggregation options</li>
-<li>automatic extraction of retrieved data into ready-made dataframes for ML training</li>
-<li>automatic generation of ready-made aligned maps and dataframes for ML prediction models</li>
-<li>preview of data map layers</li>
-</ul>
-<center>
-<a><img src="images/code_supported.png" alt="Programming Languages supported" width="80%"></a>
-</center>
+<section id="november-2022" class="level3">
+<h3 class="anchored" data-anchor-id="november-2022">November 2022</h3>
+<p>Point of contact: Januar Harianto</p>
+<p>AgReFed Data-Harvester Workshop for R users. Registration and more information at: <a href="https://www.eventbrite.com.au/e/agrefed-data-harvester-workshop-tickets-425515517367">Eventbrite Workshop Registration</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

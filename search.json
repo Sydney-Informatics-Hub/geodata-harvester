@@ -1,23 +1,58 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "geodata-harvester",
+    "objectID": "R_dataharvester.html",
+    "href": "R_dataharvester.html",
+    "title": "R-Package",
     "section": "",
-    "text": "There is an enormous amount of national/global space-time data that is free and accessible. Examples are the numerous satellite platforms, weather, soil landscape grid of Australia. Many have a temporal dimension so for any point in Australia you can extract a time series of remote sensing and weather data and soil and terrain site variables. In the case of time series covariates there are a number of post-processing steps that a user can undertake to extract meaning, e.g. temporal means, aggregating in time. All of the above is a non-trivial task and a workflow where a user could enter a point (s) and get a tidy data frame of data cube variables would be a step towards people understanding its value and being able to jumpstart their analysis. This project will contribute processing tools for finding, extracting and converting these key data layers.\nDeveloped as part of the Agricultural Research Federation (AgReFed), Data-Harvester is an open-source software that allows users to jumpstart their analysis with a suitable set of spatial-temporal aligned raster maps and dataframes."
+    "text": "https://sydney-informatics-hub.github.io/dataharvester/"
+  },
+  {
+    "objectID": "index.html#what-is-it",
+    "href": "index.html#what-is-it",
+    "title": "Geodata-Harvester",
+    "section": "What is it?",
+    "text": "What is it?\nThe Geodata-Harvester project enables researchers with reusable workflows and provides open-source software for automatic data extraction from a wide range of data sources including spatial-temporal processing. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning models. All data layer maps are automatically extracted and aligned for a specific region and time period."
   },
   {
     "objectID": "index.html#data-sources",
     "href": "index.html#data-sources",
-    "title": "geodata-harvester",
+    "title": "Geodata-Harvester",
     "section": "Data Sources",
-    "text": "Data Sources\nThe following main data sources are currently implemented:\n\nSoil and Landscape Grid of Australia (SLGA)\nSILO Climate Database\nNational Digital Elevation Model (DEM) 1 Second Hydrologically Enforced\nDigital Earth Australia (DEA) Geoscience Earth Observations\nGSKY Data Server for DEA Geoscience Earth Observations\nRadiometric Data\noptional: Google Earth Engine Data (GEE account needed)"
+    "text": "Data Sources\nThe following data sources are currently integrated:\n\nSoil and Landscape Grid of Australia (SLGA)\nSILO Climate Database (Australia)\nNational Digital Elevation Model (DEM)\nDigital Earth Australia (DEA) Geoscience Earth Observations\nRadiometric Data (Australia)\nGoogle Earth Engine Data (account needed)"
+  },
+  {
+    "objectID": "index.html#functionality",
+    "href": "index.html#functionality",
+    "title": "Geodata-Harvester",
+    "section": "Functionality",
+    "text": "Functionality\nThe main goal of the Data Harvester is to enable researchers with reusable workflows for automatic data extraction and processing:\n\nRetrieve: automatically access geospatial and soil data sources, minimal handling of individual APIs\nProcess: Spatial and temporal processing, filter, mask, reduce and convert data\nOutput: download data as GeoTIFF and ready-made data frames for use in additional modelling and machine learning workflows\n\nData-Harvester is designed as a modular and maintainable project in the form of a multi-stage pipeline by providing explicit boundaries among tasks. To encourage interaction and experimentation with the pipeline, we provide multiple frontend notebooks and use case scenarios as Jupyter and R notebooks, as well as standalone Python and R packages. The core features are:\n\nautomatic data retrieval from geospatial APIs for given locations and dates\ndata experimentation frontends via Jupyter and R notebooks\nenables reusable workflows via interactive widgets and YAML files to save/load settings.\nautomatic geospatial-temporal processing\nsupport for multiple temporal aggregation options\nautomatic extraction of retrieved data into ready-made dataframes for ML training\nautomatic generation of ready-made aligned maps and dataframes for ML prediction models\npreview of data map layers"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "The Data Harvester project enables researchers with reusable workflows for automatic data extraction from a wide range of data sources including spatial-temporal processing. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and agriculture models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period."
+    "text": "There is an enormous amount of national/global space-time data that is free and accessible. Examples are the numerous satellite platforms, weather, soil landscape grid of Australia. Many have a temporal dimension so for any point in Australia you can extract a time series of remote sensing and weather data and soil and terrain site variables. In the case of time series covariates there are a number of post-processing steps that a user can undertake to extract meaning, e.g. temporal means, aggregating in time. All of the above is a non-trivial task and a workflow where a user could enter a point (s) and get a tidy data frame of data cube variables would be a step towards people understanding its value and being able to jumpstart their analysis. This project will contribute processing tools for finding, extracting and converting these key data layers.\nDeveloped as part of the Agricultural Research Federation (AgReFed), Data-Harvester is an open-source software that allows users to jumpstart their analysis with a suitable set of spatial-temporal aligned raster maps and dataframes.\nFor more information about AgReFed and our shared mission, please see agrefed.org.au/"
+  },
+  {
+    "objectID": "about.html#attribution-and-acknowledgments",
+    "href": "about.html#attribution-and-acknowledgments",
+    "title": "About",
+    "section": "Attribution and Acknowledgments",
+    "text": "Attribution and Acknowledgments\nThis software was developed by the Sydney Informatics Hub, a core research facility of the University of Sydney, as part of the Data Harvesting project for the Agricultural Research Federation (AgReFed).\nAcknowledgments are an important way for us to demonstrate the value we bring to your research. Your research outcomes are vital for ongoing funding of the Sydney Informatics Hub.\nIf you make use of this software for your research project, please include the following acknowledgment:\n“This research was supported by the Sydney Informatics Hub, a Core Research Facility of the University of Sydney, and the Agricultural Research Federation (AgReFed).”\nAgReFed is supported by the Australian Research Data Commons (ARDC) and the Australian Government through the National Collaborative Research Infrastructure Strategy (NCRIS)."
+  },
+  {
+    "objectID": "py_dataharvester.html#pipeline-overview",
+    "href": "py_dataharvester.html#pipeline-overview",
+    "title": "Python",
+    "section": "Pipeline Overview",
+    "text": "Pipeline Overview\n\n\n\n\n\nMORE TO COME SOON\n\n\nIf you like to test the pre-release of the Geodata-Harvester or are happy to get involved as early open-source Python contributor, please contact: Sebastian Haan"
+  },
+  {
+    "objectID": "events.html",
+    "href": "events.html",
+    "title": "Events",
+    "section": "",
+    "text": "Point of contact: Sebastian Haan\nPresenting the AgReFed Geodata-Harvester at the eResearch Australia Conference\n\n\n\nPoint of contact: Januar Harianto\nAgReFed Data-Harvester Workshop for R users. Registration and more information at: Eventbrite Workshop Registration"
   }
 ]
