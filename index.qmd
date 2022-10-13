@@ -6,3 +6,15 @@ title: "geodata-harvester"
 There is an enormous amount of national/global space-time data that is free and accessible. Examples are the numerous satellite platforms, weather, soil landscape grid of Australia. Many have a temporal dimension so for any point in Australia you can extract a time series of remote sensing and weather data and soil and terrain site variables. In the case of time series covariates there are a number of post-processing steps that a user can undertake to extract meaning, e.g. temporal means, aggregating in time. All of the above is a non-trivial task and a workflow where a user could enter a point (s) and get a tidy data frame of data cube variables would be a step towards people understanding its value and being able to jumpstart their analysis. This project will contribute processing tools for finding, extracting and converting these key data layers.
 
 Developed as part of the Agricultural Research Federation (AgReFed), Data-Harvester is an open-source software that allows users to jumpstart their analysis with a suitable set of spatial-temporal aligned raster maps and dataframes.
+
+## Data Sources
+
+The following main data sources are currently implemented:
+
+- Soil and Landscape Grid of Australia (SLGA)
+- SILO Climate Database
+- National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced
+- Digital Earth Australia (DEA) Geoscience Earth Observations
+- GSKY Data Server for DEA Geoscience Earth Observations
+- Radiometric Data
+- optional: Google Earth Engine Data (GEE account needed)
