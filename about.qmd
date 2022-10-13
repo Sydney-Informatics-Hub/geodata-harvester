@@ -2,4 +2,24 @@
 title: "About"
 ---
 
-The Data Harvester project enables researchers with reusable workflows for automatic data extraction from a wide range of data sources including spatial-temporal processing. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and agriculture models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period.
+There is an enormous amount of national/global space-time data that is free and accessible. Examples are the numerous satellite platforms, weather, soil landscape grid of Australia. Many have a temporal dimension so for any point in Australia you can extract a time series of remote sensing and weather data and soil and terrain site variables. In the case of time series covariates there are a number of post-processing steps that a user can undertake to extract meaning, e.g. temporal means, aggregating in time. All of the above is a non-trivial task and a workflow where a user could enter a point (s) and get a tidy data frame of data cube variables would be a step towards people understanding its value and being able to jumpstart their analysis. This project will contribute processing tools for finding, extracting and converting these key data layers.
+
+Developed as part of the Agricultural Research Federation (AgReFed), Data-Harvester is an open-source software that allows users to jumpstart their analysis with a suitable set of spatial-temporal aligned raster maps and dataframes.
+
+For more information about AgReFed and our shared mission, please see [agrefed.org.au/](https://www.agrefed.org.au/)
+
+
+## Attribution and Acknowledgments
+
+This software was developed by the Sydney Informatics Hub, a core research facility of the University of Sydney, as part of the Data Harvesting project for the Agricultural Research Federation (AgReFed).
+
+Acknowledgments are an important way for us to demonstrate the value we bring to your research. Your research outcomes are vital for ongoing funding of the Sydney Informatics Hub.
+
+If you make use of this software for your research project, please include the following acknowledgment:
+
+“This research was supported by the Sydney Informatics Hub, a Core Research Facility of the University of Sydney, and the Agricultural Research Federation (AgReFed)."
+
+AgReFed is supported by the Australian Research Data Commons (ARDC) and the Australian Government through the National Collaborative Research Infrastructure Strategy (NCRIS).
+
+<center><a><img src="images/SIH_agrefed_logo.png" alt="SIH and AgReFed logo" width="100%"/></a></center>
+
