@@ -1,20 +1,47 @@
 ---
-title: "geodata-harvester"
+title: "Geodata-Harvester"
+subtitle: "Jumpstart your analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes."
 ---
 
+<center><a><img src="images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
 
-There is an enormous amount of national/global space-time data that is free and accessible. Examples are the numerous satellite platforms, weather, soil landscape grid of Australia. Many have a temporal dimension so for any point in Australia you can extract a time series of remote sensing and weather data and soil and terrain site variables. In the case of time series covariates there are a number of post-processing steps that a user can undertake to extract meaning, e.g. temporal means, aggregating in time. All of the above is a non-trivial task and a workflow where a user could enter a point (s) and get a tidy data frame of data cube variables would be a step towards people understanding its value and being able to jumpstart their analysis. This project will contribute processing tools for finding, extracting and converting these key data layers.
 
-Developed as part of the Agricultural Research Federation (AgReFed), Data-Harvester is an open-source software that allows users to jumpstart their analysis with a suitable set of spatial-temporal aligned raster maps and dataframes.
+
+## What is it?
+
+The Geodata-Harvester project enables researchers with reusable workflows and provides open-source software for automatic data extraction from a wide range of data sources including spatial-temporal processing. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning models. All data layer maps are automatically extracted and aligned for a specific region and time period.
+
 
 ## Data Sources
 
-The following main data sources are currently implemented:
+The following data sources are currently integrated:
 
 - Soil and Landscape Grid of Australia (SLGA)
-- SILO Climate Database
-- National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced
+- SILO Climate Database (Australia)
+- National Digital Elevation Model (DEM) 
 - Digital Earth Australia (DEA) Geoscience Earth Observations
-- GSKY Data Server for DEA Geoscience Earth Observations
-- Radiometric Data
-- optional: Google Earth Engine Data (GEE account needed)
+- Radiometric Data (Australia)
+- Google Earth Engine Data (account needed)
+
+## Functionality
+
+The main goal of the Data Harvester is to enable researchers with reusable workflows for automatic data extraction and processing:
+
+1. Retrieve: automatically access geospatial and soil data sources, minimal handling of individual APIs
+2. Process: Spatial and temporal processing, filter, mask, reduce and convert data 
+3. Output: download data as GeoTIFF and ready-made data frames for use in additional modelling and machine learning workflows 
+
+
+Data-Harvester is designed as a modular and maintainable project in the form of a multi-stage pipeline by providing explicit boundaries among tasks. To encourage interaction and experimentation with the pipeline, we provide multiple frontend notebooks and use case scenarios as Jupyter and R notebooks, as well as standalone Python and R packages. The core features are:
+
+- automatic data retrieval from geospatial APIs for given locations and dates
+- data experimentation frontends via Jupyter and R notebooks
+- enables reusable workflows via interactive widgets and YAML files to save/load settings.
+- automatic geospatial-temporal processing
+- support for multiple temporal aggregation options
+- automatic extraction of retrieved data into ready-made dataframes for ML training
+- automatic generation of ready-made aligned maps and dataframes for ML prediction models
+- preview of data map layers
+
+
+<center><a><img src="images/code_supported.png" alt="Programming Languages supported" width="80%"/></a></center>
