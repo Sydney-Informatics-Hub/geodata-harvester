@@ -6,12 +6,15 @@ execute:
   freeze: auto  # re-render only when source changes
 
 website:
-  title: "geodata-harvester"
+  title: "Geodata-Harvester"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+      - py_dataharvester.qmd
+      - R_dataharvester.qmd
+      - events.qmd
 
 format:
   html:
