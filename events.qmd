@@ -1,0 +1,20 @@
+---
+title: "Events"
+description: |
+  Events and News from the AgReFed Geodata_Harvester Project 
+---
+
+## Autumn 2022
+
+### October 2022
+
+Point of contact: Sebastian Haan
+
+Presenting the AgReFed Geodata-Harvester at the [eResearch Australia Conference](https://conference.eresearch.edu.au/)
+
+### November 2022
+
+Point of contact: Januar Harianto
+
+AgReFed Data-Harvester Workshop for R users. Registration and more information at: [Eventbrite Workshop Registration](https://www.eventbrite.com.au/e/agrefed-data-harvester-workshop-tickets-425515517367)
+
