@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/R_dataharvester.html</loc>
-    <lastmod>2022-10-13T06:55:55.315Z</lastmod>
-  </url>
-  <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/index.html</loc>
-    <lastmod>2022-10-13T06:55:56.147Z</lastmod>
+    <lastmod>2023-01-16T01:10:28.608Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/about.html</loc>
-    <lastmod>2022-10-13T06:55:56.687Z</lastmod>
-  </url>
-  <url>
-    <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/py_dataharvester.html</loc>
-    <lastmod>2022-10-13T06:55:57.295Z</lastmod>
+    <lastmod>2023-01-16T01:10:29.248Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/events.html</loc>
-    <lastmod>2022-10-13T06:55:57.651Z</lastmod>
+    <lastmod>2023-01-16T01:10:29.524Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/R_dataharvester.html</loc>
+    <lastmod>2023-01-16T01:10:29.796Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/py_dataharvester.html</loc>
+    <lastmod>2023-01-16T01:10:30.064Z</lastmod>
   </url>
 </urlset>
