@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Geodata-Harvester - Data Overview</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Geodata-Harvester</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../py_dataharvester.html">
+ <span class="menu-text">Python</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../R_dataharvester.html">
+ <span class="menu-text">R-Package</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../events.html">
+ <span class="menu-text">Events</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-overview" id="toc-data-overview" class="nav-link active" data-scroll-target="#data-overview">Data Overview</a>
+  <ul class="collapse">
+  <li><a href="#table-of-contents" id="toc-table-of-contents" class="nav-link" data-scroll-target="#table-of-contents">Table of Contents</a></li>
+  <li><a href="#soil-data-3d-slga" id="toc-soil-data-3d-slga" class="nav-link" data-scroll-target="#soil-data-3d-slga">Soil Data 3D SLGA</a></li>
+  <li><a href="#silo-climate-database" id="toc-silo-climate-database" class="nav-link" data-scroll-target="#silo-climate-database">SILO Climate Database</a></li>
+  <li><a href="#national-digital-elevation-model-1-second-hydrologically-enforced" id="toc-national-digital-elevation-model-1-second-hydrologically-enforced" class="nav-link" data-scroll-target="#national-digital-elevation-model-1-second-hydrologically-enforced">National Digital Elevation Model 1 Second Hydrologically Enforced</a></li>
+  <li><a href="#digital-earth-australia-geoscience-earth-observations" id="toc-digital-earth-australia-geoscience-earth-observations" class="nav-link" data-scroll-target="#digital-earth-australia-geoscience-earth-observations">Digital Earth Australia Geoscience Earth Observations</a></li>
+  <li><a href="#gsky-data-server-for-dea-geoscience-earth-observations" id="toc-gsky-data-server-for-dea-geoscience-earth-observations" class="nav-link" data-scroll-target="#gsky-data-server-for-dea-geoscience-earth-observations">GSKY Data Server for DEA Geoscience Earth Observations</a></li>
+  <li><a href="#radiometric-data" id="toc-radiometric-data" class="nav-link" data-scroll-target="#radiometric-data">Radiometric Data</a></li>
+  <li><a href="#landscape-data-slga" id="toc-landscape-data-slga" class="nav-link" data-scroll-target="#landscape-data-slga">Landscape Data SLGA</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Overview</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="data-overview" class="level1">
+<h1>Data Overview</h1>
+<section id="table-of-contents" class="level2">
+<h2 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#soil-data-3d-slga">Soil Data 3D SLGA</a></li>
+<li><a href="#silo-climate-database">SILO Climate Database</a></li>
+<li><a href="#national-digital-elevation-model-1-second-hydrologically-enforced">National Digital Elevation Model 1 Second Hydrologically Enforced</a></li>
+<li><a href="#digital-earth-australia-geoscience-earth-observations">Digital Earth Australia Geoscience Earth Observations</a></li>
+<li><a href="#gsky-data-server-for-dea-geoscience-earth-observations">GSKY Data Server for DEA Geoscience Earth Observations</a></li>
+<li><a href="#radiometric-data">Radiometric Data</a></li>
+<li><a href="#landscape-data-slga">Landscape Data SLGA</a></li>
+</ul>
+</section>
+<section id="soil-data-3d-slga" class="level2">
+<h2 class="anchored" data-anchor-id="soil-data-3d-slga">Soil Data 3D SLGA</h2>
+<p>Description: The Soil Facility produced a range of digital soil attribute products as Soil and Landscape Grid of Australia (SLGA). Each product contains six digital soil attribute maps, and their upper and lower confidence limits, representing the soil attribute at six depths: 0-5cm, 5-15cm, 15-30cm, 30-60cm, 60-100cm and 100-200cm.</p>
+<p>Module name: getdata_slga.py</p>
+<p>Bounding Box: Long_min: 113.00, Lat_min: -44.00, Long_max: 154.00, Lat_max: -10.00</p>
+<p>Period (temporal coverage; approximately): 1950-2013</p>
+<p>Resolution: 3 arcsec</p>
+<p>Source: https://www.clw.csiro.au/aclep/soilandlandscapegrid/ProductDetails-SoilAttributes.html</p>
+<p>License: Creative Commons Attribution 3.0 (CC By)</p>
+<p>Attribution: CSIRO Australia, TERN (University of Queensland), and Geoscience Australia</p>
+<p>Layernames:</p>
+<ul>
+<li>‘Bulk_Density’ :
+<ul>
+<li>Title: Bulk Density (whole earth)</li>
+<li>Description: Bulk Density of the whole soil (including coarse fragments) in mass per unit volume by a method equivalent to the core method</li>
+<li>Unit: g/cm3</li>
+</ul></li>
+<li>‘Organic_Carbon’ :
+<ul>
+<li>Title: Organic Carbon</li>
+<li>Description: Mass fraction of carbon by weight in the &lt; 2 mm soil material as determined by dry combustion at 900 Celcius</li>
+<li>Unit: %</li>
+</ul></li>
+<li>‘Clay’ :
+<ul>
+<li>Title: Clay</li>
+<li>Description: &lt; 2 um mass fraction of the &lt; 2 mm soil material determined using the pipette method</li>
+<li>Unit: %</li>
+</ul></li>
+<li>‘Silt’ :
+<ul>
+<li>Title: Silt</li>
+<li>Description: 2-20 um mass fraction of the &lt; 2 mm soil material determined using the pipette method</li>
+<li>Unit: %</li>
+</ul></li>
+<li>‘Sand’ :
+<ul>
+<li>Title: Sand</li>
+<li>Description: 20 um - 2 mm mass fraction of the &lt; 2 mm soil material determined using the pipette method</li>
+<li>Unit: %</li>
+</ul></li>
+<li>‘pH_CaCl2’ :
+<ul>
+<li>Title: pH (CaCl2)</li>
+<li>Description: pH of 1:5 soil/0.01M calcium chloride extract</li>
+<li>Unit: none</li>
+</ul></li>
+<li>‘Available_Water_Capacity’ :
+<ul>
+<li>Title: Available Water Capacity</li>
+<li>Description: Available water capacity computed for each of the specified depth increments</li>
+<li>Unit: %</li>
+</ul></li>
+<li>‘Total_Nitrogen’ :
+<ul>
+<li>Title: Total Nitrogen</li>
+<li>Description: Mass fraction of total nitrogen in the soil by weight</li>
+<li>Unit: %</li>
+</ul></li>
+<li>‘Total_Phosphorus’ :
+<ul>
+<li>Title: Total Phosphorus</li>
+<li>Description: Mass fraction of total phosphorus in the soil by weight</li>
+<li>Unit: %</li>
+</ul></li>
+<li>‘Effective_Cation_Exchange_Capacity’ :
+<ul>
+<li>Title: Effective Cation Exchange Capacity</li>
+<li>Description: Cations extracted using barium chloride (BaCl2) plus exchangeable H + Al</li>
+<li>Unit: meq/100g</li>
+</ul></li>
+<li>‘Depth_of_Regolith’ :
+<ul>
+<li>Title: Depth of Regolith</li>
+<li>Description: Depth to hard rock. Depth is inclusive of all regolith.</li>
+<li>Unit: m</li>
+</ul></li>
+<li>‘Depth_of_Soil’ :
+<ul>
+<li>Title: Depth of Soil</li>
+<li>Description: Depth of soil profile (A &amp; B horizons)</li>
+<li>Unit: m</li>
+</ul></li>
+</ul>
+</section>
+<section id="silo-climate-database" class="level2">
+<h2 class="anchored" data-anchor-id="silo-climate-database">SILO Climate Database</h2>
+<p>Description: SILO is containing continuous daily climate data for Australia from 1889 to present.</p>
+<p>Module name: getdata_silo.py</p>
+<p>Bounding Box = Long_min: 112.00, Lat_min: -44.00, Long_max: 154.00, Lat_max: -10.00</p>
+<p>Updates: Daily</p>
+<p>Resolution: native: 180 arcsec</p>
+<p>Source: https://www.longpaddock.qld.gov.au/silo/gridded-data/</p>
+<p>License: Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+<p>Attribution: State of Queensland (Queensland Department of Environment and Science) 2020.</p>
+<p>Layernames:</p>
+<ul>
+<li>‘daily_rain’ (Daily rainfall, mm)</li>
+<li>‘monthly_rain’ (Monthly rainfall, mm)</li>
+<li>‘max_temp’ (Maximum temperature, deg C)</li>
+<li>‘min_temp’ (Minimum temperature. deg C)</li>
+<li>‘vp’ (Vapour pressure, hPa)</li>
+<li>‘vp_deficit’ (Vapour pressure deficit, hPa)</li>
+<li>‘evap_pan’ (Class A pan evaporation, mm)</li>
+<li>‘evap_syn’ (Synthetic estimate, mm)</li>
+<li>‘evap_comb’ (Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm)</li>
+<li>‘evap_morton_lake’ (Morton’s shallow lake evaporation, mm)</li>
+<li>‘radiation’ (Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2)</li>
+<li>‘rh_tmax’ (Relative humidity: Relative humidity at the time of maximum temperature, %)</li>
+<li>‘rh_tmin’ (Relative humidity at the time of minimum temperature, %)</li>
+<li>‘et_short_crop’ (Evapotranspiration FAO564 short crop, mm)</li>
+<li>‘et_tall_crop’ (ASCE5 tall crop6, mm)</li>
+<li>‘et_morton_actual’ (Morton’s areal actual evapotranspiration, mm)</li>
+<li>‘et_morton_potential’ (Morton’s point potential evapotranspiration, mm)</li>
+<li>‘et_morton_wet’ (Morton’s wet-environment areal potential evapotranspiration over land, mm)</li>
+<li>‘mslp’ (Mean sea level pressure Mean sea level pressure, hPa)</li>
+</ul>
+</section>
+<section id="national-digital-elevation-model-1-second-hydrologically-enforced" class="level2">
+<h2 class="anchored" data-anchor-id="national-digital-elevation-model-1-second-hydrologically-enforced">National Digital Elevation Model 1 Second Hydrologically Enforced</h2>
+<p>Description: Digital Elevation Model (DEM) of Australia derived from STRM with 1 Second Grid - Hydrologically Enforced</p>
+<p>Module name: getdata_dem.py</p>
+<p>Bounding Box = Long_min: 112.00, Lat_min: -44.00, Long_max: 154.00, Lat_max: -10.00</p>
+<p>Updates: None</p>
+<p>Resolution: native: 1 arcsec</p>
+<p>Source: https://www.clw.csiro.au/aclep/soilandlandscapegrid/ProductDetails.html</p>
+<p>License: Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+<p>Attribution: Commonwealth of Australia (Geoscience Australia)</p>
+<p>Layernames:</p>
+<ul>
+<li>‘DEM_1s’
+<ul>
+<li>Title: DEM SRTM 1 Second Hydro Enforced</li>
+<li>Description: The 1 second SRTM derived hydrologically enforced DEM (DEM-H Version 1.0) is a 1 arc second (~30 m) gridded digital elevation model (DEM) that has been hydrologically conditioned and drainage enforced. The DEM-H captures flow paths based on SRTM elevations and mapped stream lines, and supports delineation of catchments and related hydrological attributes.</li>
+</ul></li>
+</ul>
+</section>
+<section id="digital-earth-australia-geoscience-earth-observations" class="level2">
+<h2 class="anchored" data-anchor-id="digital-earth-australia-geoscience-earth-observations">Digital Earth Australia Geoscience Earth Observations</h2>
+<p>Description: Digital Earth Australia’s (DEA) Landsat Surface Reflectance products take Landsat 5 Thematic Mapper (TM), Landsat 7 Enhanced Thematic Mapper Plus (ETM+) and Landsat 8 Operational Land Imager (OLI) imagery captured over the Australian continent and corrects for inconsistencies across land and coastal fringes. The result is accurate and standardised surface reflectance data, which is instrumental in identifying and quantifying environmental change. DEA’s Landsat Surface Reflectance products form a single, cohesive Analysis Ready Data (ARD) package, which allows you to analyse surface reflectance data as is without the need to apply additional corrections.</p>
+<p>Module name: getdata_dea.py</p>
+<p>Bounding Box: variable (see layernames)</p>
+<p>Resolution: variable (depending on layer, typically 25m)</p>
+<p>Updates: Daily to yearly</p>
+<p>Source: https://docs.dea.ga.gov.au/notebooks/DEA_datasets/DEA_Landsat_Surface_Reflectance.html</p>
+<p>License: Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+<p>Attribution: Digital Earth Australia (DEA)</p>
+<p>Layernames:</p>
+<ul>
+<li>‘ga_ls_ard_3’:
+<ul>
+<li>title: DEA Surface Reflectance (Landsat)</li>
+<li>description: Geoscience Australia Landsat 5 Thematic Mapper Analysis Ready Data Collection 3</li>
+<li>bounding box: (110.696007613984, -45.6734535062289, 156.154528040633, -8.13764292647926)</li>
+<li>date limits: [‘1986-08-16’, ‘2022-09-05’]</li>
+<li>Number of bands: 7</li>
+</ul></li>
+<li>‘s2_nrt_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2 Near Real-Time)</li>
+<li>description: Sentinel-2A MSI ARD NRT - NBAR NBART and Pixel Quality</li>
+<li>bounding box: (109.989859933428, -45.2413329418709, 155.307643731418, -9.9300073889701)</li>
+<li>date limits: [‘2022-06-20’, ‘2022-09-19’]</li>
+<li>Number of bands: 23</li>
+</ul></li>
+<li>‘s2_ard_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2)</li>
+<li>description: Sentinel-2A MSI Definitive ARD - NBART and Pixel Quality</li>
+<li>bounding box: (109.968510816964, -45.2234942244028, 156.101505058599, -9.02727104242043)</li>
+<li>date limits: [‘2015-07-12’, ‘2022-09-13’]</li>
+<li>Number of bands: 12</li>
+</ul></li>
+<li>‘ga_ls8c_nbart_gm_cyear_3’:
+<ul>
+<li>title: DEA GeoMAD (Landsat 8 OLI-TIRS)</li>
+<li>description: Geoscience Australia Landsat Nadir BRDF Adjusted Reflectance Terrain, Landsat 8 Geomedian Calendar Year Collection 3</li>
+<li>bounding box: (110.413246718272, -46.2302085135865, 157.044900204052, -8.10857383542487)</li>
+<li>date limits: [‘2013-01-01’, ‘2021-01-01’]</li>
+<li>Number of bands: 10</li>
+</ul></li>
+<li>‘ga_ls7e_nbart_gm_cyear_3’:
+<ul>
+<li>title: DEA GeoMAD (Landsat 7 ETM+)</li>
+<li>description: Geoscience Australia Landsat Nadir BRDF Adjusted Reflectance Terrain, Landsat 7 Geomedian Calendar Year Collection 3</li>
+<li>bounding box: (110.413246718272, -45.1432282004529, 156.432609321534, -8.21783704144064)</li>
+<li>date limits: [‘1999-01-01’, ‘2021-01-01’]</li>
+<li>Number of bands: 10</li>
+</ul></li>
+<li>‘ga_ls5t_nbart_gm_cyear_3’:
+<ul>
+<li>title: DEA GeoMAD (Landsat 5 TM)</li>
+<li>description: Geoscience Australia Landsat Nadir BRDF Adjusted Reflectance Terrain, Landsat 5 Geomedian Calendar Year Collection 3</li>
+<li>bounding box: (110.413246718272, -45.0401572488294, 156.432609321534, -7.21314878610402)</li>
+<li>date limits: [‘1986-01-01’, ‘2011-01-01’]</li>
+<li>Number of bands: 10</li>
+</ul></li>
+<li>‘ga_ls8c_ard_3’:
+<ul>
+<li>title: DEA Surface Reflectance (Landsat 8 OLI-TIRS)</li>
+<li>description: Geoscience Australia Landsat 8 Operational Land Imager and Thermal Infra-Red Scanner Analysis Ready Data Collection 3</li>
+<li>bounding box: (110.718297795307, -45.6734535062289, 156.154528040633, -9.07553770894522)</li>
+<li>date limits: [‘2013-03-19’, ‘2022-09-05’]</li>
+<li>Number of bands: 9</li>
+</ul></li>
+<li>‘ga_ls7e_ard_3’:
+<ul>
+<li>title: DEA Surface Reflectance (Landsat 7 ETM+)</li>
+<li>description: Geoscience Australia Landsat 7 Enhanced Thematic Mapper Plus Analysis Ready Data Collection 3</li>
+<li>bounding box: (110.696007613984, -44.1889410289207, 155.711647298981, -9.15270092381057)</li>
+<li>date limits: [‘1999-05-28’, ‘2022-04-06’]</li>
+<li>Number of bands: 8</li>
+</ul></li>
+<li>‘ga_ls5t_ard_3’:
+<ul>
+<li>title: DEA Surface Reflectance (Landsat 5 TM)</li>
+<li>description: Geoscience Australia Landsat 5 Thematic Mapper Analysis Ready Data Collection 3</li>
+<li>bounding box: (110.757249124468, -44.2624681575318, 155.662004153478, -8.13764292647926)</li>
+<li>date limits: [‘1986-08-16’, ‘2011-11-17’]</li>
+<li>Number of bands: 7</li>
+</ul></li>
+<li>‘ga_ls8c_ard_provisional_3’:
+<ul>
+<li>title: DEA Surface Reflectance (Landsat 8 OLI-TIRS, Provisional)</li>
+<li>description: Geoscience Australia Landsat 8 Operational Land Imager and Thermal Infra-Red Scanner Analysis Ready Data Collection 3 (provisional)</li>
+<li>bounding box: (110.746179078976, -44.2480872929322, 156.113923365678, -9.07570747846392)</li>
+<li>date limits: [‘2022-06-20’, ‘2022-09-19’]</li>
+<li>Number of bands: 9</li>
+</ul></li>
+<li>‘ga_ls7e_ard_provisional_3’:
+<ul>
+<li>title: DEA Surface Reflectance (Landsat 7 ETM+, Provisional)</li>
+<li>description: Geoscience Australia Landsat 7 Enhanced Thematic Mapper Plus Analysis Ready Data Collection 3 (provisional)</li>
+<li>bounding box: (113.36982861436, -42.7522970095266, 155.249275549932, -9.18167640172494)</li>
+<li>date limits: [‘2022-06-22’, ‘2022-08-24’]</li>
+<li>Number of bands: 8</li>
+</ul></li>
+<li>‘ga_ls_ard_provisional_3’:
+<ul>
+<li>title: DEA Surface Reflectance (Landsat, Provisional)</li>
+<li>description: Geoscience Australia Landsat 7 Enhanced Thematic Mapper Plus Analysis Ready Data Collection 3 (provisional)</li>
+<li>bounding box: (110.746179078976, -44.2480872929322, 156.113923365678, -9.07570747846392)</li>
+<li>date limits: [‘2022-06-20’, ‘2022-09-19’]</li>
+<li>Number of bands: 7</li>
+</ul></li>
+<li>‘s2b_nrt_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2B MSI Near Real-Time)</li>
+<li>description: Sentinel-2B MSI ARD NRT - NBAR NBART and Pixel Quality</li>
+<li>bounding box: (109.989859933428, -45.2413329418709, 155.307643731418, -9.9300073889701)</li>
+<li>date limits: [‘2022-06-20’, ‘2022-09-19’]</li>
+<li>Number of bands: 23</li>
+</ul></li>
+<li>‘s2a_nrt_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2A MSI Near Real-Time)</li>
+<li>description: Sentinel-2A MSI ARD NRT - NBAR NBART and Pixel Quality</li>
+<li>bounding box: (109.989859933428, -45.2413329418709, 155.307643731418, -9.9300073889701)</li>
+<li>date limits: [‘2022-06-20’, ‘2022-09-19’]</li>
+<li>Number of bands: 23</li>
+</ul></li>
+<li>‘s2_nrt_provisional_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2, Provisional)</li>
+<li>description: Geoscience Australia Sentinel 2a MSI Analysis Ready Data Collection 3 (provisional)</li>
+<li>bounding box: (111.958960179236, -44.3413038768651, 155.219674237016, -9.93000738897011)</li>
+<li>date limits: [‘2022-06-20’, ‘2022-09-19’]</li>
+<li>Number of bands: 12</li>
+</ul></li>
+<li>‘s2b_nrt_provisional_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2B MSI, Provisional)</li>
+<li>description: Geoscience Australia Sentinel 2b MSI Analysis Ready Data Collection 3 (provisional)</li>
+<li>bounding box: (111.959041001616, -44.341297231057, 155.219281688203, -9.93000738897011)</li>
+<li>date limits: [‘2022-06-20’, ‘2022-09-19’]</li>
+<li>Number of bands: 12</li>
+</ul></li>
+<li>‘s2a_nrt_provisional_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2A MSI, Provisional)</li>
+<li>description: Geoscience Australia Sentinel 2a MSI Analysis Ready Data Collection 3 (provisional)</li>
+<li>bounding box: (111.958960179236, -44.3413038768651, 155.219674237016, -9.93000738897011)</li>
+<li>date limits: [‘2022-06-20’, ‘2022-09-19’]</li>
+<li>Number of bands: 12</li>
+</ul></li>
+<li>‘s2a_ard_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2A MSI)</li>
+<li>description: Sentinel-2A MSI Definitive ARD - NBART and Pixel Quality</li>
+<li>bounding box: (109.968510816964, -45.2234942244028, 156.101505058599, -9.02727104242043)</li>
+<li>date limits: [‘2015-07-12’, ‘2022-09-13’]</li>
+<li>Number of bands: 12</li>
+</ul></li>
+<li>‘s2b_ard_granule_nbar_t’:
+<ul>
+<li>title: DEA Surface Reflectance (Sentinel-2B MSI)</li>
+<li>description: Sentinel-2B MSI Definitive ARD - NBART and Pixel Quality</li>
+<li>bounding box: (110.294393028751, -44.7864137985832, 156.101505058599, -9.02727104242043)</li>
+<li>date limits: [‘2017-06-30’, ‘2022-09-13’]</li>
+<li>Number of bands: 12</li>
+</ul></li>
+<li>‘ga_ls_landcover’:
+<ul>
+<li>title: DEA Land Cover Calendar Year (Landsat)</li>
+<li>description: Geoscience Australia Landsat Land Cover Calendar Year Collection 2.0</li>
+<li>bounding box: (112.731828633068, -44.2342184871416, 154.267421772154, -9.93509678400507)</li>
+<li>date limits: [‘1988-01-01’, ‘2020-01-01’]</li>
+<li>Number of bands: 2</li>
+</ul></li>
+<li>‘ga_ls_landcover_descriptors’:
+<ul>
+<li>title: DEA Land Cover Environmental Descriptors</li>
+<li>description: Geoscience Australia Landsat Land Cover Calendar Year Collection 2.0</li>
+<li>bounding box: (112.731828633068, -44.2342184871416, 154.267421772154, -9.93509678400507)</li>
+<li>date limits: [‘1988-01-01’, ‘2020-01-01’]</li>
+<li>Number of bands: 5</li>
+</ul></li>
+<li>‘ga_ls_fc_3’:
+<ul>
+<li>title: DEA Fractional Cover (Landsat)</li>
+<li>description: Geoscience Australia Landsat Fractional Cover Collection 3</li>
+<li>bounding box: (110.696007613984, -45.6734535062289, 156.154528040633, -8.13764292647926)</li>
+<li>date limits: [‘1986-08-16’, ‘2022-09-05’]</li>
+<li>Number of bands: 4</li>
+</ul></li>
+<li>‘ga_ls_fc_pc_cyear_3’:
+<ul>
+<li>title: DEA Fractional Cover Percentiles Calendar Year (Landsat)</li>
+<li>description: Geoscience Australia Landsat Fractional Cover Percentile Calendar Year Collection 3</li>
+<li>bounding box: (112.343354889631, -44.2467683625153, 154.378185360282, -8.51120628432549)</li>
+<li>date limits: [‘1987-01-01’, ‘2021-01-01’]</li>
+<li>Number of bands: 10</li>
+</ul></li>
+<li>‘ga_ls_mangrove_cover_cyear_3’:
+<ul>
+<li>title: DEA Mangroves (Landsat)</li>
+<li>description: Geoscience Australia Landsat Mangrove Cover Calendar Year Collection 3</li>
+<li>bounding box: (112.492257439061, -39.1292216144938, 154.264053741666, -9.5698963139854)</li>
+<li>date limits: [‘1987-01-01’, ‘2021-01-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘s2_barest_earth’:
+<ul>
+<li>title: GA Barest Earth (Sentinel-2)</li>
+<li>description: The Sentinel-2 Barest Earth</li>
+<li>bounding box: (112.324372771065, -43.9381826788341, 154.70510751296, -8.82186564540388)</li>
+<li>date limits: [‘2017-01-01’, ‘2017-01-01’]</li>
+<li>Number of bands: 10</li>
+</ul></li>
+<li>‘ls8_barest_earth_mosaic’:
+<ul>
+<li>title: GA Barest Earth (Landsat 8 OLI/TIRS)</li>
+<li>description: Landsat-8 Barest Earth pixel composite albers 25 metre, 100km tile, Australian Albers Equal Area projection (EPSG:3577)</li>
+<li>bounding box: (111.492400120054, -44.3357065215098, 155.066563941708, -8.83515695199939)</li>
+<li>date limits: [‘2013-01-01’, ‘2013-01-01’]</li>
+<li>Number of bands: 6</li>
+</ul></li>
+<li>‘landsat_barest_earth’:
+<ul>
+<li>title: GA Barest Earth (Landsat)</li>
+<li>description: Landsat-5/Landsat-7/Landsat-8 combined Barest Earth pixel composite albers 25 metre, 100km tile, Australian Albers Equal Area projection (EPSG:3577)</li>
+<li>bounding box: (111.033686003887, -44.4285210281062, 155.790571411147, -8.49453875182811)</li>
+<li>date limits: [‘1980-01-01’, ‘1980-01-01’]</li>
+<li>Number of bands: 6</li>
+</ul></li>
+<li>‘ga_ls_tcw_percentiles_2’:
+<ul>
+<li>title: DEA Wetness Percentiles (Landsat)</li>
+<li>description: Geoscience Australia Landsat Tasseled Cap Wetness Percentiles Collection 2, 25 metre, 100km tile, Australian Albers Equal Area projection (EPSG:3577)</li>
+<li>bounding box: (112.501524524947, -44.315077785668, 154.340852639902, -9.07349125191758)</li>
+<li>date limits: [‘1987-01-01’, ‘1987-01-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘ga_ls_tc_pc_cyear_3’:
+<ul>
+<li>title: DEA Tasseled Cap Indices Percentiles Calendar Year (Landsat)</li>
+<li>description: Geoscience Australia Landsat Tasseled Cap Percentile Calendar Year Collection 3</li>
+<li>bounding box: (112.343354889631, -44.2467683625153, 154.378185360282, -8.51120628432549)</li>
+<li>date limits: [‘1987-01-01’, ‘2021-01-01’]</li>
+<li>Number of bands: 9</li>
+</ul></li>
+<li>‘ga_ls_wo_3’:
+<ul>
+<li>title: DEA Water Observations (Landsat)</li>
+<li>description: Geoscience Australia Landsat Water Observations Collection 3</li>
+<li>bounding box: (110.696007613984, -45.6734414490927, 156.154528040633, -9.07557070726103)</li>
+<li>date limits: [‘1986-08-16’, ‘2022-09-05’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘ga_ls_wo_fq_myear_3’:
+<ul>
+<li>title: DEA Water Observations Multi Year (Landsat)</li>
+<li>description: Geoscience Australia Landsat Water Observations Frequency Multi Year Collection 3</li>
+<li>bounding box: (110.413246718272, -46.1419438144744, 157.044900204052, -8.10857383542487)</li>
+<li>date limits: [‘1986-01-01’, ‘1986-01-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘ga_ls_wo_fq_cyear_3’:
+<ul>
+<li>title: DEA Water Observations Calendar Year (Landsat)</li>
+<li>description: Geoscience Australia Landsat Water Observations Frequency Calendar Year Collection 3</li>
+<li>bounding box: (110.413246718272, -46.1419438144744, 157.044900204052, -8.10857383542487)</li>
+<li>date limits: [‘1986-01-01’, ‘2021-01-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘ga_ls_wo_fq_apr_oct_3’:
+<ul>
+<li>title: DEA Water Observations April to October (Landsat)</li>
+<li>description: Geoscience Australia Landsat Water Observations Frequency April to October Collection 3</li>
+<li>bounding box: (110.413246718272, -46.1419438144744, 157.044900204052, -8.10857383542487)</li>
+<li>date limits: [‘1986-04-01’, ‘2021-04-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘ga_ls_wo_fq_nov_mar_3’:
+<ul>
+<li>title: DEA Water Observations November to March (Landsat)</li>
+<li>description: Geoscience Australia Landsat Water Observations Frequency November to March Collection 3</li>
+<li>bounding box: (110.413246718272, -46.1419438144744, 157.044900204052, -8.21783704144064)</li>
+<li>date limits: [‘1987-11-01’, ‘2021-11-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘wofs_filtered_summary’:
+<ul>
+<li>title: DEA Multi-Year Water Observation Frequency Filtered Statistics (Landsat, DEPRECATED)</li>
+<li>description: Water Observations from Space Statistics confidence filtered</li>
+<li>bounding box: (111.859562290899, -44.9351287319957, 155.169368098324, -9.00692244744483)</li>
+<li>date limits: [‘1970-01-01’, ‘1970-01-01’]</li>
+<li>Number of bands: 2</li>
+</ul></li>
+<li>‘wofs_summary_clear’:
+<ul>
+<li>title: DEA Multi-Year Clear Observation Statistics (Landsat, DEPRECATED)</li>
+<li>description: Water Observations from Space Statistics</li>
+<li>bounding box: (112.99986111, -44.0008652894921, 153.999861110328, -10.0001388899999)</li>
+<li>date limits: [‘1970-01-01’, ‘1970-01-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘wofs_summary_wet’:
+<ul>
+<li>title: DEA Multi-Year Wet Observation Statistics (Landsat, DEPRECATED)</li>
+<li>description: Water Observations from Space Statistics</li>
+<li>bounding box: (112.99986111, -44.0008652894921, 153.999861110328, -10.0001388899999)</li>
+<li>date limits: [‘1970-01-01’, ‘1970-01-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘Water Observations from Space Statistics’:
+<ul>
+<li>title: DEA Multi-Year Water Observation Frequency Statistics (Landsat, DEPRECATED)</li>
+<li>description: Water Observations from Space Statistics</li>
+<li>bounding box: (112.99986111, -44.0008652894921, 153.999861110328, -10.0001388899999)</li>
+<li>date limits: [‘1970-01-01’, ‘1970-01-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘wofs_filtered_summary_confidence’:
+<ul>
+<li>title: DEA Multi-Year Water Observation Confidence Statistics (Landsat, DEPRECATED)</li>
+<li>description: Water Observations from Space Statistics confidence filtered</li>
+<li>bounding box: (111.859562290899, -44.9351287319957, 155.169368098324, -9.00692244744483)</li>
+<li>date limits: [‘1970-01-01’, ‘1970-01-01’]</li>
+<li>Number of bands: 2</li>
+</ul></li>
+<li>‘ITEM_V2.0.0’:
+<ul>
+<li>title: DEA Intertidal Extents (Landsat)</li>
+<li>description: Relative Extents Model</li>
+<li>bounding box: (112.459622677896, -43.7203758299765, 153.670408736335, -10.3096529183452)</li>
+<li>date limits: [‘1986-01-01’, ‘1986-01-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘ITEM_V2.0.0_Conf’:
+<ul>
+<li>title: DEA Intertidal Extents confidence</li>
+<li>description: Average ndwi Standard Deviation, the Confidence Layer</li>
+<li>bounding box: (112.459622677896, -43.7203758299765, 153.670408736335, -10.3096529183452)</li>
+<li>date limits: [‘1986-01-01’, ‘1986-01-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘NIDEM’:
+<ul>
+<li>title: DEA Intertidal Elevation (Landsat)</li>
+<li>description: National Intertidal Digital Elevation Model 25m 1.0.0</li>
+<li>bounding box: (112.223058990767, -43.8291965530654, 154.080299801132, -10.2371048142508)</li>
+<li>date limits: [‘1986-01-01’, ‘1986-01-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘high_tide_composite’:
+<ul>
+<li>title: DEA High Tide Imagery (Landsat)</li>
+<li>description: High tide 20 percentage composites 25m v. 2.0.0</li>
+<li>bounding box: (112.223058990767, -43.8291965530654, 154.080299801132, -10.2371048142508)</li>
+<li>date limits: [‘2000-01-01’, ‘2000-01-01’]</li>
+<li>Number of bands: 6</li>
+</ul></li>
+<li>‘low_tide_composite’:
+<ul>
+<li>title: DEA Low Tide Imagery (Landsat)</li>
+<li>description: Low tide 20 percentage composites 25m v. 2.0.0</li>
+<li>bounding box: (112.223058990767, -43.8291965530654, 154.080299801132, -10.2371048142508)</li>
+<li>date limits: [‘2000-01-01’, ‘2000-01-01’]</li>
+<li>Number of bands: 6</li>
+</ul></li>
+<li>‘ga_s2_ba_provisional_3’:
+<ul>
+<li>title: DEA Burnt Area Characteristic Layers (Sentinel 2 Near Real-Time, Provisional)</li>
+<li>description: Sentinel 2 Burnt Area Collection 3 (Provisional)</li>
+<li>bounding box: (111.966746816605, -44.3414673034495, 155.213824039639, -9.93000738897011)</li>
+<li>date limits: [‘2021-10-01’, ‘2022-09-19’]</li>
+<li>Number of bands: None</li>
+</ul></li>
+<li>‘alos_displacement’:
+<ul>
+<li>title: ALOS Displacement</li>
+<li>description: CEMP InSAR ALOS Displacement</li>
+<li>bounding box: (150.330509919584, -34.5250413940276, 151.258021405841, -33.772472435988)</li>
+<li>date limits: [‘2008-02-11’, ‘2010-10-22’]</li>
+<li>Number of bands: 4</li>
+</ul></li>
+<li>‘alos_velocity’:
+<ul>
+<li>title: ALOS Velocity</li>
+<li>description: CEMP InSAR ALOS Velocity</li>
+<li>bounding box: (150.331038253243, -34.5250413940276, 151.258021405841, -33.772472435988)</li>
+<li>date limits: [‘2009-06-15’, ‘2009-06-15’]</li>
+<li>Number of bands: 4</li>
+</ul></li>
+<li>‘envisat_displacement’:
+<ul>
+<li>title: ENVISAT Displacement</li>
+<li>description: CEMP InSAR Envisat Displacement</li>
+<li>bounding box: (150.416357298779, -34.5283535864513, 151.184355816078, -33.5035077252927)</li>
+<li>date limits: [‘2006-06-26’, ‘2010-08-28’]</li>
+<li>Number of bands: 4</li>
+</ul></li>
+<li>‘envisat_velocity’:
+<ul>
+<li>title: ENVISAT Velocity</li>
+<li>description: CEMP InSAR Envisat Velocity</li>
+<li>bounding box: (150.416357298779, -34.5283535864513, 151.184355816078, -33.5035077252927)</li>
+<li>date limits: [‘2008-06-15’, ‘2008-06-15’]</li>
+<li>Number of bands: 4</li>
+</ul></li>
+<li>‘radarsat2_displacement’:
+<ul>
+<li>title: RADARSAT2 Displacement</li>
+<li>description: CEMP InSAR Radarsat-2 Displacement</li>
+<li>bounding box: (150.540420399293, -34.3792688432228, 151.151613477574, -33.8798432478719)</li>
+<li>date limits: [‘2015-07-15’, ‘2019-05-31’]</li>
+<li>Number of bands: 4</li>
+</ul></li>
+<li>‘radarsat2_velocity’:
+<ul>
+<li>title: RADARSAT2 Velocity</li>
+<li>description: CEMP InSAR Radarsat-2 Velocity</li>
+<li>bounding box: (150.540420399293, -34.3792688432228, 151.151613477574, -33.8798432478719)</li>
+<li>date limits: [‘2017-06-15’, ‘2017-06-15’]</li>
+<li>Number of bands: 4</li>
+</ul></li>
+<li>‘aster_false_colour’:
+<ul>
+<li>title: False Colour Mosaic</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -44.013698912363, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘aster_regolith_ratios’:
+<ul>
+<li>title: Regolith Ratios</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -44.013698912363, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘aster_aloh_group_composition’:
+<ul>
+<li>title: AlOH Group Composition</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_aloh_group_content’:
+<ul>
+<li>title: AlOH Group Content</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_feoh_group_content’:
+<ul>
+<li>title: FeOH Group Content</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_ferric_oxide_composition’:
+<ul>
+<li>title: Ferric Oxide Composition</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_ferric_oxide_content’:
+<ul>
+<li>title: Ferric Oxide Content</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_ferrous_iron_content_in_mgoh’:
+<ul>
+<li>title: Ferrous Iron Content in MgOH/Carbonate</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_ferrous_iron_index’:
+<ul>
+<li>title: Ferrous Iron Index</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_green_vegetation’:
+<ul>
+<li>title: Green Vegetation Content</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_gypsum_index’:
+<ul>
+<li>title: Gypsum Index</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917024138111, -43.7806027057097, 153.640358457438, -10.28257228)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_kaolin_group_index’:
+<ul>
+<li>title: Kaolin Group Index</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_mgoh_group_composition’:
+<ul>
+<li>title: MgOH Group Composition</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_mgoh_group_content’:
+<ul>
+<li>title: MgOH Group Content</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_opaque_index’:
+<ul>
+<li>title: Opaque Index</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917275536606, -43.7806433511675, 153.640054299875, -10.2856586)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_silica_index’:
+<ul>
+<li>title: TIR Silica index</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917024138111, -43.7806027057097, 153.640358457438, -10.28257228)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘aster_quartz_index’:
+<ul>
+<li>title: TIR Quartz Index</li>
+<li>description: ASTER</li>
+<li>bounding box: (112.917024138111, -43.7806027057097, 153.640358457438, -10.28257228)</li>
+<li>date limits: [‘2000-02-01’, ‘2000-02-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+<li>‘multi_scale_topographic_position’:
+<ul>
+<li>title: Multi-Scale Topographic Position</li>
+<li>description: Multi-scale Topographic Position Image</li>
+<li>bounding box: (112.9995833, -44.0004167, 153.9995833, -10.0004167)</li>
+<li>date limits: [‘2018-01-01’, ‘2018-01-01’]</li>
+<li>Number of bands: 3</li>
+</ul></li>
+<li>‘weathering_intensity’:
+<ul>
+<li>title: Weathering Intensity</li>
+<li>description: Weathering Intensity Model</li>
+<li>bounding box: (112.9995833, -44.0004167, 153.9995833, -10.0004167)</li>
+<li>date limits: [‘2018-01-01’, ‘2018-01-01’]</li>
+<li>Number of bands: 1</li>
+</ul></li>
+</ul>
+</section>
+<section id="gsky-data-server-for-dea-geoscience-earth-observations" class="level2">
+<h2 class="anchored" data-anchor-id="gsky-data-server-for-dea-geoscience-earth-observations">GSKY Data Server for DEA Geoscience Earth Observations</h2>
+<p>Description: Digital Earth Australia’s (DEA) Landsat Surface Reflectance products take Landsat 5 Thematic Mapper (TM), Landsat 7 Enhanced Thematic Mapper Plus (ETM+) and Landsat 8 Operational Land Imager (OLI) imagery captured over the Australian continent and corrects for inconsistencies across land and coastal fringes. This product has been corrected to remove the influences of the atmosphere, the time of year, terrain shadow and satellite view angles. Some of the layers include image composites that are made from images acquired within a 16 day period.</p>
+<p>Module name: getdata_dea_nci.py</p>
+<p>Resolution: variable (typically 1 arcsec)</p>
+<p>Updates: daily to yearly</p>
+<p>Source: https://opus.nci.org.au/display/Help/Datasets</p>
+<p>License: Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+<p>Attribution: The data products are produced using Digital Earth Australia. The WCS service relies on GSKY - A Scalable, Distributed Geospatial Data Service from the National Centre for Environmental Information (NCI).</p>
+<p>Layernames:</p>
+<ul>
+<li>‘blend_sentinel2_landsat_nbart_daily’ :
+<ul>
+<li>title: Multi-sensor (Landsat and Sentinel 2) surface reflectance (Beta)</li>
+<li>description: This multi-sensor service has been corrected to remove the influences of the atmosphere, the time of year, terrain shadow and satellite view angles using the methods described in Li et al.&nbsp;2012 https://doi.org/10.1016/j.rse.2012.06.018. This service combines terrain corrected surface reflectance observations from three Landsat sensors (Landsat 5 TM, Landsat 7 ETM+, Landsat 8 OLI) and two Sentinel 2 sensors (Sentinel 2A and 2B). More detailed information about the terrain corrected surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a76d2e129e. The service for each day is composed from all acquisitions that occurred over the Australian region on that calendar day.</li>
+</ul></li>
+<li>‘hltc_high’ :
+<ul>
+<li>title: DEA High Tide Composite 25m v2.0</li>
+<li>description: The High and Low Tide Composites product is composed of two surface reflectance composite mosaics of Landsat TM and ETM+ (Landsat 5 and Landsat 7 respectively) and OLI (Landsat 8) surface reflectance data Li et al.&nbsp;2010 https://doi.org/10.1109/JSTARS.2010.2042281. These products have been produced using Digital Earth Australia (DEA). The two mosaics allow cloud free and noise reduced visualisation of the shallow water and inter-tidal coastal regions of Australia, as observed at high and low tide respectively. The composites are generated utilising the geomedian approach of Roberts et al.&nbsp;(2017) (https://doi.org/10.1109/TGRS.2017.2723896) to ensure a valid surface reflectance spectra suitable for uses such as habitat mapping. The time range used for composite generation in each polygon of the mosaic is tailored to ensure dynamic coastal features are captured whilst still allowing a clean and cloud free composite to be generated (see Sagar et al.&nbsp;2018 (https://doi.org/10.3390/rs10030480)). The concepts of the Observed Tidal Range (OTR), and Highest and Lowest Observed Tide (HOT, LOT) are discussed and described fully in Sagar et al.&nbsp;(2017) (https://doi.org/10.1016/j.rse.2017.04.009). This service provides access to the High Tide Composite v2.0 product. More detailed information including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a615705d20f7 .</li>
+</ul></li>
+<li>‘hltc_low’ :
+<ul>
+<li>title: DEA Low Tide Composite 25m v2.0</li>
+<li>description: The High and Low Tide Composites product is composed of two surface reflectance composite mosaics of Landsat TM and ETM+ (Landsat 5 and Landsat 7 respectively) and OLI (Landsat 8) surface reflectance data Li et al.&nbsp;2010 https://doi.org/10.1109/JSTARS.2010.2042281. These products have been produced using Digital Earth Australia (DEA). The two mosaics allow cloud free and noise reduced visualisation of the shallow water and inter-tidal coastal regions of Australia, as observed at high and low tide respectively. The composites are generated utilising the geomedian approach of Roberts et al.&nbsp;(2017) (https://doi.org/10.1109/TGRS.2017.2723896) to ensure a valid surface reflectance spectra suitable for uses such as habitat mapping. The time range used for composite generation in each polygon of the mosaic is tailored to ensure dynamic coastal features are captured whilst still allowing a clean and cloud free composite to be generated (see Sagar et al.&nbsp;2018 (https://doi.org/10.3390/rs10030480)). The concepts of the Observed Tidal Range (OTR), and Highest and Lowest Observed Tide (HOT, LOT) are discussed and described fully in Sagar et al.&nbsp;(2017) (https://doi.org/10.1016/j.rse.2017.04.009). This service provides access to the Low Tide Composite v2.0 product. More detailed information including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a615705d20f7 .</li>
+</ul></li>
+<li>‘item_relative’ :
+<ul>
+<li>title: DEA Intertidal Extents Model Relative Layer 25m v2.0</li>
+<li>description: The Intertidal Extents Model (ITEM) product is a national dataset characterising the spatial extents of the exposed intertidal zone; the land between the observed highest and lowest tide, at intervals of the observed tidal range. ITEM provides the extent and topography of the intertidal zone of Australia’s coastline (excluding offshore Territories). This information was derived using observations in the Landsat archive since 1986. ITEM v2.0 has implemented an improved tidal modelling framework over that utilised in ITEM v1.0 (Sagar et al.&nbsp;2017, 2018) (https://doi.org/10.1016/j.rse.2017.04.009, https://doi.org/10.3390/rs10030480). The expanded Landsat archive within the Digital Earth Australia (DEA) has also enabled the model extent to be increased from ITEM v1.0 to cover a number of offshore reefs, including the full Great Barrier Reef and southern sections of the Torres Strait Islands. ITEM can be a valuable complementary dataset to both onshore LiDAR survey data and coarser offshore bathymetry data, enabling a more realistic representation of the land and ocean interface. More detailed information including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a602cc9eb358. This service provides access to the Intertidal Extents Model v2.0 Relative Layer product. The relative layer displays the modelled extents of the exposed intertidal zone, at percentile intervals of the observed tidal range (OTR). For example, the region defined as 0-10% denotes an area that only exposes at the lowest 10% of tides in relation to the OTR.</li>
+</ul></li>
+<li>‘item_stddev’ :
+<ul>
+<li>title: DEA Intertidal Extents Model Confidence Layer 25m v2.0</li>
+<li>description: The Intertidal Extents Model (ITEM) product is a national dataset characterising the spatial extents of the exposed intertidal zone; the land between the observed highest and lowest tide, at intervals of the observed tidal range. ITEM provides the extent and topography of the intertidal zone of Australia’s coastline (excluding offshore Territories). This information was derived using observations in the Landsat archive since 1986. ITEM v2.0 has implemented an improved tidal modelling framework over that utilised in ITEM v1.0 (Sagar et al.&nbsp;2017, 2018) (https://doi.org/10.1016/j.rse.2017.04.009, https://doi.org/10.3390/rs10030480). The expanded Landsat archive within the Digital Earth Australia (DEA) has also enabled the model extent to be increased from ITEM v1.0 to cover a number of offshore reefs, including the full Great Barrier Reef and southern sections of the Torres Strait Islands. ITEM can be a valuable complementary dataset to both onshore LiDAR survey data and coarser offshore bathymetry data, enabling a more realistic representation of the land and ocean interface. More detailed information including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a602cc9eb358. This service provides access to the Intertidal Extents Model v2.0 Confidence Layer product. The confidence layer displays the standard deviation of the water index values (NDWI) derived across the tidal intervals used in generating the core ITEM relative extents product. High values indicate regions where inundation patterns are not driven by tidal influences. This can be a result of change (shoreline, geomorphic, anthropogenic), or caused by errors in the underlying tidal model.</li>
+</ul></li>
+<li>‘landsat5_nbar_16day’ :
+<ul>
+<li>title: 16-day DEA Landsat 5 surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year and satellite view angles using the methods described in Li et al.&nbsp;2010 https://doi.org/10.1109/JSTARS.2010.2042281. Landsat 5 Thematic Mapper (TM) data is available from August 1986 to November 2011. More detailed information about the surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a501e1c5af. This service provides access to Landsat 5 TM surface reflectance data. The image composites are made from images acquired within a 16 day period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat5_nbar_daily’ :
+<ul>
+<li>title: Daily DEA Landsat 5 surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year and satellite view angles using the methods described in Li et al.&nbsp;2010 https://doi.org/10.1109/JSTARS.2010.2042281. Landsat 5 Thematic Mapper (TM) data is available from August 1986 to November 2011. More detailed information about the surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a501e1c5af. This service provides access to Landsat 5 TM surface reflectance data. The image composites are made from images acquired within a 24 hour period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat5_nbart_16day’ :
+<ul>
+<li>title: 16-day DEA Landsat 5 terrain corrected surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year, terrain shadow and satellite view angles using the methods described in Li et al.&nbsp;2012 https://doi.org/10.1016/j.rse.2012.06.018. Landsat 5 Thematic Mapper (TM) data is available from August 1986 to November 2011. More detailed information about the terrain corrected surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a76d2e129e. This service provides access to Landsat 5 Thematic Mapper (TM) terrain corrected surface reflectance data. The image composites are made from images acquired within a 16 day period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat5_nbart_daily’ :
+<ul>
+<li>title: Daily DEA Landsat 5 terrain corrected surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year, terrain shadow and satellite view angles using the methods described in Li et al.&nbsp;2012 https://doi.org/10.1016/j.rse.2012.06.018. Landsat 5 Thematic Mapper (TM) data is available from August 1986 to November 2011. More detailed information about the terrain corrected surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a76d2e129e. This service provides access to Landsat 5 Thematic Mapper (TM) terrain corrected surface reflectance data. The image composites are made from images acquired within a 24 hour period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat7_nbar_16day’ :
+<ul>
+<li>title: 16-day DEA Landsat 7 surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year and satellite view angles using the methods described in Li et al.&nbsp;2010 https://doi.org/10.1109/JSTARS.2010.2042281. Landsat 7 Enhanced Thematic Mapper (ETM+) data is available from May 1999 and onwards. Please note that images from 1st of June 2003 onwards are affected by the failure of scan line corrector which results in strips of missing data. More detailed information about the surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a501e1c5af. This service provides access to Landsat 7 ETM+ terrain corrected surface reflectance data. The image composites are made from images acquired within a 16 day period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat7_nbar_daily’ :
+<ul>
+<li>title: Daily DEA Landsat 7 surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year and satellite view angles using the methods described in Li et al.&nbsp;2010 https://doi.org/10.1109/JSTARS.2010.2042281. Landsat 7 Enhanced Thematic Mapper (ETM+) data is available from May 1999 and onwards. Please note that images from 1st of June 2003 onwards are affected by the failure of scan line corrector which results in strips of missing data. More detailed information about the surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a501e1c5af. This service provides access to Landsat 7 ETM+ terrain corrected surface reflectance data. The image composites are made from images acquired within a 24 hour period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat7_nbart_16day’ :
+<ul>
+<li>title: 16-day DEA Landsat 7 terrain corrected surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year, terrain shadow and satellite view angles using the methods described in Li et. al.&nbsp;2012 https://doi.org/10.1016/j.rse.2012.06.018. Landsat 7 Enhanced Thematic Mapper (ETM+) data is available from May 1999 and onwards. Please note that images from 1st of June 2003 are affected by the failure of scan line corrector which results in strips of missing data. More detailed information about the surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a76d2e129e. This service provides access to Landsat 7 ETM+ terrain corrected surface reflectance data. The image composites are made from images acquired within a 16 day period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat7_nbart_daily’ :
+<ul>
+<li>title: Daily DEA Landsat 7 terrain corrected surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year, terrain shadow and satellite view angles using the methods described in Li et. al.&nbsp;2012 https://doi.org/10.1016/j.rse.2012.06.018. Landsat 7 Enhanced Thematic Mapper (ETM+) data is available from May 1999 and onwards. Please note that images from 1st of June 2003 are affected by the failure of scan line corrector which results in strips of missing data. More detailed information about the surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a76d2e129e. This service provides access to Landsat 7 ETM+ terrain corrected surface reflectance data. The image composites are made from images acquired within a 24 hour period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat8_nbar_16day’ :
+<ul>
+<li>title: 16-day DEA Landsat 8 surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year and satellite view angles using the methods described in Li et al.&nbsp;2010 https://doi.org/10.1109/JSTARS.2010.2042281. Landsat 8 Operational Land Imager (OLI) data is available from March 2013 and onwards. More detailed information about the surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a501e1c5af. This service provides access to Landsat 8 OLI surface reflectance data. The image composites are made from images acquired within a 16 day period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat8_nbar_daily’ :
+<ul>
+<li>title: Daily DEA Landsat 8 surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year and satellite view angles using the methods described in Li et al.&nbsp;2010 https://doi.org/10.1109/JSTARS.2010.2042281. Landsat 8 Operational Land Imager (OLI) data is available from March 2013 and onwards. More detailed information about the surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a501e1c5af. This service provides access to Landsat 8 OLI surface reflectance data. The image composites are made from images acquired within a 24 hour period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat8_nbart_16day’ :
+<ul>
+<li>title: 16-day DEA Landsat 8 terrain corrected surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year, terrain shadow and satellite view angles using the methods described in Li et al.&nbsp;2012 https://doi.org/10.1016/j.rse.2012.06.018. Landsat 8 Operational Land Imager (OLI) data is available from March 2013 and onwards. More detailed information about the terrain corrected surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a76d2e129e. This service provides access to Landsat 8 OLI terrain corrected surface reflectance data. The image composites are made from images acquired within a 16 day period, and may include clouds.</li>
+</ul></li>
+<li>‘landsat8_nbart_daily’ :
+<ul>
+<li>title: Daily DEA Landsat 8 terrain corrected surface reflectance</li>
+<li>description: This product has been corrected to remove the influences of the atmosphere, the time of year, terrain shadow and satellite view angles using the methods described in Li et al.&nbsp;2012 https://doi.org/10.1016/j.rse.2012.06.018. Landsat 8 Operational Land Imager (OLI) data is available from March 2013 and onwards. More detailed information about the terrain corrected surface reflectance product suite produced using Digital Earth Australia including CCBY4.0 is available at http://dx.doi.org/10.4225/25/5a7a76d2e129e. This service provides access to Landsat 8 OLI terrain corrected surface reflectance data. The image composites are made from images acquired within a 24 hour period, and may include clouds.</li>
+</ul></li>
+<li>‘sentinel2_nbart_daily’ :
+<ul>
+<li>title: Sentinel 2 Analysis Ready Data</li>
+<li>description: The Surface Reflectance product has been corrected to account for variations caused by atmospheric properties, sun position and sensor view angle at time of image capture. These corrections have been applied to all satellite imagery in the Sentinel-2 archive. This is undertaken to allow comparison of imagery acquired at different times, by different sensors, in different seasons and in different geographic locations. These products also indicate where the imagery has been affected by cloud or cloud shadow, contains missing data or has been affected in other ways. The Surface Reflectance products are useful as a fundamental starting point for any further analysis and are the underlying data of all other Digital Earth Australia products.</li>
+</ul></li>
+</ul>
+</section>
+<section id="radiometric-data" class="level2">
+<h2 class="anchored" data-anchor-id="radiometric-data">Radiometric Data</h2>
+<p>Description: This radiometric sub-collection of the Geoscience Australia Geophysics Reference Data Collection are compilations of radiometric data from an extensive archive of geophysical surveys dating back to 1947, which are contained in other sub-collections of this collection. The individual survey datasets have been acquired by Geoscience Australia and its State and Territory Government partners. The compilations of radiometric data involved the levelling and merging (mosaicking) of regularly interpolated grid (raster) data, from selected individual geophysical surveys, into near-seamless national scale grids for each datatype and creating derivations thereof. The selected individual surveys are chosen based on the spatial resolution and accuracy of individual surveys within a given area.</p>
+<p>Module name: getdata_radiometric.py</p>
+<p>Resolution: 100m (0.001 deg)</p>
+<p>Updates: None</p>
+<p>Source: https://opus.nci.org.au/display/Help/Datasets,</p>
+<p>License: Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+<p>Attribution: Geoscience Australia. The WCS service relies on GSKY - A Scalable, Distributed Geospatial Data Service from the National Centre for Environmental Information (NCI).</p>
+<p>Layernames:</p>
+<ul>
+<li>‘radmap2019_grid_dose_terr_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 unfiltered terrestrial dose rate</li>
+<li>description: The unfiltered terrestrial dose rate grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia, which is a merge of over 600 individual gamma-ray spectrometric surveys. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The unfiltered terrestrial dose rate grid is derived as a linear combination of the unfiltered K, U and Th grids, and has a cell size of about 100m (0.001 degrees).</li>
+</ul></li>
+<li>‘radmap2019_grid_dose_terr_filtered_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 filtered terrestrial dose rate</li>
+<li>description: The filtered terrestrial dose rate grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia, made of a combination of over 600 individual survey grids. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The terrestrial dose rate grid is derived as a linear combination of the filtered K, U and Th grids. A low pass filter is applied to the unfiltered grid to generate the filtered terrestrial dose rate grid. The grid cell size is about 100m (0.001 degrees).</li>
+</ul></li>
+<li>‘radmap2019_grid_k_conc_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 unfiltered pct potassium</li>
+<li>description: The unfiltered potassium grid is a derivative of the 2019 radiometric grid of Australia. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector. The 2019 unfiltered potassium grid has a cell size of about 100 m (0.001 degrees) and shows potassium element concentrations of the Australia region. Potassium is the seventh most abundant element in the Earth’s crust. The potassium concentration grid can be used to locate minerals and compounds containing potassium.</li>
+</ul></li>
+<li>‘radmap2019_grid_k_conc_filtered_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 filtered pct potassium grid</li>
+<li>description: The filtered potassium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium, uranium and thorium. The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The 2019 filtered potassium grid has a cell size of about 100m (0.001 degrees) and shows potassium element concentrations of the Australia region. It was obtained by applying a low-pass filter to the original potassium grid. Potassium is the seventh most abundant element in the Earth’s crust. This potassium concentration grid can be used to locate minerals and compounds containing potassium.</li>
+</ul></li>
+<li>‘radmap2019_grid_th_conc_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 unfiltered ppm thorium</li>
+<li>description: The unfiltered thorium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia which is a merge of over 600 individual gamma-ray spectrometric surveys. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The 2019 unfiltered thorium grid has a cell size of about 100 m (0.001 degrees) and shows thorium element concentrations of the Australia region.</li>
+</ul></li>
+<li>‘radmap2019_grid_th_conc_filtered_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 filtered ppm thorium</li>
+<li>description: The filtered thorium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector. The 2019 filtered thorium grid was derived by seamlessly merging over 600 airborne gamma-ray spectrometric surveys. The final grid has a cell size of about 100m (0.001 degrees) and shows thorium element concentrations of the Australia region.</li>
+</ul></li>
+<li>‘radmap2019_grid_thk_ratio_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 ratio thorium over potassium</li>
+<li>description: The thorium over potassium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The 2019 thorium over potassium was derived by seamlessly merging over 600 airborne gamma-ray spectrometric surveys. The final grid has a cell size of about 100m (0.001 degrees) and is derived from the filtered thorium and potassium grids.</li>
+</ul></li>
+<li>‘radmap2019_grid_u2th_ratio_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium squared over thorium</li>
+<li>description: The uranium squared over thorium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The 2019 uranium squared over thorium was derived by seamlessly merging over 600 airborne gamma-ray spectrometric surveys. The final grid has a cell size of about 100m (0.001 degrees) and is derived from the filtered uranium and thorium grids.</li>
+</ul></li>
+<li>‘radmap2019_grid_u_conc_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 unfiltered ppm uranium</li>
+<li>description: The unfiltered uranium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia which is a merge of over 600 individual gamma-ray spectrometric surveys. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium, uranium and thorium. The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The 2019 unfiltered uranium grid has a cell size of about 100m (0.001 degrees) and shows uranium element concentrations of the Australia region.</li>
+</ul></li>
+<li>‘radmap2019_grid_u_conc_filtered_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 filtered ppm uranium</li>
+<li>description: The filtered uranium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The 2019 filtered uranium grid was derived by seamlessly merging over 600 airborne gamma-ray spectrometric surveys. The final grid has a cell size of about 100m (0.001 degrees) and shows uranium element concentrations of the Australia region.</li>
+</ul></li>
+<li>‘radmap2019_grid_uk_ratio_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium over potassium</li>
+<li>description: The uranium over potassium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia comprising over 600 airborne gamma-ray spectrometric surveys. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The 2019 uranium over potassium grid has a cell size of about 100 m (0.001 degrees) and is derived from the filtered uranium and potassium grids.</li>
+</ul></li>
+<li>‘radmap2019_grid_uth_ratio_awags_rad_2019’
+<ul>
+<li>title: Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium over thorium</li>
+<li>description: The uranium over thorium grid is a derivative of the 2019 radiometric or gamma-ray grid of Australia which is a merge of over 600 individual gamma-ray spectrometric surveys. The radiometric, or gamma-ray spectrometric method, measures the natural variations in the gamma-rays detected near the Earth’s surface as the result of the natural radioactive decay of potassium (K), uranium (U) and thorium (Th). The data are collected on airborne geophysical surveys conducted by Commonwealth, State and Northern Territory Governments and the private sector.The 2019 uranium over thorium grid has a cell size of about 100 m (0.001 degrees) and is derived from the filtered uranium and thorium grids.</li>
+</ul></li>
+</ul>
+</section>
+<section id="landscape-data-slga" class="level2">
+<h2 class="anchored" data-anchor-id="landscape-data-slga">Landscape Data SLGA</h2>
+<p>Description: The landscape attribute products available from the Soil and Landscape Grid of Australia (SLGA) were derived from DEM-S, the smoothed version of the national 1 second resolution Digital Elevation Model, which was derived from the 1 second resolution Shuttle Radar Topography Mission (SRTM) data acquired by NASA in February 2000.</p>
+<p>Module name: getdata_landscape.py</p>
+<p>Resolution: 3 arcsec</p>
+<p>Updates: None</p>
+<p>Source: https://www.clw.csiro.au/aclep/soilandlandscapegrid/ProductDetails.html”</p>
+<p>License: Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+<p>Attribution: CSIRO Australia, TERN (University of Queensland)</p>
+<p>Bounding Box: (112.99958, -44.00042, 153.99958, -10.0004)</p>
+<p>Layernames:</p>
+<ul>
+<li>‘Prescott_index’
+<ul>
+<li>key: ‘1’</li>
+<li>title: Prescott Index</li>
+<li>description: Prescott Index derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘net_radiation_jan’
+<ul>
+<li>key: ‘2’</li>
+<li>title: Net Radiation [January]</li>
+<li>description: None</li>
+</ul></li>
+<li>‘net_radiation_july’
+<ul>
+<li>key: ‘3’</li>
+<li>title: Net Radiation [July]</li>
+<li>description: None</li>
+</ul></li>
+<li>‘total_shortwave_sloping_surf_jan’
+<ul>
+<li>key: ‘4’</li>
+<li>title: Total Shortwave Sloping Surf [January]</li>
+<li>description: None</li>
+</ul></li>
+<li>‘total_shortwave_sloping_surf_july’
+<ul>
+<li>key: ‘5’</li>
+<li>title: Total Shortwave Sloping Surf [July]</li>
+<li>description: None</li>
+</ul></li>
+<li>‘Slope’
+<ul>
+<li>key: ‘6’</li>
+<li>title: Slope [percent]</li>
+<li>description: Percent slope (3” resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘Slope_median_300m’
+<ul>
+<li>key: ‘7’</li>
+<li>title: Slope [percent] Median 300m Radius</li>
+<li>description: Median of Percent slope at 300m radius (3” resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘Slope_relief_class’
+<ul>
+<li>key: ‘8’</li>
+<li>title: Slope Relief Class</li>
+<li>description: Slope relief (3” resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘Aspect’
+<ul>
+<li>key: ‘9’</li>
+<li>title: Aspect</li>
+<li>description: Aspect (3” resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘Relief_1000m’
+<ul>
+<li>key: ‘10’</li>
+<li>title: Relief [1000m radius]</li>
+<li>description: 1000 m elevation range (3” resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘Relief_300m’
+<ul>
+<li>key: ‘11’</li>
+<li>title: Relief [300m radius]</li>
+<li>description: 300 m elevation range (3” resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘Topographic_wetness_index’
+<ul>
+<li>key: ‘12’</li>
+<li>title: Topographic Wetness Index</li>
+<li>description: Topographic Wetness Index (3” resolution) derived from 1 second DEM-H version 1.0</li>
+</ul></li>
+<li>‘TPI_mask’
+<ul>
+<li>key: ‘13’</li>
+<li>title: TPI Mask</li>
+<li>description: None</li>
+</ul></li>
+<li>‘SRTM_TopographicPositionIndex’
+<ul>
+<li>key: ‘14’</li>
+<li>title: SRTM_TopographicPositionIndex</li>
+<li>description: Topographic position index (3” resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘Contributing_area’
+<ul>
+<li>key: ‘15’</li>
+<li>title: Contributing Area [partial]</li>
+<li>description: Contributing Area - Multiple Flow Direction (Partial), 3” resolution, derived from 1 second DEM-H version 1.0</li>
+</ul></li>
+<li>‘MrVBF’
+<ul>
+<li>key: ‘16’</li>
+<li>title: MrVBF</li>
+<li>description: Multi-resolution Valley Bottom Flatness (MrVBF) at 3 second resolution derived from 1 second DEM-S version 1.0</li>
+</ul></li>
+<li>‘Plan_curvature’
+<ul>
+<li>key: ‘17’</li>
+<li>title: Plan Curvature</li>
+<li>description: Plan curvature (3” resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+<li>‘Profile_curvature’
+<ul>
+<li>key: ‘18’</li>
+<li>title: Profile Curvature</li>
+<li>description: Profile curvature (3”resolution) derived from 1 second DEM-S version 0.1</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Geodata-Harvester – earth_engine_data_overview</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Geodata-Harvester</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../py_dataharvester.html">
+ <span class="menu-text">Python</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../R_dataharvester.html">
+ <span class="menu-text">R-Package</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../events.html">
+ <span class="menu-text">Events</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#earth-engine-data-overview" id="toc-earth-engine-data-overview" class="nav-link active" data-scroll-target="#earth-engine-data-overview">Earth Engine Data Overview</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#landsat" id="toc-landsat" class="nav-link" data-scroll-target="#landsat">Landsat</a></li>
+  <li><a href="#sentinel-2-level-2a" id="toc-sentinel-2-level-2a" class="nav-link" data-scroll-target="#sentinel-2-level-2a">Sentinel-2, Level 2A</a></li>
+  <li><a href="#functionality" id="toc-functionality" class="nav-link" data-scroll-target="#functionality">Functionality</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="earth-engine-data-overview" class="level1">
+<h1>Earth Engine Data Overview</h1>
+<p>Version 0.1.0 | 5 Aug 2022</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Through the <a href="https://earthengine.google.com/">Google Earth Engine API</a>, the AgReFed Data-Harvester provides access to the following satellite products:</p>
+<ul>
+<li><a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC09_C02_T1_L2?hl=en">USGS Landsat 9 Level 2, Collection 2, Tier 1</a></li>
+<li><a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2">USGS Landsat 8 Level 2, Collection 2, Tier 1</a></li>
+<li><a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LE07_C02_T1_L2">USGS Landsat 7 Level 2, Collection 2, Tier 1</a></li>
+<li><a href="https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LT05_C02_T1_L2">USGS Landsat 5 Level 2, Collection 2, Tier 1</a></li>
+<li><a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR?hl=en">Sentinel-2 MSI: MultiSpectral Instrument, Level-2A</a></li>
+</ul>
+<p><strong>Note that Earth Engine is still under active development.</strong> Download and access limits apply, including a maximum download size of 32 MB (but, ~50MB raw). The Data Harvester uses the <a href="https://github.com/dugalh/geedim"><code>geedim</code></a> package to overcome this ceiling but cloud processing limits (e.g.&nbsp;during compositing of images) will continue to limit the amount of data that can be downloaded.</p>
+</section>
+<section id="landsat" class="level2">
+<h2 class="anchored" data-anchor-id="landsat">Landsat</h2>
+<p>The USGS/NASA Landsat Program provides satellite spectral and thermal data of the Earth from 1972. <a href="https://www.usgs.gov/landsat-missions/landsat-collection-2-level-1-data">Collection 2, Tier 1</a> products in the catalog represent data of the highest available quality with inclusions of corrections for improved geometric accuracy, digital elevation modeling and radiometric calibrations. Strips of collected data are packaged into overlapping “scenes” covering approximately 170 km x 183 km using a <a href="https://landsat.gsfc.nasa.gov/about/the-worldwide-reference-system/">standardized reference grid</a>.</p>
+<p><strong>Coverage</strong>: See coverage <a href="https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/revisit-coverage">here</a></p>
+<p><strong>Resolution</strong>: <a href="https://www.usgs.gov/faqs/what-are-band-designations-landsat-satellites">15/30/100 m</a></p>
+<p><strong>Period (y-m-d)</strong>:</p>
+<ul>
+<li>Landsat 9 : 2021-10-31 – present</li>
+<li>Landsat 8 : 2013-03-18 – present</li>
+<li>Landsat 7 : 1999-05-28 – 2022-04-06</li>
+<li>Landsat 5 : 1984-03-16 – 2012-05-05</li>
+</ul>
+<p><strong>Updates</strong>: Daily</p>
+<p><strong>Revisit frequency</strong>: 16 days</p>
+<p><strong>Attribution</strong>: tbd</p>
+</section>
+<section id="sentinel-2-level-2a" class="level2">
+<h2 class="anchored" data-anchor-id="sentinel-2-level-2a">Sentinel-2, Level 2A</h2>
+<p>Sentinel-2 is part of a constellation of satellites in the <a href="https://www.copernicus.eu/en">Copernicus Program</a> and surface reflectance images have been available from 2017. <a href="https://docs.sentinel-hub.com/api/latest/data/sentinel-2-l2a/">Level 2A images</a> provide orthorectified and atmospherically corrected surface reflectance data. Each Level 2A product is composed of 100 km<sup>2</sup> tiles in cartographic geometry (UTM/WGS84 projection).</p>
+<p><strong>Coverage</strong>: See coverage <a href="https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/revisit-coverage">here</a></p>
+<p><strong>Resolution</strong>: <a href="https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-2/instrument-payload/resolution-and-swath">10/20/60 m</a></p>
+<p><strong>Period (y-m-d)</strong>: 2017-03-28 – present</p>
+<p><strong>Updates</strong>: Daily</p>
+<p><strong>Revisit frequency</strong>: 5 days</p>
+<p><strong>Attribution</strong>: tbd</p>
+</section>
+<section id="functionality" class="level2">
+<h2 class="anchored" data-anchor-id="functionality">Functionality</h2>
+<p>The following functionality are supported:</p>
+<ul>
+<li>Selecting image(s) based on date(s)</li>
+<li>Automatic cloud masking, shadow masking, using <code>eemont</code> and <code>geedim</code></li>
+<li>Automatic scale and offsetting, using <code>eemont</code></li>
+<li>Image compositioning/reduction</li>
+<li>Automatic calculation of spectral indices (via <a href="https://github.com/awesome-spectral-indices/awesome-spectral-indices">Awesome Spectral Indices</a>)</li>
+<li>Interactive map previews, with automatic pixel stretching, using <code>geemap</code> and <code>geetools</code></li>
+<li>Download image(s) using split-download-assemble method to overcome size limits, using <code>geedim</code></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
