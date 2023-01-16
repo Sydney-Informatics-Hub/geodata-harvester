@@ -1,4 +1,15 @@
+---
+title: "Geodata-Harvester"
+subtitle: "Jumpstart your analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes."
+---
+
 # Geodata-Harvester
+
+<h3><em>Jumpstart your analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes.</em></h3> 
+
+<center><a><img src="images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
+
+
 
 <!-- Badges  start -->
 
@@ -29,7 +40,7 @@ The following main data sources are currently implemented:
 - Digital Earth Australia (DEA) Geoscience Earth Observations
 - GSKY Data Server for DEA Geoscience Earth Observations
 - Radiometric Data
-- Google Earth Engine Data (GEE account needed)
+- Google Earth Engine Data (GEE account needed), see for overview [Earth_Engine_Data_Overview](docs/Earth_Engine_Data_Overview.md).
 
 ## Functionality
 
@@ -56,7 +67,7 @@ Geodata-Harvester can be run on the cloud (e.g., in JupyterHub environment) or o
 
 ## How to get started
 
-1. Options and user settings are defined by the user in the settings 
+1. Options and user settings are defined by the user in the settings; see for settings documentation [Settings_Overview](docs/Settings_Overview.md)
 
 2. Run the jupyter notebook (see example notebooks)
 
