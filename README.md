@@ -7,7 +7,7 @@ subtitle: "Jumpstart your analysis with a ready-made set of spatial-temporal ali
 
 <h3><em>Jumpstart your analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes.</em></h3> 
 
-<center><a><img src="images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
+<center><a><img src="quarto/images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
 
 
 
