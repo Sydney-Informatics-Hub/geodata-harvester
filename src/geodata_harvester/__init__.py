@@ -1,16 +1,26 @@
-import sys
+"""
+Geodata-Harvester
+-----------------
 
-if sys.version_info[:2] >= (3, 8):
-    # TODO: Import directly (no need for conditional) when `python_requires = >= 3.8`
-    from importlib.metadata import PackageNotFoundError, version  # pragma: no cover
-else:
-    from importlib_metadata import PackageNotFoundError, version  # pragma: no cover
+An automation tool for harvesting and processing geodata from the web 
+into spatial-temporal aligned maps and dataframes.
 
-try:
-    # Change here if project is renamed and does not equal the package name
-    dist_name = __name__
-    __version__ = version(dist_name)
-except PackageNotFoundError:  # pragma: no cover
-    __version__ = "unknown"
-finally:
-    del version, PackageNotFoundError
+The following main data sources are currently implemented:
+
+- Soil and Landscape Grid of Australia (SLGA), see getdata_slga.py
+- SILO Climate Database, see getdata_silo.py
+- National Digital Elevation Model (DEM), see getdata_dem.py
+- Digital Earth Australia (DEA) Geoscience Earth Observations, see getdata_dea.py
+- Radiometric Data, see getdata_radiometric.py
+- Google Earth Engine Data (GEE account needed), see docs for eeharvest
+"""
+
+__version__ = "0.0.1alpha"
+__title__ = "Geodata-Harvester
+__description__ = """
+This Python package provides automation tools for harvesting and processing geodata from the web
+"""
+__uri__ = "https://github.com/Sydney-Informatics-Hub/geodata-harvester"
+__doc__ = __description__ + " <" + __uri__ + ">"
+
+__license__ = "LGPL-3.0 License"
