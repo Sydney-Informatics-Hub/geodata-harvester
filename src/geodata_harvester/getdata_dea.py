@@ -48,11 +48,11 @@ from rasterio import MemoryFile
 from rasterio.plot import show
 from datetime import datetime, timezone
 from termcolor import cprint, colored
-import utils
-from utils import spin
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
 
 # logger setup
-import write_logs
+from geodata_harvester import write_logs
 import logging
 
 
@@ -577,7 +577,7 @@ def get_dea_layers(
     crs="EPSG:4326",
     format_out="GeoTIFF",
     verbose=False,
-    ):
+):
     """
     Get all images for all layers and all years.
     Downloaded images are saved in outpath.
@@ -710,7 +710,7 @@ def get_dea_images(
     crs="EPSG:4326",
     format_out="GeoTIFF",
     verbose=False,
-    ):
+):
     """
     Get all satellite images from DEA for a given layer and year.
     Downloaded images are saved either as GeoTIFF or NetCDF.
@@ -750,7 +750,8 @@ def get_dea_images(
     # Check if layername is defined
     dict_dea = get_deadict()
     if layername not in dict_dea["layernames"]:
-        print(f"△ | {layername} not a DEA layer. Please select one of the following:")
+        print(
+            f"△ | {layername} not a DEA layer. Please select one of the following:")
         for key in dict_dea:
             print(key)
 
@@ -782,7 +783,8 @@ def get_dea_images(
             fname_out = f"{layername}{fname_end}"
             outfname = os.path.join(outpath, fname_out)
         else:
-            datestring = datetime.fromisoformat(date[:-1]).astimezone(timezone.utc)
+            datestring = datetime.fromisoformat(
+                date[:-1]).astimezone(timezone.utc)
             fname_out = f"{layername}_{datestring.year}-{datestring.month}-{datestring.day}{fname_end}"
         outfname = os.path.join(outpath, fname_out)
         if os.path.exists(outfname):
@@ -860,7 +862,8 @@ def get_dea_images_daterange(
     # Check if layername is defined
     dict_dea = get_deadict()
     if layername not in dict_dea["layernames"]:
-        print(f"△ | {layername} not a DEA layer. Please select one of the following:")
+        print(
+            f"△ | {layername} not a DEA layer. Please select one of the following:")
         for key in dict_dea:
             print(key)
 
@@ -888,7 +891,8 @@ def get_dea_images_daterange(
             fname_out = f"{layername}{fname_end}"
             outfname = os.path.join(outpath, fname_out)
         else:
-            datestring = datetime.fromisoformat(date[:-1]).astimezone(timezone.utc)
+            datestring = datetime.fromisoformat(
+                date[:-1]).astimezone(timezone.utc)
             fname_out = f"{layername}_{datestring.year}-{datestring.month}-{datestring.day}{fname_end}"
         outfname = os.path.join(outpath, fname_out)
         # Get data
@@ -989,7 +993,8 @@ def test_get_dea_images():
     # define outpath
     outpath = "test_dea"
     # Get data
-    outfnames = get_dea_images(layername, year, bbox, resolution, outpath, crs=crs)
+    outfnames = get_dea_images(
+        layername, year, bbox, resolution, outpath, crs=crs)
     assert len(outfnames) > 0
     print('Test passed')
 
@@ -1008,11 +1013,12 @@ def test_get_dea_images_daterange():
     # define resolution (in arcsecs per pixel since crs is in WGS84)
     resolution = 100
     # define daterange
-    date_min = '2019-01-01' 
-    date_max = '2019-01-10' 
+    date_min = '2019-01-01'
+    date_max = '2019-01-10'
     # define outpath
     outpath = "test_dea"
     # Get data
-    outfnames = get_dea_images_daterange(layername, date_min, date_max, bbox, resolution, outpath, crs=crs)
+    outfnames = get_dea_images_daterange(
+        layername, date_min, date_max, bbox, resolution, outpath, crs=crs)
     assert len(outfnames) > 0
     print('Test passed')

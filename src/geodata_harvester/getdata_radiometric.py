@@ -31,8 +31,8 @@ from rasterio.plot import show
 from datetime import datetime, timezone
 from termcolor import cprint, colored
 from alive_progress import alive_bar, config_handler
-import utils
-from utils import spin
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
 
 
 def get_radiometricdict():
@@ -174,13 +174,15 @@ def get_radiometric_layers(
     elif format_out == "NetCDF":
         fname_end = ".nc"
     else:
-        print(f"\u2716 {format_out} not supported. Choose either GeoTIFF or NetCDF.")
+        print(
+            f"\u2716 {format_out} not supported. Choose either GeoTIFF or NetCDF.")
         return outfnames
 
     # Loop over all layers
     fnames_out = []
     for layername in layernames:
-        outfname = os.path.join(outpath, "radiometric_" + layername + fname_end)
+        outfname = os.path.join(
+            outpath, "radiometric_" + layername + fname_end)
         ok = get_radiometric_image(
             outfname, layername, bbox, url, resolution=1, crs=crs, format_out=format_out
         )
@@ -323,7 +325,8 @@ def test_get_radiometric_image():
     Test script to retrieve and save image for one layer
     """
     url = "https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS"
-    layername = "radmap2019_grid_dose_terr_filtered_awags_rad_2019"  # "radmap2019_grid_dose_terr_awags_rad_2019"  # for some layers readout time of 30s is exceeding (server limited)
+    # "radmap2019_grid_dose_terr_awags_rad_2019"  # for some layers readout time of 30s is exceeding (server limited)
+    layername = "radmap2019_grid_dose_terr_filtered_awags_rad_2019"
     crs = "EPSG:4326"  # WGS84
     # define bounding box for retrieval (simple test here for entire Australia)
     bbox = (114, -44, 153.9, -11)

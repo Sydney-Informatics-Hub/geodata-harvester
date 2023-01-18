@@ -27,11 +27,11 @@ import os
 from owslib.wcs import WebCoverageService
 import rasterio
 from rasterio.plot import show
-import utils
-from utils import spin
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
 
 # logger setup
-import write_logs
+from geodata_harvester import write_logs
 import logging
 
 
@@ -274,7 +274,8 @@ def identifier2depthbounds(depths):
     min depth
     max depth
     """
-    depth_options = ["0-5cm", "5-15cm", "15-30cm", "30-60cm", "60-100cm", "100-200cm"]
+    depth_options = ["0-5cm", "5-15cm", "15-30cm",
+                     "30-60cm", "60-100cm", "100-200cm"]
     depth_intervals = [0, 5, 15, 30, 60, 100, 200]
     # Check first if entries valid
     for depth in depth_options:
@@ -371,7 +372,8 @@ def get_slga_layers(
             # Layer fname
             fname_out = os.path.join(outpath, layer_depth_name + ".tif")
             # download data
-            dl = get_wcsmap(layer_url, identifier, crs, bbox, resolution_deg, fname_out)
+            dl = get_wcsmap(layer_url, identifier, crs,
+                            bbox, resolution_deg, fname_out)
             # if dl is True:
             #     print(f"✔ {layer_depth_name}")
             # logging.print(f"✔ | {layer_depth_name}")
@@ -387,9 +389,11 @@ def get_slga_layers(
                     f"SLGA_{layername}_{depth_lower[i]}-{depth_upper[i]}cm"
                 )
                 # Layer fname
-                fname_out = os.path.join(outpath, layer_depth_name + "_5percentile.tif")
+                fname_out = os.path.join(
+                    outpath, layer_depth_name + "_5percentile.tif")
                 # download data
-                get_wcsmap(layer_url, identifier, crs, bbox, resolution_deg, fname_out)
+                get_wcsmap(layer_url, identifier, crs,
+                           bbox, resolution_deg, fname_out)
                 # 95th percentile
                 identifier = identifiers_ci_95pc[i]
                 # Get layer name

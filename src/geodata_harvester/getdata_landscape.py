@@ -30,8 +30,8 @@ from rasterio.plot import show
 import matplotlib.pyplot as plt
 from termcolor import cprint, colored
 from alive_progress import alive_bar, config_handler
-import utils
-from utils import spin
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
 
 
 def get_landscapedict():
@@ -254,7 +254,8 @@ def get_landscape_layers(layernames, bbox, outpath, resolution=3):
         # Layer fname
         fname_out = os.path.join(outpath, layer_fname)
         # download data
-        get_wcsmap(url, layerkey, crs, bbox, resolution_deg, fname_out, layername)
+        get_wcsmap(url, layerkey, crs, bbox,
+                   resolution_deg, fname_out, layername)
         # print(f"{layername} downloaded. Saved to: ", fname_out)
         fnames_out.append(fname_out)
     return fnames_out

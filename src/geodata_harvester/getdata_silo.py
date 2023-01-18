@@ -37,8 +37,8 @@ import rasterio
 import rioxarray as rio
 import xarray
 
-import utils
-from utils import spin
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
 
 # from datacube.utils.cog import write_cog
 
@@ -56,7 +56,8 @@ def download_file(url, layername, year, outpath="."):
     """
     local_filename = os.path.join(outpath, url.split("/")[-1])
     if os.path.exists(local_filename):
-        utils.msg_warn(f"{layername} for {year} already exists, skipping download")
+        utils.msg_warn(
+            f"{layername} for {year} already exists, skipping download")
         return local_filename
     with spin(f"Downloading {layername} for {year}") as s:
         with requests.get(url, stream=True) as r:
@@ -180,7 +181,7 @@ def get_SILO_layers(
     format_out="tif",
     delete_tempfiles=False,
     verbose=False,
-    ):
+):
     """
     Get raster data from SILO for certain climate variable and save data as geotif.
     If multiple times are requested, then each time will be saved in on band of multi-band geotif.
@@ -236,34 +237,37 @@ def get_SILO_layers(
     date_end = str(date_end)
     years = np.arange(int(date_start[:4]), int(date_end[:4]) + 1).tolist()
     fnames_out_silo = []
-    
+
     for layername in layernames:
 
         # run the download
         fnames_out = get_SILO_raster(
-            layername, 
-            years, 
-            outpath_temp, 
-            bbox = bbox, 
-            format_out = 'nc', 
-            delete_temp = False)
+            layername,
+            years,
+            outpath_temp,
+            bbox=bbox,
+            format_out='nc',
+            delete_temp=False)
 
         # process the data into a single file and trim to date range
         if (format_out == 'tif') | (format_out == 'GeoTIFF'):
-            outfname = os.path.join(outpath, "silo_" + layername + "_" + date_start + "-" + date_end + ".tif")
+            outfname = os.path.join(
+                outpath, "silo_" + layername + "_" + date_start + "-" + date_end + ".tif")
         elif (format_out == 'NetCDF') | (format_out == 'nc'):
-            outfname = os.path.join(outpath, "silo_" + layername + "_" + date_start + "-" + date_end + ".nc")
+            outfname = os.path.join(
+                outpath, "silo_" + layername + "_" + date_start + "-" + date_end + ".nc")
         else:
             raise ValueError("format_out must be either 'tif' or 'nc'")
 
         # Combine all years into one file and trim to date range
-        process_raster_daterange(fnames_out, date_start, date_end, outfname, layername)
+        process_raster_daterange(
+            fnames_out, date_start, date_end, outfname, layername)
 
         # Delete temporary cropped files (not the downloaded file)
         for fname in fnames_out:
             os.remove(fname)
-    
-        #Save the layer name
+
+        # Save the layer name
         # Check if outfname is list or string
         if isinstance(outfname, list):
             fnames_out_silo += outfname
@@ -271,7 +275,6 @@ def get_SILO_layers(
             fnames_out_silo.append(outfname)
 
     return fnames_out_silo
-    
 
 
 def process_raster_daterange(infnames, date_start, date_end, outfname, layername):
@@ -294,14 +297,13 @@ def process_raster_daterange(infnames, date_start, date_end, outfname, layername
     # Clip to date range
     ds = ds.sel(time=slice(date_start, date_end))
     # Save file
-    # if file extension is tif, save as 
+    # if file extension is tif, save as
     if outfname.endswith('.tif'):
         xarray2tif(ds, outfname, layername)
     if outfname.endswith('.nc'):
         ds.to_netcdf(outfname)
     # Close file
     ds.close()
-
 
 
 def process_raster_daterange(infnames, date_start, date_end, outfname, layername):
@@ -324,14 +326,13 @@ def process_raster_daterange(infnames, date_start, date_end, outfname, layername
     # Clip to date range
     ds = ds.sel(time=slice(date_start, date_end))
     # Save file
-    # if file extension is tif, save as 
+    # if file extension is tif, save as
     if outfname.endswith('.tif'):
         xarray2tif(ds, outfname, layername)
     if outfname.endswith('.nc'):
         ds.to_netcdf(outfname)
     # Close file
     ds.close()
-
 
 
 def get_SILO_raster(
@@ -342,7 +343,7 @@ def get_SILO_raster(
     format_out="nc",
     delete_temp=False,
     verbose=False,
-    ):
+):
     """
     Get raster data from SILO for certain climate variable and save data as geotif.
     If multiple times are requested, then each time will be saved in on band of multi-band geotif.
@@ -397,7 +398,8 @@ def get_SILO_raster(
     silodict = get_silodict()
     layerdict = silodict["layernames"]
     if layername not in layerdict:
-        raise ValueError(f"Layer name {layername} not valid. Choose from: {str(layerdict.keys())}")
+        raise ValueError(
+            f"Layer name {layername} not valid. Choose from: {str(layerdict.keys())}")
 
     # Create output folder
     os.makedirs(outpath, exist_ok=True)
@@ -411,7 +413,8 @@ def get_SILO_raster(
 
     # Check if format is valid
     if format_out not in ["nc", "tif", "NetCDF", "GeoTIFF"]:
-        raise ValueError("Output format not valid. Choose from: 'NetCDF'' or 'GeoTIFF'")
+        raise ValueError(
+            "Output format not valid. Choose from: 'NetCDF'' or 'GeoTIFF'")
 
     # Check if years are in the range of available years
     url_info = "https://www.longpaddock.qld.gov.au/silo/gridded-data/"
@@ -443,7 +446,8 @@ def get_SILO_raster(
     # Download data for each year and save as geotif
     for year in years:
         # Get url
-        url = silo_baseurl + layername + "/" + str(year) + "." + layername + ".nc"
+        url = silo_baseurl + layername + "/" + \
+            str(year) + "." + layername + ".nc"
         # Download file
         # print(f'Downloading data for year {year} from {url} ...')
         filename = download_file(url, layername, year, outpath)
@@ -452,7 +456,8 @@ def get_SILO_raster(
         ds = xarray.open_dataset(filename)
         # select data in bbox:
         if bbox is not None:
-            ds = ds.sel(lon=slice(bbox[0], bbox[2]), lat=slice(bbox[1], bbox[3]))
+            ds = ds.sel(lon=slice(bbox[0], bbox[2]),
+                        lat=slice(bbox[1], bbox[3]))
         # Save data
         if (format_out == "nc") | (format_out == "NetCDF"):
             # Save netCDF file
@@ -479,6 +484,7 @@ def get_SILO_raster(
 
 ### Test function ###
 
+
 def test_get_SILO_raster():
     """
     test script
@@ -497,12 +503,13 @@ def test_get_SILO_layers():
     """
     test script
     """
-    layernames = ["daily_rain","max_temp"]
+    layernames = ["daily_rain", "max_temp"]
     date_start = '2019-01-01'
     date_end = '2020-02-01'
     outpath = "silo_test"
     bbox = (130, -44, 153.9, -11)
     # test first for tif output format
     format_out = "tif"
-    fnames_out = get_SILO_layers(layernames, date_start, date_end, outpath, bbox, format_out)
+    fnames_out = get_SILO_layers(
+        layernames, date_start, date_end, outpath, bbox, format_out)
     assert len(fnames_out) > 0

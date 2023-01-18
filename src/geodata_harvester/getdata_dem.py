@@ -34,13 +34,13 @@ Author: Sebastian Haan
 import logging
 import os
 from datetime import datetime, timezone
-import utils
-from utils import spin
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
 
 import rasterio
 
 # logger setup
-import write_logs
+from geodata_harvester import write_logs
 from owslib.wcs import WebCoverageService
 from rasterio.plot import show
 from termcolor import cprint
@@ -251,7 +251,8 @@ def get_dem_layers(layernames, outpath, bbox, resolution=1, crs="EPSG:4326"):
     dem_ok = False
     for layername in layernames:
         if layername == "DEM":
-            outfname = outfname_dem = getwcs_dem(outpath, bbox, resolution, crs=crs)
+            outfname = outfname_dem = getwcs_dem(
+                outpath, bbox, resolution, crs=crs)
             dem_ok = True
         elif layername == "Slope":
             if not dem_ok:
