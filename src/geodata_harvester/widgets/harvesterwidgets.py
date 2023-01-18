@@ -31,14 +31,14 @@ import datetime
 from types import SimpleNamespace
 
 # import data dictionaries
-sys.path.append("../")
+#sys.path.append("../")
 from .ipyfilechooser import FileChooser
-from getdata_slga import get_slgadict
-from getdata_silo import get_silodict
-from getdata_dea import get_deadict
-from getdata_radiometric import get_radiometricdict
-from getdata_landscape import get_landscapedict
-from getdata_ee import supported_collections
+from geodata_harvester.getdata_slga import get_slgadict
+from geodata_harvester.getdata_silo import get_silodict
+from geodata_harvester.getdata_dea import get_deadict
+from geodata_harvester.getdata_radiometric import get_radiometricdict
+from geodata_harvester.getdata_landscape import get_landscapedict
+from geodata_harvester.getdata_ee import supported_collections
 
 
 def gen_accordion(panels, panel_titles):
