@@ -16,7 +16,6 @@ time_intervals : 4
 date_max : 2022-11-30
 time_buffer : 7
 
-
 target_sources:
   DEA:
   - landsat_barest_earth
@@ -32,25 +31,16 @@ target_sources:
     max_temp: median
     min_temp: median
     monthly_rain: sum
-
-    # processing:
-      # aggregate_rasters : ['mean']
   SLGA:
     Bulk_Density: [0-5cm]
     Clay: [0-5cm]
-  # GEE:
-  #   preprocess:
-  #     collection: LANDSAT/LC09/C02/T1_L2
-  #     coords: null
-  #     date: 2021-01-01
-  #     end_date: 2021-12-31
-  #     buffer: null
-  #     bound: null
-  #     mask_clouds: True
-  #     reduce: median
-  #     spectral: NDVI
-  #   download:
-  #     bands: NDVI
-  #     scale: 100
-  #     format: tif
-  #     overwrite: False
+  GEE:
+    preprocess:
+      collection: LANDSAT/LC09/C02/T1_L2
+      buffer: null
+      bound: null
+      mask_clouds: True
+      reduce: median
+      spectral: NDVI
+    download:
+      bands: NDVI
