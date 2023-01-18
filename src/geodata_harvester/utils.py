@@ -650,6 +650,7 @@ def update_logtable(
     layertitles=[],
     agfunctions=[],
     loginfos=[],
+    force=False
 ):
     """
     Update the dataframe table with the information from the raster download or processing.
@@ -657,7 +658,7 @@ def update_logtable(
 
     INPUTS:
     df_log: dataframe to update
-    filenames: list of filenames to add to the dataframe
+    filenames: list of filenames to add to the dataframe (captured in output of getdata_* functions)
     layernames: list of layernames to add to the dataframe (must be same length as filenames)
     datasource: datasource of the rasters (e.g. 'SLGA', 'SILO', 'DEA', see settings)
     settings: settings Namespace object
@@ -705,8 +706,12 @@ def update_logtable(
     for f in filenames:
         warnings.simplefilter(action="ignore", category=FutureWarning)
         if f in df_log.filename_out.values:
-            print("Error: " + str(f) + " exists in df_log! Dataframe not updated.")
-            return df_log
+            if force == False:
+                print("Error: " + str(f) + " exists in df_log! Dataframe not updated.\nCheck your inputs or overwrite with force=True")
+                return df_log
+            elif force==True:
+                print("Warning: " + str(f) + " exists in df_log and has been overitten by force=True")
+                df_log.drop(df_log[df_log.filename_out != f].index, inplace=True)
 
     # check if loginfos is a list or a string
     if type(loginfos) == str:

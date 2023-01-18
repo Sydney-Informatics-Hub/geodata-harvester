@@ -13,10 +13,9 @@ from pathlib import Path
 import geopandas as gpd
 from termcolor import cprint
 # from types import SimpleNamespace
-from geodata_harvester.utils import init_logtable, update_logtable
 import yaml
-from widgets import harvesterwidgets as hw
-
+from geodata_harvester.widgets import harvesterwidgets as hw
+from geodata_harvester.utils import init_logtable, update_logtable
 from geodata_harvester import (getdata_dea, getdata_dem,  getdata_landscape,
                                getdata_radiometric, getdata_silo, getdata_slga,
                                utils)  # getdata_ee

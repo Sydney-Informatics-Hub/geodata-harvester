@@ -42,11 +42,11 @@ import wxee  # trunk-ignore(flake8/F401)
 import yaml
 import urllib
 import json
-from geodata_harvester import utils
-from geodata_harvester.utils import spin
-from geodata_harvester import settingshandler as sh
+import utils
+import settingshandler as sh
 import eeharvest
 
+from utils import spin
 from contextlib import contextmanager, redirect_stderr, redirect_stdout
 from functools import partialmethod
 
@@ -373,7 +373,6 @@ class collect:
         else:
             pass
         # Function to map to collection
-
         def clip_collection(image):
             return image.clip(aoi)
 
@@ -384,8 +383,7 @@ class collect:
         # Reduce/aggregate
         reducers = ["median", "mean", "sum", "mode", "max", "min", "mosaic"]
         if reduce is None:
-            utils.msg_info(
-                f"Selected {image_count} image(s) without aggregation")
+            utils.msg_info(f"Selected {image_count} image(s) without aggregation")
         elif reduce in reducers:
             with spin(f"Reducing image pixels by {reduce}") as s:
                 func = getattr(img, reduce)
@@ -603,8 +601,7 @@ class collect:
         # Check that preprocess() has been called
         img = self.ee_image
         if img is None:
-            utils.msg_err(
-                "No image found, please run `preprocess()` before mapping")
+            utils.msg_err("No image found, please run `preprocess()` before mapping")
             return None
         # Stop if image is a pixel
         if self.aoi.getInfo()["type"] == "Point":
@@ -628,8 +625,7 @@ class collect:
             except AttributeError:
                 all_bands = get_bandinfo(img)
                 utils.msg_err("No bands defined")
-                utils.msg_info(
-                    "Please select one or more bands to download image:")
+                utils.msg_info("Please select one or more bands to download image:")
                 print(all_bands)
                 return None
         img = img.select(bands)
@@ -671,8 +667,7 @@ def harvest(obj, **kwargs):
     """
     # TODO: Validate that config file is present
     if obj.hasconfig is False:
-        raise Exception(
-            "This function requires a config file supplied in `collect()`")
+        raise Exception("This function requires a config file supplied in `collect()`")
     # Replace coordinates if needed
     if kwargs["coords"] is not None:
         obj.coords = kwargs["coords"]
@@ -858,8 +853,7 @@ def stretch_minmax(
         if not bands:
             names = ee_image.bandNames()
             bands = ee.List(
-                ee.Algorithms.If(names.size().gte(
-                    3), names.slice(0, 3), names.slice(0))
+                ee.Algorithms.If(names.size().gte(3), names.slice(0, 3), names.slice(0))
             )
             bands = bands.getInfo()
 
@@ -903,8 +897,7 @@ def stretch_minmax(
         stdDev = ee_image.reduceRegion(**params)
 
         def min_max(band, val):
-            minv = ee.Number(val).subtract(
-                ee.Number(stdDev.get(band)).multiply(sd))
+            minv = ee.Number(val).subtract(ee.Number(stdDev.get(band)).multiply(sd))
             maxv = ee.Number(val).add(ee.Number(stdDev.get(band)).multiply(sd))
             return ee.List([minv, maxv])
 
@@ -916,10 +909,8 @@ def stretch_minmax(
             maxv = values[1]
         else:
             values = mean.map(min_max).select(bands).getInfo()
-            minv = [values[bands[0]][0], values[bands[1]]
-                    [0], values[bands[2]][0]]
-            maxv = [values[bands[0]][1], values[bands[1]]
-                    [1], values[bands[2]][1]]
+            minv = [values[bands[0]][0], values[bands[1]][0], values[bands[2]][0]]
+            maxv = [values[bands[0]][1], values[bands[1]][1], values[bands[2]][1]]
     return [minv, maxv]
 
 
@@ -970,14 +961,12 @@ def generate_path_string(
     # The only difference is whether to add extension to string, or not
     if isinstance(ee_image, ee.image.Image):
         out = (
-            "_".join(
-                filter(None, ["ee", name, date, end_date, bands, reduce, scale]))
+            "_".join(filter(None, ["ee", name, date, end_date, bands, reduce, scale]))
             + "."
             + ext
         )
     else:
-        out = "_".join(
-            filter(None, [name, date, end_date, bands, reduce, scale]))
+        out = "_".join(filter(None, [name, date, end_date, bands, reduce, scale]))
 
     return out
 
