@@ -1,8 +1,8 @@
 # This settings file works for Google Earth Engine functionality on
 # the Data Harvester notebook.
 
-infile: ../testdata/example-site_llara.csv
-outpath: ../dataresults/
+infile: testdata/example-site_llara.csv
+outpath: dataresults/
 colname_lat: Lat
 colname_lng: Long
 
@@ -38,19 +38,19 @@ target_sources:
   SLGA:
     Bulk_Density: [0-5cm]
     Clay: [0-5cm]
-  GEE:
-    preprocess:
-      collection: LANDSAT/LC09/C02/T1_L2
-      coords: null
-      date: 2021-01-01
-      end_date: 2021-12-31
-      buffer: null
-      bound: null
-      mask_clouds: True
-      reduce: median
-      spectral: NDVI
-    download:
-      bands: NDVI
-      scale: 100
-      format: tif
-      overwrite: False
+  # GEE:
+  #   preprocess:
+  #     collection: LANDSAT/LC09/C02/T1_L2
+  #     coords: null
+  #     date: 2021-01-01
+  #     end_date: 2021-12-31
+  #     buffer: null
+  #     bound: null
+  #     mask_clouds: True
+  #     reduce: median
+  #     spectral: NDVI
+  #   download:
+  #     bands: NDVI
+  #     scale: 100
+  #     format: tif
+  #     overwrite: False
