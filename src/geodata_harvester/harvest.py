@@ -42,7 +42,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
     # Load config file (based on notebook for now, will optimise later)
     # with open(path_to_config, "r") as f:
     # settings = yaml.load(f, Loader=yaml.SafeLoader)
-    settings = hw.load_settings("settings/settings_v0.6.yaml")
+    settings = hw.load_settings(path_to_config)
 
     # Count number of sources to download from
     count_sources = len(settings.target_sources)
