@@ -5,7 +5,7 @@ subtitle: "Jumpstart your analysis with a ready-made set of spatial-temporal ali
 
 # Geodata-Harvester
 
-<h3><em>Jumpstart your analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes.</em></h3> 
+<h3><em>Automate harvesting geodata from the web and jumpstart your analysis with a ready-made set of spatial-temporal processed maps and dataframes.</em></h3> 
 
 <center><a><img src="quarto/images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
 
@@ -20,7 +20,7 @@ subtitle: "Jumpstart your analysis with a ready-made set of spatial-temporal ali
 
 <!-- Badges end -->
 
-The Geodata-Harvester package offers reusable workflows for automatic data extraction from a wide range of geospatial and environmental data sources. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and environmental models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period.
+The Geodata-Harvester package offers reusable and automated workflows for data extraction from a wide range of geospatial and environmental data sources. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and environmental models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period.
 
 ## Introduction
 
@@ -64,6 +64,22 @@ Geodata-Harvester is designed as a modular and maintainable project in the form 
 ## Installation
 
 Geodata-Harvester can be run on the cloud (e.g., in JupyterHub environment) or on your local machine. If you like to install Data Harvester locally, it is recommended to setup a virtual Python environment for the installation, e.g., via conda miniforge.
+
+### Install via pip
+
+to install via pip, first you need to have gdal installed (see installation guide) in your environment. Then install via
+
+```bash
+pip install geodata-harvester
+```
+
+### Install via Conda
+
+to install via conda:
+
+```bash
+conda install -c conda-forge geodata-harvester
+```
 
 ## How to get started
 
