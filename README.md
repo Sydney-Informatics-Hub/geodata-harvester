@@ -5,7 +5,6 @@
 <center><a><img src="quarto/images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
 
 
-
 <!-- Badges  start -->
 
 [![License](https://img.shields.io/badge/License-GPL3-blue)](#license)
@@ -58,29 +57,39 @@ Geodata-Harvester is designed as a modular and maintainable project in the form 
 
 ## Installation
 
-Geodata-Harvester can be run on the cloud (e.g., in JupyterHub environment) or on your local machine. If you like to install Data Harvester locally, it is recommended to setup a virtual Python environment for the installation, e.g., via conda miniforge.
+Geodata-Harvester can be run on cloud-servers (e.g., in JupyterHub environment) or on your local machine. If you like to install Data Harvester locally, it is recommended to setup a virtual environment for the installation, e.g., via conda miniforge (see for dependencies `environment.yaml`).
 
-### Install via pip
+To install in a new conda environment:
 
-to install via pip, first you need to have gdal installed (see installation guide) in your environment. Then install via
+```bash
+conda env create -f environment.yaml -n <ENV_NAME>
+conda activate <ENV_NAME>
+```
+or to update an existing conda environment:
+```bash
+conda env update -f environment.yaml 
+```
+
+### Pip install
+
+Installation via pypi requires a pre-installation of gdal (see, e.g., [pypi.org/project/GDAL/installation guide](https://pypi.org/project/GDAL/)) in your environment. Once gdal is installed, you can install geodata-harvester via
 
 ```bash
 pip install geodata-harvester
 ```
+The geodata-harvester library can then be imported via
 
-### Install via Conda
-
-to install via conda:
-
-```bash
-conda install -c conda-forge geodata-harvester
+```Python
+import geodata_harvester
 ```
+
+Example notebooks can be found in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks).
 
 ## How to get started
 
 1. Options and user settings are defined by the user in the settings; see for settings documentation [Settings_Overview](quarto/docs/Settings_Overview.md)
 
-2. Run the jupyter notebook (see example notebooks)
+2. Run the jupyter notebook in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks).
 
 ## Attribution and Acknowledgments
 
