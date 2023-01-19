@@ -1,8 +1,3 @@
----
-title: "Geodata-Harvester"
-subtitle: "Jumpstart your analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes."
----
-
 # Geodata-Harvester
 
 <h3><em>Automate harvesting geodata from the web and jumpstart your analysis with a ready-made set of spatial-temporal processed maps and dataframes.</em></h3> 
@@ -30,7 +25,7 @@ Developed as part of the Agricultural Research Federation (AgReFed), Geodata-Har
 
 ## Data Sources
 
-A detailed list of all available layers and their description can be found in [Data Overview](docs/Data_Overview.md).
+A detailed list of all available layers and their description can be found in [Data Overview](quarto/docs/Data_Overview.md).
 
 The following main data sources are currently implemented:
 
@@ -40,7 +35,7 @@ The following main data sources are currently implemented:
 - Digital Earth Australia (DEA) Geoscience Earth Observations
 - GSKY Data Server for DEA Geoscience Earth Observations
 - Radiometric Data
-- Google Earth Engine Data (GEE account needed), see for overview [Earth_Engine_Data_Overview](docs/Earth_Engine_Data_Overview.md).
+- Google Earth Engine Data (GEE account needed), see for overview [Earth_Engine_Data_Overview](quarto/docs/Earth_Engine_Data_Overview.md).
 
 ## Functionality
 
@@ -83,7 +78,7 @@ conda install -c conda-forge geodata-harvester
 
 ## How to get started
 
-1. Options and user settings are defined by the user in the settings; see for settings documentation [Settings_Overview](docs/Settings_Overview.md)
+1. Options and user settings are defined by the user in the settings; see for settings documentation [Settings_Overview](quarto/docs/Settings_Overview.md)
 
 2. Run the jupyter notebook (see example notebooks)
 
