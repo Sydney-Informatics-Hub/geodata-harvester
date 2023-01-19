@@ -727,17 +727,29 @@ def eval_widgets(w_settings, names):
             slist.append(names_ls[i])
     dict_sources["Landscape"] = slist
     # Google Earth Engine
-    slist = {}
+    # Top level dict:
+    slist = {} 
+    ## Sublevel dict:
+    slist_preprocess = {}
+    slist_download = {}
     for i in range(len(w_ee)):
-        if w_ee[i].value:
-            slist[names_ee[i]] = w_ee[i].value
+        if names_ee[i] == 'bands':
+            if w_ee[i].value:
+                slist_download[names_ee[i]] = w_ee[i].value
+            else:
+                slist_download[names_ee[i]] = None
         else:
-            slist[names_ee[i]] = None
-    if slist['collection_other'] != None:
-        slist['collection'] = slist['collection_other']
-    del slist['collection_other']
-    slist['bands'] = list(slist['bands'].split(","))
-    slist['bands'] = list(map(int, slist['bands']))
+            if w_ee[i].value:
+                slist_preprocess[names_ee[i]] = w_ee[i].value
+            else:
+                slist_preprocess[names_ee[i]] = None
+    if slist_preprocess['collection_other'] != None:
+        slist_preprocess['collection'] = slist_preprocess['collection_other']
+    del slist_preprocess['collection_other']
+    slist_download['bands'] = list(slist_download['bands'].split(","))
+    slist_download['bands'] = list(map(int, slist_download['bands']))
+    slist["preprocess"] = slist_preprocess
+    slist["download"] = slist_download
     dict_sources["GEE"] = slist
     # Add here any new settings or data sources
     dict_settings["target_sources"] = dict_sources
