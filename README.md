@@ -44,16 +44,21 @@ The main goal of the Data Harvester is to enable researchers with reusable workf
 2. Process: Spatial and temporal processing, conversion to dataframes and custom raster-files
 3. Output: Ready-made dataset for machine learning (training set and prediction mapping)
 
-Geodata-Harvester is designed as a modular and maintainable project in the form of a multi-stage pipeline by providing explicit boundaries among tasks. To encourage interaction and experimentation with the pipeline, multiple frontend notebooks and use case scenarios are provided. The core features are:
+Geodata-Harvester is designed as a modular and maintainable project in the form of a multi-stage pipeline by providing explicit boundaries among tasks. To encourage interaction and experimentation with the pipeline, multiple frontend notebooks and use case scenarios are provided.
 
-- automatic data retrieval from geo-spatial APIs for given locations and dates
-- automatic geospatial conversion including reprojection of data, including clipping to bounding boxes, coordinate transformation, and changing resolution
+## Key Features
+
+Below is a list of features available for the geodata-harvester package. Please check the project Github webpage and notebooks for examples, data selection, and other settings.
+
+- automatic data retrieval from geodata APIs for given locations and dates
+- automatic download and spatial-temporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale.
 - support for multiple temporal aggregation options
 - automatic extraction of retrieved data into ready-made dataframes for ML training
 - automatic generation of ready-made aligned maps and data for ML prediction models
-- co-registration of different raster grids
-- visualisation of final maps
-- settings saving/loading via interactive widgets and yaml files
+- visualisation of downloaded and aligned maps
+- support for saving and loading settings via interactive widgets
+- batch processing and reusable workflows via yaml settings files
+- with connectivity support to the Google Earth Engine API, perform petabyte-scale operations which include temporal cloud/shadow masking and automatic calculation of spectral indices
 
 ## Installation
 
