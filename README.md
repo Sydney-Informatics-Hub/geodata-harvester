@@ -7,7 +7,7 @@
 
 <!-- Badges  start -->
 
-[![License](https://img.shields.io/badge/License-GPL3-blue)](#license)
+[![License](https://img.shields.io/badge/License-LGPL3-blue)](#license)
 
 <!-- [![GitHub tag](https://img.shields.io/github/tag/Sydney-Informatics-Hub/AgReFed-DataHarvester?include_prereleases=&sort=semver&color=blue)](https://github.com/Sydney-Informatics-Hub/AgReFed-DataHarvester/releases/)
 [![issues - AgReFed-DataHarvester](https://img.shields.io/github/issues/Sydney-Informatics-Hub/AgReFed-DataHarvester)](https://github.com/Sydney-Informatics-Hub/AgReFed-DataHarvester/issues) -->
@@ -52,7 +52,7 @@ Below is a list of features available for the geodata-harvester package. Please 
 
 - automatic data retrieval from geodata APIs for given locations and dates
 - automatic download and spatial-temporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale.
-- support for multiple temporal aggregation options
+- support for multiple temporal aggregation options and spatial-temporal buffer
 - automatic extraction of retrieved data into ready-made dataframes for ML training
 - automatic generation of ready-made aligned maps and data for ML prediction models
 - visualisation of downloaded and aligned maps
