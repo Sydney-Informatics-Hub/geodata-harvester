@@ -86,6 +86,7 @@ def test_get_dea_images():
     for fname in outfnames:
         assert os.path.exists(fname)
         os.remove(fname)
+    shutil.rmtree(outpath, ignore_errors=True)
     print('get_dea_images test passed')
 
 
@@ -110,4 +111,5 @@ def test_get_dea_images_daterange():
     # Get data
     outfnames = getdata_dea.get_dea_images_daterange(layername, date_min, date_max, bbox, resolution, outpath, crs=crs)
     assert len(outfnames) > 0
+    shutil.rmtree(outpath, ignore_errors=True)
     print('get_dea_images_daterange test passed')

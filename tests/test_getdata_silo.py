@@ -1,6 +1,7 @@
 # Tests for getdata_silo.py functions
 
 import os
+import shutil
 import pytest
 from geodata_harvester import getdata_silo
 
@@ -19,6 +20,7 @@ def test_get_SILO_raster():
     for fname in fnames_out:
         assert os.path.exists(fname)
         os.remove(fname)
+    shutil.rmtree(outpath, ignore_errors=True)
     print("get_SILO_raster test passed")
 
 
@@ -38,4 +40,5 @@ def test_get_SILO_layers():
     for fname in fnames_out:
         assert os.path.exists(fname)
         os.remove(fname)
+    shutil.rmtree(outpath, ignore_errors=True)
     print("get_SILO_layers test passed")
