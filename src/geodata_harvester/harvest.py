@@ -96,7 +96,10 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
     # GEE
     if "GEE" in list_sources:
         # Try to initialise API if Earth Engine is selected
-        eeharvester.initialise()
+        try:
+            eeharvester.initialise()
+        except:
+            harvester.initialise(auth_mode = 'notebook')
 
         cprint("\n⌛ Downloading Google Earth Engine data...", attrs=["bold"])
         # get data from GEE with eeharvest
