@@ -38,7 +38,8 @@ from geodata_harvester.getdata_silo import get_silodict
 from geodata_harvester.getdata_dea import get_deadict
 from geodata_harvester.getdata_radiometric import get_radiometricdict
 from geodata_harvester.getdata_landscape import get_landscapedict
-#from geodata_harvester.getdata_ee import supported_collections
+from eeharvest.harvester import supported_collections
+# from geodata_harvester.getdata_ee import supported_collections
 
 
 def gen_accordion(panels, panel_titles):
