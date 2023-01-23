@@ -23,6 +23,7 @@ settings.target_bbox = [float(item) for item in settings.target_bbox]
 """
 
 import os
+import ast
 import yaml
 import sys
 import ipywidgets as widgets
@@ -748,12 +749,17 @@ def eval_widgets(w_settings, names):
         slist_preprocess['collection'] = slist_preprocess['collection_other']
     del slist_preprocess['collection_other']
     slist_download['bands'] = list(slist_download['bands'].split(","))
-    slist_download['bands'] = list(map(int, slist_download['bands']))
+    #slist_download['bands'] = list(map(int, slist_download['bands']))
     slist["preprocess"] = slist_preprocess
     slist["download"] = slist_download
     dict_sources["GEE"] = slist
     # Add here any new settings or data sources
     dict_settings["target_sources"] = dict_sources
+
+    # Check bounding box:
+    if type(dict_settings["target_bbox"]) == str:
+        # remove string from list
+        dict_settings["target_bbox"] = ast.literal_eval(dict_settings["target_bbox"])
     return dict_settings
 
 
