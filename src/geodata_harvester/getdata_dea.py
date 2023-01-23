@@ -924,7 +924,7 @@ def test_get_capabilities():
     # DEA layer
     url = "https://ows.dea.ga.gov.au/?version=1.3.0"
     # Get capabilities
-    keys, titles, descriptions, bboxs = get_capabilities(url)
+    keys, title_list, description_list, bbox_list, timelimits, nbands = get_capabilities(url)
     assert len(keys) > 0
     print('Test passed')
 
