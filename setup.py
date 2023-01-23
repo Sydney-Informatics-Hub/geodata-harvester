@@ -5,7 +5,7 @@ except ImportError:
 from os import path
 import io
 
-PYPI_VERSION = '0.0.2'
+PYPI_VERSION = '0.1.0'
 
 this_directory = path.abspath(path.dirname(__file__))
 with io.open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
@@ -21,7 +21,7 @@ if __name__ == "__main__":
           description="An automation tool for harvesting and processing geodata from the web",
           long_description=long_description,
           long_description_content_type='text/markdown',
-          license='LGPL-3.0',
+          license='LGPL-3.0-or-later',
           install_requires=['numpy',
                             'rasterio',
                             'termcolor',
