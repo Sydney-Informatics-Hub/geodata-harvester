@@ -5,7 +5,7 @@ except ImportError:
 from os import path
 import io
 
-PYPI_VERSION = '0.1.1'
+PYPI_VERSION = '0.1.2'
 
 this_directory = path.abspath(path.dirname(__file__))
 with io.open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
@@ -21,7 +21,7 @@ if __name__ == "__main__":
           description="An automation tool for harvesting and processing geodata from the web",
           long_description=long_description,
           long_description_content_type='text/markdown',
-          license='LGPL-3.0-or-later',
+          license='LGPL-3.0',
           install_requires=['numpy',
                             'rasterio',
                             'termcolor',
@@ -42,8 +42,7 @@ if __name__ == "__main__":
                             'ipython',
                             'eeharvest',
                             'schema',
-                            'requests==2.28.1',
-                            'pytest'
+                            'requests==2.28.1'
                             ],
           python_requires='>=3.8',
           packages=packages,

@@ -24,6 +24,5 @@ dependencies:
 - fiona>=1.8.21
 - owslib==0.27.2
 - requests==2.28.1
-- pytest
 - eeharvest
   
