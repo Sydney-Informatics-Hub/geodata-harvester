@@ -1,0 +1,31 @@
+outpath: results_final/
+target_bbox: [149.769345, -30.335861, 149.949173, -30.206271]
+target_res: 6.0
+date_min : 2022-10-01
+date_max : 2022-10-30
+
+target_sources:
+  DEA: [landsat_barest_earth]
+  DEM: [DEM]
+  Landscape: [Relief_300m, Slope, Aspect]
+  SILO:
+    monthly_rain: [sum]
+    max_temp: [sum]
+  SLGA:
+    Bulk_Density: [0-5cm]
+    Clay: [0-5cm]
+  GEE:
+    preprocess:
+      collection: COPERNICUS/S2_SR # edit from LANDSAT/LC09/C02/T1_L2
+      mask_clouds: true
+      reduce: median
+      spectral: [NDVI]
+    download:
+      bands: [NDVI]
+      scale: 100
+      format: tif
+      overwrite: false
+
+infile: data/example-site_llara.csv
+colname_lat: Lat
+colname_lng: Long

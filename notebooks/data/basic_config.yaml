@@ -1,0 +1,13 @@
+# Output path relative to code execution location
+outpath: results_basic/
+# Bounding box (Lon-Lat): Left, Top, Right, Bottom
+target_bbox: [149.769345, -30.335861, 149.949173, -30.206271]
+# Resolution of data download in arcseconds
+target_res: 6.0
+
+date_min : 2022-10-01
+date_max : 2022-10-30
+
+target_sources:
+  DEA:
+  - landsat_barest_earth
