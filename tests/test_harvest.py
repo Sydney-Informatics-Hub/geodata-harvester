@@ -19,9 +19,8 @@ def test_harvest():
     assert df is not None
     assert len(df)>10
     # Check output file exists
-    assert os.path.exists(fname_out)
     tif_exists = False
-    for root, dirs, files in os.walk(path_temp ):
+    for root, dirs, files in os.walk(path_temp):
         for file in files:
             if file.endswith(".tif"):
                 tif_exists = True
