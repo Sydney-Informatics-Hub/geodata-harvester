@@ -748,8 +748,11 @@ def eval_widgets(w_settings, names):
     if slist_preprocess['collection_other'] != None:
         slist_preprocess['collection'] = slist_preprocess['collection_other']
     del slist_preprocess['collection_other']
-    slist_download['bands'] = list(slist_download['bands'].split(","))
-    #slist_download['bands'] = list(map(int, slist_download['bands']))
+    if (slist_download['bands'] != None) & (slist_download['bands'] != ''):
+        slist_download['bands'] = list(slist_download['bands'].split(","))
+        slist_download['bands'] = list(map(str.strip, slist_download['bands']))
+        if len(slist_download['bands']) == 1:
+            slist_download['bands'] = slist_download['bands'][0]
     slist["preprocess"] = slist_preprocess
     slist["download"] = slist_download
     dict_sources["GEE"] = slist
