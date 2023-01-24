@@ -5,7 +5,7 @@ except ImportError:
 from os import path
 import io
 
-PYPI_VERSION = '0.1.0'
+PYPI_VERSION = '0.1.1'
 
 this_directory = path.abspath(path.dirname(__file__))
 with io.open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
@@ -43,8 +43,9 @@ if __name__ == "__main__":
                             'eeharvest',
                             'schema',
                             'requests==2.28.1',
+                            'pytest'
                             ],
-          python_requires='>=3.9',
+          python_requires='>=3.8',
           packages=packages,
           package_dir={'': 'src'},
           include_package_data=True,
