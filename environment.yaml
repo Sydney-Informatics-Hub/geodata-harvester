@@ -5,7 +5,6 @@ dependencies:
 - ipywidgets>=7.6.5
 - notebook
 - jupyter
-- pip
 - rasterio
 - rioxarray
 - xarray
