@@ -99,7 +99,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
         try:
             eeharvester.initialise()
         except:
-            harvester.initialise(auth_mode = 'notebook')
+            eeharvester.initialise(auth_mode = 'notebook')
 
         cprint("\n⌛ Downloading Google Earth Engine data...", attrs=["bold"])
         # get data from GEE with eeharvest
