@@ -15,7 +15,7 @@ The following main data sources are currently implemented:
 - Google Earth Engine Data (GEE account needed), see docs for eeharvest
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __title__ = "Geodata-Harvester"
 __description__ = """
 This Python package provides automation tools for harvesting and processing geodata from the web.
