@@ -60,19 +60,24 @@ Below is a list of features available for the geodata-harvester package. Please 
 - batch processing and reusable workflows via yaml settings files
 - with connectivity support to the Google Earth Engine API, perform petabyte-scale operations which include temporal cloud/shadow masking and automatic calculation of spectral indices
 
+
 ## Installation
 
-Geodata-Harvester can be run on cloud-servers (e.g., in JupyterHub environment) or on your local machine. If you like to install Data Harvester locally, it is recommended to setup a virtual environment for the installation, e.g., via conda miniforge (see for dependencies `environment.yaml`).
+Geodata-Harvester can be run on cloud-servers (e.g., in JupyterHub environment) or on your local machine. 
+Example notebooks for importing and using the package can be found in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks). To install the package run one of the following
 
-To install in a new conda environment:
+### Conda or Mamba install
+
+The package geodata-harvester is available via the conda-forge channel:
 
 ```bash
-conda env create -f environment.yaml -n <ENV_NAME>
-conda activate <ENV_NAME>
+conda install geodata-harvester -c conda-forge
 ```
-or to update an existing conda environment:
-```bash
-conda env update -f environment.yaml 
+
+Note that the geodata-harvester is imported with underscore as 
+
+```Python
+import geodata_harvester
 ```
 
 ### Pip install
@@ -88,7 +93,10 @@ The geodata-harvester library can then be imported via
 import geodata_harvester
 ```
 
-Example notebooks can be found in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks).
+### Requirements
+
+If you like to develop Data Harvester locally, it is recommended to setup a virtual environment for the installation, e.g., via conda miniforge (see for dependencies `environment.yaml`).
+
 
 ## How to get started
 
