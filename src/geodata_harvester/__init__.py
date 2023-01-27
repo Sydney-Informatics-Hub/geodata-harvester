@@ -15,7 +15,7 @@ The following main data sources are currently implemented:
 - Google Earth Engine Data (GEE account needed), see docs for eeharvest
 """
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __title__ = "Geodata-Harvester"
 __description__ = """
 This Python package provides automation tools for harvesting and processing geodata from the web.
@@ -24,3 +24,6 @@ __uri__ = "https://github.com/Sydney-Informatics-Hub/geodata-harvester"
 __doc__ = __description__ + " <" + __uri__ + ">"
 
 __license__ = "LGPL-3.0"
+
+from . import harvest, spatial, temporal
+from . import arc2meter, settingshandler, validate_settings
