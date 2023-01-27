@@ -39,7 +39,7 @@ from matplotlib.ticker import FormatStrFormatter
 
 from numba import jit
 
-import utils
+from geodata_harvester import utils
 
 from shapely.geometry import Polygon
 from fiona.crs import from_epsg
