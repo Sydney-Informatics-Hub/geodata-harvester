@@ -132,8 +132,15 @@ To get started, some example workflows are provided as Jupyter notebooks:
 
 ## How to add new data source modules
 
+The Geodata-Harvester is designed to be extendable and new data source modules can be added as Python modules (for examples, see `getdata_*.py` modules). If you would like to add a new data source, please follow the [adding new data source guidelines](https://github.com/Sydney-Informatics-Hub/geodata-harvester/quarto/docs/How_to_add_DataSources.md)  
+
+We recommend to fork the geodata-harvester repo and develop new modules in a local environment. If you would like to contribute your data source module to the geodata-harvester package, please visit the [geodata-harvester contribution guidelines](https://github.com/Sydney-Informatics-Hub/geodata-harvester/quarto/docs/Contributing.md).
+
 
 ## Contributions
+We are happy for any contribution to the geodata-harvester, which can range from simple feedbacks via github Issues, use-case examples via notebook contributions, to improving source-code and adding new or updating existing data source modules. 
+
+For more details about about how to contribute to the development, please visit the [geodata-harvester contribution guidelines](https://github.com/Sydney-Informatics-Hub/geodata-harvester/quarto/docs/Contributing.md).
 
 
 ## Attribution and Acknowledgments
