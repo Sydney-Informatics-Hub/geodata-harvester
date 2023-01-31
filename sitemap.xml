@@ -2,34 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/events.html</loc>
-    <lastmod>2023-01-27T00:35:06.460Z</lastmod>
+    <lastmod>2023-01-31T06:51:22.461Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/py_dataharvester.html</loc>
-    <lastmod>2023-01-27T00:35:07.072Z</lastmod>
+    <lastmod>2023-01-31T06:51:23.101Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/index.html</loc>
-    <lastmod>2023-01-27T00:35:07.404Z</lastmod>
+    <lastmod>2023-01-31T06:51:23.409Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/R_dataharvester.html</loc>
-    <lastmod>2023-01-27T00:35:07.808Z</lastmod>
+    <lastmod>2023-01-31T06:51:23.681Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Data_Overview.html</loc>
-    <lastmod>2023-01-27T00:35:09.052Z</lastmod>
+    <lastmod>2023-01-31T06:51:24.857Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/How_to_add_DataSources.html</loc>
+    <lastmod>2023-01-31T06:51:25.153Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Contributing.html</loc>
+    <lastmod>2023-01-31T06:51:25.461Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Settings_Overview.html</loc>
-    <lastmod>2023-01-27T00:35:09.444Z</lastmod>
+    <lastmod>2023-01-31T06:51:25.861Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Earth_Engine_Data_Overview.html</loc>
-    <lastmod>2023-01-27T00:35:09.744Z</lastmod>
+    <lastmod>2023-01-31T06:51:26.169Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/about.html</loc>
-    <lastmod>2023-01-27T00:35:10.012Z</lastmod>
+    <lastmod>2023-01-31T06:51:26.481Z</lastmod>
   </url>
 </urlset>
