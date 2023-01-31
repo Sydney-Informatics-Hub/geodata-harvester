@@ -17,10 +17,14 @@ Each data source module consists of at least three core functions:
 To invoke the new data source module, you need to import the module (e.g., in your Jupyter notebook) and add new source-name to the settings YAML file under the entry `target_sources:`, with layername and options as sublist or dict (see existing data source settings as example). This will enable to load the settings into the settings Namespace (via load_settings function in harvesterwidgets.py). 
 
 To fully integrate a new module into the geodata-harvester, you may need to modify the following files:
-    - src/geodata_harveseter/__init__.py (optional, for making new module available in package NameSpace)
-    - src/geodata_harveseter/harvest.py (optional, if you like to automate aggregation with all other layers by callinbg one function)
-    - src/geodata_harveseter/widgets/harvesterwidgets.py (optional, if you like to include and select settings for the new data source via Jupyter widgets)
-    - src/geodata_harveseter/validate_settings.py (optional)
+
+- src/geodata_harveseter/__init__.py (optional, for making new module available in package NameSpace)
+- src/geodata_harveseter/harvest.py (optional, if you like to automate aggregation with all other layers by callinbg one function)
+- src/geodata_harveseter/widgets/harvesterwidgets.py (optional, if you like to include and select settings for the new data source via Jupyter widgets)
+- src/geodata_harveseter/validate_settings.py (optional)
+- update documentation [Data_Overview.md](quarto/docs/Data_Overview.md)
+
+Please add test functions for the new data module (either in the module file or as sepepare test script in folder `tests`). Adding an example notebook that demonstrates how to use new data source is encouraged as well.
 
 
 For development of new data source modules, we recommend to fork the geodata-harvester repo and develop new modules in a local environment (see environment.yaml). If you would like to contribute your data source module to the geodata-harvester package, please visit the [geodata-harvester contribution guidelines](https://github.com/Sydney-Informatics-Hub/geodata-harvester/quarto/docs/Contributing.md).
