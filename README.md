@@ -16,6 +16,20 @@
 
 The Geodata-Harvester package offers reusable and automated workflows for data extraction from a wide range of geospatial and environmental data sources. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and environmental models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period.
 
+## Content
+
+- [Introduction](#introduction)
+- [Data Sources](#data-sources)
+- [Functionality](#functionality)
+- [Key Features](#key-features)
+- [Installation](#installation)
+- [How to get started](#how-to-get-started)
+- [How to add new data source modules](#how-to-add-new-data-source-modules)
+- [Contributions](#contributions)
+- [Attribution and Acknowledgments](#attribution-and-acknowledgments)
+- [License](#license)
+
+
 ## Introduction
 
 There is an enormous amount of national/global space-time data that is free and accessible. Examples are the numerous satellite platforms, weather, soil landscape grid of Australia. Many have a temporal dimension so for any point in Australia you can extract a time series of remote sensing and weather data and soil and terrain site variables. In the case of time series covariates there are a number of post-processing steps that a user can undertake to extract meaning, e.g. temporal means, aggregating in time. All of the above is a non-trivial task and a workflow where a user could enter a point (s) and get a tidy data frame of data cube variables would be a step towards people understanding its value and being able to jumpstart their analysis. This project will contribute processing tools for finding, extracting and converting these key data layers.
@@ -100,9 +114,27 @@ If you like to develop Data Harvester locally, it is recommended to setup a virt
 
 ## How to get started
 
+You may now invoke the geodata-harvester directly from a python terminal with:
+
+```python
+import geodata_harvester as gh
+gh.harvest.run()
+```
+
+**Note the subtle but important difference in use of an underscore `_` to import the package and the use of a dash `-` to install it!**
+
+To get started, some example workflows are provided as Jupyter notebooks:
+
 1. Options and user settings are defined by the user in the settings; see for settings documentation [Settings_Overview](quarto/docs/Settings_Overview.md)
 
 2. Run the jupyter notebook in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks).
+
+
+## How to add new data source modules
+
+
+## Contributions
+
 
 ## Attribution and Acknowledgments
 
