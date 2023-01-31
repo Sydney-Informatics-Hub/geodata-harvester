@@ -28,4 +28,4 @@ To integrate a new module into the geodata-harvester package, you may need to mo
 Please add test functions for the new data module (either in the module file or as sepepare test script in folder `tests`). Adding an example notebook that demonstrates how to use new data source is encouraged as well.
 
 
-For development of new data source modules, we recommend to fork the geodata-harvester repo and develop new modules in a local environment (see environment.yaml). If you would like to contribute your data source module to the geodata-harvester package, please visit the [geodata-harvester contribution guidelines](https://github.com/Sydney-Informatics-Hub/geodata-harvester/quarto/docs/Contributing.md).
+For development of new data source modules, we recommend to fork the geodata-harvester repo and develop new modules in a local environment (see environment.yaml). If you would like to contribute your data source module to the geodata-harvester package, please visit the [geodata-harvester contribution guidelines](Contributing.md).

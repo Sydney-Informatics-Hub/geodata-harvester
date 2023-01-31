@@ -39,4 +39,4 @@ We welcome contributions to improve the Python code and keep the data-sources up
 
 ### Add new data source modules
 
-To add a new data source, please visit the [geodata-harvester contribution guidelines](https://github.com/Sydney-Informatics-Hub/geodata-harvester/quarto/docs/Contributing.md). Please also submit an Issue request about the data source that you would like to add. Please fork the repo and test your new new data source locally (test scripts and example notebook for the new data source are welcome!). After successful testing, please create a pull request for a review and add details as comment to the Issue. 
+To add a new data source, please visit the [geodata-harvester contribution guidelines](Contributing.md). Please also submit an Issue request about the data source that you would like to add. Please fork the repo and test your new new data source locally (test scripts and example notebook for the new data source are welcome!). After successful testing, please create a pull request for a review and add details as comment to the Issue. 
