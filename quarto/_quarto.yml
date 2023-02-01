@@ -14,6 +14,7 @@ website:
       - about.qmd
       - py_dataharvester.qmd
       - R_dataharvester.qmd
+      - contributing.qmd
       - events.qmd
 
 format:
