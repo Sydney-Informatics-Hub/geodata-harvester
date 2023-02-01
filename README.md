@@ -138,7 +138,7 @@ We recommend to fork the geodata-harvester repo and develop new modules in a loc
 
 
 ## Contributions
-We are happy for any contribution to the geodata-harvester, which can range from simple feedbacks via github Issues, use-case examples via notebook contributions, to improving source-code and adding new or updating existing data source modules. 
+We are happy for any contribution to the geodata-harvester, whether feedbacks and bug reports via github Issues, adding use-case examples via notebook contributions, to improving source-code and adding new or updating existing data source modules. 
 
 For more details about about how to contribute to the development, please visit the [geodata-harvester contribution guidelines](quarto/docs/Contributing.md).
 
