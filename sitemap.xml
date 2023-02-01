@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/events.html</loc>
-    <lastmod>2023-01-31T06:56:52.422Z</lastmod>
+    <lastmod>2023-02-01T02:15:06.018Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/contributing.html</loc>
+    <lastmod>2023-02-01T02:15:07.702Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/py_dataharvester.html</loc>
-    <lastmod>2023-01-31T06:56:53.154Z</lastmod>
+    <lastmod>2023-02-01T02:15:08.046Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/index.html</loc>
-    <lastmod>2023-01-31T06:56:53.494Z</lastmod>
+    <lastmod>2023-02-01T02:15:08.338Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/R_dataharvester.html</loc>
-    <lastmod>2023-01-31T06:56:53.814Z</lastmod>
+    <lastmod>2023-02-01T02:15:08.602Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Data_Overview.html</loc>
-    <lastmod>2023-01-31T06:56:55.190Z</lastmod>
+    <lastmod>2023-02-01T02:15:09.750Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/How_to_add_DataSources.html</loc>
-    <lastmod>2023-01-31T06:56:55.586Z</lastmod>
+    <lastmod>2023-02-01T02:15:10.038Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Contributing.html</loc>
-    <lastmod>2023-01-31T06:56:55.938Z</lastmod>
+    <lastmod>2023-02-01T02:15:10.342Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Settings_Overview.html</loc>
-    <lastmod>2023-01-31T06:56:56.438Z</lastmod>
+    <lastmod>2023-02-01T02:15:10.730Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Earth_Engine_Data_Overview.html</loc>
-    <lastmod>2023-01-31T06:56:56.794Z</lastmod>
+    <lastmod>2023-02-01T02:15:11.034Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/about.html</loc>
-    <lastmod>2023-01-31T06:56:57.138Z</lastmod>
+    <lastmod>2023-02-01T02:15:11.342Z</lastmod>
   </url>
 </urlset>

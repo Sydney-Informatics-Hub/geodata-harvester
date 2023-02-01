@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -96,6 +159,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">R-Package</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./contributing.html">
+ <span class="menu-text">Contributing</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./events.html">
  <span class="menu-text">Events</span></a>
   </li>  
@@ -115,6 +182,18 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#pipeline-overview" id="toc-pipeline-overview" class="nav-link active" data-scroll-target="#pipeline-overview">Pipeline Overview</a></li>
+  <li><a href="#functionality" id="toc-functionality" class="nav-link" data-scroll-target="#functionality">Functionality</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a>
+  <ul class="collapse">
+  <li><a href="#conda-or-mamba" id="toc-conda-or-mamba" class="nav-link" data-scroll-target="#conda-or-mamba">Conda or Mamba</a></li>
+  <li><a href="#pip" id="toc-pip" class="nav-link" data-scroll-target="#pip">Pip</a></li>
+  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a></li>
+  </ul></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#new-data-source-modules" id="toc-new-data-source-modules" class="nav-link" data-scroll-target="#new-data-source-modules">New data source modules</a></li>
+  <li><a href="#contribution" id="toc-contribution" class="nav-link" data-scroll-target="#contribution">Contribution</a></li>
+  <li><a href="#attribution-and-acknowledgments" id="toc-attribution-and-acknowledgments" class="nav-link" data-scroll-target="#attribution-and-acknowledgments">Attribution and Acknowledgments</a></li>
+  <li><a href="#code-of-conduct" id="toc-code-of-conduct" class="nav-link" data-scroll-target="#code-of-conduct">Code of Conduct</a></li>
   </ul>
 </nav>
     </div>
@@ -146,12 +225,78 @@ ul.task-list li input[type="checkbox"] {
 <center>
 <a><img src="images/pipeline.png" alt="Schematic Pipeline Overview" width="100%"></a>
 </center>
-<p><br><br></p>
-<center>
-<strong>MORE TO COME SOON</strong>
-</center>
-<p><br><br></p>
-<p>If you like to test the pre-release of the Geodata-Harvester or are happy to get involved as early open-source Python contributor, please contact: <a href="mailto:sebastian.haan@sydney.edu.au">Sebastian Haan</a></p>
+</section>
+<section id="functionality" class="level2">
+<h2 class="anchored" data-anchor-id="functionality">Functionality</h2>
+<p>The main goal of the Data Harvester is to enable researchers with reusable workflows for automatic data extraction and processing:</p>
+<ol type="1">
+<li>Retrieve: given set of locations, automatically access and download multiple data sources (APIs) from a diverse range of geospatial and soil data sources</li>
+<li>Process: Spatial and temporal processing, conversion to dataframes and custom raster-files</li>
+<li>Output: Ready-made dataset for machine learning (training set and prediction mapping)</li>
+</ol>
+<p>Geodata-Harvester is designed as a modular and maintainable project in the form of a multi-stage pipeline by providing explicit boundaries among tasks. To encourage interaction and experimentation with the pipeline, multiple frontend notebooks and use case scenarios are provided.</p>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p>Geodata-Harvester can be run on cloud-servers (e.g., in JupyterHub environment) or on your local machine. Example notebooks for importing and using the package can be found in the folder <a href="https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks">notebooks</a>. To install the package run one of the following:</p>
+<section id="conda-or-mamba" class="level3">
+<h3 class="anchored" data-anchor-id="conda-or-mamba">Conda or Mamba</h3>
+<p>The package geodata-harvester is available via the conda-forge channel:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install geodata-harvester <span class="at">-c</span> conda-forge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that the geodata-harvester is imported with underscore as</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geodata_harvester</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="pip" class="level3">
+<h3 class="anchored" data-anchor-id="pip">Pip</h3>
+<p>Installation via pypi requires a pre-installation of gdal (see, e.g., <a href="https://pypi.org/project/GDAL/">pypi.org/project/GDAL/installation guide</a>) in your environment. Once gdal is installed, you can install geodata-harvester via</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install geodata-harvester</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The geodata-harvester library can then be imported via</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geodata_harvester</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="requirements" class="level3">
+<h3 class="anchored" data-anchor-id="requirements">Requirements</h3>
+<p>If you like to develop Data Harvester locally, it is recommended to setup a virtual environment for the installation, e.g., via conda miniforge (see for dependencies <code>environment.yaml</code>).</p>
+<p>To build the Geodata Harvester from scratch see the dependencies listed in the <a href="https://raw.githubusercontent.com/Sydney-Informatics-Hub/geodata-harvester/main/environment.yaml">environment file</a>.</p>
+<p>To install the dependencies for the Geodata Harvester you may use the environment file directly in conda:</p>
+<pre><code>wget https://raw.githubusercontent.com/Sydney-Informatics-Hub/geodata-harvester/main/environment.yaml
+conda env create -f environment.yaml -n gdh
+conda activate gdh</code></pre>
+</section>
+</section>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<p>You may now invoke the geodata-harvester directly from a python terminal with:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geodata_harvester <span class="im">as</span> gh</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gh.harvest.run()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Note the subtle but important difference in use of an underscore <code>_</code> to import the package and the use of a dash <code>-</code> to install it!</strong></p>
+<p>To get started, some example workflows are provided as Jupyter notebooks:</p>
+<ol type="1">
+<li><p>Options and user settings are defined by the user in the settings; see for settings documentation <a href="https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/quarto/docs/Settings_Overview.md">Settings_Overview</a></p></li>
+<li><p>Run the jupyter notebooks in the folder <a href="https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks">notebooks</a>.</p></li>
+</ol>
+</section>
+<section id="new-data-source-modules" class="level2">
+<h2 class="anchored" data-anchor-id="new-data-source-modules">New data source modules</h2>
+<p>The Geodata-Harvester is designed to be extendable and new data source modules can be added as Python modules (for examples, see <code>getdata_*.py</code> modules). If you would like to add a new data source, please follow the <a href="https://github.com/Sydney-Informatics-Hub/geodata-harvester/blob/main/quarto/docs/How_to_add_DataSources.md">adding new data source guidelines</a></p>
+<p>We recommend to check the existing data source modules for inspiration. If you would like to contribute your data source module to the geodata-harvester package, please see the <code>Contributing</code> page</p>
+</section>
+<section id="contribution" class="level2">
+<h2 class="anchored" data-anchor-id="contribution">Contribution</h2>
+<p>Your contributions can help improve the software and make it more useful for others. We are happy for any contribution to the geodata-harvester, whether feedbacks and bug reports via github Issues, adding use-case examples via notebook contributions, to improving source-code and adding new or updating existing data source modules.</p>
+<p>To contribute to the development and to understand how the Geodata Harvester works, visit the the <code>Contributing</code> page</p>
+</section>
+<section id="attribution-and-acknowledgments" class="level2">
+<h2 class="anchored" data-anchor-id="attribution-and-acknowledgments">Attribution and Acknowledgments</h2>
+<p>This software was developed by the Sydney Informatics Hub, a core research facility of the University of Sydney, as part of the Data Harvesting project for the Agricultural Research Federation (AgReFed).</p>
+<p>Acknowledgments are an important way for us to demonstrate the value we bring to your research. Your research outcomes are vital for ongoing funding of the Sydney Informatics Hub.</p>
+<p>If you make use of this software for your research project, please include the following acknowledgment:</p>
+<p>“This research was supported by the Sydney Informatics Hub, a Core Research Facility of the University of Sydney, and the Agricultural Research Federation (AgReFed).”</p>
+<p>AgReFed is supported by the Australian Research Data Commons (ARDC) and the Australian Government through the National Collaborative Research Infrastructure Strategy (NCRIS).</p>
+</section>
+<section id="code-of-conduct" class="level2">
+<h2 class="anchored" data-anchor-id="code-of-conduct">Code of Conduct</h2>
+<p>Please keep in mind that the geodata-harvester project follows the <a href="https://docs.github.com/en/site-policy/github-terms/github-community-code-of-conduct">GitHub Community Code of Conduct</a>, which requires respectful and professional behavior.</p>
+<p>We appreciate your interest and contributions to the geodata-harvester project and look forward to working with you! If you have any questions or need help, don’t hesitate to reach out.</p>
 
 
 </section>
