@@ -1,42 +1,57 @@
 # Welcome to Geodata-Harvester Contributing Guide 
 
-Thank you for investing your time in contributing to our project! 
+Thank you for investing your time in contributing to our project! We appreciate your interest in contributing to Geodata-Harvesterproject. Your contributions can help improve the software and make it more useful for others.  
 
-Contributions to the geodata-harvester can be made in many ways, such as:
+In this guideline, we'll explain how you can contribute to the project. Contributions to the geodata-harvester can be made in many ways, such as:
 
 - Feedback and bug reports via Github Issue
 - Use-case examples via notebook contributions
-- Code-base contributions
-- New data-source contributions
+- Source-code contributions
+- Data-source contributions
 - Updating existing data source modules
 - Improving documentation
 
 
-## Create a new issue
+## Feedback and bug reports: Create a new issue
+To report bugs or provide feedback, you can use the Github Issues feature. If you spot a problem or have a suggestion for improvement, [search if an issue already exists](https://github.com/Sydney-Informatics-Hub/geodata-harvester/issues). If a related issue doesn't exist, please open a new issue. The issue should address what is the current problem, where it occurs, and, if possible, one suggestion how this problem can potentially be solved. 
 
-If you spot a problem or have a suggestion for improvement, [search if an issue already exists](https://github.com/Sydney-Informatics-Hub/geodata-harvester/issues). If a related issue doesn't exist, please open a new issue. The issue should address what is the current problem, where it occurs, and, if possible, at least one suggestion how this problem can be addressed. If this is a bug report, please add the error statement including file name and code line, and your installation details, so that the error can be reproduced.
+If this is a bug report, please  provide a clear and concise description of the issue and any relevant information
+such as error messages including file name and code line, installation details, and all steps to reproduce the problem.
 
-## Solve an issue
-
+## Solve an open issue
 Scan through our [existing issues](https://github.com/Sydney-Informatics-Hub/geodata-harvester/issues) to find one that interests you. As a general rule, we don’t assign issues to anyone. If you find an issue to work on, you are welcome to open a pull request with a fix.
 
-## Make Changes
+## Use-case example notebooks
+If you have an interesting use-case for the geodata-harvester, we would love to hear about it! A great way to demonstrate use-cases is via Jupyter notebooks, which provide helpful workflows to the community. Currently we maintain a few example notebooks that demonstrate some use-cases of the GeoData-Harvester. If you make use of this package, you are welcome to contribute by improving existing notebooks or creating a Jupyter Notebook with your example and sharing it with us.
 
-### Make documentation changes
-
-For small documentation changes, please open a new Issue. If you would like to add/edit some more documentation, please fork the repo, edit the corresponding .md file, commit the change, and create a pull request for a review.
+To contribute, please fork the geodata-harvester repo and add your notebook and settings file to the folder `notebooks`. For reproducible research we encourage the use of settings YAML files (see notebooks/settings). Please give the settings file a name that corresponds to the notebook name. Then commit your changes and create a pull request to share with us.
 
 
-### Add or edit Notebooks
+## Documentation contributions
+For small documentation changes and suggestion to improve existing documentation, please open a new Issue. If you would like to add/edit some more documentation, please fork the repo, edit the corresponding .md file, commit the change, and submit a pull request for a review.
 
-A great start to add and test new functionalities and use-cases is via Jupyter notebooks. Currently we maintain a few basic example notebooks that demonstrate some use-cases of the GeoData-Harvester. If you make use of this package, you are welcome to improve existing notebooks or add new notebooks that provide helpful workflows to the community. 
 
-Please fork the geodata-harvester repo and add your notebook, including your name as author, and settings file to the folder `notebooks`. For reproducible research we encourage the use of settings YAML files (see notebooks/settings). Please give the settings file a name that corresponds to the notebook name. Then commit your changes and create a pull request for a review and to add your notebook to the geodata-harvester repo. 
+## Source-code contributions
+We welcome contributions to improve the Python code and to keep the data-source handlers up-to-date. If you have experience with Python programming and would like to contribute to the source code, we suggest the following guidelines:
 
-### Make code changes
+1) Fork the repository and clone it to your local machine.
+2) Create a new branch for your changes.
+3) Write clear, concise, and well-documented code.
+4) Test your changes thoroughly.
+5) Submit a pull request with a description of your changes and any relevant information.
 
-We welcome contributions to improve the Python code and keep the data-sources up-tp-date. We encourage to submit an Issue request first. To add your code edits to the geodata-harvester, please fork the repo, commit your changes and create a pull request for a review. 
 
-### Add new data source modules
+## Data source module contributions
 
-To add a new data source, please visit the [adding new data source guidelines](How_to_add_DataSources.md) . Please also submit an Issue request about the data source that you would like to add. Please fork the repo and test your new new data source locally (test scripts and example notebook for the new data source are welcome!). After successful testing, please create a pull request for a review and add details as comment to the Issue. 
+If you would like to add a new data source module or update an existing one, please visit the [adding new data source guidelines](How_to_add_DataSources.md). Please also check if there are any open Issue requests about the data source that you would like to add. To contribute a new data source module, follow these guidelines:
+
+1) Check the existing data source modules for inspiration.
+2) Write clear, concise, and well-documented code.
+3) Test your changes thoroughly (test scripts and example notebook demonstrating the new data source are welcome!)
+4) Submit a pull request with a description of your changes and any relevant information.
+
+## Code of Conduct
+
+Please keep in mind that the geodata-harvester project follows the [GitHub Community Code of Conduct](https://docs.github.com/en/site-policy/github-terms/github-community-code-of-conduct), which requires respectful and professional behavior.
+
+We appreciate your contributions to the geodata-harvester project and look forward to working with you! If you have any questions or need help, don't hesitate to reach out.
