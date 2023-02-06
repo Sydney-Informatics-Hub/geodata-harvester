@@ -5,7 +5,7 @@ except ImportError:
 from os import path
 import io
 
-PYPI_VERSION = '0.1.4'
+PYPI_VERSION = '0.2.0'
 
 this_directory = path.abspath(path.dirname(__file__))
 with io.open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
