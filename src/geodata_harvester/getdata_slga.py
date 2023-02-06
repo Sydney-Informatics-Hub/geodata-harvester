@@ -312,7 +312,7 @@ def get_slga_layers(
     layernames : list of layer names
     bbox : bounding box [min, miny, maxx, maxy] in
     resolution : resolution in arcsec (Default: 3 arcsec ~ 90m, which is native resolution of SLGA data)
-    depth_min : minimum depth (Default: 0 cm)
+    depth_min : minimum depth (Default: 0 cm). If depth_min and depth_max are lists, then must have same length as layernames
     depth_max : maximum depth (Default: 200 cm, maximum depth of SLGA data)
     outpath : output path
 
@@ -333,6 +333,17 @@ def get_slga_layers(
     if not isinstance(layernames, list):
         layernames = [layernames]
 
+
+    # Check if depth_min and depth_max are lists:
+    if not isinstance(depth_min, list):
+        depth_min = [depth_min] * len(layernames)
+    if not isinstance(depth_max, list):
+        depth_max = [depth_max] * len(layernames)
+
+    assert len(depth_min) == len(depth_max), "depth_min and depth_max should be lists of same length"
+    assert len(depth_min) == len(layernames), "depth_min and depth_max should be lists with same length as layernames"
+    
+
     # Check if outpath exist, if not create it
     os.makedirs(outpath, exist_ok=True)
 
@@ -350,21 +361,19 @@ def get_slga_layers(
     # set crs
     crs = "EPSG:4326"
 
-    # Get depth identifiers for layers
-    (
-        identifiers,
+    fnames_out = []
+    # Loop over layers
+    for idx, layername in enumerate(layernames):
+        # Get layer url
+        layer_url = layers_url[layername]
+        # logging.print(f"Downloading {layername}...")
+        # Get depth identifiers for layers
+        (identifiers,
         identifiers_ci_5pc,
         identifiers_ci_95pc,
         depth_lower,
         depth_upper,
-    ) = depth2identifier(depth_min, depth_max)
-
-    fnames_out = []
-    # Loop over layers
-    for layername in layernames:
-        # Get layer url
-        layer_url = layers_url[layername]
-        # logging.print(f"Downloading {layername}...")
+        ) = depth2identifier(depth_min[idx], depth_max[idx])
         for i in range(len(identifiers)):
             identifier = identifiers[i]
             # Get layer name

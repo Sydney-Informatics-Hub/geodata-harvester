@@ -280,10 +280,15 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
     if "SLGA" in list_sources:
         cprint("\n⌛ Downloading SLGA data...", attrs=["bold"])
         # get data from SLGA
-        depth_min, depth_max = getdata_slga.identifier2depthbounds(
-            list(settings.target_sources["SLGA"].values())[0]
-        )
         slga_layernames = list(settings.target_sources["SLGA"].keys())
+        # get min and max depth for each layername
+        depth_min = []
+        depth_max = []
+        for layername in slga_layernames:
+            depth_bounds = settings.target_sources["SLGA"][layername]
+            dmin, dmax = getdata_slga.identifier2depthbounds(depth_bounds)
+            depth_min.append(dmin)
+            depth_max.append(dmax)
         try:
             files_slga = getdata_slga.get_slga_layers(
                 slga_layernames,
@@ -297,6 +302,9 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             print(e)
         var_exists = "files_slga" in locals() or "files_slga" in globals()
         if var_exists:
+            if len(files_slga) != len(slga_layernames):
+                # get filename stems of files_slga
+                slga_layernames = [Path(f).stem for f in files_slga]
             download_log = update_logtable(
                 download_log,
                 files_slga,
