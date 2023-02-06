@@ -1,6 +1,6 @@
 # Geodata-Harvester
 
-<h3><em>Automate harvesting geodata from the web and jumpstart your analysis with a ready-made set of spatial-temporal processed maps and dataframes.</em></h3> 
+<h3><em>Automate geodata harvesting from the web and jumpstart your analysis with a ready-made set of spatial-temporal processed maps and dataframes.</em></h3> 
 
 <center><a><img src="quarto/images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
 
@@ -14,7 +14,9 @@
 
 <!-- Badges end -->
 
-The Geodata-Harvester package offers reusable and automated workflows for data extraction from a wide range of geospatial and environmental data sources. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and environmental models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period.
+The Geodata-Harvester Python package offers reusable and automated workflows for data extraction from a wide range of geospatial and environmental data sources. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and environmental models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period.
+
+For the R-package wrapper of the Geodata-Harvester, please visit the [Github dataharvesteR project](https://github.com/Sydney-Informatics-Hub/dataharvester).
 
 ## Content
 
@@ -64,6 +66,7 @@ Geodata-Harvester is designed as a modular and maintainable project in the form 
 
 Below is a list of features available for the geodata-harvester package. Please check the project Github webpage and notebooks for examples, data selection, and other settings.
 
+- enabling reproducible workflows via YAML settings files
 - automatic data retrieval from geodata APIs for given locations and dates
 - automatic download and spatial-temporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale.
 - support for multiple temporal aggregation options and spatial-temporal buffer
@@ -71,7 +74,6 @@ Below is a list of features available for the geodata-harvester package. Please 
 - automatic generation of ready-made aligned maps and data for ML prediction models
 - visualisation of downloaded and aligned maps
 - support for saving and loading settings via interactive widgets
-- batch processing and reusable workflows via yaml settings files
 - with connectivity support to the Google Earth Engine API, perform petabyte-scale operations which include temporal cloud/shadow masking and automatic calculation of spectral indices
 
 
@@ -129,6 +131,7 @@ To get started, some example workflows are provided as Jupyter notebooks:
 
 2. Run the jupyter notebook in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks).
 
+If you would like to learn more about the Geodata-Harvester, please visit our [Workshop webpage](https://sydney-informatics-hub.github.io/AgReFed-Workshop/).
 
 ## How to add new data source modules
 
@@ -140,7 +143,7 @@ We recommend to fork the geodata-harvester repo and develop new modules in a loc
 ## Contributions
 We are happy for any contribution to the geodata-harvester, whether feedbacks and bug reports via github Issues, adding use-case examples via notebook contributions, to improving source-code and adding new or updating existing data source modules. 
 
-For more details about about how to contribute to the development, please visit the [geodata-harvester contribution guidelines](quarto/docs/Contributing.md).
+For more details about about how to contribute to the development, please visit the [Geodata-Harvester contribution guidelines](quarto/docs/Contributing.md).
 
 
 ## Attribution and Acknowledgments
