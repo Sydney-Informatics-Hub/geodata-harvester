@@ -1,0 +1,2430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>geodata_harvester.getdata_dea API documentation</title>
+<meta name="description" content="Script to download satellite data from Digital Earth Australia (DEA)for a given time,
+resolution, and bounding box. Final data is saved as geotiff or …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>geodata_harvester.getdata_dea</code></h1>
+</header>
+<section id="section-intro">
+<p>Script to download satellite data from Digital Earth Australia (DEA)for a given time,
+resolution, and bounding box. Final data is saved as geotiff or NetCDF.</p>
+<p>Satellite data sources are calibrated by DEA for Australia and include datasets for Landsat and Sentinel2.</p>
+<p>An overview of DEA data is available here
+<a href="https://docs.dea.ga.gov.au/notebooks/DEA_datasets/README.html">https://docs.dea.ga.gov.au/notebooks/DEA_datasets/README.html</a>
+and explanation of datasets here:
+<a href="https://docs.dea.ga.gov.au/notebooks/Beginners_guide/02_DEA.html">https://docs.dea.ga.gov.au/notebooks/Beginners_guide/02_DEA.html</a></p>
+<p>A full ist of data layer names can be retrieved with get_deadict() or get_capabilities() for a given url
+The DEA WCS service capabilities are also available online at:
+<a href="https://docs.dea.ga.gov.au/setup/gis/web_services.html#Web-Coverage-Service-(WCS)">https://docs.dea.ga.gov.au/setup/gis/web_services.html#Web-Coverage-Service-(WCS)</a></p>
+<p>For more complex data processing use DEA's excellent Jupyter notebooks within their Sandbox (authentication needed)
+that leverage the Open Data Cube software package (datacube-core)
+<a href="https://docs.dea.ga.gov.au/setup/Sandbox/sandbox.html">https://docs.dea.ga.gov.au/setup/Sandbox/sandbox.html</a></p>
+<p>Other resources:
+- NCI (authentication needed)
+<a href="https://docs.dea.ga.gov.au/setup/NCI/README.html">https://docs.dea.ga.gov.au/setup/NCI/README.html</a></p>
+<ul>
+<li>SpatioTemporal Asset Catalog (STAC) endpoint
+(authentication needed):
+<a href="https://docs.dea.ga.gov.au/notebooks/Frequently_used_code/Downloading_data_with_STAC.html">https://docs.dea.ga.gov.au/notebooks/Frequently_used_code/Downloading_data_with_STAC.html</a></li>
+</ul>
+<p>LIMITATIONS: for large bbox the server can exceeds limits and the data is not returned.</p>
+<p>This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).</p>
+<p>Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney</p>
+<p>This open-source software is released under the LGPL-3.0 License.</p>
+<p>Author: Sebastian Haan</p>
+<p>TBF:
+- apply cloud mask to downloaded images automatically (accept "valid", "water", "snow")
+- include some DEA tools <a href="https://github.com/GeoscienceAustralia/dea-notebooks/blob/stable/Tools/dea_tools/">https://github.com/GeoscienceAustralia/dea-notebooks/blob/stable/Tools/dea_tools/</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Script to download satellite data from Digital Earth Australia (DEA)for a given time,
+resolution, and bounding box. Final data is saved as geotiff or NetCDF.
+
+Satellite data sources are calibrated by DEA for Australia and include datasets for Landsat and Sentinel2.
+
+An overview of DEA data is available here
+https://docs.dea.ga.gov.au/notebooks/DEA_datasets/README.html
+and explanation of datasets here:
+https://docs.dea.ga.gov.au/notebooks/Beginners_guide/02_DEA.html
+
+A full ist of data layer names can be retrieved with get_deadict() or get_capabilities() for a given url
+The DEA WCS service capabilities are also available online at:
+https://docs.dea.ga.gov.au/setup/gis/web_services.html#Web-Coverage-Service-(WCS)
+
+For more complex data processing use DEA&#39;s excellent Jupyter notebooks within their Sandbox (authentication needed)
+that leverage the Open Data Cube software package (datacube-core)
+https://docs.dea.ga.gov.au/setup/Sandbox/sandbox.html
+
+Other resources:
+- NCI (authentication needed)
+https://docs.dea.ga.gov.au/setup/NCI/README.html
+
+- SpatioTemporal Asset Catalog (STAC) endpoint  (authentication needed):
+https://docs.dea.ga.gov.au/notebooks/Frequently_used_code/Downloading_data_with_STAC.html
+
+LIMITATIONS: for large bbox the server can exceeds limits and the data is not returned.
+
+This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
+
+Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
+
+This open-source software is released under the LGPL-3.0 License.
+
+Author: Sebastian Haan
+
+
+TBF:
+- apply cloud mask to downloaded images automatically (accept &#34;valid&#34;, &#34;water&#34;, &#34;snow&#34;)
+- include some DEA tools https://github.com/GeoscienceAustralia/dea-notebooks/blob/stable/Tools/dea_tools/
+
+&#34;&#34;&#34;
+
+import os
+from owslib.wcs import WebCoverageService
+import rasterio
+from rasterio import MemoryFile
+from rasterio.plot import show
+from datetime import datetime, timezone
+from termcolor import cprint, colored
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
+
+# logger setup
+from geodata_harvester import write_logs
+import logging
+
+
+def get_deadict():
+    &#34;&#34;&#34;
+    Returns dictionary of keys and layer titles
+
+    To update manually please run get_capabilities() to retrieve all current layer details
+    &#34;&#34;&#34;
+    deadict = {
+        &#34;resolution_arcsec&#34;: 1,
+        &#34;layernames&#34;: {
+            &#34;ga_ls_ard_3&#34;: &#34;DEA Surface Reflectance (Landsat)&#34;,
+            &#34;s2_nrt_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2 Near Real-Time)&#34;,
+            &#34;s2_ard_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2)&#34;,
+            &#34;ga_ls8c_nbart_gm_cyear_3&#34;: &#34;DEA GeoMAD (Landsat 8 OLI-TIRS)&#34;,
+            &#34;ga_ls7e_nbart_gm_cyear_3&#34;: &#34;DEA GeoMAD (Landsat 7 ETM+)&#34;,
+            &#34;ga_ls5t_nbart_gm_cyear_3&#34;: &#34;DEA GeoMAD (Landsat 5 TM)&#34;,
+            &#34;ga_ls8c_ard_3&#34;: &#34;DEA Surface Reflectance (Landsat 8 OLI-TIRS)&#34;,
+            &#34;ga_ls7e_ard_3&#34;: &#34;DEA Surface Reflectance (Landsat 7 ETM+)&#34;,
+            &#34;ga_ls5t_ard_3&#34;: &#34;DEA Surface Reflectance (Landsat 5 TM)&#34;,
+            &#34;ga_ls8c_ard_provisional_3&#34;: &#34;DEA Surface Reflectance (Landsat 8 OLI-TIRS, Provisional)&#34;,
+            &#34;ga_ls7e_ard_provisional_3&#34;: &#34;DEA Surface Reflectance (Landsat 7 ETM+, Provisional)&#34;,
+            &#34;ga_ls_ard_provisional_3&#34;: &#34;DEA Surface Reflectance (Landsat, Provisional)&#34;,
+            &#34;s2b_nrt_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2B MSI Near Real-Time)&#34;,
+            &#34;s2a_nrt_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2A MSI Near Real-Time)&#34;,
+            &#34;s2_nrt_provisional_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2, Provisional)&#34;,
+            &#34;s2b_nrt_provisional_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2B MSI, Provisional)&#34;,
+            &#34;s2a_nrt_provisional_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2A MSI, Provisional)&#34;,
+            &#34;s2a_ard_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2A MSI)&#34;,
+            &#34;s2b_ard_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2B MSI)&#34;,
+            &#34;ga_ls_landcover&#34;: &#34;DEA Land Cover Calendar Year (Landsat)&#34;,
+            &#34;ga_ls_landcover_descriptors&#34;: &#34;DEA Land Cover Environmental Descriptors&#34;,
+            &#34;ga_ls_fc_3&#34;: &#34;DEA Fractional Cover (Landsat)&#34;,
+            &#34;ga_ls_fc_pc_cyear_3&#34;: &#34;DEA Fractional Cover Percentiles Calendar Year (Landsat)&#34;,
+            &#34;ga_ls_mangrove_cover_cyear_3&#34;: &#34;DEA Mangroves (Landsat)&#34;,
+            &#34;s2_barest_earth&#34;: &#34;GA Barest Earth (Sentinel-2)&#34;,
+            &#34;ls8_barest_earth_mosaic&#34;: &#34;GA Barest Earth (Landsat 8 OLI/TIRS)&#34;,
+            &#34;landsat_barest_earth&#34;: &#34;GA Barest Earth (Landsat)&#34;,
+            &#34;ga_ls_tcw_percentiles_2&#34;: &#34;DEA Wetness Percentiles (Landsat)&#34;,
+            &#34;ga_ls_tc_pc_cyear_3&#34;: &#34;DEA Tasseled Cap Indices Percentiles Calendar Year (Landsat)&#34;,
+            &#34;ga_ls_wo_3&#34;: &#34;DEA Water Observations (Landsat)&#34;,
+            &#34;ga_ls_wo_fq_myear_3&#34;: &#34;DEA Water Observations Multi Year (Landsat)&#34;,
+            &#34;ga_ls_wo_fq_cyear_3&#34;: &#34;DEA Water Observations Calendar Year (Landsat)&#34;,
+            &#34;ga_ls_wo_fq_apr_oct_3&#34;: &#34;DEA Water Observations April to October (Landsat)&#34;,
+            &#34;ga_ls_wo_fq_nov_mar_3&#34;: &#34;DEA Water Observations November to March (Landsat)&#34;,
+            &#34;wofs_filtered_summary&#34;: &#34;DEA Multi-Year Water Observation Frequency Filtered Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;wofs_summary_clear&#34;: &#34;DEA Multi-Year Clear Observation Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;wofs_summary_wet&#34;: &#34;DEA Multi-Year Wet Observation Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;Water Observations from Space Statistics&#34;: &#34;DEA Multi-Year Water Observation Frequency Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;wofs_filtered_summary_confidence&#34;: &#34;DEA Multi-Year Water Observation Confidence Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;ITEM_V2.0.0&#34;: &#34;DEA Intertidal Extents (Landsat)&#34;,
+            &#34;ITEM_V2.0.0_Conf&#34;: &#34;DEA Intertidal Extents confidence&#34;,
+            &#34;NIDEM&#34;: &#34;DEA Intertidal Elevation (Landsat)&#34;,
+            &#34;high_tide_composite&#34;: &#34;DEA High Tide Imagery (Landsat)&#34;,
+            &#34;low_tide_composite&#34;: &#34;DEA Low Tide Imagery (Landsat)&#34;,
+            &#34;ga_s2_ba_provisional_3&#34;: &#34;DEA Burnt Area Characteristic Layers (Sentinel 2 Near Real-Time, Provisional)&#34;,
+            &#34;alos_displacement&#34;: &#34;ALOS Displacement&#34;,
+            &#34;alos_velocity&#34;: &#34;ALOS Velocity&#34;,
+            &#34;envisat_displacement&#34;: &#34;ENVISAT Displacement&#34;,
+            &#34;envisat_velocity&#34;: &#34;ENVISAT Velocity&#34;,
+            &#34;radarsat2_displacement&#34;: &#34;RADARSAT2 Displacement&#34;,
+            &#34;radarsat2_velocity&#34;: &#34;RADARSAT2 Velocity&#34;,
+            &#34;aster_false_colour&#34;: &#34;False Colour Mosaic&#34;,
+            &#34;aster_regolith_ratios&#34;: &#34;Regolith Ratios&#34;,
+            &#34;aster_aloh_group_composition&#34;: &#34;AlOH Group Composition&#34;,
+            &#34;aster_aloh_group_content&#34;: &#34;AlOH Group Content&#34;,
+            &#34;aster_feoh_group_content&#34;: &#34;FeOH Group Content&#34;,
+            &#34;aster_ferric_oxide_composition&#34;: &#34;Ferric Oxide Composition&#34;,
+            &#34;aster_ferric_oxide_content&#34;: &#34;Ferric Oxide Content&#34;,
+            &#34;aster_ferrous_iron_content_in_mgoh&#34;: &#34;Ferrous Iron Content in MgOH/Carbonate&#34;,
+            &#34;aster_ferrous_iron_index&#34;: &#34;Ferrous Iron Index&#34;,
+            &#34;aster_green_vegetation&#34;: &#34;Green Vegetation Content&#34;,
+            &#34;aster_gypsum_index&#34;: &#34;Gypsum Index&#34;,
+            &#34;aster_kaolin_group_index&#34;: &#34;Kaolin Group Index&#34;,
+            &#34;aster_mgoh_group_composition&#34;: &#34;MgOH Group Composition&#34;,
+            &#34;aster_mgoh_group_content&#34;: &#34;MgOH Group Content&#34;,
+            &#34;aster_opaque_index&#34;: &#34;Opaque Index&#34;,
+            &#34;aster_silica_index&#34;: &#34;TIR Silica index&#34;,
+            &#34;aster_quartz_index&#34;: &#34;TIR Quartz Index&#34;,
+            &#34;multi_scale_topographic_position&#34;: &#34;Multi-Scale Topographic Position&#34;,
+            &#34;weathering_intensity&#34;: &#34;Weathering Intensity&#34;,
+        },
+        &#34;n_bands&#34;: {
+            &#34;ga_ls_ard_3&#34;: 7,
+            &#34;s2_nrt_granule_nbar_t&#34;: 23,
+            &#34;s2_ard_granule_nbar_t&#34;: 12,
+            &#34;ga_ls8c_nbart_gm_cyear_3&#34;: 10,
+            &#34;ga_ls7e_nbart_gm_cyear_3&#34;: 10,
+            &#34;ga_ls5t_nbart_gm_cyear_3&#34;: 10,
+            &#34;ga_ls8c_ard_3&#34;: 9,
+            &#34;ga_ls7e_ard_3&#34;: 8,
+            &#34;ga_ls5t_ard_3&#34;: 7,
+            &#34;ga_ls8c_ard_provisional_3&#34;: 9,
+            &#34;ga_ls7e_ard_provisional_3&#34;: 8,
+            &#34;ga_ls_ard_provisional_3&#34;: 7,
+            &#34;s2b_nrt_granule_nbar_t&#34;: 23,
+            &#34;s2a_nrt_granule_nbar_t&#34;: 23,
+            &#34;s2_nrt_provisional_granule_nbar_t&#34;: 12,
+            &#34;s2b_nrt_provisional_granule_nbar_t&#34;: 12,
+            &#34;s2a_nrt_provisional_granule_nbar_t&#34;: 12,
+            &#34;s2a_ard_granule_nbar_t&#34;: 12,
+            &#34;s2b_ard_granule_nbar_t&#34;: 12,
+            &#34;ga_ls_landcover&#34;: 2,
+            &#34;ga_ls_landcover_descriptors&#34;: 5,
+            &#34;ga_ls_fc_3&#34;: 4,
+            &#34;ga_ls_fc_pc_cyear_3&#34;: 10,
+            &#34;ga_ls_mangrove_cover_cyear_3&#34;: 1,
+            &#34;s2_barest_earth&#34;: 10,
+            &#34;ls8_barest_earth_mosaic&#34;: 6,
+            &#34;landsat_barest_earth&#34;: 6,
+            &#34;ga_ls_tcw_percentiles_2&#34;: 3,
+            &#34;ga_ls_tc_pc_cyear_3&#34;: 9,
+            &#34;ga_ls_wo_3&#34;: 1,
+            &#34;ga_ls_wo_fq_myear_3&#34;: 3,
+            &#34;ga_ls_wo_fq_cyear_3&#34;: 3,
+            &#34;ga_ls_wo_fq_apr_oct_3&#34;: 3,
+            &#34;ga_ls_wo_fq_nov_mar_3&#34;: 3,
+            &#34;wofs_filtered_summary&#34;: 2,
+            &#34;wofs_summary_clear&#34;: 3,
+            &#34;wofs_summary_wet&#34;: 3,
+            &#34;Water Observations from Space Statistics&#34;: 3,
+            &#34;wofs_filtered_summary_confidence&#34;: 2,
+            &#34;ITEM_V2.0.0&#34;: 1,
+            &#34;ITEM_V2.0.0_Conf&#34;: 1,
+            &#34;NIDEM&#34;: 1,
+            &#34;high_tide_composite&#34;: 6,
+            &#34;low_tide_composite&#34;: 6,
+            &#34;ga_s2_ba_provisional_3&#34;: None,
+            &#34;alos_displacement&#34;: 4,
+            &#34;alos_velocity&#34;: 4,
+            &#34;envisat_displacement&#34;: 4,
+            &#34;envisat_velocity&#34;: 4,
+            &#34;radarsat2_displacement&#34;: 4,
+            &#34;radarsat2_velocity&#34;: 4,
+            &#34;aster_false_colour&#34;: 3,
+            &#34;aster_regolith_ratios&#34;: 3,
+            &#34;aster_aloh_group_composition&#34;: 1,
+            &#34;aster_aloh_group_content&#34;: 1,
+            &#34;aster_feoh_group_content&#34;: 1,
+            &#34;aster_ferric_oxide_composition&#34;: 1,
+            &#34;aster_ferric_oxide_content&#34;: 1,
+            &#34;aster_ferrous_iron_content_in_mgoh&#34;: 1,
+            &#34;aster_ferrous_iron_index&#34;: 1,
+            &#34;aster_green_vegetation&#34;: 1,
+            &#34;aster_gypsum_index&#34;: 1,
+            &#34;aster_kaolin_group_index&#34;: 1,
+            &#34;aster_mgoh_group_composition&#34;: 1,
+            &#34;aster_mgoh_group_content&#34;: 1,
+            &#34;aster_opaque_index&#34;: 1,
+            &#34;aster_silica_index&#34;: 1,
+            &#34;aster_quartz_index&#34;: 1,
+            &#34;multi_scale_topographic_position&#34;: 3,
+            &#34;weathering_intensity&#34;: 1,
+        },
+        &#34;date_limits&#34;: {
+            &#34;ga_ls_ard_3&#34;: [&#34;1986-08-16&#34;, &#34;2022-09-05&#34;],
+            &#34;s2_nrt_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2_ard_granule_nbar_t&#34;: [&#34;2015-07-12&#34;, &#34;2022-09-13&#34;],
+            &#34;ga_ls8c_nbart_gm_cyear_3&#34;: [&#34;2013-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls7e_nbart_gm_cyear_3&#34;: [&#34;1999-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls5t_nbart_gm_cyear_3&#34;: [&#34;1986-01-01&#34;, &#34;2011-01-01&#34;],
+            &#34;ga_ls8c_ard_3&#34;: [&#34;2013-03-19&#34;, &#34;2022-09-05&#34;],
+            &#34;ga_ls7e_ard_3&#34;: [&#34;1999-05-28&#34;, &#34;2022-04-06&#34;],
+            &#34;ga_ls5t_ard_3&#34;: [&#34;1986-08-16&#34;, &#34;2011-11-17&#34;],
+            &#34;ga_ls8c_ard_provisional_3&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;ga_ls7e_ard_provisional_3&#34;: [&#34;2022-06-22&#34;, &#34;2022-08-24&#34;],
+            &#34;ga_ls_ard_provisional_3&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2b_nrt_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2a_nrt_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2_nrt_provisional_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2b_nrt_provisional_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2a_nrt_provisional_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2a_ard_granule_nbar_t&#34;: [&#34;2015-07-12&#34;, &#34;2022-09-13&#34;],
+            &#34;s2b_ard_granule_nbar_t&#34;: [&#34;2017-06-30&#34;, &#34;2022-09-13&#34;],
+            &#34;ga_ls_landcover&#34;: [&#34;1988-01-01&#34;, &#34;2020-01-01&#34;],
+            &#34;ga_ls_landcover_descriptors&#34;: [&#34;1988-01-01&#34;, &#34;2020-01-01&#34;],
+            &#34;ga_ls_fc_3&#34;: [&#34;1986-08-16&#34;, &#34;2022-09-05&#34;],
+            &#34;ga_ls_fc_pc_cyear_3&#34;: [&#34;1987-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls_mangrove_cover_cyear_3&#34;: [&#34;1987-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;s2_barest_earth&#34;: [&#34;2017-01-01&#34;, &#34;2017-01-01&#34;],
+            &#34;ls8_barest_earth_mosaic&#34;: [&#34;2013-01-01&#34;, &#34;2013-01-01&#34;],
+            &#34;landsat_barest_earth&#34;: [&#34;1980-01-01&#34;, &#34;1980-01-01&#34;],
+            &#34;ga_ls_tcw_percentiles_2&#34;: [&#34;1987-01-01&#34;, &#34;1987-01-01&#34;],
+            &#34;ga_ls_tc_pc_cyear_3&#34;: [&#34;1987-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls_wo_3&#34;: [&#34;1986-08-16&#34;, &#34;2022-09-05&#34;],
+            &#34;ga_ls_wo_fq_myear_3&#34;: [&#34;1986-01-01&#34;, &#34;1986-01-01&#34;],
+            &#34;ga_ls_wo_fq_cyear_3&#34;: [&#34;1986-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls_wo_fq_apr_oct_3&#34;: [&#34;1986-04-01&#34;, &#34;2021-04-01&#34;],
+            &#34;ga_ls_wo_fq_nov_mar_3&#34;: [&#34;1987-11-01&#34;, &#34;2021-11-01&#34;],
+            &#34;wofs_filtered_summary&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;wofs_summary_clear&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;wofs_summary_wet&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;Water Observations from Space Statistics&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;wofs_filtered_summary_confidence&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;ITEM_V2.0.0&#34;: [&#34;1986-01-01&#34;, &#34;1986-01-01&#34;],
+            &#34;ITEM_V2.0.0_Conf&#34;: [&#34;1986-01-01&#34;, &#34;1986-01-01&#34;],
+            &#34;NIDEM&#34;: [&#34;1986-01-01&#34;, &#34;1986-01-01&#34;],
+            &#34;high_tide_composite&#34;: [&#34;2000-01-01&#34;, &#34;2000-01-01&#34;],
+            &#34;low_tide_composite&#34;: [&#34;2000-01-01&#34;, &#34;2000-01-01&#34;],
+            &#34;ga_s2_ba_provisional_3&#34;: [&#34;2021-10-01&#34;, &#34;2022-09-19&#34;],
+            &#34;alos_displacement&#34;: [&#34;2008-02-11&#34;, &#34;2010-10-22&#34;],
+            &#34;alos_velocity&#34;: [&#34;2009-06-15&#34;, &#34;2009-06-15&#34;],
+            &#34;envisat_displacement&#34;: [&#34;2006-06-26&#34;, &#34;2010-08-28&#34;],
+            &#34;envisat_velocity&#34;: [&#34;2008-06-15&#34;, &#34;2008-06-15&#34;],
+            &#34;radarsat2_displacement&#34;: [&#34;2015-07-15&#34;, &#34;2019-05-31&#34;],
+            &#34;radarsat2_velocity&#34;: [&#34;2017-06-15&#34;, &#34;2017-06-15&#34;],
+            &#34;aster_false_colour&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_regolith_ratios&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_aloh_group_composition&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_aloh_group_content&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_feoh_group_content&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_ferric_oxide_composition&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_ferric_oxide_content&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_ferrous_iron_content_in_mgoh&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_ferrous_iron_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_green_vegetation&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_gypsum_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_kaolin_group_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_mgoh_group_composition&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_mgoh_group_content&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_opaque_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_silica_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_quartz_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;multi_scale_topographic_position&#34;: [&#34;2018-01-01&#34;, &#34;2018-01-01&#34;],
+            &#34;weathering_intensity&#34;: [&#34;2018-01-01&#34;, &#34;2018-01-01&#34;],
+        },
+    }
+    return deadict
+
+
+def getdict_license():
+    &#34;&#34;&#34;
+    Retrieves the DEA data license and NCI attribution information as dict
+    &#34;&#34;&#34;
+    dict = {
+        &#34;name&#34;: &#34;Digital Earth Australia (DEA) Geoscience Earth Observations&#34;,
+        &#34;source_url&#34;: &#34;https://docs.dea.ga.gov.au/notebooks/DEA_datasets/DEA_Landsat_Surface_Reflectance.html&#34;,
+        &#34;license&#34;: &#34;CC BY 4.0&#34;,
+        &#34;license_title&#34;: &#34;Creative Commons Attribution 4.0 International (CC BY 4.0)&#34;,
+        &#34;license_url&#34;: &#34;https://creativecommons.org/licenses/by/4.0/&#34;,
+        &#34;copyright&#34;: &#34;© Copyright 2017-2022, Geoscience Australia&#34;,
+        &#34;attribution&#34;: &#34;Digital Earth Australia (DEA)&#34;,
+    }
+    return dict
+
+
+def getdict_cloudmask():
+    &#34;&#34;&#34;
+    return dict of cloud mask
+    &#34;&#34;&#34;
+    oa_fmask = {
+        &#34;0&#34;: &#34;nodata&#34;,
+        &#34;1&#34;: &#34;valid&#34;,
+        &#34;2&#34;: &#34;cloud&#34;,
+        &#34;3&#34;: &#34;shadow&#34;,
+        &#34;4&#34;: &#34;snow&#34;,
+        &#34;5&#34;: &#34;water&#34;,
+    }
+    return oa_fmask
+
+
+def plot_raster(infname):
+    &#34;&#34;&#34;
+    Read in raster tif with rasterio and visualise as map.
+
+    Parameters
+    ----------
+    infname : str
+    &#34;&#34;&#34;
+    data = rasterio.open(infname)
+    # show image
+    show(data)
+
+
+def get_capabilities(url):
+    &#34;&#34;&#34;
+    Get capabilities from WCS layer.
+
+    Parameters
+    ----------
+    url : str
+        layer url
+
+    Returns
+    -------
+    keys    : list
+        layer identifiers
+    titles  : list  of str
+        layer titles
+    descriptions : list of str
+        layer descriptions
+    bboxs   : list of floats
+        layer bounding boxes
+    &#34;&#34;&#34;
+
+    # Create WCS object
+    wcs = WebCoverageService(url, timeout=300)
+
+    # Get coverages and content dict keys
+    content = wcs.contents
+    keys = content.keys()
+
+    print(&#34;Following data layers are available:&#34;)
+    title_list = []
+    description_list = []
+    bbox_list = []
+    timelimits = []
+    for key in keys:
+        print(f&#34;key: {key}&#34;)
+        print(f&#34;title: {wcs[key].title}&#34;)
+        title_list.append(wcs[key].title)
+        print(f&#34;{wcs[key].abstract}&#34;)
+        description_list.append(wcs[key].abstract)
+        print(f&#34;bounding box: {wcs[key].boundingBoxWGS84}&#34;)
+        bbox_list.append(wcs[key].boundingBoxWGS84)
+        print(f&#34;timelimits: {wcs[key].timelimits}&#34;)
+        timelimits.append(wcs[key].timelimits)
+        print(&#34;&#34;)
+    nbands = []
+    # Get number of bands (need to retrieve small subset)
+    bbox = [130, -30.2, 130.2, -30]
+    print(&#34;Requesting number of bands for each key...&#34;)
+    for key in keys:
+        try:
+            response = wcs.getCoverage(
+                identifier=key,
+                bbox=bbox,
+                format=&#34;GeoTIFF&#34;,
+                crs=&#34;EPSG:4326&#34;,
+                width=4,
+                height=4,
+                Styles=&#34;tc&#34;,
+            )
+            with MemoryFile(response) as memfile:
+                with memfile.open() as dataset:
+                    nband = dataset.count
+            print(f&#34;{key} has {nband} bands.&#34;)
+        except:
+            print(f&#34;{key} failed to download&#34;)
+            nband = None
+        nbands.append(nband)
+    return keys, title_list, description_list, bbox_list, timelimits, nbands
+
+
+def write_deadict():
+    &#34;&#34;&#34;
+    Generates new DEA dictionary from crawling WCS url
+    &#34;&#34;&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    (
+        keys,
+        title_list,
+        description_list,
+        bbox_list,
+        timelimits,
+        nbands,
+    ) = get_capabilities(url)
+
+    deadict = {&#34;resolution_arcsec&#34;: 1}
+    layernames = {}
+    n_bands = {}
+    date_limits = {}
+    deadict[&#34;resolution_arcsec&#34;] = 1
+    for i in range(len(keys)):
+        layernames[keys[i]] = title_list[i]
+        n_bands[keys[i]] = nbands[i]
+        date_limits[keys[i]] = timelimits[i]
+
+    deadict[&#34;layernames&#34;] = layernames
+    deadict[&#34;n_bands&#34;] = n_bands
+    deadict[&#34;date_limits&#34;] = date_limits
+    return deadict
+
+
+def get_times(url, layername, year=None):
+    &#34;&#34;&#34;
+    Return available dates for layer.
+
+    Parameters
+    ----------
+    url: str, layer url
+    layername: str, name of layer id
+    year: int or str, year of interest (if None, times for all available years are returned)
+
+    Return
+    ------
+    list of dates
+    &#34;&#34;&#34;
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+    times = wcs[layername].timepositions
+    if year is None:
+        return times
+    else:
+        year = int(year)
+        dates = []
+        for time in times:
+            if datetime.fromisoformat(time[:-1]).astimezone(timezone.utc).year == year:
+                dates.append(time)
+        return dates
+
+
+def get_times_startend(url, layername, dt_start, dt_end):
+    &#34;&#34;&#34;
+    Return all available images datetimes for layer in range
+    between start and end date.
+
+    Parameters
+    ----------
+    url: str, layer url
+    layername: str, name of layer id
+    dt_start: str, start date in dateformat YYYY-MM-DD
+    dt_end: str, end date in dateformat YYYY-MM-DD
+
+    Return
+    ------
+    list of dates
+    &#34;&#34;&#34;
+    # Convert to datetimes
+    dt_start = datetime.strptime(dt_start, &#34;%Y-%m-%d&#34;)
+    dt_end = datetime.strptime(dt_end, &#34;%Y-%m-%d&#34;)
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+    times = wcs[layername].timepositions
+    dates = []
+    for time in times:
+        dt = datetime.fromisoformat(time[:-1])
+        if (dt &gt;= dt_start) &amp; (dt &lt;= dt_end):
+            dates.append(time)
+    return dates
+
+
+def get_wcsmap(
+    outfname,
+    layername,
+    bbox,
+    date,
+    resolution,
+    url,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+):
+    &#34;&#34;&#34;
+    Download and save geotiff from WCS layer.
+
+    Parameters
+    ----------
+    outfname : str
+        output file name
+    layername : str
+        layer identifier
+    bbox : list
+        layer bounding box
+    date : str
+        datetime
+    resolution : int
+        layer resolution in arcsec
+    url : str
+        url of wcs server
+    crs: str
+        crsm default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    Exited ok: boolean
+    &#34;&#34;&#34;
+
+    # If the resolution passed is None, set to native resolution of datasource
+    if resolution is None:
+        resolution = get_deadict()[&#34;resolution_arcsec&#34;]
+
+    # Convert resolution into width and height pixel number
+    width = abs(bbox[2] - bbox[0])
+    height = abs(bbox[3] - bbox[1])
+    nwidth = int(width / resolution * 3600)
+    nheight = int(height / resolution * 3600)
+    # Get data
+    if os.path.exists(outfname):
+        utils.msg_warn(f&#34;{layername}.tif already exists, skipping download&#34;)
+    else:
+        try:
+            with spin(f&#34;Downloading {layername}.tif for {date}&#34;) as s:
+                wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+                if date == &#34;None&#34;:
+                    data = wcs.getCoverage(
+                        identifier=layername,
+                        bbox=bbox,
+                        format=format_out,
+                        crs=crs,
+                        width=nwidth,
+                        height=nheight,
+                        Styles=&#34;tc&#34;,
+                    )
+                else:
+                    data = wcs.getCoverage(
+                        identifier=layername,
+                        time=[date],
+                        bbox=bbox,
+                        format=format_out,
+                        crs=crs,
+                        width=nwidth,
+                        height=nheight,
+                        Styles=&#34;tc&#34;,
+                    )
+                s(1)
+        except:
+            utils.msg_err(&#34;Download failed&#34;)
+            return False
+        # Save data
+        with open(outfname, &#34;wb&#34;) as f:
+            f.write(data.read())
+    return True
+
+
+def get_dea_layers(
+    layernames,
+    years,
+    bbox,
+    resolution,
+    outpath,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Get all images for all layers and all years.
+    Downloaded images are saved in outpath.
+
+    Parameters
+    ----------
+    layernames : list of strings
+        layer identifiers
+    years : list
+        years, e.g. [2019, 2020]
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    outpath : str
+        output directory
+    crs: str
+        crs, default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    list of output filenames for each layer
+    &#34;&#34;&#34;
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    # Check if input is list
+    if not (isinstance(years, tuple) | isinstance(years, list)):
+        years = [years]
+    if not (isinstance(layernames, tuple) | isinstance(layernames, list)):
+        layernames = [layernames]
+    # Loop over layernames
+    # logging.print(&#34;Processing DEA...&#34;)
+    fnames_out = []
+    for layername in layernames:
+        # save for each layer
+        outfnames = []
+        for year in years:
+            outfnames += get_dea_images(
+                layername,
+                year,
+                bbox,
+                resolution,
+                outpath,
+                crs=crs,
+                format_out=format_out,
+            )
+        fnames_out += outfnames
+    # logging.print(f&#34;DEA download(s) complete (saved to: {outpath})&#34;)
+    return fnames_out
+
+
+def get_dea_layers_daterange(
+    layernames,
+    date_start,
+    date_end,
+    bbox,
+    resolution,
+    outpath,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Get all images for all layers and all dates between start_date and end_date.
+    Downloaded images are saved in outpath.
+
+    Parameters
+    ----------
+    layernames : list of strings
+        layer identifiers
+    date_start : str
+        start date in dateformat YYYY-MM-DD
+    date_end : str
+        end date in dateformat YYYY-MM-DD
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    outpath : str
+        output directory
+    crs: str
+        crs, default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    list of output filenames for each layer
+    &#34;&#34;&#34;
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    # Check if input is list
+    if not (isinstance(layernames, tuple) | isinstance(layernames, list)):
+        layernames = [layernames]
+    # Loop over layernames
+    # logging.print(&#34;Processing DEA...&#34;)
+    fnames_out = []
+    for layername in layernames:
+        # save for each layer
+        fnames_out += get_dea_images_daterange(
+            layername,
+            date_start,
+            date_end,
+            bbox,
+            resolution,
+            outpath,
+            crs=crs,
+            format_out=format_out,
+        )
+    # logging.print(f&#34;DEA download(s) complete (saved to: {outpath})&#34;)
+    return fnames_out
+
+
+def get_dea_images(
+    layername,
+    year,
+    bbox,
+    resolution,
+    outpath,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Get all satellite images from DEA for a given layer and year.
+    Downloaded images are saved either as GeoTIFF or NetCDF.
+
+    Parameters
+    ----------
+    layername : str
+        layer identifier
+    year : str
+        selected year for images
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    outpath : str
+        output directory
+    crs: str
+        crs, default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    Exited ok: boolean
+    &#34;&#34;&#34;
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    os.makedirs(outpath, exist_ok=True)
+
+    # URL
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+
+    # Check if layername is defined
+    dict_dea = get_deadict()
+    if layername not in dict_dea[&#34;layernames&#34;]:
+        print(
+            f&#34;△ | {layername} not a DEA layer. Please select one of the following:&#34;)
+        for key in dict_dea:
+            print(key)
+
+    # Get available timecoverage
+    try:
+        times = get_times(url, layername)
+    except Exception as e:
+        logging.error(f&#34;Exception in timecoverage request with error {e}&#34;)
+        return False
+
+    # Convert times to datetime and select dates that are within the choosen year
+    datetimes = []
+    dates = []
+    year = int(year)
+    if len(dates) == 0:
+        dates = [&#34;None&#34;]
+    # Download images for all dates in year
+    outfnames = []
+    for date in dates:
+        if format_out == &#34;GeoTIFF&#34;:
+            fname_end = &#34;.tif&#34;
+        elif format_out == &#34;NetCDF&#34;:
+            fname_end = &#34;.nc&#34;
+        else:
+            logging.print(
+                f&#34;△ | {format_out} not supported. Choose either GeoTIFF or NetCDF.&#34;
+            )
+        if date == &#34;None&#34;:
+            fname_out = f&#34;{layername}{fname_end}&#34;
+            outfname = os.path.join(outpath, fname_out)
+        else:
+            datestring = datetime.fromisoformat(
+                date[:-1]).astimezone(timezone.utc)
+            fname_out = f&#34;{layername}_{datestring.year}-{datestring.month}-{datestring.day}{fname_end}&#34;
+        outfname = os.path.join(outpath, fname_out)
+        if os.path.exists(outfname):
+            outfnames.append(outfname)
+        # Get data
+        download_ok = get_wcsmap(
+            outfname,
+            layername,
+            bbox,
+            date,
+            resolution,
+            url,
+            crs=crs,
+            format_out=format_out,
+        )
+        # Log download success message if file does not already exist
+        if download_ok:
+            # outfnames.append(outfname)
+            pass
+        else:
+            cprint(f&#34;✘ {layername} for date {date} failed to download&#34;, &#34;red&#34;)
+    # return [item for sublist in outfnames for item in sublist]
+    return outfnames
+
+
+def get_dea_images_daterange(
+    layername,
+    date_min,
+    date_max,
+    bbox,
+    resolution,
+    outpath,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Get all satellite images from DEA for a given layer and year.
+    Downloaded images are saved either as GeoTIFF or NetCDF.
+
+    Parameters
+    ----------
+    layername : str
+        layer identifier
+    date_min : str
+        start datetime string for images (format: YYYY-MM-DD)
+    date_max : str
+        end datetime string for images (format: YYYY-MM-DD)
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    outpath : str
+        output directory
+    crs: str
+        crs, default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    Exited ok: boolean
+    &#34;&#34;&#34;
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    os.makedirs(outpath, exist_ok=True)
+
+    # URL
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+
+    # Check if layername is defined
+    dict_dea = get_deadict()
+    if layername not in dict_dea[&#34;layernames&#34;]:
+        print(
+            f&#34;△ | {layername} not a DEA layer. Please select one of the following:&#34;)
+        for key in dict_dea:
+            print(key)
+
+    # Get available timecoverage
+    try:
+        dates = get_times_startend(url, layername, date_min, date_max)
+    except Exception as e:
+        logging.error(f&#34;Exception in timecoverage request with error {e}&#34;)
+        return False
+
+    if len(dates) == 0:
+        dates = [&#34;None&#34;]
+    # Download images for all dates in year
+    outfnames = []
+    for date in dates:
+        if format_out == &#34;GeoTIFF&#34;:
+            fname_end = &#34;.tif&#34;
+        elif format_out == &#34;NetCDF&#34;:
+            fname_end = &#34;.nc&#34;
+        else:
+            logging.print(
+                f&#34;△ | {format_out} not supported. Choose either GeoTIFF or NetCDF.&#34;
+            )
+        if date == &#34;None&#34;:
+            fname_out = f&#34;{layername}{fname_end}&#34;
+            outfname = os.path.join(outpath, fname_out)
+        else:
+            datestring = datetime.fromisoformat(
+                date[:-1]).astimezone(timezone.utc)
+            fname_out = f&#34;{layername}_{datestring.year}-{datestring.month}-{datestring.day}{fname_end}&#34;
+        outfname = os.path.join(outpath, fname_out)
+        # Get data
+        download_ok = get_wcsmap(
+            outfname,
+            layername,
+            bbox,
+            date,
+            resolution,
+            url,
+            crs=crs,
+            format_out=format_out,
+        )
+        # Log download success message if file does not already exist
+        if download_ok:
+            outfnames.append(outfname)
+        else:
+            cprint(f&#34;✘ {layername} for date {date} failed to download&#34;, &#34;red&#34;)
+    return outfnames
+
+
+### Some test functions ###
+
+
+def test_get_capabilities():
+    &#34;&#34;&#34;
+    Test script to retrieve WCS capabilities
+    &#34;&#34;&#34;
+    # DEA layer
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    # Get capabilities
+    keys, title_list, description_list, bbox_list, timelimits, nbands = get_capabilities(url)
+    assert len(keys) &gt; 0
+    print(&#39;Test passed&#39;)
+
+
+def test_get_times():
+    &#34;&#34;&#34;
+    Test script to retrieve available times for a layer
+    &#34;&#34;&#34;
+    layername = &#34;ga_ls8c_ard_3&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    times = get_times(url, layername)
+    assert len(times) &gt; 0
+    print(&#39;Test passed&#39;)
+
+
+def test_get_times_startend():
+    &#34;&#34;&#34;
+    Test script to retrieve available times for a layer
+    &#34;&#34;&#34;
+    layername = &#34;ga_ls8c_ard_3&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    dt_start = &#34;2020-01-01&#34;
+    dt_end = &#34;2020-02-20&#34;
+    times = get_times_startend(url, layername, dt_start, dt_end)
+    assert len(times) &gt; 0
+    print(&#39;Test passed&#39;)
+
+
+def test_get_wcsmap():
+    &#34;&#34;&#34;
+    Test script to retrieve and save image for one layer and date
+    &#34;&#34;&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    layername = &#34;ga_ls8c_ard_3&#34;
+    times = get_times(url, layername)
+    crs = &#34;EPSG:4326&#34;  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = [130, -40, 150, -20]
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # get latest image
+    time = times[-1]
+    # define output file name
+    fname_out = f&#34;test_{layername}_{time}.tif&#34;
+    # Get data
+    download_ok = get_wcsmap(fname_out, layername, bbox, time, resolution, url)
+    assert download_ok
+    print(&#39;Test passed&#39;)
+
+
+def test_get_dea_images():
+    &#34;&#34;&#34;
+    Test script to retrieve and save images for a given year
+    &#34;&#34;&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    # Get data (here only for first layer)
+    layername = &#34;ga_ls8c_ard_3&#34;
+    # Crs for output
+    crs = &#34;EPSG:4326&#34;  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = [120, -40, 140, -20]
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # define year
+    year = 2019
+    # define outpath
+    outpath = &#34;test_dea&#34;
+    # Get data
+    outfnames = get_dea_images(
+        layername, year, bbox, resolution, outpath, crs=crs)
+    assert len(outfnames) &gt; 0
+    print(&#39;Test passed&#39;)
+
+
+def test_get_dea_images_daterange():
+    &#34;&#34;&#34;
+    Test script to retrieve and save images for a given year
+    &#34;&#34;&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    # Get data (here only for first layer)
+    layername = &#34;ga_ls8c_ard_3&#34;
+    # Crs for output
+    crs = &#34;EPSG:4326&#34;  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = [120, -40, 140, -20]
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # define daterange
+    date_min = &#39;2019-01-01&#39;
+    date_max = &#39;2019-01-10&#39;
+    # define outpath
+    outpath = &#34;test_dea&#34;
+    # Get data
+    outfnames = get_dea_images_daterange(
+        layername, date_min, date_max, bbox, resolution, outpath, crs=crs)
+    assert len(outfnames) &gt; 0
+    print(&#39;Test passed&#39;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="geodata_harvester.getdata_dea.get_capabilities"><code class="name flex">
+<span>def <span class="ident">get_capabilities</span></span>(<span>url)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get capabilities from WCS layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>layer url</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>keys
+: list</code></dt>
+<dd>layer identifiers</dd>
+<dt><code>titles
+: list</code>
+of <code>str</code></dt>
+<dd>layer titles</dd>
+<dt><strong><code>descriptions</code></strong> :&ensp;<code>list</code> of <code>str</code></dt>
+<dd>layer descriptions</dd>
+<dt><code>bboxs
+: list</code> of <code>floats</code></dt>
+<dd>layer bounding boxes</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_capabilities(url):
+    &#34;&#34;&#34;
+    Get capabilities from WCS layer.
+
+    Parameters
+    ----------
+    url : str
+        layer url
+
+    Returns
+    -------
+    keys    : list
+        layer identifiers
+    titles  : list  of str
+        layer titles
+    descriptions : list of str
+        layer descriptions
+    bboxs   : list of floats
+        layer bounding boxes
+    &#34;&#34;&#34;
+
+    # Create WCS object
+    wcs = WebCoverageService(url, timeout=300)
+
+    # Get coverages and content dict keys
+    content = wcs.contents
+    keys = content.keys()
+
+    print(&#34;Following data layers are available:&#34;)
+    title_list = []
+    description_list = []
+    bbox_list = []
+    timelimits = []
+    for key in keys:
+        print(f&#34;key: {key}&#34;)
+        print(f&#34;title: {wcs[key].title}&#34;)
+        title_list.append(wcs[key].title)
+        print(f&#34;{wcs[key].abstract}&#34;)
+        description_list.append(wcs[key].abstract)
+        print(f&#34;bounding box: {wcs[key].boundingBoxWGS84}&#34;)
+        bbox_list.append(wcs[key].boundingBoxWGS84)
+        print(f&#34;timelimits: {wcs[key].timelimits}&#34;)
+        timelimits.append(wcs[key].timelimits)
+        print(&#34;&#34;)
+    nbands = []
+    # Get number of bands (need to retrieve small subset)
+    bbox = [130, -30.2, 130.2, -30]
+    print(&#34;Requesting number of bands for each key...&#34;)
+    for key in keys:
+        try:
+            response = wcs.getCoverage(
+                identifier=key,
+                bbox=bbox,
+                format=&#34;GeoTIFF&#34;,
+                crs=&#34;EPSG:4326&#34;,
+                width=4,
+                height=4,
+                Styles=&#34;tc&#34;,
+            )
+            with MemoryFile(response) as memfile:
+                with memfile.open() as dataset:
+                    nband = dataset.count
+            print(f&#34;{key} has {nband} bands.&#34;)
+        except:
+            print(f&#34;{key} failed to download&#34;)
+            nband = None
+        nbands.append(nband)
+    return keys, title_list, description_list, bbox_list, timelimits, nbands</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.get_dea_images"><code class="name flex">
+<span>def <span class="ident">get_dea_images</span></span>(<span>layername, year, bbox, resolution, outpath, crs='EPSG:4326', format_out='GeoTIFF', verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get all satellite images from DEA for a given layer and year.
+Downloaded images are saved either as GeoTIFF or NetCDF.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>layername</code></strong> :&ensp;<code>str</code></dt>
+<dd>layer identifier</dd>
+<dt><strong><code>year</code></strong> :&ensp;<code>str</code></dt>
+<dd>selected year for images</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec</dd>
+<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>output directory</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crs, default 'EPSG:4326'</dd>
+<dt><strong><code>format</code></strong> :&ensp;<code>str</code></dt>
+<dd>output format, either "GeoTIFF" or "NetCDF"</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>Exited ok: boolean</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dea_images(
+    layername,
+    year,
+    bbox,
+    resolution,
+    outpath,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Get all satellite images from DEA for a given layer and year.
+    Downloaded images are saved either as GeoTIFF or NetCDF.
+
+    Parameters
+    ----------
+    layername : str
+        layer identifier
+    year : str
+        selected year for images
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    outpath : str
+        output directory
+    crs: str
+        crs, default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    Exited ok: boolean
+    &#34;&#34;&#34;
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    os.makedirs(outpath, exist_ok=True)
+
+    # URL
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+
+    # Check if layername is defined
+    dict_dea = get_deadict()
+    if layername not in dict_dea[&#34;layernames&#34;]:
+        print(
+            f&#34;△ | {layername} not a DEA layer. Please select one of the following:&#34;)
+        for key in dict_dea:
+            print(key)
+
+    # Get available timecoverage
+    try:
+        times = get_times(url, layername)
+    except Exception as e:
+        logging.error(f&#34;Exception in timecoverage request with error {e}&#34;)
+        return False
+
+    # Convert times to datetime and select dates that are within the choosen year
+    datetimes = []
+    dates = []
+    year = int(year)
+    if len(dates) == 0:
+        dates = [&#34;None&#34;]
+    # Download images for all dates in year
+    outfnames = []
+    for date in dates:
+        if format_out == &#34;GeoTIFF&#34;:
+            fname_end = &#34;.tif&#34;
+        elif format_out == &#34;NetCDF&#34;:
+            fname_end = &#34;.nc&#34;
+        else:
+            logging.print(
+                f&#34;△ | {format_out} not supported. Choose either GeoTIFF or NetCDF.&#34;
+            )
+        if date == &#34;None&#34;:
+            fname_out = f&#34;{layername}{fname_end}&#34;
+            outfname = os.path.join(outpath, fname_out)
+        else:
+            datestring = datetime.fromisoformat(
+                date[:-1]).astimezone(timezone.utc)
+            fname_out = f&#34;{layername}_{datestring.year}-{datestring.month}-{datestring.day}{fname_end}&#34;
+        outfname = os.path.join(outpath, fname_out)
+        if os.path.exists(outfname):
+            outfnames.append(outfname)
+        # Get data
+        download_ok = get_wcsmap(
+            outfname,
+            layername,
+            bbox,
+            date,
+            resolution,
+            url,
+            crs=crs,
+            format_out=format_out,
+        )
+        # Log download success message if file does not already exist
+        if download_ok:
+            # outfnames.append(outfname)
+            pass
+        else:
+            cprint(f&#34;✘ {layername} for date {date} failed to download&#34;, &#34;red&#34;)
+    # return [item for sublist in outfnames for item in sublist]
+    return outfnames</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.get_dea_images_daterange"><code class="name flex">
+<span>def <span class="ident">get_dea_images_daterange</span></span>(<span>layername, date_min, date_max, bbox, resolution, outpath, crs='EPSG:4326', format_out='GeoTIFF', verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get all satellite images from DEA for a given layer and year.
+Downloaded images are saved either as GeoTIFF or NetCDF.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>layername</code></strong> :&ensp;<code>str</code></dt>
+<dd>layer identifier</dd>
+<dt><strong><code>date_min</code></strong> :&ensp;<code>str</code></dt>
+<dd>start datetime string for images (format: YYYY-MM-DD)</dd>
+<dt><strong><code>date_max</code></strong> :&ensp;<code>str</code></dt>
+<dd>end datetime string for images (format: YYYY-MM-DD)</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec</dd>
+<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>output directory</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crs, default 'EPSG:4326'</dd>
+<dt><strong><code>format</code></strong> :&ensp;<code>str</code></dt>
+<dd>output format, either "GeoTIFF" or "NetCDF"</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>Exited ok: boolean</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dea_images_daterange(
+    layername,
+    date_min,
+    date_max,
+    bbox,
+    resolution,
+    outpath,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Get all satellite images from DEA for a given layer and year.
+    Downloaded images are saved either as GeoTIFF or NetCDF.
+
+    Parameters
+    ----------
+    layername : str
+        layer identifier
+    date_min : str
+        start datetime string for images (format: YYYY-MM-DD)
+    date_max : str
+        end datetime string for images (format: YYYY-MM-DD)
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    outpath : str
+        output directory
+    crs: str
+        crs, default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    Exited ok: boolean
+    &#34;&#34;&#34;
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    os.makedirs(outpath, exist_ok=True)
+
+    # URL
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+
+    # Check if layername is defined
+    dict_dea = get_deadict()
+    if layername not in dict_dea[&#34;layernames&#34;]:
+        print(
+            f&#34;△ | {layername} not a DEA layer. Please select one of the following:&#34;)
+        for key in dict_dea:
+            print(key)
+
+    # Get available timecoverage
+    try:
+        dates = get_times_startend(url, layername, date_min, date_max)
+    except Exception as e:
+        logging.error(f&#34;Exception in timecoverage request with error {e}&#34;)
+        return False
+
+    if len(dates) == 0:
+        dates = [&#34;None&#34;]
+    # Download images for all dates in year
+    outfnames = []
+    for date in dates:
+        if format_out == &#34;GeoTIFF&#34;:
+            fname_end = &#34;.tif&#34;
+        elif format_out == &#34;NetCDF&#34;:
+            fname_end = &#34;.nc&#34;
+        else:
+            logging.print(
+                f&#34;△ | {format_out} not supported. Choose either GeoTIFF or NetCDF.&#34;
+            )
+        if date == &#34;None&#34;:
+            fname_out = f&#34;{layername}{fname_end}&#34;
+            outfname = os.path.join(outpath, fname_out)
+        else:
+            datestring = datetime.fromisoformat(
+                date[:-1]).astimezone(timezone.utc)
+            fname_out = f&#34;{layername}_{datestring.year}-{datestring.month}-{datestring.day}{fname_end}&#34;
+        outfname = os.path.join(outpath, fname_out)
+        # Get data
+        download_ok = get_wcsmap(
+            outfname,
+            layername,
+            bbox,
+            date,
+            resolution,
+            url,
+            crs=crs,
+            format_out=format_out,
+        )
+        # Log download success message if file does not already exist
+        if download_ok:
+            outfnames.append(outfname)
+        else:
+            cprint(f&#34;✘ {layername} for date {date} failed to download&#34;, &#34;red&#34;)
+    return outfnames</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.get_dea_layers"><code class="name flex">
+<span>def <span class="ident">get_dea_layers</span></span>(<span>layernames, years, bbox, resolution, outpath, crs='EPSG:4326', format_out='GeoTIFF', verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get all images for all layers and all years.
+Downloaded images are saved in outpath.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>layernames</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>layer identifiers</dd>
+<dt><strong><code>years</code></strong> :&ensp;<code>list</code></dt>
+<dd>years, e.g. [2019, 2020]</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec</dd>
+<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>output directory</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crs, default 'EPSG:4326'</dd>
+<dt><strong><code>format</code></strong> :&ensp;<code>str</code></dt>
+<dd>output format, either "GeoTIFF" or "NetCDF"</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>list of output filenames for each layer</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dea_layers(
+    layernames,
+    years,
+    bbox,
+    resolution,
+    outpath,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Get all images for all layers and all years.
+    Downloaded images are saved in outpath.
+
+    Parameters
+    ----------
+    layernames : list of strings
+        layer identifiers
+    years : list
+        years, e.g. [2019, 2020]
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    outpath : str
+        output directory
+    crs: str
+        crs, default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    list of output filenames for each layer
+    &#34;&#34;&#34;
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    # Check if input is list
+    if not (isinstance(years, tuple) | isinstance(years, list)):
+        years = [years]
+    if not (isinstance(layernames, tuple) | isinstance(layernames, list)):
+        layernames = [layernames]
+    # Loop over layernames
+    # logging.print(&#34;Processing DEA...&#34;)
+    fnames_out = []
+    for layername in layernames:
+        # save for each layer
+        outfnames = []
+        for year in years:
+            outfnames += get_dea_images(
+                layername,
+                year,
+                bbox,
+                resolution,
+                outpath,
+                crs=crs,
+                format_out=format_out,
+            )
+        fnames_out += outfnames
+    # logging.print(f&#34;DEA download(s) complete (saved to: {outpath})&#34;)
+    return fnames_out</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.get_dea_layers_daterange"><code class="name flex">
+<span>def <span class="ident">get_dea_layers_daterange</span></span>(<span>layernames, date_start, date_end, bbox, resolution, outpath, crs='EPSG:4326', format_out='GeoTIFF', verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get all images for all layers and all dates between start_date and end_date.
+Downloaded images are saved in outpath.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>layernames</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>layer identifiers</dd>
+<dt><strong><code>date_start</code></strong> :&ensp;<code>str</code></dt>
+<dd>start date in dateformat YYYY-MM-DD</dd>
+<dt><strong><code>date_end</code></strong> :&ensp;<code>str</code></dt>
+<dd>end date in dateformat YYYY-MM-DD</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec</dd>
+<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>output directory</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crs, default 'EPSG:4326'</dd>
+<dt><strong><code>format</code></strong> :&ensp;<code>str</code></dt>
+<dd>output format, either "GeoTIFF" or "NetCDF"</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>list of output filenames for each layer</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dea_layers_daterange(
+    layernames,
+    date_start,
+    date_end,
+    bbox,
+    resolution,
+    outpath,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Get all images for all layers and all dates between start_date and end_date.
+    Downloaded images are saved in outpath.
+
+    Parameters
+    ----------
+    layernames : list of strings
+        layer identifiers
+    date_start : str
+        start date in dateformat YYYY-MM-DD
+    date_end : str
+        end date in dateformat YYYY-MM-DD
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    outpath : str
+        output directory
+    crs: str
+        crs, default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    list of output filenames for each layer
+    &#34;&#34;&#34;
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    # Check if input is list
+    if not (isinstance(layernames, tuple) | isinstance(layernames, list)):
+        layernames = [layernames]
+    # Loop over layernames
+    # logging.print(&#34;Processing DEA...&#34;)
+    fnames_out = []
+    for layername in layernames:
+        # save for each layer
+        fnames_out += get_dea_images_daterange(
+            layername,
+            date_start,
+            date_end,
+            bbox,
+            resolution,
+            outpath,
+            crs=crs,
+            format_out=format_out,
+        )
+    # logging.print(f&#34;DEA download(s) complete (saved to: {outpath})&#34;)
+    return fnames_out</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.get_deadict"><code class="name flex">
+<span>def <span class="ident">get_deadict</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns dictionary of keys and layer titles</p>
+<p>To update manually please run get_capabilities() to retrieve all current layer details</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_deadict():
+    &#34;&#34;&#34;
+    Returns dictionary of keys and layer titles
+
+    To update manually please run get_capabilities() to retrieve all current layer details
+    &#34;&#34;&#34;
+    deadict = {
+        &#34;resolution_arcsec&#34;: 1,
+        &#34;layernames&#34;: {
+            &#34;ga_ls_ard_3&#34;: &#34;DEA Surface Reflectance (Landsat)&#34;,
+            &#34;s2_nrt_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2 Near Real-Time)&#34;,
+            &#34;s2_ard_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2)&#34;,
+            &#34;ga_ls8c_nbart_gm_cyear_3&#34;: &#34;DEA GeoMAD (Landsat 8 OLI-TIRS)&#34;,
+            &#34;ga_ls7e_nbart_gm_cyear_3&#34;: &#34;DEA GeoMAD (Landsat 7 ETM+)&#34;,
+            &#34;ga_ls5t_nbart_gm_cyear_3&#34;: &#34;DEA GeoMAD (Landsat 5 TM)&#34;,
+            &#34;ga_ls8c_ard_3&#34;: &#34;DEA Surface Reflectance (Landsat 8 OLI-TIRS)&#34;,
+            &#34;ga_ls7e_ard_3&#34;: &#34;DEA Surface Reflectance (Landsat 7 ETM+)&#34;,
+            &#34;ga_ls5t_ard_3&#34;: &#34;DEA Surface Reflectance (Landsat 5 TM)&#34;,
+            &#34;ga_ls8c_ard_provisional_3&#34;: &#34;DEA Surface Reflectance (Landsat 8 OLI-TIRS, Provisional)&#34;,
+            &#34;ga_ls7e_ard_provisional_3&#34;: &#34;DEA Surface Reflectance (Landsat 7 ETM+, Provisional)&#34;,
+            &#34;ga_ls_ard_provisional_3&#34;: &#34;DEA Surface Reflectance (Landsat, Provisional)&#34;,
+            &#34;s2b_nrt_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2B MSI Near Real-Time)&#34;,
+            &#34;s2a_nrt_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2A MSI Near Real-Time)&#34;,
+            &#34;s2_nrt_provisional_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2, Provisional)&#34;,
+            &#34;s2b_nrt_provisional_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2B MSI, Provisional)&#34;,
+            &#34;s2a_nrt_provisional_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2A MSI, Provisional)&#34;,
+            &#34;s2a_ard_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2A MSI)&#34;,
+            &#34;s2b_ard_granule_nbar_t&#34;: &#34;DEA Surface Reflectance (Sentinel-2B MSI)&#34;,
+            &#34;ga_ls_landcover&#34;: &#34;DEA Land Cover Calendar Year (Landsat)&#34;,
+            &#34;ga_ls_landcover_descriptors&#34;: &#34;DEA Land Cover Environmental Descriptors&#34;,
+            &#34;ga_ls_fc_3&#34;: &#34;DEA Fractional Cover (Landsat)&#34;,
+            &#34;ga_ls_fc_pc_cyear_3&#34;: &#34;DEA Fractional Cover Percentiles Calendar Year (Landsat)&#34;,
+            &#34;ga_ls_mangrove_cover_cyear_3&#34;: &#34;DEA Mangroves (Landsat)&#34;,
+            &#34;s2_barest_earth&#34;: &#34;GA Barest Earth (Sentinel-2)&#34;,
+            &#34;ls8_barest_earth_mosaic&#34;: &#34;GA Barest Earth (Landsat 8 OLI/TIRS)&#34;,
+            &#34;landsat_barest_earth&#34;: &#34;GA Barest Earth (Landsat)&#34;,
+            &#34;ga_ls_tcw_percentiles_2&#34;: &#34;DEA Wetness Percentiles (Landsat)&#34;,
+            &#34;ga_ls_tc_pc_cyear_3&#34;: &#34;DEA Tasseled Cap Indices Percentiles Calendar Year (Landsat)&#34;,
+            &#34;ga_ls_wo_3&#34;: &#34;DEA Water Observations (Landsat)&#34;,
+            &#34;ga_ls_wo_fq_myear_3&#34;: &#34;DEA Water Observations Multi Year (Landsat)&#34;,
+            &#34;ga_ls_wo_fq_cyear_3&#34;: &#34;DEA Water Observations Calendar Year (Landsat)&#34;,
+            &#34;ga_ls_wo_fq_apr_oct_3&#34;: &#34;DEA Water Observations April to October (Landsat)&#34;,
+            &#34;ga_ls_wo_fq_nov_mar_3&#34;: &#34;DEA Water Observations November to March (Landsat)&#34;,
+            &#34;wofs_filtered_summary&#34;: &#34;DEA Multi-Year Water Observation Frequency Filtered Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;wofs_summary_clear&#34;: &#34;DEA Multi-Year Clear Observation Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;wofs_summary_wet&#34;: &#34;DEA Multi-Year Wet Observation Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;Water Observations from Space Statistics&#34;: &#34;DEA Multi-Year Water Observation Frequency Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;wofs_filtered_summary_confidence&#34;: &#34;DEA Multi-Year Water Observation Confidence Statistics (Landsat, DEPRECATED)&#34;,
+            &#34;ITEM_V2.0.0&#34;: &#34;DEA Intertidal Extents (Landsat)&#34;,
+            &#34;ITEM_V2.0.0_Conf&#34;: &#34;DEA Intertidal Extents confidence&#34;,
+            &#34;NIDEM&#34;: &#34;DEA Intertidal Elevation (Landsat)&#34;,
+            &#34;high_tide_composite&#34;: &#34;DEA High Tide Imagery (Landsat)&#34;,
+            &#34;low_tide_composite&#34;: &#34;DEA Low Tide Imagery (Landsat)&#34;,
+            &#34;ga_s2_ba_provisional_3&#34;: &#34;DEA Burnt Area Characteristic Layers (Sentinel 2 Near Real-Time, Provisional)&#34;,
+            &#34;alos_displacement&#34;: &#34;ALOS Displacement&#34;,
+            &#34;alos_velocity&#34;: &#34;ALOS Velocity&#34;,
+            &#34;envisat_displacement&#34;: &#34;ENVISAT Displacement&#34;,
+            &#34;envisat_velocity&#34;: &#34;ENVISAT Velocity&#34;,
+            &#34;radarsat2_displacement&#34;: &#34;RADARSAT2 Displacement&#34;,
+            &#34;radarsat2_velocity&#34;: &#34;RADARSAT2 Velocity&#34;,
+            &#34;aster_false_colour&#34;: &#34;False Colour Mosaic&#34;,
+            &#34;aster_regolith_ratios&#34;: &#34;Regolith Ratios&#34;,
+            &#34;aster_aloh_group_composition&#34;: &#34;AlOH Group Composition&#34;,
+            &#34;aster_aloh_group_content&#34;: &#34;AlOH Group Content&#34;,
+            &#34;aster_feoh_group_content&#34;: &#34;FeOH Group Content&#34;,
+            &#34;aster_ferric_oxide_composition&#34;: &#34;Ferric Oxide Composition&#34;,
+            &#34;aster_ferric_oxide_content&#34;: &#34;Ferric Oxide Content&#34;,
+            &#34;aster_ferrous_iron_content_in_mgoh&#34;: &#34;Ferrous Iron Content in MgOH/Carbonate&#34;,
+            &#34;aster_ferrous_iron_index&#34;: &#34;Ferrous Iron Index&#34;,
+            &#34;aster_green_vegetation&#34;: &#34;Green Vegetation Content&#34;,
+            &#34;aster_gypsum_index&#34;: &#34;Gypsum Index&#34;,
+            &#34;aster_kaolin_group_index&#34;: &#34;Kaolin Group Index&#34;,
+            &#34;aster_mgoh_group_composition&#34;: &#34;MgOH Group Composition&#34;,
+            &#34;aster_mgoh_group_content&#34;: &#34;MgOH Group Content&#34;,
+            &#34;aster_opaque_index&#34;: &#34;Opaque Index&#34;,
+            &#34;aster_silica_index&#34;: &#34;TIR Silica index&#34;,
+            &#34;aster_quartz_index&#34;: &#34;TIR Quartz Index&#34;,
+            &#34;multi_scale_topographic_position&#34;: &#34;Multi-Scale Topographic Position&#34;,
+            &#34;weathering_intensity&#34;: &#34;Weathering Intensity&#34;,
+        },
+        &#34;n_bands&#34;: {
+            &#34;ga_ls_ard_3&#34;: 7,
+            &#34;s2_nrt_granule_nbar_t&#34;: 23,
+            &#34;s2_ard_granule_nbar_t&#34;: 12,
+            &#34;ga_ls8c_nbart_gm_cyear_3&#34;: 10,
+            &#34;ga_ls7e_nbart_gm_cyear_3&#34;: 10,
+            &#34;ga_ls5t_nbart_gm_cyear_3&#34;: 10,
+            &#34;ga_ls8c_ard_3&#34;: 9,
+            &#34;ga_ls7e_ard_3&#34;: 8,
+            &#34;ga_ls5t_ard_3&#34;: 7,
+            &#34;ga_ls8c_ard_provisional_3&#34;: 9,
+            &#34;ga_ls7e_ard_provisional_3&#34;: 8,
+            &#34;ga_ls_ard_provisional_3&#34;: 7,
+            &#34;s2b_nrt_granule_nbar_t&#34;: 23,
+            &#34;s2a_nrt_granule_nbar_t&#34;: 23,
+            &#34;s2_nrt_provisional_granule_nbar_t&#34;: 12,
+            &#34;s2b_nrt_provisional_granule_nbar_t&#34;: 12,
+            &#34;s2a_nrt_provisional_granule_nbar_t&#34;: 12,
+            &#34;s2a_ard_granule_nbar_t&#34;: 12,
+            &#34;s2b_ard_granule_nbar_t&#34;: 12,
+            &#34;ga_ls_landcover&#34;: 2,
+            &#34;ga_ls_landcover_descriptors&#34;: 5,
+            &#34;ga_ls_fc_3&#34;: 4,
+            &#34;ga_ls_fc_pc_cyear_3&#34;: 10,
+            &#34;ga_ls_mangrove_cover_cyear_3&#34;: 1,
+            &#34;s2_barest_earth&#34;: 10,
+            &#34;ls8_barest_earth_mosaic&#34;: 6,
+            &#34;landsat_barest_earth&#34;: 6,
+            &#34;ga_ls_tcw_percentiles_2&#34;: 3,
+            &#34;ga_ls_tc_pc_cyear_3&#34;: 9,
+            &#34;ga_ls_wo_3&#34;: 1,
+            &#34;ga_ls_wo_fq_myear_3&#34;: 3,
+            &#34;ga_ls_wo_fq_cyear_3&#34;: 3,
+            &#34;ga_ls_wo_fq_apr_oct_3&#34;: 3,
+            &#34;ga_ls_wo_fq_nov_mar_3&#34;: 3,
+            &#34;wofs_filtered_summary&#34;: 2,
+            &#34;wofs_summary_clear&#34;: 3,
+            &#34;wofs_summary_wet&#34;: 3,
+            &#34;Water Observations from Space Statistics&#34;: 3,
+            &#34;wofs_filtered_summary_confidence&#34;: 2,
+            &#34;ITEM_V2.0.0&#34;: 1,
+            &#34;ITEM_V2.0.0_Conf&#34;: 1,
+            &#34;NIDEM&#34;: 1,
+            &#34;high_tide_composite&#34;: 6,
+            &#34;low_tide_composite&#34;: 6,
+            &#34;ga_s2_ba_provisional_3&#34;: None,
+            &#34;alos_displacement&#34;: 4,
+            &#34;alos_velocity&#34;: 4,
+            &#34;envisat_displacement&#34;: 4,
+            &#34;envisat_velocity&#34;: 4,
+            &#34;radarsat2_displacement&#34;: 4,
+            &#34;radarsat2_velocity&#34;: 4,
+            &#34;aster_false_colour&#34;: 3,
+            &#34;aster_regolith_ratios&#34;: 3,
+            &#34;aster_aloh_group_composition&#34;: 1,
+            &#34;aster_aloh_group_content&#34;: 1,
+            &#34;aster_feoh_group_content&#34;: 1,
+            &#34;aster_ferric_oxide_composition&#34;: 1,
+            &#34;aster_ferric_oxide_content&#34;: 1,
+            &#34;aster_ferrous_iron_content_in_mgoh&#34;: 1,
+            &#34;aster_ferrous_iron_index&#34;: 1,
+            &#34;aster_green_vegetation&#34;: 1,
+            &#34;aster_gypsum_index&#34;: 1,
+            &#34;aster_kaolin_group_index&#34;: 1,
+            &#34;aster_mgoh_group_composition&#34;: 1,
+            &#34;aster_mgoh_group_content&#34;: 1,
+            &#34;aster_opaque_index&#34;: 1,
+            &#34;aster_silica_index&#34;: 1,
+            &#34;aster_quartz_index&#34;: 1,
+            &#34;multi_scale_topographic_position&#34;: 3,
+            &#34;weathering_intensity&#34;: 1,
+        },
+        &#34;date_limits&#34;: {
+            &#34;ga_ls_ard_3&#34;: [&#34;1986-08-16&#34;, &#34;2022-09-05&#34;],
+            &#34;s2_nrt_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2_ard_granule_nbar_t&#34;: [&#34;2015-07-12&#34;, &#34;2022-09-13&#34;],
+            &#34;ga_ls8c_nbart_gm_cyear_3&#34;: [&#34;2013-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls7e_nbart_gm_cyear_3&#34;: [&#34;1999-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls5t_nbart_gm_cyear_3&#34;: [&#34;1986-01-01&#34;, &#34;2011-01-01&#34;],
+            &#34;ga_ls8c_ard_3&#34;: [&#34;2013-03-19&#34;, &#34;2022-09-05&#34;],
+            &#34;ga_ls7e_ard_3&#34;: [&#34;1999-05-28&#34;, &#34;2022-04-06&#34;],
+            &#34;ga_ls5t_ard_3&#34;: [&#34;1986-08-16&#34;, &#34;2011-11-17&#34;],
+            &#34;ga_ls8c_ard_provisional_3&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;ga_ls7e_ard_provisional_3&#34;: [&#34;2022-06-22&#34;, &#34;2022-08-24&#34;],
+            &#34;ga_ls_ard_provisional_3&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2b_nrt_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2a_nrt_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2_nrt_provisional_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2b_nrt_provisional_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2a_nrt_provisional_granule_nbar_t&#34;: [&#34;2022-06-20&#34;, &#34;2022-09-19&#34;],
+            &#34;s2a_ard_granule_nbar_t&#34;: [&#34;2015-07-12&#34;, &#34;2022-09-13&#34;],
+            &#34;s2b_ard_granule_nbar_t&#34;: [&#34;2017-06-30&#34;, &#34;2022-09-13&#34;],
+            &#34;ga_ls_landcover&#34;: [&#34;1988-01-01&#34;, &#34;2020-01-01&#34;],
+            &#34;ga_ls_landcover_descriptors&#34;: [&#34;1988-01-01&#34;, &#34;2020-01-01&#34;],
+            &#34;ga_ls_fc_3&#34;: [&#34;1986-08-16&#34;, &#34;2022-09-05&#34;],
+            &#34;ga_ls_fc_pc_cyear_3&#34;: [&#34;1987-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls_mangrove_cover_cyear_3&#34;: [&#34;1987-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;s2_barest_earth&#34;: [&#34;2017-01-01&#34;, &#34;2017-01-01&#34;],
+            &#34;ls8_barest_earth_mosaic&#34;: [&#34;2013-01-01&#34;, &#34;2013-01-01&#34;],
+            &#34;landsat_barest_earth&#34;: [&#34;1980-01-01&#34;, &#34;1980-01-01&#34;],
+            &#34;ga_ls_tcw_percentiles_2&#34;: [&#34;1987-01-01&#34;, &#34;1987-01-01&#34;],
+            &#34;ga_ls_tc_pc_cyear_3&#34;: [&#34;1987-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls_wo_3&#34;: [&#34;1986-08-16&#34;, &#34;2022-09-05&#34;],
+            &#34;ga_ls_wo_fq_myear_3&#34;: [&#34;1986-01-01&#34;, &#34;1986-01-01&#34;],
+            &#34;ga_ls_wo_fq_cyear_3&#34;: [&#34;1986-01-01&#34;, &#34;2021-01-01&#34;],
+            &#34;ga_ls_wo_fq_apr_oct_3&#34;: [&#34;1986-04-01&#34;, &#34;2021-04-01&#34;],
+            &#34;ga_ls_wo_fq_nov_mar_3&#34;: [&#34;1987-11-01&#34;, &#34;2021-11-01&#34;],
+            &#34;wofs_filtered_summary&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;wofs_summary_clear&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;wofs_summary_wet&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;Water Observations from Space Statistics&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;wofs_filtered_summary_confidence&#34;: [&#34;1970-01-01&#34;, &#34;1970-01-01&#34;],
+            &#34;ITEM_V2.0.0&#34;: [&#34;1986-01-01&#34;, &#34;1986-01-01&#34;],
+            &#34;ITEM_V2.0.0_Conf&#34;: [&#34;1986-01-01&#34;, &#34;1986-01-01&#34;],
+            &#34;NIDEM&#34;: [&#34;1986-01-01&#34;, &#34;1986-01-01&#34;],
+            &#34;high_tide_composite&#34;: [&#34;2000-01-01&#34;, &#34;2000-01-01&#34;],
+            &#34;low_tide_composite&#34;: [&#34;2000-01-01&#34;, &#34;2000-01-01&#34;],
+            &#34;ga_s2_ba_provisional_3&#34;: [&#34;2021-10-01&#34;, &#34;2022-09-19&#34;],
+            &#34;alos_displacement&#34;: [&#34;2008-02-11&#34;, &#34;2010-10-22&#34;],
+            &#34;alos_velocity&#34;: [&#34;2009-06-15&#34;, &#34;2009-06-15&#34;],
+            &#34;envisat_displacement&#34;: [&#34;2006-06-26&#34;, &#34;2010-08-28&#34;],
+            &#34;envisat_velocity&#34;: [&#34;2008-06-15&#34;, &#34;2008-06-15&#34;],
+            &#34;radarsat2_displacement&#34;: [&#34;2015-07-15&#34;, &#34;2019-05-31&#34;],
+            &#34;radarsat2_velocity&#34;: [&#34;2017-06-15&#34;, &#34;2017-06-15&#34;],
+            &#34;aster_false_colour&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_regolith_ratios&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_aloh_group_composition&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_aloh_group_content&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_feoh_group_content&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_ferric_oxide_composition&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_ferric_oxide_content&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_ferrous_iron_content_in_mgoh&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_ferrous_iron_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_green_vegetation&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_gypsum_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_kaolin_group_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_mgoh_group_composition&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_mgoh_group_content&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_opaque_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_silica_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;aster_quartz_index&#34;: [&#34;2000-02-01&#34;, &#34;2000-02-01&#34;],
+            &#34;multi_scale_topographic_position&#34;: [&#34;2018-01-01&#34;, &#34;2018-01-01&#34;],
+            &#34;weathering_intensity&#34;: [&#34;2018-01-01&#34;, &#34;2018-01-01&#34;],
+        },
+    }
+    return deadict</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.get_times"><code class="name flex">
+<span>def <span class="ident">get_times</span></span>(<span>url, layername, year=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return available dates for layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str, layer url</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>layername</code></strong> :&ensp;<code>str, name</code> of <code>layer id</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>year</code></strong> :&ensp;<code>int</code> or <code>str, year</code> of <code>interest (if None, times for all available years are returned)</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>list of dates</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_times(url, layername, year=None):
+    &#34;&#34;&#34;
+    Return available dates for layer.
+
+    Parameters
+    ----------
+    url: str, layer url
+    layername: str, name of layer id
+    year: int or str, year of interest (if None, times for all available years are returned)
+
+    Return
+    ------
+    list of dates
+    &#34;&#34;&#34;
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+    times = wcs[layername].timepositions
+    if year is None:
+        return times
+    else:
+        year = int(year)
+        dates = []
+        for time in times:
+            if datetime.fromisoformat(time[:-1]).astimezone(timezone.utc).year == year:
+                dates.append(time)
+        return dates</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.get_times_startend"><code class="name flex">
+<span>def <span class="ident">get_times_startend</span></span>(<span>url, layername, dt_start, dt_end)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return all available images datetimes for layer in range
+between start and end date.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str, layer url</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>layername</code></strong> :&ensp;<code>str, name</code> of <code>layer id</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>dt_start</code></strong> :&ensp;<code>str, start date in dateformat YYYY-MM-DD</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>dt_end</code></strong> :&ensp;<code>str, end date in dateformat YYYY-MM-DD</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>list of dates</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_times_startend(url, layername, dt_start, dt_end):
+    &#34;&#34;&#34;
+    Return all available images datetimes for layer in range
+    between start and end date.
+
+    Parameters
+    ----------
+    url: str, layer url
+    layername: str, name of layer id
+    dt_start: str, start date in dateformat YYYY-MM-DD
+    dt_end: str, end date in dateformat YYYY-MM-DD
+
+    Return
+    ------
+    list of dates
+    &#34;&#34;&#34;
+    # Convert to datetimes
+    dt_start = datetime.strptime(dt_start, &#34;%Y-%m-%d&#34;)
+    dt_end = datetime.strptime(dt_end, &#34;%Y-%m-%d&#34;)
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+    times = wcs[layername].timepositions
+    dates = []
+    for time in times:
+        dt = datetime.fromisoformat(time[:-1])
+        if (dt &gt;= dt_start) &amp; (dt &lt;= dt_end):
+            dates.append(time)
+    return dates</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.get_wcsmap"><code class="name flex">
+<span>def <span class="ident">get_wcsmap</span></span>(<span>outfname, layername, bbox, date, resolution, url, crs='EPSG:4326', format_out='GeoTIFF')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Download and save geotiff from WCS layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>outfname</code></strong> :&ensp;<code>str</code></dt>
+<dd>output file name</dd>
+<dt><strong><code>layername</code></strong> :&ensp;<code>str</code></dt>
+<dd>layer identifier</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>date</code></strong> :&ensp;<code>str</code></dt>
+<dd>datetime</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>url of wcs server</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crsm default 'EPSG:4326'</dd>
+<dt><strong><code>format</code></strong> :&ensp;<code>str</code></dt>
+<dd>output format, either "GeoTIFF" or "NetCDF"</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>Exited ok: boolean</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_wcsmap(
+    outfname,
+    layername,
+    bbox,
+    date,
+    resolution,
+    url,
+    crs=&#34;EPSG:4326&#34;,
+    format_out=&#34;GeoTIFF&#34;,
+):
+    &#34;&#34;&#34;
+    Download and save geotiff from WCS layer.
+
+    Parameters
+    ----------
+    outfname : str
+        output file name
+    layername : str
+        layer identifier
+    bbox : list
+        layer bounding box
+    date : str
+        datetime
+    resolution : int
+        layer resolution in arcsec
+    url : str
+        url of wcs server
+    crs: str
+        crsm default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    Exited ok: boolean
+    &#34;&#34;&#34;
+
+    # If the resolution passed is None, set to native resolution of datasource
+    if resolution is None:
+        resolution = get_deadict()[&#34;resolution_arcsec&#34;]
+
+    # Convert resolution into width and height pixel number
+    width = abs(bbox[2] - bbox[0])
+    height = abs(bbox[3] - bbox[1])
+    nwidth = int(width / resolution * 3600)
+    nheight = int(height / resolution * 3600)
+    # Get data
+    if os.path.exists(outfname):
+        utils.msg_warn(f&#34;{layername}.tif already exists, skipping download&#34;)
+    else:
+        try:
+            with spin(f&#34;Downloading {layername}.tif for {date}&#34;) as s:
+                wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+                if date == &#34;None&#34;:
+                    data = wcs.getCoverage(
+                        identifier=layername,
+                        bbox=bbox,
+                        format=format_out,
+                        crs=crs,
+                        width=nwidth,
+                        height=nheight,
+                        Styles=&#34;tc&#34;,
+                    )
+                else:
+                    data = wcs.getCoverage(
+                        identifier=layername,
+                        time=[date],
+                        bbox=bbox,
+                        format=format_out,
+                        crs=crs,
+                        width=nwidth,
+                        height=nheight,
+                        Styles=&#34;tc&#34;,
+                    )
+                s(1)
+        except:
+            utils.msg_err(&#34;Download failed&#34;)
+            return False
+        # Save data
+        with open(outfname, &#34;wb&#34;) as f:
+            f.write(data.read())
+    return True</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.getdict_cloudmask"><code class="name flex">
+<span>def <span class="ident">getdict_cloudmask</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>return dict of cloud mask</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getdict_cloudmask():
+    &#34;&#34;&#34;
+    return dict of cloud mask
+    &#34;&#34;&#34;
+    oa_fmask = {
+        &#34;0&#34;: &#34;nodata&#34;,
+        &#34;1&#34;: &#34;valid&#34;,
+        &#34;2&#34;: &#34;cloud&#34;,
+        &#34;3&#34;: &#34;shadow&#34;,
+        &#34;4&#34;: &#34;snow&#34;,
+        &#34;5&#34;: &#34;water&#34;,
+    }
+    return oa_fmask</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.getdict_license"><code class="name flex">
+<span>def <span class="ident">getdict_license</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the DEA data license and NCI attribution information as dict</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getdict_license():
+    &#34;&#34;&#34;
+    Retrieves the DEA data license and NCI attribution information as dict
+    &#34;&#34;&#34;
+    dict = {
+        &#34;name&#34;: &#34;Digital Earth Australia (DEA) Geoscience Earth Observations&#34;,
+        &#34;source_url&#34;: &#34;https://docs.dea.ga.gov.au/notebooks/DEA_datasets/DEA_Landsat_Surface_Reflectance.html&#34;,
+        &#34;license&#34;: &#34;CC BY 4.0&#34;,
+        &#34;license_title&#34;: &#34;Creative Commons Attribution 4.0 International (CC BY 4.0)&#34;,
+        &#34;license_url&#34;: &#34;https://creativecommons.org/licenses/by/4.0/&#34;,
+        &#34;copyright&#34;: &#34;© Copyright 2017-2022, Geoscience Australia&#34;,
+        &#34;attribution&#34;: &#34;Digital Earth Australia (DEA)&#34;,
+    }
+    return dict</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.plot_raster"><code class="name flex">
+<span>def <span class="ident">plot_raster</span></span>(<span>infname)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read in raster tif with rasterio and visualise as map.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>infname</code></strong> :&ensp;<code>str</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_raster(infname):
+    &#34;&#34;&#34;
+    Read in raster tif with rasterio and visualise as map.
+
+    Parameters
+    ----------
+    infname : str
+    &#34;&#34;&#34;
+    data = rasterio.open(infname)
+    # show image
+    show(data)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.test_get_capabilities"><code class="name flex">
+<span>def <span class="ident">test_get_capabilities</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve WCS capabilities</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_capabilities():
+    &#34;&#34;&#34;
+    Test script to retrieve WCS capabilities
+    &#34;&#34;&#34;
+    # DEA layer
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    # Get capabilities
+    keys, title_list, description_list, bbox_list, timelimits, nbands = get_capabilities(url)
+    assert len(keys) &gt; 0
+    print(&#39;Test passed&#39;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.test_get_dea_images"><code class="name flex">
+<span>def <span class="ident">test_get_dea_images</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve and save images for a given year</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_dea_images():
+    &#34;&#34;&#34;
+    Test script to retrieve and save images for a given year
+    &#34;&#34;&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    # Get data (here only for first layer)
+    layername = &#34;ga_ls8c_ard_3&#34;
+    # Crs for output
+    crs = &#34;EPSG:4326&#34;  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = [120, -40, 140, -20]
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # define year
+    year = 2019
+    # define outpath
+    outpath = &#34;test_dea&#34;
+    # Get data
+    outfnames = get_dea_images(
+        layername, year, bbox, resolution, outpath, crs=crs)
+    assert len(outfnames) &gt; 0
+    print(&#39;Test passed&#39;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.test_get_dea_images_daterange"><code class="name flex">
+<span>def <span class="ident">test_get_dea_images_daterange</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve and save images for a given year</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_dea_images_daterange():
+    &#34;&#34;&#34;
+    Test script to retrieve and save images for a given year
+    &#34;&#34;&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    # Get data (here only for first layer)
+    layername = &#34;ga_ls8c_ard_3&#34;
+    # Crs for output
+    crs = &#34;EPSG:4326&#34;  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = [120, -40, 140, -20]
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # define daterange
+    date_min = &#39;2019-01-01&#39;
+    date_max = &#39;2019-01-10&#39;
+    # define outpath
+    outpath = &#34;test_dea&#34;
+    # Get data
+    outfnames = get_dea_images_daterange(
+        layername, date_min, date_max, bbox, resolution, outpath, crs=crs)
+    assert len(outfnames) &gt; 0
+    print(&#39;Test passed&#39;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.test_get_times"><code class="name flex">
+<span>def <span class="ident">test_get_times</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve available times for a layer</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_times():
+    &#34;&#34;&#34;
+    Test script to retrieve available times for a layer
+    &#34;&#34;&#34;
+    layername = &#34;ga_ls8c_ard_3&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    times = get_times(url, layername)
+    assert len(times) &gt; 0
+    print(&#39;Test passed&#39;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.test_get_times_startend"><code class="name flex">
+<span>def <span class="ident">test_get_times_startend</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve available times for a layer</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_times_startend():
+    &#34;&#34;&#34;
+    Test script to retrieve available times for a layer
+    &#34;&#34;&#34;
+    layername = &#34;ga_ls8c_ard_3&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    dt_start = &#34;2020-01-01&#34;
+    dt_end = &#34;2020-02-20&#34;
+    times = get_times_startend(url, layername, dt_start, dt_end)
+    assert len(times) &gt; 0
+    print(&#39;Test passed&#39;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.test_get_wcsmap"><code class="name flex">
+<span>def <span class="ident">test_get_wcsmap</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve and save image for one layer and date</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_wcsmap():
+    &#34;&#34;&#34;
+    Test script to retrieve and save image for one layer and date
+    &#34;&#34;&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    layername = &#34;ga_ls8c_ard_3&#34;
+    times = get_times(url, layername)
+    crs = &#34;EPSG:4326&#34;  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = [130, -40, 150, -20]
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # get latest image
+    time = times[-1]
+    # define output file name
+    fname_out = f&#34;test_{layername}_{time}.tif&#34;
+    # Get data
+    download_ok = get_wcsmap(fname_out, layername, bbox, time, resolution, url)
+    assert download_ok
+    print(&#39;Test passed&#39;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dea.write_deadict"><code class="name flex">
+<span>def <span class="ident">write_deadict</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates new DEA dictionary from crawling WCS url</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def write_deadict():
+    &#34;&#34;&#34;
+    Generates new DEA dictionary from crawling WCS url
+    &#34;&#34;&#34;
+    url = &#34;https://ows.dea.ga.gov.au/?version=1.3.0&#34;
+    (
+        keys,
+        title_list,
+        description_list,
+        bbox_list,
+        timelimits,
+        nbands,
+    ) = get_capabilities(url)
+
+    deadict = {&#34;resolution_arcsec&#34;: 1}
+    layernames = {}
+    n_bands = {}
+    date_limits = {}
+    deadict[&#34;resolution_arcsec&#34;] = 1
+    for i in range(len(keys)):
+        layernames[keys[i]] = title_list[i]
+        n_bands[keys[i]] = nbands[i]
+        date_limits[keys[i]] = timelimits[i]
+
+    deadict[&#34;layernames&#34;] = layernames
+    deadict[&#34;n_bands&#34;] = n_bands
+    deadict[&#34;date_limits&#34;] = date_limits
+    return deadict</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="geodata_harvester" href="index.html">geodata_harvester</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="geodata_harvester.getdata_dea.get_capabilities" href="#geodata_harvester.getdata_dea.get_capabilities">get_capabilities</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.get_dea_images" href="#geodata_harvester.getdata_dea.get_dea_images">get_dea_images</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.get_dea_images_daterange" href="#geodata_harvester.getdata_dea.get_dea_images_daterange">get_dea_images_daterange</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.get_dea_layers" href="#geodata_harvester.getdata_dea.get_dea_layers">get_dea_layers</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.get_dea_layers_daterange" href="#geodata_harvester.getdata_dea.get_dea_layers_daterange">get_dea_layers_daterange</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.get_deadict" href="#geodata_harvester.getdata_dea.get_deadict">get_deadict</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.get_times" href="#geodata_harvester.getdata_dea.get_times">get_times</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.get_times_startend" href="#geodata_harvester.getdata_dea.get_times_startend">get_times_startend</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.get_wcsmap" href="#geodata_harvester.getdata_dea.get_wcsmap">get_wcsmap</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.getdict_cloudmask" href="#geodata_harvester.getdata_dea.getdict_cloudmask">getdict_cloudmask</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.getdict_license" href="#geodata_harvester.getdata_dea.getdict_license">getdict_license</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.plot_raster" href="#geodata_harvester.getdata_dea.plot_raster">plot_raster</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.test_get_capabilities" href="#geodata_harvester.getdata_dea.test_get_capabilities">test_get_capabilities</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.test_get_dea_images" href="#geodata_harvester.getdata_dea.test_get_dea_images">test_get_dea_images</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.test_get_dea_images_daterange" href="#geodata_harvester.getdata_dea.test_get_dea_images_daterange">test_get_dea_images_daterange</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.test_get_times" href="#geodata_harvester.getdata_dea.test_get_times">test_get_times</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.test_get_times_startend" href="#geodata_harvester.getdata_dea.test_get_times_startend">test_get_times_startend</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.test_get_wcsmap" href="#geodata_harvester.getdata_dea.test_get_wcsmap">test_get_wcsmap</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dea.write_deadict" href="#geodata_harvester.getdata_dea.write_deadict">write_deadict</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

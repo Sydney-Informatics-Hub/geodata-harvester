@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>geodata_harvester.getdata_silo API documentation</title>
+<meta name="description" content="Python script to automatically download and crop climate data layers from SILO …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>geodata_harvester.getdata_silo</code></h1>
+</header>
+<section id="section-intro">
+<p>Python script to automatically download and crop climate data layers from SILO.</p>
+<p>Functionalities:
+- download SILO data for custom time period and layer(s) as defined in dictionary
+- clip data to custom bounding box
+- save data as multi-band geotiff or netCDF</p>
+<p>The SILO climate layers are described as dictionary in the module function get_silodict()
+and the SILO licensing and attribution are availabe with the module function getdict_license()</p>
+<p>More details on the SILO climate variables can be found here:
+<a href="https://www.longpaddock.qld.gov.au/silo/about/climate-variables/">https://www.longpaddock.qld.gov.au/silo/about/climate-variables/</a>
+and more details about the gridded data structure here:
+<a href="https://www.longpaddock.qld.gov.au/silo/gridded-data/">https://www.longpaddock.qld.gov.au/silo/gridded-data/</a>
+and a data index:
+<a href="https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/index.html">https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/index.html</a></p>
+<p>This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).</p>
+<p>Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney</p>
+<p>This open-source software is released under the LGPL-3.0 License.</p>
+<p>Author: Sebastian Haan</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Python script to automatically download and crop climate data layers from SILO.
+
+Functionalities:
+- download SILO data for custom time period and layer(s) as defined in dictionary
+- clip data to custom bounding box
+- save data as multi-band geotiff or netCDF
+
+The SILO climate layers are described as dictionary in the module function get_silodict()
+and the SILO licensing and attribution are availabe with the module function getdict_license()
+
+More details on the SILO climate variables can be found here:
+https://www.longpaddock.qld.gov.au/silo/about/climate-variables/
+and more details about the gridded data structure here:
+https://www.longpaddock.qld.gov.au/silo/gridded-data/
+and a data index:
+https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/index.html
+
+This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
+
+Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
+
+This open-source software is released under the LGPL-3.0 License.
+
+Author: Sebastian Haan
+&#34;&#34;&#34;
+
+import os
+import shutil
+import datetime
+import requests
+import numpy as np
+
+# from urllib import request
+from netCDF4 import Dataset
+import rasterio
+import rioxarray as rio
+import xarray
+
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
+
+# from datacube.utils.cog import write_cog
+
+
+def download_file(url, layername, year, outpath=&#34;.&#34;):
+    &#34;&#34;&#34;
+    download file from url
+
+    INPUT:
+    url : str
+    outpath : str
+
+    OUTPUT:
+    file : str
+    &#34;&#34;&#34;
+    local_filename = os.path.join(outpath, url.split(&#34;/&#34;)[-1])
+    if os.path.exists(local_filename):
+        utils.msg_warn(f&#34;{layername} for {year} already exists, skipping download&#34;)
+        return local_filename
+    with spin(f&#34;Downloading {layername} for {year}&#34;) as s:
+        with requests.get(url, stream=True) as r:
+            with open(local_filename, &#34;wb&#34;) as f:
+                shutil.copyfileobj(r.raw, f)
+        s(1)
+
+    # with request.urlopen(url) as response:
+    #     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+    #         shutil.copyfileobj(response, tmp_file)
+    # return tmp_file.name
+    return local_filename
+
+
+def get_silodict():
+    &#34;&#34;&#34;
+    Get dictionary of available layers and meta data
+
+    OUTPUT:
+    layerdict : dict
+        dictionary of meta data and available layer names
+    &#34;&#34;&#34;
+
+    silodict = {}
+    silodict[&#34;title&#34;] = &#34;SILO climate database&#34;
+    silodict[
+        &#34;description&#34;
+    ] = &#34;SILO is containing continuous daily climate data for Australia from 1889 to present.&#34;
+    silodict[&#34;crs&#34;] = &#34;EPSG:4326&#34;
+    silodict[&#34;bbox&#34;] = [112.00, -44.00, 154.00, -10.00]
+    silodict[&#34;resolution_arcsec&#34;] = 180
+    silodict[&#34;updates&#34;] = &#34;daily&#34;
+    silodict[&#34;layernames&#34;] = {
+        &#34;daily_rain&#34;: &#34;Daily rainfall, mm&#34;,
+        &#34;monthly_rain&#34;: &#34;Monthly rainfall, mm&#34;,
+        &#34;max_temp&#34;: &#34;Maximum temperature, degrees Celsius&#34;,
+        &#34;min_temp&#34;: &#34;Minimum temperature, degrees Celsius&#34;,
+        &#34;vp&#34;: &#34;Vapour pressure, hPa&#34;,
+        &#34;vp_deficit&#34;: &#34;Vapour pressure deficit, hPa&#34;,
+        &#34;evap_pan&#34;: &#34;Class A pan evaporation, mm&#34;,
+        &#34;evap_syn&#34;: &#34;Synthetic estimate, mm&#34;,
+        &#34;evap_comb&#34;: &#34;Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm&#34;,
+        &#34;evap_morton_lake&#34;: &#34;Morton&#39;s shallow lake evaporation, mm&#34;,
+        &#34;radiation&#34;: &#34;Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2&#34;,
+        &#34;rh_tmax&#34;: &#34;Relative humidity:  Relative humidity at the time of maximum temperature, %&#34;,
+        &#34;rh_tmin&#34;: &#34;Relative humidity at the time of minimum temperature, %&#34;,
+        &#34;et_short_crop&#34;: &#34;Evapotranspiration FAO564 short crop, mm&#34;,
+        &#34;et_tall_crop&#34;: &#34;ASCE5 tall crop6, mm&#34;,
+        &#34;et_morton_actual&#34;: &#34;Morton&#39;s areal actual evapotranspiration, mm&#34;,
+        &#34;et_morton_potential&#34;: &#34;Morton&#39;s point potential evapotranspiration, mm&#34;,
+        &#34;et_morton_wet&#34;: &#34;Morton&#39;s wet-environment areal potential evapotranspiration over land, mm&#34;,
+        &#34;mslp&#34;: &#34;Mean sea level pressure Mean sea level pressure, hPa&#34;,
+    }
+    return silodict
+
+
+def getdict_license():
+    &#34;&#34;&#34;
+    Retrieves the SILO license and attribution information as dict
+    &#34;&#34;&#34;
+    dict = {
+        &#34;name&#34;: &#34;SILO Climate Data&#34;,
+        &#34;source_url&#34;: &#34;https://www.longpaddock.qld.gov.au/silo/&#34;,
+        &#34;license&#34;: &#34;CC BY 4.0&#34;,
+        &#34;license_title&#34;: &#34;Creative Commons Attribution 4.0 International (CC BY 4.0)&#34;,
+        &#34;license_url&#34;: &#34;https://creativecommons.org/licenses/by/4.0/&#34;,
+        &#34;copyright&#34;: &#34;© State of Queensland (Queensland Department of Environment and Science) 2020.&#34;,
+        &#34;attribution&#34;: &#34;State of Queensland (Queensland Department of Environment and Science) 2020.&#34;,
+    }
+    return dict
+
+
+def xarray2tif(ds, outfname, layername):
+    &#34;&#34;&#34;
+    Convert rio xarray dataset to multi-band geotiff with each time as separate band.
+
+    TBD: optional: save separate tif each time slice
+
+    INPUT:
+    ds : xarray dataset
+    outfname : str
+        path+name of output file (&#34;.tif&#34;)
+
+    OUTPUT:
+    tif : str, name of multi-band geotiff
+    &#34;&#34;&#34;
+
+    # create empty array
+    dsnew = xarray.Dataset()
+
+    for i in range(len(ds.time)):
+
+        # We will use the date of the image to name the GeoTIFF
+        date = ds.isel(time=i).time.dt.strftime(&#34;%Y-%m-%d&#34;).data
+        # print(f&#39;Writing {date}&#39;)
+
+        da = ds.isel(time=i)
+        dsnew[str(date)] = xarray.DataArray(
+            da.variables[layername][:],
+            dims=[&#34;lat&#34;, &#34;lon&#34;],
+            coords={&#34;lat&#34;: da.variables[&#34;lat&#34;], &#34;lon&#34;: da.variables[&#34;lon&#34;]},
+        )
+
+        # Write GeoTIFF with datacube libary for cloud optimized GeoTIFFs (COG)
+        # write_cog(geo_im=singletimestamp_da,
+        #         fname=os.path.join(outpath,f&#39;{outfname_base}_{date}.tif&#39;,
+        #         overwrite=True)
+    # Set crs
+    dsnew.rio.write_crs(4326, inplace=True)
+
+    # Write GeoTIFF to disk
+    dsnew.rio.to_raster(outfname)
+
+
+def get_SILO_layers(
+    layernames,
+    date_start,
+    date_end,
+    outpath,
+    bbox=None,
+    format_out=&#34;tif&#34;,
+    delete_tempfiles=False,
+    verbose=False,
+    ):
+    &#34;&#34;&#34;
+    Get raster data from SILO for certain climate variable and save data as geotif.
+    If multiple times are requested, then each time will be saved in on band of multi-band geotif.
+    All layers are available with daily resolution (except &#39;monthly_rain&#39;)
+
+    This function includes validation of years and automatically download of data from SILO in temporary folder.
+
+    Input:
+        layernames : list climate variable names (see below)
+        date_start : str, start date of time series in format &#39;YYYY-MM-DD&#39;
+        date_end : str, end date of time series in format &#39;YYYY-MM-DD&#39;
+        outpath : str, path to save output data
+        bbox : list of bounding box coordinates (optional)
+        format_out : str, format of output data: either &#39;NetCDF&#39; (nc) or &#39;GeoTIFF&#39; (tif)
+        delete_tempfiles : bool, delete temporary files after processing
+
+    Returns:
+        fnames_out : list of output filenames
+
+    layer names:
+        - &#39;daily_rain&#39; (Daily rainfall, mm)
+        - &#39;monthly_rain&#39; (Monthly rainfall, mm)
+        - &#39;max_temp&#39; (Maximum temperature, deg C)
+        - &#39;min_temp&#39;  (Minimum temperature. deg C)
+        - &#39;vp&#39; (Vapour pressure, hPa)
+        - &#39;vp_deficit&#39; (Vapour pressure deficit, hPa)
+        - &#39;evap_pan&#39; (Class A pan evaporation, mm)
+        - &#39;evap_syn&#39; (Synthetic estimate, mm)
+        - &#39;evap_comb&#39; (Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm)
+        - &#39;evap_morton_lake&#39; (Morton&#39;s shallow lake evaporation, mm)
+        - &#39;radiation&#39;   (Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2)
+        - &#39;rh_tmax&#39;     (Relative humidity:     Relative humidity at the time of maximum temperature, %)
+        - &#39;rh_tmin&#39;     (Relative humidity at the time of minimum temperature, %)
+        - &#39;et_short_crop&#39; (Evapotranspiration FAO564 short crop, mm)
+        - &#39;et_tall_crop&#39; (ASCE5 tall crop6, mm)
+        - &#39;et_morton_actual&#39; (Morton&#39;s areal actual evapotranspiration, mm)
+        - &#39;et_morton_potential&#39; (Morton&#39;s point potential evapotranspiration, mm)
+        - &#39;et_morton_wet&#39; (Morton&#39;s wet-environment areal potential evapotranspiration over land, mm)
+        - &#39;mslp&#39; (Mean sea level pressure Mean sea level pressure, hPa)
+
+    For more details see:
+    SILO data structure doc for gridded data:
+    https://www.longpaddock.qld.gov.au/silo/gridded-data/
+
+    Notes: Here we use the SILO annual raster API to download the data and then trim to date range. 
+    For data ranges much smaller than a year, one could also use the SILO daily raster API and combine dates.
+    &#34;&#34;&#34;
+
+    # define outpath for temporary files
+    outpath_temp = os.path.join(outpath, &#39;temp_silo&#39;)
+    os.makedirs(outpath, exist_ok=True)
+    date_start = str(date_start)
+    date_end = str(date_end)
+    years = np.arange(int(date_start[:4]), int(date_end[:4]) + 1).tolist()
+    fnames_out_silo = []
+    
+    for layername in layernames:
+
+        # run the download
+        fnames_out = get_SILO_raster(
+            layername, 
+            years, 
+            outpath_temp, 
+            bbox = bbox, 
+            format_out = &#39;nc&#39;, 
+            delete_temp = False)
+
+        # process the data into a single file and trim to date range
+        if (format_out == &#39;tif&#39;) | (format_out == &#39;GeoTIFF&#39;):
+            outfname = os.path.join(outpath, &#34;silo_&#34; + layername + &#34;_&#34; + date_start + &#34;-&#34; + date_end + &#34;.tif&#34;)
+        elif (format_out == &#39;NetCDF&#39;) | (format_out == &#39;nc&#39;):
+            outfname = os.path.join(outpath, &#34;silo_&#34; + layername + &#34;_&#34; + date_start + &#34;-&#34; + date_end + &#34;.nc&#34;)
+        else:
+            raise ValueError(&#34;format_out must be either &#39;tif&#39; or &#39;nc&#39;&#34;)
+
+        # Combine all years into one file and trim to date range
+        process_raster_daterange(fnames_out, date_start, date_end, outfname, layername)
+
+        # Delete temporary cropped files (not the downloaded file)
+        for fname in fnames_out:
+            os.remove(fname)
+    
+        #Save the layer name
+        # Check if outfname is list or string
+        if isinstance(outfname, list):
+            fnames_out_silo += outfname
+        else:
+            fnames_out_silo.append(outfname)
+
+    return fnames_out_silo
+    
+
+
+def process_raster_daterange(infnames, date_start, date_end, outfname, layername):
+    &#34;&#34;&#34; Combines all the raster data into one xarray dataset, trimming to the date range, 
+    and saves it as a multiband tif file.
+
+    Input:
+        infnames : list of input filenames
+        date_start : str, start date of time series in format &#39;YYYY-MM-DD&#39;
+        date_end : str, end date of time series in format &#39;YYYY-MM-DD&#39;
+        outfname : str, path+name of output file
+    &#34;&#34;&#34;
+    # Read all the raster data into one xarray dataset
+    try:
+        # Requires dask installed
+        ds = xarray.open_mfdataset(infnames, combine=&#34;by_coords&#34;)
+    except:
+        # If dask is not installed, merge it this way (not as memory efficient)
+        ds = xarray.merge([xarray.open_dataset(f) for f in infnames])
+    # Clip to date range
+    ds = ds.sel(time=slice(date_start, date_end))
+    # Save file
+    # if file extension is tif, save as 
+    if outfname.endswith(&#39;.tif&#39;):
+        xarray2tif(ds, outfname, layername)
+    if outfname.endswith(&#39;.nc&#39;):
+        ds.to_netcdf(outfname)
+    # Close file
+    ds.close()
+
+
+
+def process_raster_daterange(infnames, date_start, date_end, outfname, layername):
+    &#34;&#34;&#34; Combines all the raster data into one xarray dataset, trimming to the date range, 
+    and saves it as a multiband tif file.
+
+    Input:
+        infnames : list of input filenames
+        date_start : str, start date of time series in format &#39;YYYY-MM-DD&#39;
+        date_end : str, end date of time series in format &#39;YYYY-MM-DD&#39;
+        outfname : str, path+name of output file
+    &#34;&#34;&#34;
+    # Read all the raster data into one xarray dataset
+    try:
+        # Requires dask installed
+        ds = xarray.open_mfdataset(infnames, combine=&#34;by_coords&#34;)
+    except:
+        # If dask is not installed, merge it this way (not as memory efficient)
+        ds = xarray.merge([xarray.open_dataset(f) for f in infnames])
+    # Clip to date range
+    ds = ds.sel(time=slice(date_start, date_end))
+    # Save file
+    # if file extension is tif, save as 
+    if outfname.endswith(&#39;.tif&#39;):
+        xarray2tif(ds, outfname, layername)
+    if outfname.endswith(&#39;.nc&#39;):
+        ds.to_netcdf(outfname)
+    # Close file
+    ds.close()
+
+
+
+def get_SILO_raster(
+    layername,
+    years,
+    outpath,
+    bbox=None,
+    format_out=&#34;nc&#34;,
+    delete_temp=False,
+    verbose=False,
+    ):
+    &#34;&#34;&#34;
+    Get raster data from SILO for certain climate variable and save data as geotif.
+    If multiple times are requested, then each time will be saved in on band of multi-band geotif.
+    All layers are available with daily resolution (except &#39;monthly_rain&#39;)
+
+    This function includes validation of years and automatically download of data from SILO in temporary folder.
+
+    Input:
+        layername : str, climate variable name (see below)
+        years : list of years
+        outpath : str, path to save output data
+        bbox : list of bounding box coordinates (optional)
+        format_out : str, format of output data: either &#39;nc&#39; (netCDF) or &#39;tif&#39; (geotiff)
+        delete_temp : bool, delete temporary folder after download
+
+    Returns:
+        fnames_out : list of output filenames
+
+
+
+    layer names:
+        - &#39;daily_rain&#39; (Daily rainfall, mm)
+        - &#39;monthly_rain&#39; (Monthly rainfall, mm)
+        - &#39;max_temp&#39; (Maximum temperature, deg C)
+        - &#39;min_temp&#39;  (Minimum temperature. deg C)
+        - &#39;vp&#39; (Vapour pressure, hPa)
+        - &#39;vp_deficit&#39; (Vapour pressure deficit, hPa)
+        - &#39;evap_pan&#39; (Class A pan evaporation, mm)
+        - &#39;evap_syn&#39; (Synthetic estimate, mm)
+        - &#39;evap_comb&#39; (Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm)
+        - &#39;evap_morton_lake&#39; (Morton&#39;s shallow lake evaporation, mm)
+        - &#39;radiation&#39;   (Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2)
+        - &#39;rh_tmax&#39;     (Relative humidity:     Relative humidity at the time of maximum temperature, %)
+        - &#39;rh_tmin&#39;     (Relative humidity at the time of minimum temperature, %)
+        - &#39;et_short_crop&#39; (Evapotranspiration FAO564 short crop, mm)
+        - &#39;et_tall_crop&#39; (ASCE5 tall crop6, mm)
+        - &#39;et_morton_actual&#39; (Morton&#39;s areal actual evapotranspiration, mm)
+        - &#39;et_morton_potential&#39; (Morton&#39;s point potential evapotranspiration, mm)
+        - &#39;et_morton_wet&#39; (Morton&#39;s wet-environment areal potential evapotranspiration over land, mm)
+        - &#39;mslp&#39; (Mean sea level pressure Mean sea level pressure, hPa)
+
+    For more details see:
+    SILO data structure doc for gridded data:
+    https://www.longpaddock.qld.gov.au/silo/gridded-data/
+
+    SILO url structure:
+    url = &#34;https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/&lt;variable&gt;/&lt;year&gt;.&lt;variable&gt;.nc
+    e.g. url = &#34;https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/monthly_rain/2005.monthly_rain.nc&#34;
+    &#34;&#34;&#34;
+
+    # Check if layername is valid
+    silodict = get_silodict()
+    layerdict = silodict[&#34;layernames&#34;]
+    if layername not in layerdict:
+        raise ValueError(f&#34;Layer name {layername} not valid. Choose from: {str(layerdict.keys())}&#34;)
+
+    # Create output folder
+    os.makedirs(outpath, exist_ok=True)
+
+    # Check if years are valid
+    if not (isinstance(years, tuple) | isinstance(years, list)):
+        # If not a list, make it a list
+        years = [years]
+    # Get current year from datetime
+    current_year = int(datetime.datetime.now().year)
+
+    # Check if format is valid
+    if format_out not in [&#34;nc&#34;, &#34;tif&#34;, &#34;NetCDF&#34;, &#34;GeoTIFF&#34;]:
+        raise ValueError(&#34;Output format not valid. Choose from: &#39;NetCDF&#39;&#39; or &#39;GeoTIFF&#39;&#34;)
+
+    # Check if years are in the range of available years
+    url_info = &#34;https://www.longpaddock.qld.gov.au/silo/gridded-data/&#34;
+    for year in years:
+        if year &gt; current_year:
+            raise ValueError(f&#34;Choose years &lt;= {current_year}&#34;)
+            return False
+        if year &lt; 1889:
+            print(f&#34;data is not available for years &lt; 1889.&#34;)
+            print(f&#34;see for more details: {url_info}&#34;)
+            return False
+        if (year &lt; 1970) &amp; (layername == &#34;evap_pan&#34;):
+            print(
+                f&#34;{layername} is not available for years &lt; 1970. Automatically set to evap_comb&#34;
+            )
+            print(f&#34;see for more details: {url_info}&#34;)
+            layername = &#34;evap_comb&#34;
+        if (year &lt; 1957) &amp; (layername == &#34;mslp&#34;):
+            print(f&#34;{layername} is not available for years &lt; 1957.&#34;)
+            print(f&#34;see for more details: {url_info}&#34;)
+            return False
+
+    # Silo base url
+    silo_baseurl = (
+        &#34;https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/&#34;
+    )
+
+    fnames_out = []
+    # Download data for each year and save as geotif
+    for year in years:
+        # Get url
+        url = silo_baseurl + layername + &#34;/&#34; + str(year) + &#34;.&#34; + layername + &#34;.nc&#34;
+        # Download file
+        # print(f&#39;Downloading data for year {year} from {url} ...&#39;)
+        filename = download_file(url, layername, year, outpath)
+
+        # Open file in Xarray
+        ds = xarray.open_dataset(filename)
+        # select data in bbox:
+        if bbox is not None:
+            ds = ds.sel(lon=slice(bbox[0], bbox[2]), lat=slice(bbox[1], bbox[3]))
+        # Save data
+        if (format_out == &#34;nc&#34;) | (format_out == &#34;NetCDF&#34;):
+            # Save netCDF file
+            outfname = layername + &#34;_&#34; + str(year) + &#34;_cropped.nc&#34;
+            outfile = os.path.join(outpath, outfname)
+            ds.to_netcdf(outfile)
+        elif (format_out == &#34;tif&#34;) | (format_out == &#34;GeoTIFF&#34;):
+            # Save as multi-band geotiff file
+            outfname = layername + &#34;_&#34; + str(year) + &#34;_cropped.tif&#34;
+            xarray2tif(ds, os.path.join(outpath, outfname), layername)
+        # Close file
+        ds.close()
+        # Remove file
+        if delete_temp:
+            os.remove(filename)
+        # print(&#34;Saved &#34; + layername + &#34; for year &#34; + str(year) + &#34; as geotif: &#34;)
+        # print(os.path.join(outpath,outfname))
+        fnames_out.append(os.path.join(outpath, outfname))
+
+    # Convert netcdf to geotif
+    # nc_to_geotif(filename, outpath, layername, year)
+    # https://pratiman-91.github.io/2020/08/01/NetCDF-to-GeoTIFF-using-Python.html
+    return fnames_out
+
+### Test function ###
+
+def test_get_SILO_raster():
+    &#34;&#34;&#34;
+    test script
+    &#34;&#34;&#34;
+    layername = &#34;daily_rain&#34;
+    years = 2019
+    outpath = &#34;silo_test&#34;
+    bbox = (130, -44, 153.9, -11)
+    # test first for tif output format
+    format_out = &#34;tif&#34;
+    fnames_out = get_SILO_raster(layername, years, outpath, bbox, format_out)
+    assert len(fnames_out) &gt; 0
+
+
+def test_get_SILO_layers():
+    &#34;&#34;&#34;
+    test script
+    &#34;&#34;&#34;
+    layernames = [&#34;daily_rain&#34;,&#34;max_temp&#34;]
+    date_start = &#39;2019-01-01&#39;
+    date_end = &#39;2020-02-01&#39;
+    outpath = &#34;silo_test&#34;
+    bbox = (130, -44, 153.9, -11)
+    # test first for tif output format
+    format_out = &#34;tif&#34;
+    fnames_out = get_SILO_layers(layernames, date_start, date_end, outpath, bbox, format_out)
+    assert len(fnames_out) &gt; 0</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="geodata_harvester.getdata_silo.download_file"><code class="name flex">
+<span>def <span class="ident">download_file</span></span>(<span>url, layername, year, outpath='.')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>download file from url</p>
+<p>INPUT:
+url : str
+outpath : str</p>
+<p>OUTPUT:
+file : str</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def download_file(url, layername, year, outpath=&#34;.&#34;):
+    &#34;&#34;&#34;
+    download file from url
+
+    INPUT:
+    url : str
+    outpath : str
+
+    OUTPUT:
+    file : str
+    &#34;&#34;&#34;
+    local_filename = os.path.join(outpath, url.split(&#34;/&#34;)[-1])
+    if os.path.exists(local_filename):
+        utils.msg_warn(f&#34;{layername} for {year} already exists, skipping download&#34;)
+        return local_filename
+    with spin(f&#34;Downloading {layername} for {year}&#34;) as s:
+        with requests.get(url, stream=True) as r:
+            with open(local_filename, &#34;wb&#34;) as f:
+                shutil.copyfileobj(r.raw, f)
+        s(1)
+
+    # with request.urlopen(url) as response:
+    #     with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+    #         shutil.copyfileobj(response, tmp_file)
+    # return tmp_file.name
+    return local_filename</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_silo.get_SILO_layers"><code class="name flex">
+<span>def <span class="ident">get_SILO_layers</span></span>(<span>layernames, date_start, date_end, outpath, bbox=None, format_out='tif', delete_tempfiles=False, verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get raster data from SILO for certain climate variable and save data as geotif.
+If multiple times are requested, then each time will be saved in on band of multi-band geotif.
+All layers are available with daily resolution (except 'monthly_rain')</p>
+<p>This function includes validation of years and automatically download of data from SILO in temporary folder.</p>
+<h2 id="input">Input</h2>
+<p>layernames : list climate variable names (see below)
+date_start : str, start date of time series in format 'YYYY-MM-DD'
+date_end : str, end date of time series in format 'YYYY-MM-DD'
+outpath : str, path to save output data
+bbox : list of bounding box coordinates (optional)
+format_out : str, format of output data: either 'NetCDF' (nc) or 'GeoTIFF' (tif)
+delete_tempfiles : bool, delete temporary files after processing</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>fnames_out </code></dt>
+<dd>list of output filenames</dd>
+</dl>
+<p>layer names:
+- 'daily_rain' (Daily rainfall, mm)
+- 'monthly_rain' (Monthly rainfall, mm)
+- 'max_temp' (Maximum temperature, deg C)
+- 'min_temp'
+(Minimum temperature. deg C)
+- 'vp' (Vapour pressure, hPa)
+- 'vp_deficit' (Vapour pressure deficit, hPa)
+- 'evap_pan' (Class A pan evaporation, mm)
+- 'evap_syn' (Synthetic estimate, mm)
+- 'evap_comb' (Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm)
+- 'evap_morton_lake' (Morton's shallow lake evaporation, mm)
+- 'radiation'
+(Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2)
+- 'rh_tmax'
+(Relative humidity:
+Relative humidity at the time of maximum temperature, %)
+- 'rh_tmin'
+(Relative humidity at the time of minimum temperature, %)
+- 'et_short_crop' (Evapotranspiration FAO564 short crop, mm)
+- 'et_tall_crop' (ASCE5 tall crop6, mm)
+- 'et_morton_actual' (Morton's areal actual evapotranspiration, mm)
+- 'et_morton_potential' (Morton's point potential evapotranspiration, mm)
+- 'et_morton_wet' (Morton's wet-environment areal potential evapotranspiration over land, mm)
+- 'mslp' (Mean sea level pressure Mean sea level pressure, hPa)</p>
+<p>For more details see:
+SILO data structure doc for gridded data:
+<a href="https://www.longpaddock.qld.gov.au/silo/gridded-data/">https://www.longpaddock.qld.gov.au/silo/gridded-data/</a></p>
+<p>Notes: Here we use the SILO annual raster API to download the data and then trim to date range.
+For data ranges much smaller than a year, one could also use the SILO daily raster API and combine dates.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_SILO_layers(
+    layernames,
+    date_start,
+    date_end,
+    outpath,
+    bbox=None,
+    format_out=&#34;tif&#34;,
+    delete_tempfiles=False,
+    verbose=False,
+    ):
+    &#34;&#34;&#34;
+    Get raster data from SILO for certain climate variable and save data as geotif.
+    If multiple times are requested, then each time will be saved in on band of multi-band geotif.
+    All layers are available with daily resolution (except &#39;monthly_rain&#39;)
+
+    This function includes validation of years and automatically download of data from SILO in temporary folder.
+
+    Input:
+        layernames : list climate variable names (see below)
+        date_start : str, start date of time series in format &#39;YYYY-MM-DD&#39;
+        date_end : str, end date of time series in format &#39;YYYY-MM-DD&#39;
+        outpath : str, path to save output data
+        bbox : list of bounding box coordinates (optional)
+        format_out : str, format of output data: either &#39;NetCDF&#39; (nc) or &#39;GeoTIFF&#39; (tif)
+        delete_tempfiles : bool, delete temporary files after processing
+
+    Returns:
+        fnames_out : list of output filenames
+
+    layer names:
+        - &#39;daily_rain&#39; (Daily rainfall, mm)
+        - &#39;monthly_rain&#39; (Monthly rainfall, mm)
+        - &#39;max_temp&#39; (Maximum temperature, deg C)
+        - &#39;min_temp&#39;  (Minimum temperature. deg C)
+        - &#39;vp&#39; (Vapour pressure, hPa)
+        - &#39;vp_deficit&#39; (Vapour pressure deficit, hPa)
+        - &#39;evap_pan&#39; (Class A pan evaporation, mm)
+        - &#39;evap_syn&#39; (Synthetic estimate, mm)
+        - &#39;evap_comb&#39; (Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm)
+        - &#39;evap_morton_lake&#39; (Morton&#39;s shallow lake evaporation, mm)
+        - &#39;radiation&#39;   (Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2)
+        - &#39;rh_tmax&#39;     (Relative humidity:     Relative humidity at the time of maximum temperature, %)
+        - &#39;rh_tmin&#39;     (Relative humidity at the time of minimum temperature, %)
+        - &#39;et_short_crop&#39; (Evapotranspiration FAO564 short crop, mm)
+        - &#39;et_tall_crop&#39; (ASCE5 tall crop6, mm)
+        - &#39;et_morton_actual&#39; (Morton&#39;s areal actual evapotranspiration, mm)
+        - &#39;et_morton_potential&#39; (Morton&#39;s point potential evapotranspiration, mm)
+        - &#39;et_morton_wet&#39; (Morton&#39;s wet-environment areal potential evapotranspiration over land, mm)
+        - &#39;mslp&#39; (Mean sea level pressure Mean sea level pressure, hPa)
+
+    For more details see:
+    SILO data structure doc for gridded data:
+    https://www.longpaddock.qld.gov.au/silo/gridded-data/
+
+    Notes: Here we use the SILO annual raster API to download the data and then trim to date range. 
+    For data ranges much smaller than a year, one could also use the SILO daily raster API and combine dates.
+    &#34;&#34;&#34;
+
+    # define outpath for temporary files
+    outpath_temp = os.path.join(outpath, &#39;temp_silo&#39;)
+    os.makedirs(outpath, exist_ok=True)
+    date_start = str(date_start)
+    date_end = str(date_end)
+    years = np.arange(int(date_start[:4]), int(date_end[:4]) + 1).tolist()
+    fnames_out_silo = []
+    
+    for layername in layernames:
+
+        # run the download
+        fnames_out = get_SILO_raster(
+            layername, 
+            years, 
+            outpath_temp, 
+            bbox = bbox, 
+            format_out = &#39;nc&#39;, 
+            delete_temp = False)
+
+        # process the data into a single file and trim to date range
+        if (format_out == &#39;tif&#39;) | (format_out == &#39;GeoTIFF&#39;):
+            outfname = os.path.join(outpath, &#34;silo_&#34; + layername + &#34;_&#34; + date_start + &#34;-&#34; + date_end + &#34;.tif&#34;)
+        elif (format_out == &#39;NetCDF&#39;) | (format_out == &#39;nc&#39;):
+            outfname = os.path.join(outpath, &#34;silo_&#34; + layername + &#34;_&#34; + date_start + &#34;-&#34; + date_end + &#34;.nc&#34;)
+        else:
+            raise ValueError(&#34;format_out must be either &#39;tif&#39; or &#39;nc&#39;&#34;)
+
+        # Combine all years into one file and trim to date range
+        process_raster_daterange(fnames_out, date_start, date_end, outfname, layername)
+
+        # Delete temporary cropped files (not the downloaded file)
+        for fname in fnames_out:
+            os.remove(fname)
+    
+        #Save the layer name
+        # Check if outfname is list or string
+        if isinstance(outfname, list):
+            fnames_out_silo += outfname
+        else:
+            fnames_out_silo.append(outfname)
+
+    return fnames_out_silo</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_silo.get_SILO_raster"><code class="name flex">
+<span>def <span class="ident">get_SILO_raster</span></span>(<span>layername, years, outpath, bbox=None, format_out='nc', delete_temp=False, verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get raster data from SILO for certain climate variable and save data as geotif.
+If multiple times are requested, then each time will be saved in on band of multi-band geotif.
+All layers are available with daily resolution (except 'monthly_rain')</p>
+<p>This function includes validation of years and automatically download of data from SILO in temporary folder.</p>
+<h2 id="input">Input</h2>
+<p>layername : str, climate variable name (see below)
+years : list of years
+outpath : str, path to save output data
+bbox : list of bounding box coordinates (optional)
+format_out : str, format of output data: either 'nc' (netCDF) or 'tif' (geotiff)
+delete_temp : bool, delete temporary folder after download</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>fnames_out </code></dt>
+<dd>list of output filenames</dd>
+</dl>
+<p>layer names:
+- 'daily_rain' (Daily rainfall, mm)
+- 'monthly_rain' (Monthly rainfall, mm)
+- 'max_temp' (Maximum temperature, deg C)
+- 'min_temp'
+(Minimum temperature. deg C)
+- 'vp' (Vapour pressure, hPa)
+- 'vp_deficit' (Vapour pressure deficit, hPa)
+- 'evap_pan' (Class A pan evaporation, mm)
+- 'evap_syn' (Synthetic estimate, mm)
+- 'evap_comb' (Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm)
+- 'evap_morton_lake' (Morton's shallow lake evaporation, mm)
+- 'radiation'
+(Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2)
+- 'rh_tmax'
+(Relative humidity:
+Relative humidity at the time of maximum temperature, %)
+- 'rh_tmin'
+(Relative humidity at the time of minimum temperature, %)
+- 'et_short_crop' (Evapotranspiration FAO564 short crop, mm)
+- 'et_tall_crop' (ASCE5 tall crop6, mm)
+- 'et_morton_actual' (Morton's areal actual evapotranspiration, mm)
+- 'et_morton_potential' (Morton's point potential evapotranspiration, mm)
+- 'et_morton_wet' (Morton's wet-environment areal potential evapotranspiration over land, mm)
+- 'mslp' (Mean sea level pressure Mean sea level pressure, hPa)</p>
+<p>For more details see:
+SILO data structure doc for gridded data:
+<a href="https://www.longpaddock.qld.gov.au/silo/gridded-data/">https://www.longpaddock.qld.gov.au/silo/gridded-data/</a></p>
+<p>SILO url structure:
+url = "https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/<variable>/<year>.<variable>.nc
+e.g. url = "https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/monthly_rain/2005.monthly_rain.nc"</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_SILO_raster(
+    layername,
+    years,
+    outpath,
+    bbox=None,
+    format_out=&#34;nc&#34;,
+    delete_temp=False,
+    verbose=False,
+    ):
+    &#34;&#34;&#34;
+    Get raster data from SILO for certain climate variable and save data as geotif.
+    If multiple times are requested, then each time will be saved in on band of multi-band geotif.
+    All layers are available with daily resolution (except &#39;monthly_rain&#39;)
+
+    This function includes validation of years and automatically download of data from SILO in temporary folder.
+
+    Input:
+        layername : str, climate variable name (see below)
+        years : list of years
+        outpath : str, path to save output data
+        bbox : list of bounding box coordinates (optional)
+        format_out : str, format of output data: either &#39;nc&#39; (netCDF) or &#39;tif&#39; (geotiff)
+        delete_temp : bool, delete temporary folder after download
+
+    Returns:
+        fnames_out : list of output filenames
+
+
+
+    layer names:
+        - &#39;daily_rain&#39; (Daily rainfall, mm)
+        - &#39;monthly_rain&#39; (Monthly rainfall, mm)
+        - &#39;max_temp&#39; (Maximum temperature, deg C)
+        - &#39;min_temp&#39;  (Minimum temperature. deg C)
+        - &#39;vp&#39; (Vapour pressure, hPa)
+        - &#39;vp_deficit&#39; (Vapour pressure deficit, hPa)
+        - &#39;evap_pan&#39; (Class A pan evaporation, mm)
+        - &#39;evap_syn&#39; (Synthetic estimate, mm)
+        - &#39;evap_comb&#39; (Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm)
+        - &#39;evap_morton_lake&#39; (Morton&#39;s shallow lake evaporation, mm)
+        - &#39;radiation&#39;   (Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2)
+        - &#39;rh_tmax&#39;     (Relative humidity:     Relative humidity at the time of maximum temperature, %)
+        - &#39;rh_tmin&#39;     (Relative humidity at the time of minimum temperature, %)
+        - &#39;et_short_crop&#39; (Evapotranspiration FAO564 short crop, mm)
+        - &#39;et_tall_crop&#39; (ASCE5 tall crop6, mm)
+        - &#39;et_morton_actual&#39; (Morton&#39;s areal actual evapotranspiration, mm)
+        - &#39;et_morton_potential&#39; (Morton&#39;s point potential evapotranspiration, mm)
+        - &#39;et_morton_wet&#39; (Morton&#39;s wet-environment areal potential evapotranspiration over land, mm)
+        - &#39;mslp&#39; (Mean sea level pressure Mean sea level pressure, hPa)
+
+    For more details see:
+    SILO data structure doc for gridded data:
+    https://www.longpaddock.qld.gov.au/silo/gridded-data/
+
+    SILO url structure:
+    url = &#34;https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/&lt;variable&gt;/&lt;year&gt;.&lt;variable&gt;.nc
+    e.g. url = &#34;https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/monthly_rain/2005.monthly_rain.nc&#34;
+    &#34;&#34;&#34;
+
+    # Check if layername is valid
+    silodict = get_silodict()
+    layerdict = silodict[&#34;layernames&#34;]
+    if layername not in layerdict:
+        raise ValueError(f&#34;Layer name {layername} not valid. Choose from: {str(layerdict.keys())}&#34;)
+
+    # Create output folder
+    os.makedirs(outpath, exist_ok=True)
+
+    # Check if years are valid
+    if not (isinstance(years, tuple) | isinstance(years, list)):
+        # If not a list, make it a list
+        years = [years]
+    # Get current year from datetime
+    current_year = int(datetime.datetime.now().year)
+
+    # Check if format is valid
+    if format_out not in [&#34;nc&#34;, &#34;tif&#34;, &#34;NetCDF&#34;, &#34;GeoTIFF&#34;]:
+        raise ValueError(&#34;Output format not valid. Choose from: &#39;NetCDF&#39;&#39; or &#39;GeoTIFF&#39;&#34;)
+
+    # Check if years are in the range of available years
+    url_info = &#34;https://www.longpaddock.qld.gov.au/silo/gridded-data/&#34;
+    for year in years:
+        if year &gt; current_year:
+            raise ValueError(f&#34;Choose years &lt;= {current_year}&#34;)
+            return False
+        if year &lt; 1889:
+            print(f&#34;data is not available for years &lt; 1889.&#34;)
+            print(f&#34;see for more details: {url_info}&#34;)
+            return False
+        if (year &lt; 1970) &amp; (layername == &#34;evap_pan&#34;):
+            print(
+                f&#34;{layername} is not available for years &lt; 1970. Automatically set to evap_comb&#34;
+            )
+            print(f&#34;see for more details: {url_info}&#34;)
+            layername = &#34;evap_comb&#34;
+        if (year &lt; 1957) &amp; (layername == &#34;mslp&#34;):
+            print(f&#34;{layername} is not available for years &lt; 1957.&#34;)
+            print(f&#34;see for more details: {url_info}&#34;)
+            return False
+
+    # Silo base url
+    silo_baseurl = (
+        &#34;https://s3-ap-southeast-2.amazonaws.com/silo-open-data/Official/annual/&#34;
+    )
+
+    fnames_out = []
+    # Download data for each year and save as geotif
+    for year in years:
+        # Get url
+        url = silo_baseurl + layername + &#34;/&#34; + str(year) + &#34;.&#34; + layername + &#34;.nc&#34;
+        # Download file
+        # print(f&#39;Downloading data for year {year} from {url} ...&#39;)
+        filename = download_file(url, layername, year, outpath)
+
+        # Open file in Xarray
+        ds = xarray.open_dataset(filename)
+        # select data in bbox:
+        if bbox is not None:
+            ds = ds.sel(lon=slice(bbox[0], bbox[2]), lat=slice(bbox[1], bbox[3]))
+        # Save data
+        if (format_out == &#34;nc&#34;) | (format_out == &#34;NetCDF&#34;):
+            # Save netCDF file
+            outfname = layername + &#34;_&#34; + str(year) + &#34;_cropped.nc&#34;
+            outfile = os.path.join(outpath, outfname)
+            ds.to_netcdf(outfile)
+        elif (format_out == &#34;tif&#34;) | (format_out == &#34;GeoTIFF&#34;):
+            # Save as multi-band geotiff file
+            outfname = layername + &#34;_&#34; + str(year) + &#34;_cropped.tif&#34;
+            xarray2tif(ds, os.path.join(outpath, outfname), layername)
+        # Close file
+        ds.close()
+        # Remove file
+        if delete_temp:
+            os.remove(filename)
+        # print(&#34;Saved &#34; + layername + &#34; for year &#34; + str(year) + &#34; as geotif: &#34;)
+        # print(os.path.join(outpath,outfname))
+        fnames_out.append(os.path.join(outpath, outfname))
+
+    # Convert netcdf to geotif
+    # nc_to_geotif(filename, outpath, layername, year)
+    # https://pratiman-91.github.io/2020/08/01/NetCDF-to-GeoTIFF-using-Python.html
+    return fnames_out</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_silo.get_silodict"><code class="name flex">
+<span>def <span class="ident">get_silodict</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get dictionary of available layers and meta data</p>
+<p>OUTPUT:
+layerdict : dict
+dictionary of meta data and available layer names</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_silodict():
+    &#34;&#34;&#34;
+    Get dictionary of available layers and meta data
+
+    OUTPUT:
+    layerdict : dict
+        dictionary of meta data and available layer names
+    &#34;&#34;&#34;
+
+    silodict = {}
+    silodict[&#34;title&#34;] = &#34;SILO climate database&#34;
+    silodict[
+        &#34;description&#34;
+    ] = &#34;SILO is containing continuous daily climate data for Australia from 1889 to present.&#34;
+    silodict[&#34;crs&#34;] = &#34;EPSG:4326&#34;
+    silodict[&#34;bbox&#34;] = [112.00, -44.00, 154.00, -10.00]
+    silodict[&#34;resolution_arcsec&#34;] = 180
+    silodict[&#34;updates&#34;] = &#34;daily&#34;
+    silodict[&#34;layernames&#34;] = {
+        &#34;daily_rain&#34;: &#34;Daily rainfall, mm&#34;,
+        &#34;monthly_rain&#34;: &#34;Monthly rainfall, mm&#34;,
+        &#34;max_temp&#34;: &#34;Maximum temperature, degrees Celsius&#34;,
+        &#34;min_temp&#34;: &#34;Minimum temperature, degrees Celsius&#34;,
+        &#34;vp&#34;: &#34;Vapour pressure, hPa&#34;,
+        &#34;vp_deficit&#34;: &#34;Vapour pressure deficit, hPa&#34;,
+        &#34;evap_pan&#34;: &#34;Class A pan evaporation, mm&#34;,
+        &#34;evap_syn&#34;: &#34;Synthetic estimate, mm&#34;,
+        &#34;evap_comb&#34;: &#34;Combination: synthetic estimate pre-1970, class A pan 1970 onwards, mm&#34;,
+        &#34;evap_morton_lake&#34;: &#34;Morton&#39;s shallow lake evaporation, mm&#34;,
+        &#34;radiation&#34;: &#34;Solar radiation: Solar exposure, consisting of both direct and diffuse components, MJ/m2&#34;,
+        &#34;rh_tmax&#34;: &#34;Relative humidity:  Relative humidity at the time of maximum temperature, %&#34;,
+        &#34;rh_tmin&#34;: &#34;Relative humidity at the time of minimum temperature, %&#34;,
+        &#34;et_short_crop&#34;: &#34;Evapotranspiration FAO564 short crop, mm&#34;,
+        &#34;et_tall_crop&#34;: &#34;ASCE5 tall crop6, mm&#34;,
+        &#34;et_morton_actual&#34;: &#34;Morton&#39;s areal actual evapotranspiration, mm&#34;,
+        &#34;et_morton_potential&#34;: &#34;Morton&#39;s point potential evapotranspiration, mm&#34;,
+        &#34;et_morton_wet&#34;: &#34;Morton&#39;s wet-environment areal potential evapotranspiration over land, mm&#34;,
+        &#34;mslp&#34;: &#34;Mean sea level pressure Mean sea level pressure, hPa&#34;,
+    }
+    return silodict</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_silo.getdict_license"><code class="name flex">
+<span>def <span class="ident">getdict_license</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the SILO license and attribution information as dict</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getdict_license():
+    &#34;&#34;&#34;
+    Retrieves the SILO license and attribution information as dict
+    &#34;&#34;&#34;
+    dict = {
+        &#34;name&#34;: &#34;SILO Climate Data&#34;,
+        &#34;source_url&#34;: &#34;https://www.longpaddock.qld.gov.au/silo/&#34;,
+        &#34;license&#34;: &#34;CC BY 4.0&#34;,
+        &#34;license_title&#34;: &#34;Creative Commons Attribution 4.0 International (CC BY 4.0)&#34;,
+        &#34;license_url&#34;: &#34;https://creativecommons.org/licenses/by/4.0/&#34;,
+        &#34;copyright&#34;: &#34;© State of Queensland (Queensland Department of Environment and Science) 2020.&#34;,
+        &#34;attribution&#34;: &#34;State of Queensland (Queensland Department of Environment and Science) 2020.&#34;,
+    }
+    return dict</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_silo.process_raster_daterange"><code class="name flex">
+<span>def <span class="ident">process_raster_daterange</span></span>(<span>infnames, date_start, date_end, outfname, layername)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Combines all the raster data into one xarray dataset, trimming to the date range,
+and saves it as a multiband tif file.</p>
+<h2 id="input">Input</h2>
+<p>infnames : list of input filenames
+date_start : str, start date of time series in format 'YYYY-MM-DD'
+date_end : str, end date of time series in format 'YYYY-MM-DD'
+outfname : str, path+name of output file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_raster_daterange(infnames, date_start, date_end, outfname, layername):
+    &#34;&#34;&#34; Combines all the raster data into one xarray dataset, trimming to the date range, 
+    and saves it as a multiband tif file.
+
+    Input:
+        infnames : list of input filenames
+        date_start : str, start date of time series in format &#39;YYYY-MM-DD&#39;
+        date_end : str, end date of time series in format &#39;YYYY-MM-DD&#39;
+        outfname : str, path+name of output file
+    &#34;&#34;&#34;
+    # Read all the raster data into one xarray dataset
+    try:
+        # Requires dask installed
+        ds = xarray.open_mfdataset(infnames, combine=&#34;by_coords&#34;)
+    except:
+        # If dask is not installed, merge it this way (not as memory efficient)
+        ds = xarray.merge([xarray.open_dataset(f) for f in infnames])
+    # Clip to date range
+    ds = ds.sel(time=slice(date_start, date_end))
+    # Save file
+    # if file extension is tif, save as 
+    if outfname.endswith(&#39;.tif&#39;):
+        xarray2tif(ds, outfname, layername)
+    if outfname.endswith(&#39;.nc&#39;):
+        ds.to_netcdf(outfname)
+    # Close file
+    ds.close()</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_silo.test_get_SILO_layers"><code class="name flex">
+<span>def <span class="ident">test_get_SILO_layers</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>test script</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_SILO_layers():
+    &#34;&#34;&#34;
+    test script
+    &#34;&#34;&#34;
+    layernames = [&#34;daily_rain&#34;,&#34;max_temp&#34;]
+    date_start = &#39;2019-01-01&#39;
+    date_end = &#39;2020-02-01&#39;
+    outpath = &#34;silo_test&#34;
+    bbox = (130, -44, 153.9, -11)
+    # test first for tif output format
+    format_out = &#34;tif&#34;
+    fnames_out = get_SILO_layers(layernames, date_start, date_end, outpath, bbox, format_out)
+    assert len(fnames_out) &gt; 0</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_silo.test_get_SILO_raster"><code class="name flex">
+<span>def <span class="ident">test_get_SILO_raster</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>test script</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_SILO_raster():
+    &#34;&#34;&#34;
+    test script
+    &#34;&#34;&#34;
+    layername = &#34;daily_rain&#34;
+    years = 2019
+    outpath = &#34;silo_test&#34;
+    bbox = (130, -44, 153.9, -11)
+    # test first for tif output format
+    format_out = &#34;tif&#34;
+    fnames_out = get_SILO_raster(layername, years, outpath, bbox, format_out)
+    assert len(fnames_out) &gt; 0</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_silo.xarray2tif"><code class="name flex">
+<span>def <span class="ident">xarray2tif</span></span>(<span>ds, outfname, layername)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert rio xarray dataset to multi-band geotiff with each time as separate band.</p>
+<p>TBD: optional: save separate tif each time slice</p>
+<p>INPUT:
+ds : xarray dataset
+outfname : str
+path+name of output file (".tif")</p>
+<p>OUTPUT:
+tif : str, name of multi-band geotiff</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def xarray2tif(ds, outfname, layername):
+    &#34;&#34;&#34;
+    Convert rio xarray dataset to multi-band geotiff with each time as separate band.
+
+    TBD: optional: save separate tif each time slice
+
+    INPUT:
+    ds : xarray dataset
+    outfname : str
+        path+name of output file (&#34;.tif&#34;)
+
+    OUTPUT:
+    tif : str, name of multi-band geotiff
+    &#34;&#34;&#34;
+
+    # create empty array
+    dsnew = xarray.Dataset()
+
+    for i in range(len(ds.time)):
+
+        # We will use the date of the image to name the GeoTIFF
+        date = ds.isel(time=i).time.dt.strftime(&#34;%Y-%m-%d&#34;).data
+        # print(f&#39;Writing {date}&#39;)
+
+        da = ds.isel(time=i)
+        dsnew[str(date)] = xarray.DataArray(
+            da.variables[layername][:],
+            dims=[&#34;lat&#34;, &#34;lon&#34;],
+            coords={&#34;lat&#34;: da.variables[&#34;lat&#34;], &#34;lon&#34;: da.variables[&#34;lon&#34;]},
+        )
+
+        # Write GeoTIFF with datacube libary for cloud optimized GeoTIFFs (COG)
+        # write_cog(geo_im=singletimestamp_da,
+        #         fname=os.path.join(outpath,f&#39;{outfname_base}_{date}.tif&#39;,
+        #         overwrite=True)
+    # Set crs
+    dsnew.rio.write_crs(4326, inplace=True)
+
+    # Write GeoTIFF to disk
+    dsnew.rio.to_raster(outfname)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="geodata_harvester" href="index.html">geodata_harvester</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="geodata_harvester.getdata_silo.download_file" href="#geodata_harvester.getdata_silo.download_file">download_file</a></code></li>
+<li><code><a title="geodata_harvester.getdata_silo.get_SILO_layers" href="#geodata_harvester.getdata_silo.get_SILO_layers">get_SILO_layers</a></code></li>
+<li><code><a title="geodata_harvester.getdata_silo.get_SILO_raster" href="#geodata_harvester.getdata_silo.get_SILO_raster">get_SILO_raster</a></code></li>
+<li><code><a title="geodata_harvester.getdata_silo.get_silodict" href="#geodata_harvester.getdata_silo.get_silodict">get_silodict</a></code></li>
+<li><code><a title="geodata_harvester.getdata_silo.getdict_license" href="#geodata_harvester.getdata_silo.getdict_license">getdict_license</a></code></li>
+<li><code><a title="geodata_harvester.getdata_silo.process_raster_daterange" href="#geodata_harvester.getdata_silo.process_raster_daterange">process_raster_daterange</a></code></li>
+<li><code><a title="geodata_harvester.getdata_silo.test_get_SILO_layers" href="#geodata_harvester.getdata_silo.test_get_SILO_layers">test_get_SILO_layers</a></code></li>
+<li><code><a title="geodata_harvester.getdata_silo.test_get_SILO_raster" href="#geodata_harvester.getdata_silo.test_get_SILO_raster">test_get_SILO_raster</a></code></li>
+<li><code><a title="geodata_harvester.getdata_silo.xarray2tif" href="#geodata_harvester.getdata_silo.xarray2tif">xarray2tif</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1736 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>geodata_harvester.widgets.harvesterwidgets API documentation</title>
+<meta name="description" content="This script generates interactive notebook widgets for selecting the settings …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>geodata_harvester.widgets.harvesterwidgets</code></h1>
+</header>
+<section id="section-intro">
+<p>This script generates interactive notebook widgets for selecting the settings.</p>
+<p>Widgets are defined using the package ipywidgets, for more details see:</p>
+<p><a href="https://ipywidgets.readthedocs.io/en/stable/index.html">https://ipywidgets.readthedocs.io/en/stable/index.html</a></p>
+<p>and examples:
+<a href="https://coderzcolumn.com/tutorials/python/interactive-widgets-in-jupyter-notebook-using-ipywidgets">https://coderzcolumn.com/tutorials/python/interactive-widgets-in-jupyter-notebook-using-ipywidgets</a></p>
+<p>This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).</p>
+<p>Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney</p>
+<p>This open-source software is released under the LGPL-3.0 License.</p>
+<p>TBD:
+- convert bbox string to list of floats
+settings.target_bbox = settings.target_bbox.strip('][').split(', ')
+settings.target_bbox = [float(item) for item in settings.target_bbox]</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+This script generates interactive notebook widgets for selecting the settings.
+
+Widgets are defined using the package ipywidgets, for more details see:
+
+https://ipywidgets.readthedocs.io/en/stable/index.html
+
+and examples:
+https://coderzcolumn.com/tutorials/python/interactive-widgets-in-jupyter-notebook-using-ipywidgets
+
+
+This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
+
+Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
+
+This open-source software is released under the LGPL-3.0 License.
+
+TBD:
+- convert bbox string to list of floats
+settings.target_bbox = settings.target_bbox.strip(&#39;][&#39;).split(&#39;, &#39;)
+settings.target_bbox = [float(item) for item in settings.target_bbox]
+
+&#34;&#34;&#34;
+
+import os
+import ast
+import yaml
+import sys
+import ipywidgets as widgets
+from IPython.display import display
+import datetime
+from types import SimpleNamespace
+
+# import data dictionaries
+#sys.path.append(&#34;../&#34;)
+from .ipyfilechooser import FileChooser
+from geodata_harvester.getdata_slga import get_slgadict
+from geodata_harvester.getdata_silo import get_silodict
+from geodata_harvester.getdata_dea import get_deadict
+from geodata_harvester.getdata_radiometric import get_radiometricdict
+from geodata_harvester.getdata_landscape import get_landscapedict
+from eeharvest.harvester import supported_collections
+# from geodata_harvester.getdata_ee import supported_collections
+
+
+def gen_accordion(panels, panel_titles):
+    # Generate accordion of panels
+    accordion_main = widgets.Accordion(children=panels)
+    # in future version its is possible to use title attribute in accordion
+    # titles=[io_title, st_title, slga_title, silo_title, dea_title, dem_title]
+    for i in range(len(accordion_main.children)):
+        accordion_main.set_title(i, panel_titles[i])
+    return accordion_main
+
+
+def save_dict_settings(dict_settings, yaml_outfname):
+    &#34;&#34;&#34;
+    save dictionary to yaml file
+    &#34;&#34;&#34;
+    # save dictionary to yaml file
+    f = open(yaml_outfname, &#34;w+&#34;)
+    yaml.dump(dict_settings, f, allow_unicode=True, default_flow_style=False)
+    print(f&#34;Settings saved to file {yaml_outfname}&#34;)
+
+
+def load_settings(fname_settings):
+    &#34;&#34;&#34;
+    Input:
+        fname_settings: path and filename to settings file
+    &#34;&#34;&#34;
+    # Load settings from yaml file
+    with open(fname_settings, &#34;r&#34;) as f:
+        settings = yaml.load(f, Loader=yaml.FullLoader)
+    # Parse settings dictinary as namespace (settings are available as
+    # settings.variable_name rather than settings[&#39;variable_name&#39;])
+    settings = SimpleNamespace(**settings)
+    settings.date_min = str(settings.date_min)
+    settings.date_max = str(settings.date_max)
+    return settings
+
+
+def gen_loadwidget():
+    w_yamlfile = FileChooser(os.getcwd(), title=&#34;Settings File:&#34;)
+    return w_yamlfile
+
+
+def gen_maintab():
+    &#34;&#34;&#34;Generate New Settings Tab&#34;&#34;&#34;
+    w_load = gen_loadwidget()
+    # panels, w_settings, w_names, w_save = gen_widgets()
+    panels, w_settings, names_settings, panel_titles = gen_panels()
+    accordion = gen_accordion(panels, panel_titles)
+    # w_save = gen_savebutton()
+    # w_new = widgets.VBox([accordion, w_save])
+    w_new = accordion
+    tab_nest = widgets.Tab()
+    tab_nest.children = [w_new, w_load]
+    tab_titles = [&#34;New Settings&#34;, &#34;Load Settings&#34;]
+    for i in range(len(tab_nest.children)):
+        tab_nest.set_title(i, tab_titles[i])
+    return tab_nest, w_settings, names_settings, w_load
+
+
+def gen_savebutton():
+    &#34;&#34;&#34;Generate Save button&#34;&#34;&#34;
+    w_savebutton = widgets.ToggleButton(
+        description=&#34;Save Settings&#34;,
+        # button_style=&#39;&#39;, # &#39;success&#39;, &#39;info&#39;, &#39;warning&#39;, &#39;danger&#39; or &#39;&#39;
+        # tooltip=&#39;Click me&#39;,
+        # icon=&#39;check&#39;
+    )
+    return w_savebutton
+
+
+def savebutton_onclick(params):
+    # functionality with non-name params not supported yet by widgets
+    w_settings, name_settings, yaml_outfname = params
+    save_dict_settings(eval_widgets(w_settings, names_settings), yaml_outfname)
+    print(f&#34;Settings saved to file {yaml_outfname}&#34;)
+
+
+def gen_panel_io():
+    # Generate I/O panel
+    w_inpath = FileChooser(os.getcwd(), title=&#34;Input File:&#34;)
+
+    # Write name relative output path
+    w_outpath = widgets.Text(
+        value=&#34;../../dataresults/&#34;,
+        placeholder=&#34;Type name of output path&#34;,
+        description=&#34;Output Path:&#34;,
+        disabled=False,
+    )
+
+    # Write name of longitude
+    w_colname_lng = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;Type name of Longitude column&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    # Write name of latitude
+    w_colname_lat = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;Type name of Latitude column&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    # box1_io = widgets.HBox([w_inpath, w_outpath])
+    # box2_io = widgets.HBox([
+    #    widgets.Box([widgets.Label(&#34;Headername of Longitude:&#34;), w_colname_lng]),
+    #     widgets.Box([widgets.Label(&#34;Headername of Longitude:&#34;), w_colname_lng])
+    #    ])
+
+    items = [
+        w_inpath,
+        widgets.Box([widgets.Label(&#34;Headername of Longitude:&#34;), w_colname_lng]),
+        w_outpath,
+        widgets.Box([widgets.Label(&#34;Headername of Latitude:&#34;), w_colname_lat]),
+    ]
+
+    panel_io = widgets.GridBox(
+        items, layout=widgets.Layout(grid_template_columns=&#34;2fr 3fr&#34;)
+    )
+    # widgets.VBox([w_inpath, w_outpath, box2_io])
+
+    w_io = [w_inpath, w_outpath, w_colname_lng, w_colname_lat]
+    w_names = [&#34;infile&#34;, &#34;outpath&#34;, &#34;colname_lng&#34;, &#34;colname_lat&#34;]
+    return panel_io, w_io, w_names
+
+
+def gen_panel_st():
+    # spatial-temporal specs
+
+    w_target_bbox = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;[Lng_min, Lat_min, Lng_max, Lat_max]&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    w_target_res = widgets.FloatSlider(
+        value=3,
+        min=0.3,
+        max=100,
+        step=0.1,
+        description=&#34;&#34;,
+        disabled=False,
+        continuous_update=False,
+        orientation=&#34;horizontal&#34;,
+        readout=True,
+        slider_color=&#34;white&#34;,
+    )
+
+    # currentDateTime = datetime.datetime.now()
+    # current_year = currentDateTime.date().year
+    # date_options = [*range(1970, current_year + 1, 1)]
+    # date_options.reverse()
+
+    # w_target_dates = widgets.SelectMultiple(
+    #     options=date_options,
+    #     value=[current_year - 1],
+    #     rows=3,
+    #     description=&#34;&#34;,
+    #     disabled=False,
+    # )
+
+    w_date_min = widgets.DatePicker(
+    description=&#39;&#39;,
+    disabled=False
+)
+    w_date_max = widgets.DatePicker(
+    description=&#39;&#39;,
+    disabled=False
+)
+
+    w_temp_intervals = widgets.IntSlider(
+        value=1,
+        min=1,
+        max=365,
+        step=1,
+        description=&#34;&#34;,
+        disabled=False,
+        continuous_update=False,
+        orientation=&#34;horizontal&#34;,
+        readout=True,
+        slider_color=&#34;white&#34;,
+    )
+
+    w_temp_buffer = widgets.IntSlider(
+        value=1,
+        min=1,
+        max=365,
+        step=1,
+        description=&#34;&#34;,
+        disabled=False,
+        continuous_update=False,
+        orientation=&#34;horizontal&#34;,
+        readout=True,
+        slider_color=&#34;white&#34;,
+    )
+
+
+    # w_temp_res = widgets.IntSlider(
+    #     value=30,
+    #     min=1,
+    #     max=365,
+    #     step=1,
+    #     description=&#34;&#34;,
+    #     disabled=False,
+    #     continuous_update=False,
+    #     orientation=&#34;horizontal&#34;,
+    #     readout=True,
+    #     slider_color=&#34;white&#34;,
+    # )
+
+    items = [
+        widgets.GridBox([widgets.Label(&#34;Bounding Box :&#34;), w_target_bbox], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(&#34;Spatial Resolution [arcsec]:&#34;), w_target_res], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Start Date:&#34;.rjust(2)), w_date_min], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Number of Temporal Slices:&#34;.rjust(3)), w_temp_intervals], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;End Date:&#34;.rjust(4)), w_date_max], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Temporal Buffer Window in Days:&#34;), w_temp_buffer], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        # widgets.Box([widgets.Label(&#34;Select years:&#34;), w_target_dates]),
+        # widgets.Box([widgets.Label(&#34;Temporal Resolution [days]:&#34;), w_temp_res]),
+        ]
+
+    # settings_st = [w_target_bbox, w_target_res, w_target_date_min, w_target_date_max, w_temp_res]
+    # settings_names = [&#39;target_bbox&#39;, &#39;target_res&#39;, &#39;target_date_min&#39;, &#39;target_date_max&#39;, &#39;temp_res&#39;]
+    #settings_st = [w_target_bbox, w_target_res, w_target_dates, w_temp_res]
+    #settings_names = [&#34;target_bbox&#34;, &#34;target_res&#34;, &#34;target_dates&#34;, &#34;temp_res&#34;]
+    settings_st = [w_target_bbox, w_target_res, w_date_min, w_temp_intervals, w_date_max, w_temp_buffer]
+    settings_names = [&#34;target_bbox&#34;, &#34;target_res&#34;, &#34;date_min&#34;, &#34;temp_intervals&#34;, &#34;date_max&#34;, &#34;temp_buffer&#34;]
+    panel_st = widgets.GridBox(
+        items, layout=widgets.Layout(grid_template_columns=&#34;6fr 6fr&#34;)
+    )
+    return panel_st, settings_st, settings_names
+
+
+def gen_panel_slga():
+    # Generate SLGA panel
+    ## SLGA
+    dict_slga = get_slgadict()
+    options_slga = list(dict_slga[&#34;layers_url&#34;].keys())
+
+    w_slga = []
+    box_slga = []
+    for option in options_slga:
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_depth = widgets.SelectMultiple(
+            options=[&#34;0-5cm&#34;, &#34;5-15cm&#34;, &#34;15-30cm&#34;, &#34;30-60cm&#34;, &#34;60-100cm&#34;, &#34;100-200cm&#34;],
+            value=[&#34;0-5cm&#34;],
+            rows=2,
+            description=&#34;Depths:&#34;,
+            disabled=False,
+        )
+
+        w_slga.append([w_sel, w_depth])
+        box = widgets.HBox([w_sel, w_depth])
+        box_slga.append(box)
+
+    panel_slga = widgets.VBox(box_slga)
+    return panel_slga, w_slga, options_slga
+
+
+def gen_panel_silo():
+    # Generate SILO panel
+    ## SILO
+    dict_silo = get_silodict()
+    options_silo = list(dict_silo[&#34;layernames&#34;].keys())
+    desc_silo = list(dict_silo[&#34;layernames&#34;].values())
+
+    w_silo = []
+    box_silo = []
+    for i in range(len(options_silo)):
+        option = options_silo[i]
+        desc = desc_silo[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_temp = widgets.SelectMultiple(
+            # options=[&#39;Total&#39;,&#39;Median&#39;,&#39;Mean&#39;,&#39;Std&#39;,&#39;5pct&#39;,&#39;10pct&#39;,&#39;15pct&#39;,&#39;25pct&#39;,&#39;75pct&#39;,&#39;85pct&#39;,&#39;90pct&#39;,&#39;95pct&#39;],
+            options=[&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;std&#34;, &#34;perc95&#34;, &#34;perc5&#34;, &#34;max&#34;, &#34;min&#34;],
+            value=[&#34;median&#34;],
+            rows=2,
+            description=&#34;&#34;,
+            disabled=False,
+        )
+        w_silo.append([w_sel, w_temp])
+        items = [
+            w_sel,
+            widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]),
+            widgets.Label(desc),
+        ]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr 3fr&#34;)
+        )
+        # box = widgets.HBox([w_sel, widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]), widgets.Label(desc)])
+        box_silo.append(box)
+
+    panel_silo = widgets.VBox(box_silo)
+    return panel_silo, w_silo, options_silo
+
+
+def gen_panel_dea():
+    # Generate DEA panel
+    ## DEA
+    dict_dea = get_deadict()
+    options_dea = list(dict_dea[&#34;layernames&#34;].keys())
+    desc_dea = list(dict_dea[&#34;layernames&#34;].values())
+
+    w_dea = []
+    box_dea = []
+    for i in range(len(options_dea)):
+        option = options_dea[i]
+        desc = desc_dea[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        # If any temporal aggregation needed, uncomment following lines
+        # w_temp = widgets.SelectMultiple(
+        # value=[&#39;Median&#39;],
+        # rows=2,
+        # description=&#39;&#39;,
+        # disabled=False
+        # )
+        # w_dea.append([w_sel, w_temp])
+        # items = [w_sel, widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]), widgets.Label(desc)]
+        # box = widgets.GridBox(items, layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr 3fr&#34;))
+        w_dea.append([w_sel])
+        items = [w_sel, widgets.Label(desc)]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;1fr 3fr&#34;)
+        )
+        # box = widgets.HBox([w_sel, widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]), widgets.Label(desc)])
+        box_dea.append(box)
+    panel_dea = widgets.VBox(box_dea)
+    return panel_dea, w_dea, options_dea
+
+
+def gen_panel_dem():
+    # generate DEM panel
+    ## DEM
+    options_dem = [&#34;DEM&#34;, &#34;Slope&#34;, &#34;Aspect&#34;]
+    desc_dem = [
+        &#34;Digital Elevation Model (DEM) of Australia derived from STRM with 1 Second Grid - Hydrologically Enforced.&#34;,
+        &#34;DEM Slope&#34;,
+        &#34;DEM Aspect Ratio&#34;,
+    ]
+    w_dem = []
+    box_dem = []
+    for i in range(len(options_dem)):
+        option = options_dem[i]
+        desc = desc_dem[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_dem.append([w_sel])
+        items = [w_sel, widgets.Label(desc)]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;1fr 4fr&#34;)
+        )
+        # box = widgets.HBox([w_sel, widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]), widgets.Label(desc)])
+        box_dem.append(box)
+
+    panel_dem = widgets.VBox(box_dem)
+    return panel_dem, w_dem, options_dem
+
+
+def gen_panel_radiometric():
+    # Generate radiometrics panel
+    dict_rm = get_radiometricdict()
+    desc_rm = list(dict_rm[&#34;layernames&#34;].values())
+    options_rm = list(dict_rm[&#34;layernames&#34;].keys())
+
+    w_rm = []
+    box_rm = []
+    for i in range(len(options_rm)):
+        option = options_rm[i]
+        desc = desc_rm[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_rm.append([w_sel])
+        items = [w_sel, widgets.Label(desc)]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;2fr 3fr&#34;)
+        )
+        box_rm.append(box)
+    panel_rm = widgets.VBox(box_rm)
+    return panel_rm, w_rm, options_rm
+
+
+def gen_panel_landscape():
+    # Generate radiometrics panel
+    dict_ls = get_landscapedict()
+    options_ls = list(dict_ls[&#34;layernames&#34;].keys())
+    w_ls = []
+    box_ls = []
+    for i in range(len(options_ls)):
+        option = options_ls[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_ls.append([w_sel])
+        items = [w_sel]
+        box = widgets.GridBox(items, layout=widgets.Layout(grid_template_columns=&#34;1fr&#34;))
+        box_ls.append(box)
+    panel_ls = widgets.VBox(box_ls)
+    return panel_ls, w_ls, options_ls
+
+def gen_panel_ee():
+        # Generate Google Earth engine panel
+    ## GEE
+    dict_ee = supported_collections()
+    options_ee = list(dict_ee.keys())
+    w_sel = widgets.Select(
+        options = options_ee,
+        description = &#39;&#39;, 
+        rows = 3,
+        disabled=False)
+
+    w_other = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;Enter other collection name&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    w_spectral = widgets.Select(
+            options=[&#39;None&#39;, &#39;NDVI&#39;, &#39;EVI&#39;, &#39;AVI&#39;, &#39;BI&#39;, &#39;NDMI&#39;, &#39;NBR&#39;, &#39;BNDVI&#39;, &#39;GNDVI&#39;, &#39;SAVI&#39;, &#39;MSI&#39;, &#39;ARVI&#39;, &#39;SIPI&#39;, &#39;NDSI&#39;, &#39;NDWI&#39;],
+            value=&#39;NDVI&#39;,
+            rows=3,
+            description=&#34;&#34;,
+            disabled=False,
+        )
+    w_cloud = widgets.Checkbox(
+            value=False, description=&#39;&#39;, disabled=False, indent=False
+        )
+
+    w_cloud_prob = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;0.7&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    w_reduce = widgets.Select(
+            options=[&#34;median&#34;, &#34;mean&#34;, &#34;mode&#34;, &#34;min&#34;, &#34;max&#34;, &#34;sum&#34;, &#34;stdDev&#34;],
+            value=&#34;median&#34;,
+            rows=3,
+            description=&#34;&#34;,
+            disabled=False,
+        )
+
+    w_band = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;7,8&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    items = [
+        widgets.GridBox([widgets.Label(&#34;Collection Name:&#34;.rjust(2)), w_sel], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Other Collection:&#34;), w_other], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Spectral Index:&#34;.rjust(2)), w_spectral], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Reduce Method:&#34;.rjust(3)), w_reduce], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Band Numbers:&#34;.rjust(4)), w_band], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Cloud Masking:&#34;.rjust(3)), w_cloud], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Mask Probability:&#34;), w_cloud_prob], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        ]
+
+    w_ee = [w_sel, w_other, w_spectral, w_reduce, w_band, w_cloud, w_cloud_prob]
+
+    names_ee = [&#39;collection&#39;, &#39;collection_other&#39;, &#39;spectral&#39;, &#39;reduce&#39;, &#39;bands&#39;, &#39;mask_clouds&#39;, &#39;mask_probability&#39;]
+
+    panel_ee = widgets.GridBox(
+        items, layout=widgets.Layout(grid_template_columns=&#34;6fr&#34;)
+    )
+    return panel_ee, w_ee, names_ee
+
+&#34;&#34;&#34;
+def gen_panel_ee():
+    # Generate Google Earth engine panel
+    ## GEE
+    # Generate Google Earth Engine panel
+    dict_ee = supported_collections()
+    options_ee = list(dict_ee.keys())
+    w_ee = []
+    box_ee = []
+
+    for i in range(len(options_ee)):
+        option = options_ee[i]
+        desc = dict_ee[option]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_temp = widgets.SelectMultiple(
+            options=[&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;min&#34;, &#34;max&#34;, &#34;stDev&#34;, &#39;count&#39;],
+            value=[&#34;median&#34;],
+            rows=2,
+            description=&#34;&#34;,
+            disabled=False,
+        )
+
+        w_cloud = widgets.Checkbox(
+            value=False, description=&#39;Cloud Mask&#39;, disabled=False, indent=False
+        )
+
+        w_spectra = widgets.SelectMultiple(
+            options=[&#39;None&#39;, &#39;NDVI&#39;, &#39;EVI&#39;, &#39;AVI&#39;, &#39;BI&#39;, &#39;NDMI&#39;, &#39;NBR&#39;, &#39;BNDVI&#39;, &#39;GNDVI&#39;, &#39;SAVI&#39;, &#39;MSI&#39;, &#39;ARVI&#39;, &#39;SIPI&#39;, &#39;NDSI&#39;, &#39;NDWI&#39;],
+            value=[&#39;None&#39;],
+            rows=2,
+            description=&#34;&#34;,
+            disabled=False,
+        )
+
+        w_ee.append([w_sel, w_temp, w_cloud, w_spectra])
+        items = [
+            w_sel,
+            widgets.Label(desc),
+            widgets.Box([widgets.Label(&#34;Reducer: &#34;), w_temp]),
+            widgets.Box([widgets.Label(&#34;Spectral: &#34;), w_spectra]),
+            w_cloud,  
+        ]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;1fr 3fr 2fr 2fr 1fr&#34;)
+        )
+        box_ee.append(box)
+
+    panel_ee = widgets.VBox(box_ee)
+    return panel_ee, w_ee, options_ee
+&#34;&#34;&#34;
+
+
+def gen_panels():
+    # Generate New Settings panels
+
+    panel_io, w_io, names_io = gen_panel_io()
+
+    panel_st, w_st, names_st = gen_panel_st()
+
+    panel_slga, w_slga, names_slga = gen_panel_slga()
+
+    panel_silo, w_silo, names_silo = gen_panel_silo()
+
+    panel_dea, w_dea, names_dea = gen_panel_dea()
+
+    panel_dem, w_dem, names_dem = gen_panel_dem()
+
+    panel_rm, w_rm, names_rm = gen_panel_radiometric()
+
+    panel_ls, w_ls, names_ls = gen_panel_landscape()
+
+    panel_ee, w_ee, names_ee  = gen_panel_ee()
+
+    ## define return objects
+    w_settings = [
+        w_io,
+        w_st,
+        w_slga,
+        w_silo,
+        w_dea,
+        w_dem,
+        w_rm,
+        w_ls,
+        w_ee,
+    ]
+
+    panels = [
+        panel_io,
+        panel_st,
+        panel_slga,
+        panel_silo,
+        panel_dea,
+        panel_dem,
+        panel_rm,
+        panel_ls,
+        panel_ee,
+    ]
+
+    names_settings = [
+        names_io,
+        names_st,
+        names_slga,
+        names_silo,
+        names_dea,
+        names_dem,
+        names_rm,
+        names_ls,
+        names_ee,
+    ]
+
+    io_title = &#34;Input and Output Specifications&#34;
+    st_title = &#34;Settings for Spatial and Temporal Specifications&#34;
+    slga_title = &#34;SLGA Data Selection&#34;
+    silo_title = &#34;SILO Data Selection&#34;
+    dea_title = &#34;DEA Data Selection&#34;
+    dem_title = &#34;DEM Data Selection&#34;
+    rm_title = &#34;Radiometrics Data Selection&#34;
+    ls_title = &#34;Landscape Data Selection&#34;
+    ee_title = &#34;Google Earth Engine Selection&#34;
+
+    panel_titles = [
+        io_title,
+        st_title,
+        slga_title,
+        silo_title,
+        dea_title,
+        dem_title,
+        rm_title,
+        ls_title,
+        ee_title,
+    ]
+
+    return panels, w_settings, names_settings, panel_titles
+
+
+def eval_widgets(w_settings, names):
+    &#34;&#34;&#34;
+    This function is converting widget settings into dictionary.
+
+    If widget settings change, add settings here too.
+    &#34;&#34;&#34;
+    w_io, w_st, w_slga, w_silo, w_dea, w_dem, w_rm, w_ls, w_ee = w_settings
+    (
+        names_io,
+        names_st,
+        names_slga,
+        names_silo,
+        names_dea,
+        names_dem,
+        names_rm,
+        names_ls,
+        names_ee,
+    ) = names
+
+    dict_settings = {}
+    # I/O
+    assert len(names_io) == len(w_io)
+    for i in range(len(w_io)):
+        dict_settings[names_io[i]] = w_io[i].value
+    # ST settings
+    assert len(names_st) == len(w_st)
+    for i in range(len(w_st)):
+        dict_settings[names_st[i]] = w_st[i].value
+    # target sources settings
+    # define for target source a dictionary
+    # Loop over all settings and add the ones that are selected
+    dict_sources = {}
+    # SLGA
+    slist = {}
+    for i in range(len(w_slga)):
+        if w_slga[i][0].value:
+            slist[names_slga[i]] = list(w_slga[i][1].value)
+    dict_sources[&#34;SLGA&#34;] = slist
+    # SILO
+    slist = {}
+    for i in range(len(w_silo)):
+        if w_silo[i][0].value:
+            slist[names_silo[i]] = list(w_silo[i][1].value)
+    dict_sources[&#34;SILO&#34;] = slist
+    # DEA
+    slist = []
+    for i in range(len(w_dea)):
+        if w_dea[i][0].value:
+            # slist.append({names_dea[i]: list(w_dea[i][1].value)})
+            slist.append(names_dea[i])
+    dict_sources[&#34;DEA&#34;] = slist
+    # DEM
+    slist = []
+    for i in range(len(w_dem)):
+        if w_dem[i][0].value:
+            slist.append(names_dem[i])
+    dict_sources[&#34;DEM&#34;] = slist
+    # Radiometric
+    slist = []
+    for i in range(len(w_rm)):
+        if w_rm[i][0].value:
+            slist.append(names_rm[i])
+    dict_sources[&#34;Radiometric&#34;] = slist
+    slist = []
+    # Landscape
+    for i in range(len(w_ls)):
+        if w_ls[i][0].value:
+            slist.append(names_ls[i])
+    dict_sources[&#34;Landscape&#34;] = slist
+    # Google Earth Engine
+    # Top level dict:
+    slist = {} 
+    ## Sublevel dict:
+    slist_preprocess = {}
+    slist_download = {}
+    for i in range(len(w_ee)):
+        if names_ee[i] == &#39;bands&#39;:
+            if w_ee[i].value:
+                slist_download[names_ee[i]] = w_ee[i].value
+            else:
+                slist_download[names_ee[i]] = None
+        else:
+            if w_ee[i].value:
+                slist_preprocess[names_ee[i]] = w_ee[i].value
+            else:
+                slist_preprocess[names_ee[i]] = None
+    if slist_preprocess[&#39;collection_other&#39;] != None:
+        slist_preprocess[&#39;collection&#39;] = slist_preprocess[&#39;collection_other&#39;]
+    del slist_preprocess[&#39;collection_other&#39;]
+    if (slist_download[&#39;bands&#39;] != None) &amp; (slist_download[&#39;bands&#39;] != &#39;&#39;):
+        slist_download[&#39;bands&#39;] = list(slist_download[&#39;bands&#39;].split(&#34;,&#34;))
+        slist_download[&#39;bands&#39;] = list(map(str.strip, slist_download[&#39;bands&#39;]))
+        if len(slist_download[&#39;bands&#39;]) == 1:
+            slist_download[&#39;bands&#39;] = slist_download[&#39;bands&#39;][0]
+    slist[&#34;preprocess&#34;] = slist_preprocess
+    slist[&#34;download&#34;] = slist_download
+    dict_sources[&#34;GEE&#34;] = slist
+    # Add here any new settings or data sources
+    dict_settings[&#34;target_sources&#34;] = dict_sources
+
+    # Check bounding box:
+    if type(dict_settings[&#34;target_bbox&#34;]) == str:
+        # remove string from list
+        dict_settings[&#34;target_bbox&#34;] = ast.literal_eval(dict_settings[&#34;target_bbox&#34;])
+    return dict_settings
+
+
+def print_settings(settings):
+    &#34;&#34;&#34;
+    print settings
+    &#34;&#34;&#34;
+    print(&#34;Settings loaded:&#34;)
+    print(&#34;----------------&#34;)
+    for key in settings.__dict__:
+        if key == &#34;target_sources&#34;:
+            print(f&#34;settings.{key}:&#34;)
+            for source in settings.target_sources:
+                print(f&#34;   &#39;{source}&#39;: {settings.target_sources[source]}&#34;)
+        else:
+            print(f&#34;settings.{key} : {settings.__dict__[key]}&#34;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="geodata_harvester.widgets.harvesterwidgets.eval_widgets"><code class="name flex">
+<span>def <span class="ident">eval_widgets</span></span>(<span>w_settings, names)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This function is converting widget settings into dictionary.</p>
+<p>If widget settings change, add settings here too.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def eval_widgets(w_settings, names):
+    &#34;&#34;&#34;
+    This function is converting widget settings into dictionary.
+
+    If widget settings change, add settings here too.
+    &#34;&#34;&#34;
+    w_io, w_st, w_slga, w_silo, w_dea, w_dem, w_rm, w_ls, w_ee = w_settings
+    (
+        names_io,
+        names_st,
+        names_slga,
+        names_silo,
+        names_dea,
+        names_dem,
+        names_rm,
+        names_ls,
+        names_ee,
+    ) = names
+
+    dict_settings = {}
+    # I/O
+    assert len(names_io) == len(w_io)
+    for i in range(len(w_io)):
+        dict_settings[names_io[i]] = w_io[i].value
+    # ST settings
+    assert len(names_st) == len(w_st)
+    for i in range(len(w_st)):
+        dict_settings[names_st[i]] = w_st[i].value
+    # target sources settings
+    # define for target source a dictionary
+    # Loop over all settings and add the ones that are selected
+    dict_sources = {}
+    # SLGA
+    slist = {}
+    for i in range(len(w_slga)):
+        if w_slga[i][0].value:
+            slist[names_slga[i]] = list(w_slga[i][1].value)
+    dict_sources[&#34;SLGA&#34;] = slist
+    # SILO
+    slist = {}
+    for i in range(len(w_silo)):
+        if w_silo[i][0].value:
+            slist[names_silo[i]] = list(w_silo[i][1].value)
+    dict_sources[&#34;SILO&#34;] = slist
+    # DEA
+    slist = []
+    for i in range(len(w_dea)):
+        if w_dea[i][0].value:
+            # slist.append({names_dea[i]: list(w_dea[i][1].value)})
+            slist.append(names_dea[i])
+    dict_sources[&#34;DEA&#34;] = slist
+    # DEM
+    slist = []
+    for i in range(len(w_dem)):
+        if w_dem[i][0].value:
+            slist.append(names_dem[i])
+    dict_sources[&#34;DEM&#34;] = slist
+    # Radiometric
+    slist = []
+    for i in range(len(w_rm)):
+        if w_rm[i][0].value:
+            slist.append(names_rm[i])
+    dict_sources[&#34;Radiometric&#34;] = slist
+    slist = []
+    # Landscape
+    for i in range(len(w_ls)):
+        if w_ls[i][0].value:
+            slist.append(names_ls[i])
+    dict_sources[&#34;Landscape&#34;] = slist
+    # Google Earth Engine
+    # Top level dict:
+    slist = {} 
+    ## Sublevel dict:
+    slist_preprocess = {}
+    slist_download = {}
+    for i in range(len(w_ee)):
+        if names_ee[i] == &#39;bands&#39;:
+            if w_ee[i].value:
+                slist_download[names_ee[i]] = w_ee[i].value
+            else:
+                slist_download[names_ee[i]] = None
+        else:
+            if w_ee[i].value:
+                slist_preprocess[names_ee[i]] = w_ee[i].value
+            else:
+                slist_preprocess[names_ee[i]] = None
+    if slist_preprocess[&#39;collection_other&#39;] != None:
+        slist_preprocess[&#39;collection&#39;] = slist_preprocess[&#39;collection_other&#39;]
+    del slist_preprocess[&#39;collection_other&#39;]
+    if (slist_download[&#39;bands&#39;] != None) &amp; (slist_download[&#39;bands&#39;] != &#39;&#39;):
+        slist_download[&#39;bands&#39;] = list(slist_download[&#39;bands&#39;].split(&#34;,&#34;))
+        slist_download[&#39;bands&#39;] = list(map(str.strip, slist_download[&#39;bands&#39;]))
+        if len(slist_download[&#39;bands&#39;]) == 1:
+            slist_download[&#39;bands&#39;] = slist_download[&#39;bands&#39;][0]
+    slist[&#34;preprocess&#34;] = slist_preprocess
+    slist[&#34;download&#34;] = slist_download
+    dict_sources[&#34;GEE&#34;] = slist
+    # Add here any new settings or data sources
+    dict_settings[&#34;target_sources&#34;] = dict_sources
+
+    # Check bounding box:
+    if type(dict_settings[&#34;target_bbox&#34;]) == str:
+        # remove string from list
+        dict_settings[&#34;target_bbox&#34;] = ast.literal_eval(dict_settings[&#34;target_bbox&#34;])
+    return dict_settings</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_accordion"><code class="name flex">
+<span>def <span class="ident">gen_accordion</span></span>(<span>panels, panel_titles)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_accordion(panels, panel_titles):
+    # Generate accordion of panels
+    accordion_main = widgets.Accordion(children=panels)
+    # in future version its is possible to use title attribute in accordion
+    # titles=[io_title, st_title, slga_title, silo_title, dea_title, dem_title]
+    for i in range(len(accordion_main.children)):
+        accordion_main.set_title(i, panel_titles[i])
+    return accordion_main</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_loadwidget"><code class="name flex">
+<span>def <span class="ident">gen_loadwidget</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_loadwidget():
+    w_yamlfile = FileChooser(os.getcwd(), title=&#34;Settings File:&#34;)
+    return w_yamlfile</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_maintab"><code class="name flex">
+<span>def <span class="ident">gen_maintab</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate New Settings Tab</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_maintab():
+    &#34;&#34;&#34;Generate New Settings Tab&#34;&#34;&#34;
+    w_load = gen_loadwidget()
+    # panels, w_settings, w_names, w_save = gen_widgets()
+    panels, w_settings, names_settings, panel_titles = gen_panels()
+    accordion = gen_accordion(panels, panel_titles)
+    # w_save = gen_savebutton()
+    # w_new = widgets.VBox([accordion, w_save])
+    w_new = accordion
+    tab_nest = widgets.Tab()
+    tab_nest.children = [w_new, w_load]
+    tab_titles = [&#34;New Settings&#34;, &#34;Load Settings&#34;]
+    for i in range(len(tab_nest.children)):
+        tab_nest.set_title(i, tab_titles[i])
+    return tab_nest, w_settings, names_settings, w_load</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_dea"><code class="name flex">
+<span>def <span class="ident">gen_panel_dea</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_dea():
+    # Generate DEA panel
+    ## DEA
+    dict_dea = get_deadict()
+    options_dea = list(dict_dea[&#34;layernames&#34;].keys())
+    desc_dea = list(dict_dea[&#34;layernames&#34;].values())
+
+    w_dea = []
+    box_dea = []
+    for i in range(len(options_dea)):
+        option = options_dea[i]
+        desc = desc_dea[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        # If any temporal aggregation needed, uncomment following lines
+        # w_temp = widgets.SelectMultiple(
+        # value=[&#39;Median&#39;],
+        # rows=2,
+        # description=&#39;&#39;,
+        # disabled=False
+        # )
+        # w_dea.append([w_sel, w_temp])
+        # items = [w_sel, widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]), widgets.Label(desc)]
+        # box = widgets.GridBox(items, layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr 3fr&#34;))
+        w_dea.append([w_sel])
+        items = [w_sel, widgets.Label(desc)]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;1fr 3fr&#34;)
+        )
+        # box = widgets.HBox([w_sel, widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]), widgets.Label(desc)])
+        box_dea.append(box)
+    panel_dea = widgets.VBox(box_dea)
+    return panel_dea, w_dea, options_dea</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_dem"><code class="name flex">
+<span>def <span class="ident">gen_panel_dem</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_dem():
+    # generate DEM panel
+    ## DEM
+    options_dem = [&#34;DEM&#34;, &#34;Slope&#34;, &#34;Aspect&#34;]
+    desc_dem = [
+        &#34;Digital Elevation Model (DEM) of Australia derived from STRM with 1 Second Grid - Hydrologically Enforced.&#34;,
+        &#34;DEM Slope&#34;,
+        &#34;DEM Aspect Ratio&#34;,
+    ]
+    w_dem = []
+    box_dem = []
+    for i in range(len(options_dem)):
+        option = options_dem[i]
+        desc = desc_dem[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_dem.append([w_sel])
+        items = [w_sel, widgets.Label(desc)]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;1fr 4fr&#34;)
+        )
+        # box = widgets.HBox([w_sel, widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]), widgets.Label(desc)])
+        box_dem.append(box)
+
+    panel_dem = widgets.VBox(box_dem)
+    return panel_dem, w_dem, options_dem</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_ee"><code class="name flex">
+<span>def <span class="ident">gen_panel_ee</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_ee():
+        # Generate Google Earth engine panel
+    ## GEE
+    dict_ee = supported_collections()
+    options_ee = list(dict_ee.keys())
+    w_sel = widgets.Select(
+        options = options_ee,
+        description = &#39;&#39;, 
+        rows = 3,
+        disabled=False)
+
+    w_other = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;Enter other collection name&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    w_spectral = widgets.Select(
+            options=[&#39;None&#39;, &#39;NDVI&#39;, &#39;EVI&#39;, &#39;AVI&#39;, &#39;BI&#39;, &#39;NDMI&#39;, &#39;NBR&#39;, &#39;BNDVI&#39;, &#39;GNDVI&#39;, &#39;SAVI&#39;, &#39;MSI&#39;, &#39;ARVI&#39;, &#39;SIPI&#39;, &#39;NDSI&#39;, &#39;NDWI&#39;],
+            value=&#39;NDVI&#39;,
+            rows=3,
+            description=&#34;&#34;,
+            disabled=False,
+        )
+    w_cloud = widgets.Checkbox(
+            value=False, description=&#39;&#39;, disabled=False, indent=False
+        )
+
+    w_cloud_prob = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;0.7&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    w_reduce = widgets.Select(
+            options=[&#34;median&#34;, &#34;mean&#34;, &#34;mode&#34;, &#34;min&#34;, &#34;max&#34;, &#34;sum&#34;, &#34;stdDev&#34;],
+            value=&#34;median&#34;,
+            rows=3,
+            description=&#34;&#34;,
+            disabled=False,
+        )
+
+    w_band = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;7,8&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    items = [
+        widgets.GridBox([widgets.Label(&#34;Collection Name:&#34;.rjust(2)), w_sel], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Other Collection:&#34;), w_other], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Spectral Index:&#34;.rjust(2)), w_spectral], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Reduce Method:&#34;.rjust(3)), w_reduce], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Band Numbers:&#34;.rjust(4)), w_band], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Cloud Masking:&#34;.rjust(3)), w_cloud], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Mask Probability:&#34;), w_cloud_prob], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        ]
+
+    w_ee = [w_sel, w_other, w_spectral, w_reduce, w_band, w_cloud, w_cloud_prob]
+
+    names_ee = [&#39;collection&#39;, &#39;collection_other&#39;, &#39;spectral&#39;, &#39;reduce&#39;, &#39;bands&#39;, &#39;mask_clouds&#39;, &#39;mask_probability&#39;]
+
+    panel_ee = widgets.GridBox(
+        items, layout=widgets.Layout(grid_template_columns=&#34;6fr&#34;)
+    )
+    return panel_ee, w_ee, names_ee</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_io"><code class="name flex">
+<span>def <span class="ident">gen_panel_io</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_io():
+    # Generate I/O panel
+    w_inpath = FileChooser(os.getcwd(), title=&#34;Input File:&#34;)
+
+    # Write name relative output path
+    w_outpath = widgets.Text(
+        value=&#34;../../dataresults/&#34;,
+        placeholder=&#34;Type name of output path&#34;,
+        description=&#34;Output Path:&#34;,
+        disabled=False,
+    )
+
+    # Write name of longitude
+    w_colname_lng = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;Type name of Longitude column&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    # Write name of latitude
+    w_colname_lat = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;Type name of Latitude column&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    # box1_io = widgets.HBox([w_inpath, w_outpath])
+    # box2_io = widgets.HBox([
+    #    widgets.Box([widgets.Label(&#34;Headername of Longitude:&#34;), w_colname_lng]),
+    #     widgets.Box([widgets.Label(&#34;Headername of Longitude:&#34;), w_colname_lng])
+    #    ])
+
+    items = [
+        w_inpath,
+        widgets.Box([widgets.Label(&#34;Headername of Longitude:&#34;), w_colname_lng]),
+        w_outpath,
+        widgets.Box([widgets.Label(&#34;Headername of Latitude:&#34;), w_colname_lat]),
+    ]
+
+    panel_io = widgets.GridBox(
+        items, layout=widgets.Layout(grid_template_columns=&#34;2fr 3fr&#34;)
+    )
+    # widgets.VBox([w_inpath, w_outpath, box2_io])
+
+    w_io = [w_inpath, w_outpath, w_colname_lng, w_colname_lat]
+    w_names = [&#34;infile&#34;, &#34;outpath&#34;, &#34;colname_lng&#34;, &#34;colname_lat&#34;]
+    return panel_io, w_io, w_names</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_landscape"><code class="name flex">
+<span>def <span class="ident">gen_panel_landscape</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_landscape():
+    # Generate radiometrics panel
+    dict_ls = get_landscapedict()
+    options_ls = list(dict_ls[&#34;layernames&#34;].keys())
+    w_ls = []
+    box_ls = []
+    for i in range(len(options_ls)):
+        option = options_ls[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_ls.append([w_sel])
+        items = [w_sel]
+        box = widgets.GridBox(items, layout=widgets.Layout(grid_template_columns=&#34;1fr&#34;))
+        box_ls.append(box)
+    panel_ls = widgets.VBox(box_ls)
+    return panel_ls, w_ls, options_ls</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_radiometric"><code class="name flex">
+<span>def <span class="ident">gen_panel_radiometric</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_radiometric():
+    # Generate radiometrics panel
+    dict_rm = get_radiometricdict()
+    desc_rm = list(dict_rm[&#34;layernames&#34;].values())
+    options_rm = list(dict_rm[&#34;layernames&#34;].keys())
+
+    w_rm = []
+    box_rm = []
+    for i in range(len(options_rm)):
+        option = options_rm[i]
+        desc = desc_rm[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_rm.append([w_sel])
+        items = [w_sel, widgets.Label(desc)]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;2fr 3fr&#34;)
+        )
+        box_rm.append(box)
+    panel_rm = widgets.VBox(box_rm)
+    return panel_rm, w_rm, options_rm</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_silo"><code class="name flex">
+<span>def <span class="ident">gen_panel_silo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_silo():
+    # Generate SILO panel
+    ## SILO
+    dict_silo = get_silodict()
+    options_silo = list(dict_silo[&#34;layernames&#34;].keys())
+    desc_silo = list(dict_silo[&#34;layernames&#34;].values())
+
+    w_silo = []
+    box_silo = []
+    for i in range(len(options_silo)):
+        option = options_silo[i]
+        desc = desc_silo[i]
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_temp = widgets.SelectMultiple(
+            # options=[&#39;Total&#39;,&#39;Median&#39;,&#39;Mean&#39;,&#39;Std&#39;,&#39;5pct&#39;,&#39;10pct&#39;,&#39;15pct&#39;,&#39;25pct&#39;,&#39;75pct&#39;,&#39;85pct&#39;,&#39;90pct&#39;,&#39;95pct&#39;],
+            options=[&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;std&#34;, &#34;perc95&#34;, &#34;perc5&#34;, &#34;max&#34;, &#34;min&#34;],
+            value=[&#34;median&#34;],
+            rows=2,
+            description=&#34;&#34;,
+            disabled=False,
+        )
+        w_silo.append([w_sel, w_temp])
+        items = [
+            w_sel,
+            widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]),
+            widgets.Label(desc),
+        ]
+        box = widgets.GridBox(
+            items, layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr 3fr&#34;)
+        )
+        # box = widgets.HBox([w_sel, widgets.Box([widgets.Label(&#34;Temporal Stats: &#34;), w_temp]), widgets.Label(desc)])
+        box_silo.append(box)
+
+    panel_silo = widgets.VBox(box_silo)
+    return panel_silo, w_silo, options_silo</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_slga"><code class="name flex">
+<span>def <span class="ident">gen_panel_slga</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_slga():
+    # Generate SLGA panel
+    ## SLGA
+    dict_slga = get_slgadict()
+    options_slga = list(dict_slga[&#34;layers_url&#34;].keys())
+
+    w_slga = []
+    box_slga = []
+    for option in options_slga:
+        w_sel = widgets.Checkbox(
+            value=False, description=option, disabled=False, indent=False
+        )
+        w_depth = widgets.SelectMultiple(
+            options=[&#34;0-5cm&#34;, &#34;5-15cm&#34;, &#34;15-30cm&#34;, &#34;30-60cm&#34;, &#34;60-100cm&#34;, &#34;100-200cm&#34;],
+            value=[&#34;0-5cm&#34;],
+            rows=2,
+            description=&#34;Depths:&#34;,
+            disabled=False,
+        )
+
+        w_slga.append([w_sel, w_depth])
+        box = widgets.HBox([w_sel, w_depth])
+        box_slga.append(box)
+
+    panel_slga = widgets.VBox(box_slga)
+    return panel_slga, w_slga, options_slga</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panel_st"><code class="name flex">
+<span>def <span class="ident">gen_panel_st</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panel_st():
+    # spatial-temporal specs
+
+    w_target_bbox = widgets.Text(
+        value=&#34;&#34;,
+        placeholder=&#34;[Lng_min, Lat_min, Lng_max, Lat_max]&#34;,
+        description=&#34;&#34;,
+        disabled=False,
+    )
+
+    w_target_res = widgets.FloatSlider(
+        value=3,
+        min=0.3,
+        max=100,
+        step=0.1,
+        description=&#34;&#34;,
+        disabled=False,
+        continuous_update=False,
+        orientation=&#34;horizontal&#34;,
+        readout=True,
+        slider_color=&#34;white&#34;,
+    )
+
+    # currentDateTime = datetime.datetime.now()
+    # current_year = currentDateTime.date().year
+    # date_options = [*range(1970, current_year + 1, 1)]
+    # date_options.reverse()
+
+    # w_target_dates = widgets.SelectMultiple(
+    #     options=date_options,
+    #     value=[current_year - 1],
+    #     rows=3,
+    #     description=&#34;&#34;,
+    #     disabled=False,
+    # )
+
+    w_date_min = widgets.DatePicker(
+    description=&#39;&#39;,
+    disabled=False
+)
+    w_date_max = widgets.DatePicker(
+    description=&#39;&#39;,
+    disabled=False
+)
+
+    w_temp_intervals = widgets.IntSlider(
+        value=1,
+        min=1,
+        max=365,
+        step=1,
+        description=&#34;&#34;,
+        disabled=False,
+        continuous_update=False,
+        orientation=&#34;horizontal&#34;,
+        readout=True,
+        slider_color=&#34;white&#34;,
+    )
+
+    w_temp_buffer = widgets.IntSlider(
+        value=1,
+        min=1,
+        max=365,
+        step=1,
+        description=&#34;&#34;,
+        disabled=False,
+        continuous_update=False,
+        orientation=&#34;horizontal&#34;,
+        readout=True,
+        slider_color=&#34;white&#34;,
+    )
+
+
+    # w_temp_res = widgets.IntSlider(
+    #     value=30,
+    #     min=1,
+    #     max=365,
+    #     step=1,
+    #     description=&#34;&#34;,
+    #     disabled=False,
+    #     continuous_update=False,
+    #     orientation=&#34;horizontal&#34;,
+    #     readout=True,
+    #     slider_color=&#34;white&#34;,
+    # )
+
+    items = [
+        widgets.GridBox([widgets.Label(&#34;Bounding Box :&#34;), w_target_bbox], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(&#34;Spatial Resolution [arcsec]:&#34;), w_target_res], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Start Date:&#34;.rjust(2)), w_date_min], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Number of Temporal Slices:&#34;.rjust(3)), w_temp_intervals], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;End Date:&#34;.rjust(4)), w_date_max], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Temporal Buffer Window in Days:&#34;), w_temp_buffer], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        # widgets.Box([widgets.Label(&#34;Select years:&#34;), w_target_dates]),
+        # widgets.Box([widgets.Label(&#34;Temporal Resolution [days]:&#34;), w_temp_res]),
+        ]
+
+    # settings_st = [w_target_bbox, w_target_res, w_target_date_min, w_target_date_max, w_temp_res]
+    # settings_names = [&#39;target_bbox&#39;, &#39;target_res&#39;, &#39;target_date_min&#39;, &#39;target_date_max&#39;, &#39;temp_res&#39;]
+    #settings_st = [w_target_bbox, w_target_res, w_target_dates, w_temp_res]
+    #settings_names = [&#34;target_bbox&#34;, &#34;target_res&#34;, &#34;target_dates&#34;, &#34;temp_res&#34;]
+    settings_st = [w_target_bbox, w_target_res, w_date_min, w_temp_intervals, w_date_max, w_temp_buffer]
+    settings_names = [&#34;target_bbox&#34;, &#34;target_res&#34;, &#34;date_min&#34;, &#34;temp_intervals&#34;, &#34;date_max&#34;, &#34;temp_buffer&#34;]
+    panel_st = widgets.GridBox(
+        items, layout=widgets.Layout(grid_template_columns=&#34;6fr 6fr&#34;)
+    )
+    return panel_st, settings_st, settings_names</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_panels"><code class="name flex">
+<span>def <span class="ident">gen_panels</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_panels():
+    # Generate New Settings panels
+
+    panel_io, w_io, names_io = gen_panel_io()
+
+    panel_st, w_st, names_st = gen_panel_st()
+
+    panel_slga, w_slga, names_slga = gen_panel_slga()
+
+    panel_silo, w_silo, names_silo = gen_panel_silo()
+
+    panel_dea, w_dea, names_dea = gen_panel_dea()
+
+    panel_dem, w_dem, names_dem = gen_panel_dem()
+
+    panel_rm, w_rm, names_rm = gen_panel_radiometric()
+
+    panel_ls, w_ls, names_ls = gen_panel_landscape()
+
+    panel_ee, w_ee, names_ee  = gen_panel_ee()
+
+    ## define return objects
+    w_settings = [
+        w_io,
+        w_st,
+        w_slga,
+        w_silo,
+        w_dea,
+        w_dem,
+        w_rm,
+        w_ls,
+        w_ee,
+    ]
+
+    panels = [
+        panel_io,
+        panel_st,
+        panel_slga,
+        panel_silo,
+        panel_dea,
+        panel_dem,
+        panel_rm,
+        panel_ls,
+        panel_ee,
+    ]
+
+    names_settings = [
+        names_io,
+        names_st,
+        names_slga,
+        names_silo,
+        names_dea,
+        names_dem,
+        names_rm,
+        names_ls,
+        names_ee,
+    ]
+
+    io_title = &#34;Input and Output Specifications&#34;
+    st_title = &#34;Settings for Spatial and Temporal Specifications&#34;
+    slga_title = &#34;SLGA Data Selection&#34;
+    silo_title = &#34;SILO Data Selection&#34;
+    dea_title = &#34;DEA Data Selection&#34;
+    dem_title = &#34;DEM Data Selection&#34;
+    rm_title = &#34;Radiometrics Data Selection&#34;
+    ls_title = &#34;Landscape Data Selection&#34;
+    ee_title = &#34;Google Earth Engine Selection&#34;
+
+    panel_titles = [
+        io_title,
+        st_title,
+        slga_title,
+        silo_title,
+        dea_title,
+        dem_title,
+        rm_title,
+        ls_title,
+        ee_title,
+    ]
+
+    return panels, w_settings, names_settings, panel_titles</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.gen_savebutton"><code class="name flex">
+<span>def <span class="ident">gen_savebutton</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate Save button</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gen_savebutton():
+    &#34;&#34;&#34;Generate Save button&#34;&#34;&#34;
+    w_savebutton = widgets.ToggleButton(
+        description=&#34;Save Settings&#34;,
+        # button_style=&#39;&#39;, # &#39;success&#39;, &#39;info&#39;, &#39;warning&#39;, &#39;danger&#39; or &#39;&#39;
+        # tooltip=&#39;Click me&#39;,
+        # icon=&#39;check&#39;
+    )
+    return w_savebutton</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.load_settings"><code class="name flex">
+<span>def <span class="ident">load_settings</span></span>(<span>fname_settings)</span>
+</code></dt>
+<dd>
+<div class="desc"><h2 id="input">Input</h2>
+<p>fname_settings: path and filename to settings file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_settings(fname_settings):
+    &#34;&#34;&#34;
+    Input:
+        fname_settings: path and filename to settings file
+    &#34;&#34;&#34;
+    # Load settings from yaml file
+    with open(fname_settings, &#34;r&#34;) as f:
+        settings = yaml.load(f, Loader=yaml.FullLoader)
+    # Parse settings dictinary as namespace (settings are available as
+    # settings.variable_name rather than settings[&#39;variable_name&#39;])
+    settings = SimpleNamespace(**settings)
+    settings.date_min = str(settings.date_min)
+    settings.date_max = str(settings.date_max)
+    return settings</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.print_settings"><code class="name flex">
+<span>def <span class="ident">print_settings</span></span>(<span>settings)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>print settings</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def print_settings(settings):
+    &#34;&#34;&#34;
+    print settings
+    &#34;&#34;&#34;
+    print(&#34;Settings loaded:&#34;)
+    print(&#34;----------------&#34;)
+    for key in settings.__dict__:
+        if key == &#34;target_sources&#34;:
+            print(f&#34;settings.{key}:&#34;)
+            for source in settings.target_sources:
+                print(f&#34;   &#39;{source}&#39;: {settings.target_sources[source]}&#34;)
+        else:
+            print(f&#34;settings.{key} : {settings.__dict__[key]}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.save_dict_settings"><code class="name flex">
+<span>def <span class="ident">save_dict_settings</span></span>(<span>dict_settings, yaml_outfname)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>save dictionary to yaml file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_dict_settings(dict_settings, yaml_outfname):
+    &#34;&#34;&#34;
+    save dictionary to yaml file
+    &#34;&#34;&#34;
+    # save dictionary to yaml file
+    f = open(yaml_outfname, &#34;w+&#34;)
+    yaml.dump(dict_settings, f, allow_unicode=True, default_flow_style=False)
+    print(f&#34;Settings saved to file {yaml_outfname}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.widgets.harvesterwidgets.savebutton_onclick"><code class="name flex">
+<span>def <span class="ident">savebutton_onclick</span></span>(<span>params)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def savebutton_onclick(params):
+    # functionality with non-name params not supported yet by widgets
+    w_settings, name_settings, yaml_outfname = params
+    save_dict_settings(eval_widgets(w_settings, names_settings), yaml_outfname)
+    print(f&#34;Settings saved to file {yaml_outfname}&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="geodata_harvester.widgets" href="index.html">geodata_harvester.widgets</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.eval_widgets" href="#geodata_harvester.widgets.harvesterwidgets.eval_widgets">eval_widgets</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_accordion" href="#geodata_harvester.widgets.harvesterwidgets.gen_accordion">gen_accordion</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_loadwidget" href="#geodata_harvester.widgets.harvesterwidgets.gen_loadwidget">gen_loadwidget</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_maintab" href="#geodata_harvester.widgets.harvesterwidgets.gen_maintab">gen_maintab</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_dea" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_dea">gen_panel_dea</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_dem" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_dem">gen_panel_dem</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_ee" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_ee">gen_panel_ee</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_io" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_io">gen_panel_io</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_landscape" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_landscape">gen_panel_landscape</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_radiometric" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_radiometric">gen_panel_radiometric</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_silo" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_silo">gen_panel_silo</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_slga" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_slga">gen_panel_slga</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panel_st" href="#geodata_harvester.widgets.harvesterwidgets.gen_panel_st">gen_panel_st</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_panels" href="#geodata_harvester.widgets.harvesterwidgets.gen_panels">gen_panels</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.gen_savebutton" href="#geodata_harvester.widgets.harvesterwidgets.gen_savebutton">gen_savebutton</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.load_settings" href="#geodata_harvester.widgets.harvesterwidgets.load_settings">load_settings</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.print_settings" href="#geodata_harvester.widgets.harvesterwidgets.print_settings">print_settings</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.save_dict_settings" href="#geodata_harvester.widgets.harvesterwidgets.save_dict_settings">save_dict_settings</a></code></li>
+<li><code><a title="geodata_harvester.widgets.harvesterwidgets.savebutton_onclick" href="#geodata_harvester.widgets.harvesterwidgets.savebutton_onclick">savebutton_onclick</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
