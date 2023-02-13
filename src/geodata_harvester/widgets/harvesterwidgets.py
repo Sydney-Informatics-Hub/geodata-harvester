@@ -457,7 +457,7 @@ def gen_panel_ee():
     ## GEE
     dict_ee = supported_collections()
     options_ee = list(dict_ee.keys())
-    w_sel = widgets.Select(
+    w_sel = widgets.SelectMultiple(
         options = options_ee,
         description = '', 
         rows = 3,
