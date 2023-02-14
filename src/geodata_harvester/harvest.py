@@ -131,7 +131,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             "GEE",
             settings,
             layertitles=[],
-            agfunctions=gee.reduce,
+            agfunctions=settings.target_sources['GEE']['preprocess']['reduce'],
             loginfos="downloaded",
         )
 
