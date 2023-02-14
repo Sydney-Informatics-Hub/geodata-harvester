@@ -83,6 +83,10 @@ To get started, some example workflows are provided as Jupyter notebooks:
 
 2. Run the jupyter notebooks in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks).
 
+## API
+
+A detailed API documentation is available [here](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/quarto/docs/API/geodata_
+harvester/index.html).
 
 ## New data source modules
 
