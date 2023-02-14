@@ -810,6 +810,9 @@ def eval_widgets(w_settings, names):
     if slist_preprocess['collection_other'] != None:
         slist_preprocess['collection'] = slist_preprocess['collection_other']
     del slist_preprocess['collection_other']
+    # check if list or string
+    if isinstance(slist_preprocess['collection'], (tuple, str)):
+        slist_preprocess['collection'] = list(slist_preprocess['collection'])
     if (slist_download['bands'] != None) & (slist_download['bands'] != ''):
         slist_download['bands'] = list(slist_download['bands'].split(","))
         slist_download['bands'] = list(map(str.strip, slist_download['bands']))
