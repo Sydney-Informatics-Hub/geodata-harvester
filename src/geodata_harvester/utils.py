@@ -122,11 +122,18 @@ def msg_success(message, log=False):
 def plot_rasters(rasters, longs=None, lats=None, titles=None):
     """
     Plots multiple raster files (.tif) on a grid of nicely arranged figures.
-    raster: list of filenames (.tif).
-        Will only read the first band/channel if multiband.
-    longs, lats: optional x,y values in list like object for plotting as points
-        over raster images.
-    titles: title of plot default is raster file name.
+
+    Parameters:
+        raster: list of filenames (.tif).
+            Will only read the first band/channel if multiband.
+        longs: optional x values in list like object for plotting as points 
+            over raster images.
+        lats: optional x values in list like object for plotting as points
+            over raster images.
+        titles: title of plot default is raster file name.
+
+    Returns:  
+        None
     """
     # Set the value for reasonable shaped plot based on the number of datasets
     figlen = int(np.ceil(len(rasters) / 3))
@@ -180,11 +187,12 @@ def _getFeatures(gdf):
     """
     Internal function to parse features from GeoDataFrame in such a manner that
     rasterio wants them.
+
     INPUTS
-    gdf: geodataframe
+        gdf: geodataframe
 
     RETURNS
-    json object for rasterio to read
+        json object for rasterio to read
     """
     return [json.loads(gdf.to_json())["features"][0]["geometry"]]
 
@@ -193,11 +201,15 @@ def reproj_mask(filepath, bbox, crscode=4326, filepath_out=None):
     """
     Clips a raster to the area of a shape, and reprojects.
 
-    filepath: input filename (tif)
-    bbox: shapely geometry(polygon) defining mask boundary
-    crscode: coordinate reference system as defined
-    filepath_out: the optional output filename of the raster. If False,
-    does not save a new file
+    INPUTS
+        filepath: input filename (tif)
+        bbox: shapely geometry(polygon) defining mask boundary
+        crscode: optional, coordinate reference system as defined by EPSG
+        filepath_out: optional, the optional output filename of the raster. If False, 
+        does not save a new file
+
+    RETURNS
+        out_img: numpy array of the clipped and reprojected raster
     """
     data = rasterio.open(filepath)
     geo = gpd.GeoDataFrame({"geometry": bbox}, index=[0], crs=CRS.from_epsg(crscode))
@@ -225,7 +237,9 @@ def reproj_mask(filepath, bbox, crscode=4326, filepath_out=None):
 
 
 def reproj_rastermatch(infile, matchfile, outfile, nodata):
-    """Reproject a file to match the shape and projection of existing raster.
+    """
+    Reproject a file to match the shape and projection of existing raster.
+    Output file is written to disk.
 
     Parameters
     ----------
@@ -283,7 +297,9 @@ def reproj_rastermatch(infile, matchfile, outfile, nodata):
 def reproj_raster(
     infile, outfile, bbox_out, resolution_out=None, crs_out="EPSG:4326", nodata=0
 ):
-    """Reproject and clip for a given output resolution, crs and bbox.
+    """
+    Reproject and clip for a given output resolution, crs and bbox.
+    Output file is written to disk.
 
     Parameters
     ----------
@@ -340,10 +356,12 @@ def reproj_raster(
 def _read_file(file):
     """
     Internal function to read a raster file with rasterio
-    INPUT
-    file: filepath to raster file
-    RETURNS
-    Either single data array or multi-dimensional array if input is multiband.
+
+    INPUT:
+        file: filepath to raster file
+
+    RETURNS:
+        Either single data array or multi-dimensional array if input is multiband.
     """
     with rasterio.open(file) as src:
         temp = src.read()
@@ -538,13 +556,15 @@ def _get_coords_at_point(gt, lon, lat):
     Internal function, given a point in some coordinate reference
     (e.g. lat/lon) Find the closest point to that in an array (e.g.
     a raster) and return the index location of that point in the raster.
-    INPUTS
-    gt: output from "gdal_data.GetGeoTransform()"
-    lon: x/row-coordinate of interest
-    lat: y/column-coordinate of interest
-    RETURNS
-    col: x index value from the raster
-    row: y index value from the raster
+    
+    INPUTS:
+        gt: output from "gdal_data.GetGeoTransform()"
+        lon: x/row-coordinate of interest
+        lat: y/column-coordinate of interest
+    
+    RETURNS:
+        col: x index value from the raster
+        row: y index value from the raster
     """
     row = int((lon - gt[2]) / gt[0])
     col = int((lat - gt[5]) / gt[4])
@@ -556,15 +576,16 @@ def raster_query(longs, lats, rasters, titles=None):
     """
     given a longitude,latitude value, return the value at that point of the
         first channel/band in the raster/tif.
-    INPUTS:
-    longs:list of longitudes
-    lats:list of latitudes
-    rasters:list of raster filenames (as strings)
-    titles:list of column titles (as strings) that correspond to rasters (if none provided, rasternames will be used)
+
+    INPUTS
+        longs:list of longitudes
+        lats:list of latitudes
+        rasters:list of raster filenames (as strings)
+        titles:list of column titles (as strings) that correspond to rasters (if none provided, rasternames will be used)
 
     RETURNS
-    gdf: geopandas dataframe where each row is long/lat point,
-        and columns are rasterfiles
+        gdf: geopandas dataframe where each row is long/lat point,
+            and columns are rasterfiles
     """
 
     # Setup the dataframe to store the ML data
@@ -628,6 +649,9 @@ def raster_query(longs, lats, rasters, titles=None):
 def init_logtable():
     """
     Create a log table to store information from the raster download or processing.
+
+    RETURNS:
+        df_log: dataframe to update
     """
     return pd.DataFrame(
         columns=[
@@ -656,7 +680,7 @@ def update_logtable(
     Update the dataframe table with the information from the raster download or processing.
     The dataframe is simultaneoulsy saved to a csv file in default output directory.
 
-    INPUTS:
+    INPUTS
     df_log: dataframe to update
     filenames: list of filenames to add to the dataframe (captured in output of getdata_* functions)
     layernames: list of layernames to add to the dataframe (must be same length as filenames)
@@ -666,7 +690,7 @@ def update_logtable(
     agfunctions: list of aggregation functions to add to the dataframe; if empty or none provided, it will be inferred from settings
     loginfos: string or list of log information strings to add to the dataframe;
 
-    RETURNS:
+    RETURNS
     df_log: updated dataframe
     """
     # First automatically check consistency of inputs and set defaults if necessary
@@ -747,6 +771,14 @@ def points_in_circle(circle, arr):
     http://stackoverflow.com/a/2774284
     Warning: If a point is near the the edges of the raster it will not loop
     around to the other side of the raster!
+
+    INPUTS
+    circle: a tuple of (i0, j0, r) where i0, j0 are the indices of the center of the circle and r is the radius
+
+    arr: a two-dimensional numpy array
+
+    RETURNS
+    A generator that yields all points within the circle    
     """
     i0, j0, r = circle
 
@@ -763,13 +795,15 @@ def points_in_circle(circle, arr):
 def coreg_raster(i0, j0, data, region):
     """
     Coregisters a point with a buffer region of a raster.
+    
     INPUTS
-    i0: column-index of point of interest
-    j0: row-index of point of interest
-    data: two-dimensional numpy array (raster)
-    region: integer, same units as data resolution
+        i0: column-index of point of interest
+        j0: row-index of point of interest
+        data: two-dimensional numpy array (raster)
+        region: integer, same units as data resolution
+
     RETURNS
-    pts: all values from array within region
+        pts: all values from array within region
     """
     pts_iterator = points_in_circle((i0, j0, region), data)
     pts = np.array(list(pts_iterator))
