@@ -12,7 +12,7 @@ target_bbox: [149.769345, -30.335861, 149.949173, -30.206271]
 target_res: 6.0
 date_min : 2022-10-01
 time_intervals : 2
-date_max : 2022-10-10
+date_max : 2022-11-01
 time_buffer : 2
 
 target_sources:
