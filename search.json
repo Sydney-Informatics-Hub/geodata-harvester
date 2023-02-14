@@ -42,6 +42,13 @@
     "text": "Usage\nYou may now invoke the geodata-harvester directly from a python terminal with:\nimport geodata_harvester as gh\ngh.harvest.run()\nNote the subtle but important difference in use of an underscore _ to import the package and the use of a dash - to install it!\nTo get started, some example workflows are provided as Jupyter notebooks:\n\nOptions and user settings are defined by the user in the settings; see for settings documentation Settings_Overview\nRun the jupyter notebooks in the folder notebooks."
   },
   {
+    "objectID": "py_dataharvester.html#api",
+    "href": "py_dataharvester.html#api",
+    "title": "Python",
+    "section": "API",
+    "text": "API\nA detailed API documentation is available here."
+  },
+  {
     "objectID": "py_dataharvester.html#new-data-source-modules",
     "href": "py_dataharvester.html#new-data-source-modules",
     "title": "Python",
