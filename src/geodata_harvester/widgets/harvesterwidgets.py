@@ -11,15 +11,9 @@ https://coderzcolumn.com/tutorials/python/interactive-widgets-in-jupyter-noteboo
 
 This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
 
-Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
+Copyright 2023 Sydney Informatics Hub (SIH), The University of Sydney
 
 This open-source software is released under the LGPL-3.0 License.
-
-TBD:
-- convert bbox string to list of floats
-settings.target_bbox = settings.target_bbox.strip('][').split(', ')
-settings.target_bbox = [float(item) for item in settings.target_bbox]
-
 """
 
 import os
@@ -44,7 +38,16 @@ from eeharvest.harvester import supported_collections
 
 
 def gen_accordion(panels, panel_titles):
-    # Generate accordion of panels
+    """
+    Generate accordion of panels
+
+    Input:
+        panels: list of panels
+        panel_titles: list of panel titles
+
+    Output:
+        accordion_main: accordion of panels
+    """
     accordion_main = widgets.Accordion(children=panels)
     # in future version its is possible to use title attribute in accordion
     # titles=[io_title, st_title, slga_title, silo_title, dea_title, dem_title]
@@ -56,8 +59,14 @@ def gen_accordion(panels, panel_titles):
 def save_dict_settings(dict_settings, yaml_outfname):
     """
     save dictionary to yaml file
+
+    Input:
+        dict_settings: dictionary of settings
+        yaml_outfname: path and filename to save settings
+
+    Output:
+        None
     """
-    # save dictionary to yaml file
     f = open(yaml_outfname, "w+")
     yaml.dump(dict_settings, f, allow_unicode=True, default_flow_style=False)
     print(f"Settings saved to file {yaml_outfname}")
@@ -65,8 +74,13 @@ def save_dict_settings(dict_settings, yaml_outfname):
 
 def load_settings(fname_settings):
     """
+    Load settings from yaml file
+
     Input:
         fname_settings: path and filename to settings file
+
+    Output:
+        settings: settings as namespace
     """
     # Load settings from yaml file
     with open(fname_settings, "r") as f:
@@ -80,12 +94,32 @@ def load_settings(fname_settings):
 
 
 def gen_loadwidget():
+    """
+    Generate widget for loading settings from yaml file
+
+    Input:
+        None
+    
+    Output:
+        w_load: widget for loading settings
+    """
     w_yamlfile = FileChooser(os.getcwd(), title="Settings File:")
     return w_yamlfile
 
 
 def gen_maintab():
-    """Generate New Settings Tab"""
+    """
+    Generate New Settings Tab
+
+    Input:
+        None
+
+    Output:
+        tab_nest: tab containing New Settings and Load Settings
+        w_settings: widget for settings
+        names_settings: list of names of settings
+        w_load: widget for loading settings
+    """
     w_load = gen_loadwidget()
     # panels, w_settings, w_names, w_save = gen_widgets()
     panels, w_settings, names_settings, panel_titles = gen_panels()
@@ -102,7 +136,15 @@ def gen_maintab():
 
 
 def gen_savebutton():
-    """Generate Save button"""
+    """
+    Generate Save button
+
+    Input:
+        None
+
+    Output:
+        w_savebutton: widget for saving settings
+    """
     w_savebutton = widgets.ToggleButton(
         description="Save Settings",
         # button_style='', # 'success', 'info', 'warning', 'danger' or ''
@@ -113,6 +155,15 @@ def gen_savebutton():
 
 
 def savebutton_onclick(params):
+    """
+    Save settings to yaml file
+
+    Input:
+        params: list of widgets, list of names of widgets, output filename
+
+    Output:
+        None
+    """
     # functionality with non-name params not supported yet by widgets
     w_settings, name_settings, yaml_outfname = params
     save_dict_settings(eval_widgets(w_settings, names_settings), yaml_outfname)
@@ -120,7 +171,17 @@ def savebutton_onclick(params):
 
 
 def gen_panel_io():
-    # Generate I/O panel
+    """
+    Generate panel for input and output settings
+
+    Input:
+        None
+
+    Output:
+        panel_io: panel for input and output settings
+        w_io: widget for input path
+        w_names: list of names of widgets
+    """ 
     w_inpath = FileChooser(os.getcwd(), title="Input File:")
 
     # Write name relative output path
@@ -147,12 +208,6 @@ def gen_panel_io():
         disabled=False,
     )
 
-    # box1_io = widgets.HBox([w_inpath, w_outpath])
-    # box2_io = widgets.HBox([
-    #    widgets.Box([widgets.Label("Headername of Longitude:"), w_colname_lng]),
-    #     widgets.Box([widgets.Label("Headername of Longitude:"), w_colname_lng])
-    #    ])
-
     items = [
         w_inpath,
         widgets.Box([widgets.Label("Headername of Longitude:"), w_colname_lng]),
@@ -163,7 +218,6 @@ def gen_panel_io():
     panel_io = widgets.GridBox(
         items, layout=widgets.Layout(grid_template_columns="2fr 3fr")
     )
-    # widgets.VBox([w_inpath, w_outpath, box2_io])
 
     w_io = [w_inpath, w_outpath, w_colname_lng, w_colname_lat]
     w_names = ["infile", "outpath", "colname_lng", "colname_lat"]
@@ -171,8 +225,17 @@ def gen_panel_io():
 
 
 def gen_panel_st():
-    # spatial-temporal specs
-
+    """
+    Generate panel for spatial-temporal settings
+    
+    Input:
+        None
+    
+    Output:
+        panel_st: panel for spatial-temporal settings
+        settings_st: list of settings
+        settings_names: list of names of settings
+    """
     w_target_bbox = widgets.Text(
         value="",
         placeholder="[Lng_min, Lat_min, Lng_max, Lat_max]",
@@ -192,19 +255,6 @@ def gen_panel_st():
         readout=True,
         slider_color="white",
     )
-
-    # currentDateTime = datetime.datetime.now()
-    # current_year = currentDateTime.date().year
-    # date_options = [*range(1970, current_year + 1, 1)]
-    # date_options.reverse()
-
-    # w_target_dates = widgets.SelectMultiple(
-    #     options=date_options,
-    #     value=[current_year - 1],
-    #     rows=3,
-    #     description="",
-    #     disabled=False,
-    # )
 
     w_date_min = widgets.DatePicker(
     description='',
@@ -241,20 +291,6 @@ def gen_panel_st():
         slider_color="white",
     )
 
-
-    # w_temp_res = widgets.IntSlider(
-    #     value=30,
-    #     min=1,
-    #     max=365,
-    #     step=1,
-    #     description="",
-    #     disabled=False,
-    #     continuous_update=False,
-    #     orientation="horizontal",
-    #     readout=True,
-    #     slider_color="white",
-    # )
-
     items = [
         widgets.GridBox([widgets.Label("Bounding Box :"), w_target_bbox], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
         widgets.GridBox([widgets.Label("Spatial Resolution [arcsec]:"), w_target_res], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
@@ -266,10 +302,6 @@ def gen_panel_st():
         # widgets.Box([widgets.Label("Temporal Resolution [days]:"), w_temp_res]),
         ]
 
-    # settings_st = [w_target_bbox, w_target_res, w_target_date_min, w_target_date_max, w_temp_res]
-    # settings_names = ['target_bbox', 'target_res', 'target_date_min', 'target_date_max', 'temp_res']
-    #settings_st = [w_target_bbox, w_target_res, w_target_dates, w_temp_res]
-    #settings_names = ["target_bbox", "target_res", "target_dates", "temp_res"]
     settings_st = [w_target_bbox, w_target_res, w_date_min, w_temp_intervals, w_date_max, w_temp_buffer]
     settings_names = ["target_bbox", "target_res", "date_min", "temp_intervals", "date_max", "temp_buffer"]
     panel_st = widgets.GridBox(
@@ -279,8 +311,17 @@ def gen_panel_st():
 
 
 def gen_panel_slga():
-    # Generate SLGA panel
-    ## SLGA
+    """
+    Generate panel for SLGA settings
+
+    Input:
+        None
+
+    Output:
+        panel_slga: panel for SLGA settings
+        w_slga: widget for SLGA settings
+        options_slga: list of available SLGA layers
+    """
     dict_slga = get_slgadict()
     options_slga = list(dict_slga["layers_url"].keys())
 
@@ -307,8 +348,17 @@ def gen_panel_slga():
 
 
 def gen_panel_silo():
-    # Generate SILO panel
-    ## SILO
+    """
+    Generate panel for SILO settings
+
+    Input:
+        None
+
+    Output:
+        panel_silo: panel for SILO settings
+        w_silo: widget for SILO settings
+        options_silo: list of SILO options
+    """
     dict_silo = get_silodict()
     options_silo = list(dict_silo["layernames"].keys())
     desc_silo = list(dict_silo["layernames"].values())
@@ -346,8 +396,17 @@ def gen_panel_silo():
 
 
 def gen_panel_dea():
-    # Generate DEA panel
-    ## DEA
+    """
+    Generate panel for DEA settings
+
+    Input:
+        None
+
+    Output:
+        panel_dea: panel for DEA settings
+        w_dea: widget for DEA settings
+        options_dea: list of DEA options 
+    """
     dict_dea = get_deadict()
     options_dea = list(dict_dea["layernames"].keys())
     desc_dea = list(dict_dea["layernames"].values())
@@ -382,8 +441,17 @@ def gen_panel_dea():
 
 
 def gen_panel_dem():
-    # generate DEM panel
-    ## DEM
+    """
+    Generate panel for DEM settings
+
+    Input:
+        None
+
+    Output:
+        panel_dem: panel for DEM settings
+        w_dem: widget for DEM settings
+        options_dem: list of DEM options 
+    """
     options_dem = ["DEM", "Slope", "Aspect"]
     desc_dem = [
         "Digital Elevation Model (DEM) of Australia derived from STRM with 1 Second Grid - Hydrologically Enforced.",
@@ -411,7 +479,17 @@ def gen_panel_dem():
 
 
 def gen_panel_radiometric():
-    # Generate radiometrics panel
+    """
+    Generate panel for radiometric settings
+
+    Input:
+        None
+    
+    Output:
+        panel_rm: panel for radiometric settings
+        w_rm: widget for radiometric settings
+        options_rm: list of radiometric options
+    """
     dict_rm = get_radiometricdict()
     desc_rm = list(dict_rm["layernames"].values())
     options_rm = list(dict_rm["layernames"].keys())
@@ -435,7 +513,17 @@ def gen_panel_radiometric():
 
 
 def gen_panel_landscape():
-    # Generate radiometrics panel
+    """
+    Generate panel for landscape settings
+
+    Input:
+        None
+
+    Output:
+        panel_ls: panel for landscape settings
+        w_ls: widget for landscape settings
+        options_ls: list of landscape options
+    """
     dict_ls = get_landscapedict()
     options_ls = list(dict_ls["layernames"].keys())
     w_ls = []
@@ -453,8 +541,17 @@ def gen_panel_landscape():
     return panel_ls, w_ls, options_ls
 
 def gen_panel_ee():
-        # Generate Google Earth engine panel
-    ## GEE
+    """
+    Generate panel for Google Earth Engine settings
+
+    Input:
+        None
+
+    Output:
+        panel_ee: panel for Google Earth Engine settings
+        w_ee: widget for Google Earth Engine settings
+        names_ee: list of widget names  
+    """
     dict_ee = supported_collections()
     options_ee = list(dict_ee.keys())
     w_sel = widgets.SelectMultiple(
@@ -522,63 +619,21 @@ def gen_panel_ee():
     )
     return panel_ee, w_ee, names_ee
 
-"""
-def gen_panel_ee():
-    # Generate Google Earth engine panel
-    ## GEE
-    # Generate Google Earth Engine panel
-    dict_ee = supported_collections()
-    options_ee = list(dict_ee.keys())
-    w_ee = []
-    box_ee = []
-
-    for i in range(len(options_ee)):
-        option = options_ee[i]
-        desc = dict_ee[option]
-        w_sel = widgets.Checkbox(
-            value=False, description=option, disabled=False, indent=False
-        )
-        w_temp = widgets.SelectMultiple(
-            options=["mean", "median", "sum", "min", "max", "stDev", 'count'],
-            value=["median"],
-            rows=2,
-            description="",
-            disabled=False,
-        )
-
-        w_cloud = widgets.Checkbox(
-            value=False, description='Cloud Mask', disabled=False, indent=False
-        )
-
-        w_spectra = widgets.SelectMultiple(
-            options=['None', 'NDVI', 'EVI', 'AVI', 'BI', 'NDMI', 'NBR', 'BNDVI', 'GNDVI', 'SAVI', 'MSI', 'ARVI', 'SIPI', 'NDSI', 'NDWI'],
-            value=['None'],
-            rows=2,
-            description="",
-            disabled=False,
-        )
-
-        w_ee.append([w_sel, w_temp, w_cloud, w_spectra])
-        items = [
-            w_sel,
-            widgets.Label(desc),
-            widgets.Box([widgets.Label("Reducer: "), w_temp]),
-            widgets.Box([widgets.Label("Spectral: "), w_spectra]),
-            w_cloud,  
-        ]
-        box = widgets.GridBox(
-            items, layout=widgets.Layout(grid_template_columns="1fr 3fr 2fr 2fr 1fr")
-        )
-        box_ee.append(box)
-
-    panel_ee = widgets.VBox(box_ee)
-    return panel_ee, w_ee, options_ee
-"""
 
 
 def gen_panels():
-    # Generate New Settings panels
+    """
+    Generate all settings panels
 
+    Input:
+        None
+
+    Output:
+        panels: list of panels
+        w_settings: list of widgets for all settings
+        names_settings: list of widget names
+        panel_titles: list of panel titles
+    """
     panel_io, w_io, names_io = gen_panel_io()
 
     panel_st, w_st, names_st = gen_panel_st()
@@ -664,6 +719,13 @@ def eval_widgets(w_settings, names):
     This function is converting widget settings into dictionary.
 
     If widget settings change, add settings here too.
+
+    Input:
+        w_settings: list of settings
+        names: list of setting names
+
+    Output:
+        dict_settings: dictionary of settings
     """
     w_io, w_st, w_slga, w_silo, w_dea, w_dem, w_rm, w_ls, w_ee = w_settings
     (
@@ -769,6 +831,12 @@ def eval_widgets(w_settings, names):
 def print_settings(settings):
     """
     print settings
+
+    Input:
+        settings: settings object
+
+    Output: 
+        None
     """
     print("Settings loaded:")
     print("----------------")
