@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>geodata_harvester.harvest API documentation</title>
-<meta name="description" content="This script is used to run the headless version of the data harvester." />
+<meta name="description" content="This script is running the headless version of the data harvester …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,13 +22,26 @@
 <h1 class="title">Module <code>geodata_harvester.harvest</code></h1>
 </header>
 <section id="section-intro">
-<p>This script is used to run the headless version of the data harvester.</p>
+<p>This script is running the headless version of the data harvester.</p>
+<p>The following main steps are automatically executed within the run() function:
+- loading settings from config file
+- creating bounding box from input file points if not provided
+- downloading data layers as sepcified in config file
+- extract data for point locations provided in input file (name specified in settings)
+- save results to disk as csv and geopackage</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
-This script is used to run the headless version of the data harvester.
+This script is running the headless version of the data harvester.
+
+The following main steps are automatically executed within the run() function:
+    - loading settings from config file
+    - creating bounding box from input file points if not provided
+    - downloading data layers as sepcified in config file
+    - extract data for point locations provided in input file (name specified in settings)
+    - save results to disk as csv and geopackage
 &#34;&#34;&#34;
 
 # TODO: add validation to infile, colname_lng, colname_lat, if not in config, to
@@ -36,36 +49,37 @@ This script is used to run the headless version of the data harvester.
 # main code handle this, but for now, this is a quick fix.
 
 import os
-
 from pathlib import Path
-
 import geopandas as gpd
 from termcolor import cprint
-# from types import SimpleNamespace
 import yaml
 from geodata_harvester.widgets import harvesterwidgets as hw
 from geodata_harvester.utils import init_logtable, update_logtable
 from geodata_harvester import (getdata_dea, getdata_dem,  getdata_landscape,
                                getdata_radiometric, getdata_silo, getdata_slga,
-                               utils)  # getdata_ee
+                               utils)
 from eeharvest import harvester as eeharvester
 
 
 def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_df=False):
     &#34;&#34;&#34;
-    A headless version of the Data-Harvester (with some limitations)
+    A headless version of the Data-Harvester (with some limitations).
+    Results are saved to disk.
 
     Parameters
     ----------
     path_to_config : str
         Path to YAML config file
+    log_name: name of log file (default: &#34;download_log&#34;)
     preview : bool, optional
         Plots a matrix of downloaded images if set to True, by default False
+    return_df : bool, optional (Default: False)
+        if True, returns dataframe with results
 
     Returns
     -------
-    None
-        Nothing is returned, results are saved to disk
+    None (if return_df is False)
+    dataframe (if return_df is True)
     &#34;&#34;&#34;
     cprint(&#34;Starting the data harvester -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
 
@@ -138,10 +152,12 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
         # use auto function to download and preprocess
         gee = eeharvester.auto(config=path_to_config)
         # add settings.outpath to all entries in list of gee.filenames
-        outfnames = [settings.outpath + gee.filenames]
-        #img_list, filenames = eeharvester.auto(config=path_to_config)
-        #outfnames = [settings.outpath  + filename for filename in filenames]
-        layernames = [Path(gee.filenames).resolve().stem]
+        # if gee.filenames is a list of strings
+        if not isinstance(gee.filenames, list):
+            # convert to list
+            gee.filenames = [gee.filenames]
+        outfnames = [settings.outpath  + filename for filename in gee.filenames]
+        layernames = [Path(filename).resolve().stem for filename in gee.filenames]
 
         download_log = update_logtable(
             download_log,
@@ -150,7 +166,7 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
             &#34;GEE&#34;,
             settings,
             layertitles=[],
-            agfunctions=gee.reduce,
+            agfunctions=settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;],
             loginfos=&#34;downloaded&#34;,
         )
 
@@ -398,18 +414,25 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
 <span>def <span class="ident">run</span></span>(<span>path_to_config, log_name='download_log', preview=False, return_df=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>A headless version of the Data-Harvester (with some limitations)</p>
+<div class="desc"><p>A headless version of the Data-Harvester (with some limitations).
+Results are saved to disk.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>path_to_config</code></strong> :&ensp;<code>str</code></dt>
 <dd>Path to YAML config file</dd>
+<dt><strong><code>log_name</code></strong> :&ensp;<code>name</code> of <code>log file (default: "download_log")</code></dt>
+<dd>&nbsp;</dd>
 <dt><strong><code>preview</code></strong> :&ensp;<code>bool</code>, optional</dt>
 <dd>Plots a matrix of downloaded images if set to True, by default False</dd>
+<dt><strong><code>return_df</code></strong> :&ensp;<code>bool</code>, optional <code>(Default: False)</code></dt>
+<dd>if True, returns dataframe with results</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>None</code></dt>
-<dd>Nothing is returned, results are saved to disk</dd>
+<dt><code>None (if return_df is False)</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>dataframe (if return_df is True)</code></dt>
+<dd>&nbsp;</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -417,19 +440,23 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
 </summary>
 <pre><code class="python">def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_df=False):
     &#34;&#34;&#34;
-    A headless version of the Data-Harvester (with some limitations)
+    A headless version of the Data-Harvester (with some limitations).
+    Results are saved to disk.
 
     Parameters
     ----------
     path_to_config : str
         Path to YAML config file
+    log_name: name of log file (default: &#34;download_log&#34;)
     preview : bool, optional
         Plots a matrix of downloaded images if set to True, by default False
+    return_df : bool, optional (Default: False)
+        if True, returns dataframe with results
 
     Returns
     -------
-    None
-        Nothing is returned, results are saved to disk
+    None (if return_df is False)
+    dataframe (if return_df is True)
     &#34;&#34;&#34;
     cprint(&#34;Starting the data harvester -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
 
@@ -502,10 +529,12 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
         # use auto function to download and preprocess
         gee = eeharvester.auto(config=path_to_config)
         # add settings.outpath to all entries in list of gee.filenames
-        outfnames = [settings.outpath + gee.filenames]
-        #img_list, filenames = eeharvester.auto(config=path_to_config)
-        #outfnames = [settings.outpath  + filename for filename in filenames]
-        layernames = [Path(gee.filenames).resolve().stem]
+        # if gee.filenames is a list of strings
+        if not isinstance(gee.filenames, list):
+            # convert to list
+            gee.filenames = [gee.filenames]
+        outfnames = [settings.outpath  + filename for filename in gee.filenames]
+        layernames = [Path(filename).resolve().stem for filename in gee.filenames]
 
         download_log = update_logtable(
             download_log,
@@ -514,7 +543,7 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
             &#34;GEE&#34;,
             settings,
             layertitles=[],
-            agfunctions=gee.reduce,
+            agfunctions=settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;],
             loginfos=&#34;downloaded&#34;,
         )
 
