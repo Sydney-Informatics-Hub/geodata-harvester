@@ -1,5 +1,12 @@
 """
-This script is used to run the headless version of the data harvester.
+This script is running the headless version of the data harvester.
+
+The following main steps are automatically executed within the run() function:
+    - loading settings from config file
+    - creating bounding box from input file points if not provided
+    - downloading data layers as sepcified in config file
+    - extract data for point locations provided in input file (name specified in settings)
+    - save results to disk as csv and geopackage
 """
 
 # TODO: add validation to infile, colname_lng, colname_lat, if not in config, to
@@ -7,36 +14,37 @@ This script is used to run the headless version of the data harvester.
 # main code handle this, but for now, this is a quick fix.
 
 import os
-
 from pathlib import Path
-
 import geopandas as gpd
 from termcolor import cprint
-# from types import SimpleNamespace
 import yaml
 from geodata_harvester.widgets import harvesterwidgets as hw
 from geodata_harvester.utils import init_logtable, update_logtable
 from geodata_harvester import (getdata_dea, getdata_dem,  getdata_landscape,
                                getdata_radiometric, getdata_silo, getdata_slga,
-                               utils)  # getdata_ee
+                               utils)
 from eeharvest import harvester as eeharvester
 
 
 def run(path_to_config, log_name="download_log", preview=False, return_df=False):
     """
-    A headless version of the Data-Harvester (with some limitations)
+    A headless version of the Data-Harvester (with some limitations).
+    Results are saved to disk.
 
     Parameters
     ----------
     path_to_config : str
         Path to YAML config file
+    log_name: name of log file (default: "download_log")
     preview : bool, optional
         Plots a matrix of downloaded images if set to True, by default False
+    return_df : bool, optional (Default: False)
+        if True, returns dataframe with results
 
     Returns
     -------
-    None
-        Nothing is returned, results are saved to disk
+    None (if return_df is False)
+    dataframe (if return_df is True)
     """
     cprint("Starting the data harvester -----", "magenta", attrs=["bold"])
 
@@ -108,8 +116,13 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
         #gee.download()
         # use auto function to download and preprocess
         gee = eeharvester.auto(config=path_to_config)
-        outfnames = [settings.outpath + gee.filenames]
-        layernames = [Path(gee.filenames).resolve().stem]
+        # add settings.outpath to all entries in list of gee.filenames
+        # if gee.filenames is a list of strings
+        if not isinstance(gee.filenames, list):
+            # convert to list
+            gee.filenames = [gee.filenames]
+        outfnames = [settings.outpath  + filename for filename in gee.filenames]
+        layernames = [Path(filename).resolve().stem for filename in gee.filenames]
 
         download_log = update_logtable(
             download_log,
