@@ -4,6 +4,9 @@ editor:
   render-on-save: true
 execute:
   freeze: auto  # re-render only when source changes
+resources:
+  - "API/geodata_harvester/*.html"
+
 
 website:
   title: "Geodata-Harvester"

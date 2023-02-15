@@ -1,5 +1,8 @@
 ---
 title: "Python"
+
+resources:
+  - "API/geodata_harvester/*.html"
 ---
 
 <center><a><img src="images/Python_jupyter_logo.png" alt="SIH and AgReFed logo" width="50%"/></a></center>
@@ -83,7 +86,7 @@ To get started, some example workflows are provided as Jupyter notebooks:
 
 2. Run the jupyter notebooks in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks).
 
-## API
+## API reference
 
 A detailed API documentation is available [here](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/quarto/docs/API/geodata_
 harvester/index.html).
