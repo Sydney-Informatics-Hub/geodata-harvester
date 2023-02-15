@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>geodata_harvester.harvest API documentation</title>
+<meta name="description" content="This script is running the headless version of the data harvester …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>geodata_harvester.harvest</code></h1>
+</header>
+<section id="section-intro">
+<p>This script is running the headless version of the data harvester.</p>
+<p>The following main steps are automatically executed within the run() function:
+- loading settings from config file
+- creating bounding box from input file points if not provided
+- downloading data layers as sepcified in config file
+- extract data for point locations provided in input file (name specified in settings)
+- save results to disk as csv and geopackage</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+This script is running the headless version of the data harvester.
+
+The following main steps are automatically executed within the run() function:
+    - loading settings from config file
+    - creating bounding box from input file points if not provided
+    - downloading data layers as sepcified in config file
+    - extract data for point locations provided in input file (name specified in settings)
+    - save results to disk as csv and geopackage
+&#34;&#34;&#34;
+
+# TODO: add validation to infile, colname_lng, colname_lat, if not in config, to
+# generate blanks so that the script doesn&#39;t crash. In the future, maybe let the
+# main code handle this, but for now, this is a quick fix.
+
+import os
+from pathlib import Path
+import geopandas as gpd
+from termcolor import cprint
+import yaml
+from geodata_harvester.widgets import harvesterwidgets as hw
+from geodata_harvester.utils import init_logtable, update_logtable
+from geodata_harvester import (getdata_dea, getdata_dem,  getdata_landscape,
+                               getdata_radiometric, getdata_silo, getdata_slga,
+                               utils)
+from eeharvest import harvester as eeharvester
+
+
+def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_df=False):
+    &#34;&#34;&#34;
+    A headless version of the Data-Harvester (with some limitations).
+    Results are saved to disk.
+
+    Parameters
+    ----------
+    path_to_config : str
+        Path to YAML config file
+    log_name: name of log file (default: &#34;download_log&#34;)
+    preview : bool, optional
+        Plots a matrix of downloaded images if set to True, by default False
+    return_df : bool, optional (Default: False)
+        if True, returns dataframe with results
+
+    Returns
+    -------
+    None (if return_df is False)
+    dataframe (if return_df is True)
+    &#34;&#34;&#34;
+    cprint(&#34;Starting the data harvester -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
+
+    # Load config file (based on notebook for now, will optimise later)
+    # with open(path_to_config, &#34;r&#34;) as f:
+    # settings = yaml.load(f, Loader=yaml.SafeLoader)
+    settings = hw.load_settings(path_to_config)
+
+    # Count number of sources to download from
+    count_sources = len(settings.target_sources)
+    list_sources = list(settings.target_sources.keys())
+
+    # If no infile provided, generate a blank one (including colnames)
+    try:
+        settings.infile
+        if settings.infile is None:
+            points_available = False
+        else:
+            points_available = True
+    except (AttributeError, KeyError):
+        settings.infile = None
+        settings.colname_lng = None
+        settings.colname_lat = None
+        points_available = False
+
+    # If no resolution set, make it 1 arc-second
+    if settings.target_res is None:
+        utils.msg_info(
+            &#34;No target resolution specified, using default of 1 arc-sec&#34;)
+        settings.target_res = 1
+
+    # Create bounding box if infile is provided and target_bbox is not provided
+    if settings.infile is not None:
+        gdfpoints = gpd.read_file(settings.infile)
+        longs = gdfpoints[settings.colname_lng].astype(float)
+        lats = gdfpoints[settings.colname_lat].astype(float)
+
+        if settings.target_bbox is None:
+            settings.target_bbox = (
+                min(longs) - 0.05,
+                min(lats) - 0.05,
+                max(longs) + 0.05,
+                max(lats) + 0.05,
+            )
+
+    # Stop if bounding box cannot be calculated or was not provided
+    if settings.infile is None and settings.target_bbox is None:
+        raise ValueError(&#34;No sampling file or bounding box provided&#34;)
+
+    # Create download log
+    download_log = init_logtable()
+    # process each data source
+    utils.msg_info(
+        f&#34;Found the following {count_sources} sources: {list_sources}&#34;)
+    cprint(&#34;\nDownloading from API sources -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
+
+    # GEE
+    if &#34;GEE&#34; in list_sources:
+        # Try to initialise API if Earth Engine is selected
+        try:
+            eeharvester.initialise()
+        except:
+            eeharvester.initialise(auth_mode = &#39;notebook&#39;)
+
+        cprint(&#34;\n⌛ Downloading Google Earth Engine data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from GEE with eeharvest
+        #gee = eeharvester.collect(config=path_to_config)
+        #gee.preprocess()
+        #gee.download()
+        # use auto function to download and preprocess
+        gee = eeharvester.auto(config=path_to_config)
+        # add settings.outpath to all entries in list of gee.filenames
+        # if gee.filenames is a list of strings
+        if not isinstance(gee.filenames, list):
+            # convert to list
+            gee.filenames = [gee.filenames]
+        outfnames = [settings.outpath  + filename for filename in gee.filenames]
+        layernames = [Path(filename).resolve().stem for filename in gee.filenames]
+
+        download_log = update_logtable(
+            download_log,
+            outfnames,
+            layernames,
+            &#34;GEE&#34;,
+            settings,
+            layertitles=[],
+            agfunctions=settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;],
+            loginfos=&#34;downloaded&#34;,
+        )
+
+    # DEA
+    if &#34;DEA&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading DEA data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from DEA
+        dea_layernames = settings.target_sources[&#34;DEA&#34;]
+        outpath_dea = os.path.join(settings.outpath, &#34;dea&#34;)
+        # put into subdirectory
+        files_dea = getdata_dea.get_dea_layers_daterange(
+            dea_layernames,
+            settings.date_min,
+            settings.date_max,
+            settings.target_bbox,
+            settings.target_res,
+            outpath_dea,
+            crs=&#34;EPSG:4326&#34;,
+            format_out=&#34;GeoTIFF&#34;,
+        )
+
+        # DEA layers come in many lengths, so unravel them all based on name
+        # This may be better suited to fit in utils.update_logtable
+        layer_list = []
+        for layername in dea_layernames:
+            s = sum(layername in s for s in files_dea)
+            l = [layername]*s
+            layer_list.append(l)
+
+        layer_list = sum(layer_list, [])
+        # Need a unique name for each layer
+        layer_titles = [os.path.splitext(
+            x)[0].split(&#39;/&#39;)[-1] for x in files_dea]
+        # layernames = []
+        # for layername in dea_layernames:
+        #   layernames += [layername + &#39;_channel&#39; + channel_list[i] for i in range(len(channel_list))]
+        download_log = update_logtable(
+            download_log,
+            files_dea,
+            layer_list,
+            &#39;DEA&#39;,
+            settings,
+            layertitles=layer_titles,
+            loginfos=&#39;downloaded&#39;
+        )
+
+    # DEM
+    if &#34;DEM&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading DEM data...&#34;, attrs=[&#34;bold&#34;])
+        dem_layernames = settings.target_sources[&#34;DEM&#34;]
+        try:
+            files_dem = getdata_dem.get_dem_layers(
+                dem_layernames,
+                settings.outpath,
+                settings.target_bbox,
+                settings.target_res,
+            )
+        except Exception as e:
+            print(e)
+        # Check if output if False (no data available) and skip if so
+        if (files_dem == [False]) or files_dem is None:
+            pass
+        else:
+            # Add extracted data to log dataframe
+            download_log = update_logtable(
+                download_log,
+                files_dem,
+                dem_layernames,
+                &#39;DEM&#39;,
+                settings,
+                layertitles=dem_layernames,
+                loginfos=&#39;downloaded&#39;)
+
+    if &#34;Landscape&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading Landscape data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from Landscape
+        layernames = settings.target_sources[&#34;Landscape&#34;]
+        layertitles = [&#34;landscape_&#34; + layername for layername in layernames]
+
+        files_ls = getdata_landscape.get_landscape_layers(
+            layernames,
+            settings.target_bbox,
+            settings.outpath,
+            resolution=settings.target_res,
+        )
+        # Add extracted data to log dataframe
+        download_log = update_logtable(
+            download_log,
+            files_ls,
+            layernames,
+            &#34;Landscape&#34;,
+            settings,
+            layertitles=layertitles,
+            loginfos=&#34;downloaded&#34;,
+        )
+    if &#34;Radiometric&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading Radiometric data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from Radiometric
+        # Download radiometrics
+        layernames = settings.target_sources[&#34;Radiometric&#34;]
+        try:
+            files_rd = getdata_radiometric.get_radiometric_layers(
+                settings.outpath,
+                layernames,
+                bbox=settings.target_bbox,
+                resolution=settings.target_res,
+            )
+        except Exception as e:
+            print(e)
+        var_exists = &#34;files_rd&#34; in locals() or &#34;files_rd&#34; in globals()
+        if var_exists:
+            # Add extracted data to log dataframe
+            download_log = update_logtable(
+                download_log,
+                files_rd,
+                layernames,
+                &#34;Radiometric&#34;,
+                settings,
+                layertitles=layernames,
+                loginfos=&#34;downloaded&#34;,
+            )
+        else:
+            pass
+    if &#34;SILO&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading SILO data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from SILO
+        fnames_out_silo = []
+        silo_layernames = list(settings.target_sources[&#34;SILO&#34;].keys())
+        # print(silo_layernames)
+        try:
+            # run the download
+            files_silo = settings.outpath + &#34;silo&#34;
+            fnames_out = getdata_silo.get_SILO_layers(
+                silo_layernames,
+                settings.date_min,
+                settings.date_max,
+                files_silo,
+                bbox=settings.target_bbox,
+                format_out=&#34;tif&#34;
+            )
+            # Save the layer name
+            fnames_out_silo += fnames_out
+        except Exception as e:
+            print(e)
+        var_exists = &#34;files_silo&#34; in locals() or &#34;files_silo&#34; in globals()
+        if var_exists:
+            # Add download info to log dataframe
+            download_log = update_logtable(
+                download_log,
+                fnames_out_silo,
+                silo_layernames,
+                &#34;SILO&#34;,
+                settings,
+                layertitles=[],
+                loginfos=&#34;downloaded&#34;,
+            )
+        else:
+            pass
+    if &#34;SLGA&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading SLGA data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from SLGA
+        slga_layernames = list(settings.target_sources[&#34;SLGA&#34;].keys())
+        # get min and max depth for each layername
+        depth_min = []
+        depth_max = []
+        for layername in slga_layernames:
+            depth_bounds = settings.target_sources[&#34;SLGA&#34;][layername]
+            dmin, dmax = getdata_slga.identifier2depthbounds(depth_bounds)
+            depth_min.append(dmin)
+            depth_max.append(dmax)
+        try:
+            files_slga = getdata_slga.get_slga_layers(
+                slga_layernames,
+                settings.target_bbox,
+                settings.outpath,
+                depth_min=depth_min,
+                depth_max=depth_max,
+                get_ci=True,
+            )
+        except Exception as e:
+            print(e)
+        var_exists = &#34;files_slga&#34; in locals() or &#34;files_slga&#34; in globals()
+        if var_exists:
+            if len(files_slga) != len(slga_layernames):
+                # get filename stems of files_slga
+                slga_layernames = [Path(f).stem for f in files_slga]
+            download_log = update_logtable(
+                download_log,
+                files_slga,
+                slga_layernames,
+                &#34;SLGA&#34;,
+                settings,
+                layertitles=[],
+                loginfos=&#34;downloaded&#34;,
+            )
+        else:
+            pass
+
+    # save log to file
+    logfile = settings.outpath + log_name + &#34;.csv&#34;
+    download_log.to_csv(logfile, index=False)
+
+    # extract filename from settings.infile
+    # Select all processed data
+    df_sel = download_log.copy()
+    rasters = df_sel[&#34;filename_out&#34;].values.tolist()
+    titles = df_sel[&#34;layertitle&#34;].values.tolist()
+    if points_available:
+        fn = Path(settings.infile).resolve().name
+        cprint(
+            f&#34;\nExtracting data points for {fn}  -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
+        # Extract datatable from rasters given input coordinates
+        gdf = utils.raster_query(longs, lats, rasters, titles)
+        # Save the results table to a csv
+        gdf.to_csv(
+            os.path.join(settings.outpath, &#34;results.csv&#34;), index=True, mode=&#34;w&#34;
+        )
+        # Save also as geopackage
+        gdf.to_file(os.path.join(settings.outpath,
+                    &#34;results.gpkg&#34;), driver=&#34;GPKG&#34;)
+        utils.msg_success(
+            f&#34;Data points extracted to {settings.outpath}results.gpkg&#34;)
+
+    if preview and points_available:
+        utils.plot_rasters(rasters, longs, lats, titles)
+    elif preview and not points_available:
+        utils.plot_rasters(rasters, titles=titles)
+
+    cprint(&#34;\n🎉 🎉 🎉 Harvest complete 🎉 🎉 🎉&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
+
+    if return_df and points_available:
+        return gdf
+    else:
+        return None</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="geodata_harvester.harvest.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>path_to_config, log_name='download_log', preview=False, return_df=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A headless version of the Data-Harvester (with some limitations).
+Results are saved to disk.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>path_to_config</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to YAML config file</dd>
+<dt><strong><code>log_name</code></strong> :&ensp;<code>name</code> of <code>log file (default: "download_log")</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>preview</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Plots a matrix of downloaded images if set to True, by default False</dd>
+<dt><strong><code>return_df</code></strong> :&ensp;<code>bool</code>, optional <code>(Default: False)</code></dt>
+<dd>if True, returns dataframe with results</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>None (if return_df is False)</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>dataframe (if return_df is True)</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_df=False):
+    &#34;&#34;&#34;
+    A headless version of the Data-Harvester (with some limitations).
+    Results are saved to disk.
+
+    Parameters
+    ----------
+    path_to_config : str
+        Path to YAML config file
+    log_name: name of log file (default: &#34;download_log&#34;)
+    preview : bool, optional
+        Plots a matrix of downloaded images if set to True, by default False
+    return_df : bool, optional (Default: False)
+        if True, returns dataframe with results
+
+    Returns
+    -------
+    None (if return_df is False)
+    dataframe (if return_df is True)
+    &#34;&#34;&#34;
+    cprint(&#34;Starting the data harvester -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
+
+    # Load config file (based on notebook for now, will optimise later)
+    # with open(path_to_config, &#34;r&#34;) as f:
+    # settings = yaml.load(f, Loader=yaml.SafeLoader)
+    settings = hw.load_settings(path_to_config)
+
+    # Count number of sources to download from
+    count_sources = len(settings.target_sources)
+    list_sources = list(settings.target_sources.keys())
+
+    # If no infile provided, generate a blank one (including colnames)
+    try:
+        settings.infile
+        if settings.infile is None:
+            points_available = False
+        else:
+            points_available = True
+    except (AttributeError, KeyError):
+        settings.infile = None
+        settings.colname_lng = None
+        settings.colname_lat = None
+        points_available = False
+
+    # If no resolution set, make it 1 arc-second
+    if settings.target_res is None:
+        utils.msg_info(
+            &#34;No target resolution specified, using default of 1 arc-sec&#34;)
+        settings.target_res = 1
+
+    # Create bounding box if infile is provided and target_bbox is not provided
+    if settings.infile is not None:
+        gdfpoints = gpd.read_file(settings.infile)
+        longs = gdfpoints[settings.colname_lng].astype(float)
+        lats = gdfpoints[settings.colname_lat].astype(float)
+
+        if settings.target_bbox is None:
+            settings.target_bbox = (
+                min(longs) - 0.05,
+                min(lats) - 0.05,
+                max(longs) + 0.05,
+                max(lats) + 0.05,
+            )
+
+    # Stop if bounding box cannot be calculated or was not provided
+    if settings.infile is None and settings.target_bbox is None:
+        raise ValueError(&#34;No sampling file or bounding box provided&#34;)
+
+    # Create download log
+    download_log = init_logtable()
+    # process each data source
+    utils.msg_info(
+        f&#34;Found the following {count_sources} sources: {list_sources}&#34;)
+    cprint(&#34;\nDownloading from API sources -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
+
+    # GEE
+    if &#34;GEE&#34; in list_sources:
+        # Try to initialise API if Earth Engine is selected
+        try:
+            eeharvester.initialise()
+        except:
+            eeharvester.initialise(auth_mode = &#39;notebook&#39;)
+
+        cprint(&#34;\n⌛ Downloading Google Earth Engine data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from GEE with eeharvest
+        #gee = eeharvester.collect(config=path_to_config)
+        #gee.preprocess()
+        #gee.download()
+        # use auto function to download and preprocess
+        gee = eeharvester.auto(config=path_to_config)
+        # add settings.outpath to all entries in list of gee.filenames
+        # if gee.filenames is a list of strings
+        if not isinstance(gee.filenames, list):
+            # convert to list
+            gee.filenames = [gee.filenames]
+        outfnames = [settings.outpath  + filename for filename in gee.filenames]
+        layernames = [Path(filename).resolve().stem for filename in gee.filenames]
+
+        download_log = update_logtable(
+            download_log,
+            outfnames,
+            layernames,
+            &#34;GEE&#34;,
+            settings,
+            layertitles=[],
+            agfunctions=settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;],
+            loginfos=&#34;downloaded&#34;,
+        )
+
+    # DEA
+    if &#34;DEA&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading DEA data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from DEA
+        dea_layernames = settings.target_sources[&#34;DEA&#34;]
+        outpath_dea = os.path.join(settings.outpath, &#34;dea&#34;)
+        # put into subdirectory
+        files_dea = getdata_dea.get_dea_layers_daterange(
+            dea_layernames,
+            settings.date_min,
+            settings.date_max,
+            settings.target_bbox,
+            settings.target_res,
+            outpath_dea,
+            crs=&#34;EPSG:4326&#34;,
+            format_out=&#34;GeoTIFF&#34;,
+        )
+
+        # DEA layers come in many lengths, so unravel them all based on name
+        # This may be better suited to fit in utils.update_logtable
+        layer_list = []
+        for layername in dea_layernames:
+            s = sum(layername in s for s in files_dea)
+            l = [layername]*s
+            layer_list.append(l)
+
+        layer_list = sum(layer_list, [])
+        # Need a unique name for each layer
+        layer_titles = [os.path.splitext(
+            x)[0].split(&#39;/&#39;)[-1] for x in files_dea]
+        # layernames = []
+        # for layername in dea_layernames:
+        #   layernames += [layername + &#39;_channel&#39; + channel_list[i] for i in range(len(channel_list))]
+        download_log = update_logtable(
+            download_log,
+            files_dea,
+            layer_list,
+            &#39;DEA&#39;,
+            settings,
+            layertitles=layer_titles,
+            loginfos=&#39;downloaded&#39;
+        )
+
+    # DEM
+    if &#34;DEM&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading DEM data...&#34;, attrs=[&#34;bold&#34;])
+        dem_layernames = settings.target_sources[&#34;DEM&#34;]
+        try:
+            files_dem = getdata_dem.get_dem_layers(
+                dem_layernames,
+                settings.outpath,
+                settings.target_bbox,
+                settings.target_res,
+            )
+        except Exception as e:
+            print(e)
+        # Check if output if False (no data available) and skip if so
+        if (files_dem == [False]) or files_dem is None:
+            pass
+        else:
+            # Add extracted data to log dataframe
+            download_log = update_logtable(
+                download_log,
+                files_dem,
+                dem_layernames,
+                &#39;DEM&#39;,
+                settings,
+                layertitles=dem_layernames,
+                loginfos=&#39;downloaded&#39;)
+
+    if &#34;Landscape&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading Landscape data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from Landscape
+        layernames = settings.target_sources[&#34;Landscape&#34;]
+        layertitles = [&#34;landscape_&#34; + layername for layername in layernames]
+
+        files_ls = getdata_landscape.get_landscape_layers(
+            layernames,
+            settings.target_bbox,
+            settings.outpath,
+            resolution=settings.target_res,
+        )
+        # Add extracted data to log dataframe
+        download_log = update_logtable(
+            download_log,
+            files_ls,
+            layernames,
+            &#34;Landscape&#34;,
+            settings,
+            layertitles=layertitles,
+            loginfos=&#34;downloaded&#34;,
+        )
+    if &#34;Radiometric&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading Radiometric data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from Radiometric
+        # Download radiometrics
+        layernames = settings.target_sources[&#34;Radiometric&#34;]
+        try:
+            files_rd = getdata_radiometric.get_radiometric_layers(
+                settings.outpath,
+                layernames,
+                bbox=settings.target_bbox,
+                resolution=settings.target_res,
+            )
+        except Exception as e:
+            print(e)
+        var_exists = &#34;files_rd&#34; in locals() or &#34;files_rd&#34; in globals()
+        if var_exists:
+            # Add extracted data to log dataframe
+            download_log = update_logtable(
+                download_log,
+                files_rd,
+                layernames,
+                &#34;Radiometric&#34;,
+                settings,
+                layertitles=layernames,
+                loginfos=&#34;downloaded&#34;,
+            )
+        else:
+            pass
+    if &#34;SILO&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading SILO data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from SILO
+        fnames_out_silo = []
+        silo_layernames = list(settings.target_sources[&#34;SILO&#34;].keys())
+        # print(silo_layernames)
+        try:
+            # run the download
+            files_silo = settings.outpath + &#34;silo&#34;
+            fnames_out = getdata_silo.get_SILO_layers(
+                silo_layernames,
+                settings.date_min,
+                settings.date_max,
+                files_silo,
+                bbox=settings.target_bbox,
+                format_out=&#34;tif&#34;
+            )
+            # Save the layer name
+            fnames_out_silo += fnames_out
+        except Exception as e:
+            print(e)
+        var_exists = &#34;files_silo&#34; in locals() or &#34;files_silo&#34; in globals()
+        if var_exists:
+            # Add download info to log dataframe
+            download_log = update_logtable(
+                download_log,
+                fnames_out_silo,
+                silo_layernames,
+                &#34;SILO&#34;,
+                settings,
+                layertitles=[],
+                loginfos=&#34;downloaded&#34;,
+            )
+        else:
+            pass
+    if &#34;SLGA&#34; in list_sources:
+        cprint(&#34;\n⌛ Downloading SLGA data...&#34;, attrs=[&#34;bold&#34;])
+        # get data from SLGA
+        slga_layernames = list(settings.target_sources[&#34;SLGA&#34;].keys())
+        # get min and max depth for each layername
+        depth_min = []
+        depth_max = []
+        for layername in slga_layernames:
+            depth_bounds = settings.target_sources[&#34;SLGA&#34;][layername]
+            dmin, dmax = getdata_slga.identifier2depthbounds(depth_bounds)
+            depth_min.append(dmin)
+            depth_max.append(dmax)
+        try:
+            files_slga = getdata_slga.get_slga_layers(
+                slga_layernames,
+                settings.target_bbox,
+                settings.outpath,
+                depth_min=depth_min,
+                depth_max=depth_max,
+                get_ci=True,
+            )
+        except Exception as e:
+            print(e)
+        var_exists = &#34;files_slga&#34; in locals() or &#34;files_slga&#34; in globals()
+        if var_exists:
+            if len(files_slga) != len(slga_layernames):
+                # get filename stems of files_slga
+                slga_layernames = [Path(f).stem for f in files_slga]
+            download_log = update_logtable(
+                download_log,
+                files_slga,
+                slga_layernames,
+                &#34;SLGA&#34;,
+                settings,
+                layertitles=[],
+                loginfos=&#34;downloaded&#34;,
+            )
+        else:
+            pass
+
+    # save log to file
+    logfile = settings.outpath + log_name + &#34;.csv&#34;
+    download_log.to_csv(logfile, index=False)
+
+    # extract filename from settings.infile
+    # Select all processed data
+    df_sel = download_log.copy()
+    rasters = df_sel[&#34;filename_out&#34;].values.tolist()
+    titles = df_sel[&#34;layertitle&#34;].values.tolist()
+    if points_available:
+        fn = Path(settings.infile).resolve().name
+        cprint(
+            f&#34;\nExtracting data points for {fn}  -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
+        # Extract datatable from rasters given input coordinates
+        gdf = utils.raster_query(longs, lats, rasters, titles)
+        # Save the results table to a csv
+        gdf.to_csv(
+            os.path.join(settings.outpath, &#34;results.csv&#34;), index=True, mode=&#34;w&#34;
+        )
+        # Save also as geopackage
+        gdf.to_file(os.path.join(settings.outpath,
+                    &#34;results.gpkg&#34;), driver=&#34;GPKG&#34;)
+        utils.msg_success(
+            f&#34;Data points extracted to {settings.outpath}results.gpkg&#34;)
+
+    if preview and points_available:
+        utils.plot_rasters(rasters, longs, lats, titles)
+    elif preview and not points_available:
+        utils.plot_rasters(rasters, titles=titles)
+
+    cprint(&#34;\n🎉 🎉 🎉 Harvest complete 🎉 🎉 🎉&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
+
+    if return_df and points_available:
+        return gdf
+    else:
+        return None</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="geodata_harvester" href="index.html">geodata_harvester</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="geodata_harvester.harvest.run" href="#geodata_harvester.harvest.run">run</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

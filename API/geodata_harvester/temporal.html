@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>geodata_harvester.temporal API documentation</title>
+<meta name="description" content="Utility functions for for temporal processing …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>geodata_harvester.temporal</code></h1>
+</header>
+<section id="section-intro">
+<p>Utility functions for for temporal processing.</p>
+<p>&ndash;Function List, in order of appearence&ndash;</p>
+<p>combine_rasters_temporal: Concatenates files by time returns xarray.
+aggregate_temporal: Aggregates xarrays by specified function and time period.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/bin/python
+&#34;&#34;&#34;
+
+Utility functions for for temporal processing.
+
+--Function List, in order of appearence--
+
+combine_rasters_temporal: Concatenates files by time returns xarray.
+aggregate_temporal: Aggregates xarrays by specified function and time period.
+
+&#34;&#34;&#34;
+
+import numpy as np
+import pandas as pd
+import rioxarray
+import xarray as xr
+
+
+def combine_rasters_temporal(
+    file_list, channel_name=&#34;band&#34;, attribute_name=&#34;long_name&#34;
+):
+    &#34;&#34;&#34;
+    Combines multiple tif files into single xarray object. Assumes files are in
+    temporal order, and additional channels contain sequential time step data.
+    Also assumes files are of the same shape (x,y,t).
+
+    Example:
+    file_list = [&#39;../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif&#39;,
+             &#39;../data/mvp_daily_rain_silo/daily_rain_2018_cropped.tif&#39;]
+
+    xdr = combine_rasters_temporal(file_list, channel_name=&#39;band&#39;,attribute_name=&#39;long_name&#39;)
+
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
+        Expected to be of the form &#34;x,y&#34; or &#34;x,y,z1&#34;
+    channel_name : string of coordinate dimension to concatentate (band, time,
+        etc). Check options with rioxarray.open_rasterio(&#39;filename&#39;).coords
+    attribute_name : string name of rioxarray attribute holding a time/date
+        label. Check with rioxarray.open_rasterio(&#39;filename&#39;).attrs
+
+    Returns
+    -------
+    xdr : xarray object of x,y,time, with approriate metadata.
+
+    &#34;&#34;&#34;
+    print(&#34;Concatenating&#34;, channel_name, &#34;and&#34;, attribute_name, &#34;over&#34;, file_list)
+    # file_list = glob(os.path.join(data_dir, &#39;*.tif&#39;))
+
+    # Append all data/channels, collect metadata lists
+    array_list = []
+    attrs = ()
+    first = True
+    for x in file_list:
+        xds = rioxarray.open_rasterio(x)
+
+        if channel_name not in xds.coords:
+            raise ValueError(
+                channel_name + &#34; not a channel in the raster &#34; + x + &#34; Options are&#34;,
+                [t for t in xds.coords],
+            )
+            return None
+
+        if attribute_name not in xds.attrs:
+            raise ValueError(
+                attribute_name
+                + &#34; not an attribute in the raster &#34;
+                + x
+                + &#34; Options are&#34;,
+                [t for t in xds.attrs],
+            )
+            return None
+
+        array_list.append(xds)
+        attrs = attrs + xds.attrs[attribute_name]
+        if first == True:
+            coords = xds[channel_name].values
+
+            first = False
+        else:
+            coords = np.append(coords, xds[channel_name].values + coords[-1])
+
+    xdr = xr.concat(array_list, channel_name)
+    # print(agg,coords,attrs)
+    # xdr = xdr.assign_attrs({attr: attrs})
+    xdr = xdr.assign_coords({channel_name: np.array(pd.to_datetime(attrs))})
+    xdr = xdr.rename({channel_name: &#34;time&#34;})
+    del xdr.attrs[attribute_name]
+
+    return xdr
+
+
+def temporal_crop(xdr, start_time, end_time):
+    &#34;&#34;&#34;
+    Cuts an xarray object by start and end times.
+
+    Parameters
+    ----------
+    xdr : xarray object of x,y,time
+    start_time : string time in &#39;yyyy-mm-dd&#39; format.
+    end_time : string time in &#39;yyyy-mm-dd&#39; format.
+
+    Returns
+    -------
+    xdr_crop : xarray object of x,y,time, with approriate metadata.
+    &#34;&#34;&#34;
+
+    xdr_crop = xdr.sel(time=slice(start_time, end_time))
+
+    return(xdr_crop)
+
+
+def aggregate_temporal(xdr,
+    period=&#34;yearly&#34;, agg=[&#34;mean&#34;], outfile=&#34;temporal_agg&#34;, buffer = None):
+    &#34;&#34;&#34;
+    Make a data aggregation (mean, median, sum, etc) through time on an xarray.
+    Expects xarray coordinates to be x, y, time. Saves every aggregation for
+    every time period as its own tif file.
+
+    Example:
+    file_list = [&#39;../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif&#39;,
+         &#39;../data/mvp_daily_rain_silo/daily_rain_2018_cropped.tif&#39;]
+
+    xdr = combine_rasters_temporal(file_list, channel_name=&#39;band&#39;,attribute_name=&#39;long_name&#39;)
+
+    outfname_list, agg_list = aggregate_temporal(
+        xdr,period=100,agg=[&#39;mean&#39;,&#39;sum&#39;],outfile=&#39;temporal_agg&#39;)
+
+    Parameters
+    ----------
+    xdr : xarray object of x,y,time
+    period : string or int. Time period to perform aggregation,
+        &#39;yearly&#39;, &#39;monthly&#39;, or number of periods to aggregate over.
+    agg: list of strings. Choice of aggregation methods to apply of
+        [&#39;mean&#39;,&#39;median&#39;,&#39;sum&#39;,&#39;perc95&#39;,&#39;perc5&#39;]
+    outfile : string. Prefix of output file name.
+    buffer: integer time period in same units as period to buffer into the future.
+
+    Returns
+    -------
+    outfname_list : list of strings of output file names
+    agg_list : list of strings of aggregation methods
+
+    &#34;&#34;&#34;
+
+    # Check the aggregation methods are okay
+    agg_types = [&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;perc95&#34;, &#34;perc5&#34;, &#34;max&#34;, &#34;min&#34;]
+    aggcheck = [a for a in agg if a in agg_types]
+    if aggcheck is None:
+        raise ValueError(&#34;Invalid Aggregation type. Expected any of: %s&#34; % agg_types)
+    else:
+        print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
+        print(&#34;for&#34;, period, &#34; period.&#34;)
+
+    # Group by the appropriate time period
+    if period == &#34;yearly&#34;:
+        xdr_groups = xdr.groupby(&#34;time.year&#34;)
+
+        if buffer != None:
+            xx = xdr_groups.apply(lambda x: x.isel(time=slice(0,buffer)))
+            xdr_groups = xx.groupby(&#34;time.year&#34;)
+
+    elif period == &#34;monthly&#34;:
+        xdr_groups = xdr.groupby(&#34;time.month&#34;)
+
+        if buffer != None:
+            xx = xdr_groups.apply(lambda x: x.isel(time=slice(0,buffer)))
+            xdr_groups = xx.groupby(&#34;time.month&#34;)
+
+    elif type(period) == int:
+        bins = int(np.floor(len(xdr) / period))
+        xdr_groups = xdr.groupby_bins(&#34;time&#34;, bins)
+
+        if buffer != None:
+            xx = xdr_groups.apply(lambda x: x.isel(time=slice(0,buffer)))
+            xdr_groups = xx.groupby_bins(&#34;time&#34;, period)
+
+
+    else:
+        raise ValueError(
+            &#34;Invalid temporal period. Expected any of: &#39;yearly&#39;, &#39;monthly&#39;, or an integer period&#34;
+        )
+
+    # What is more efficient? Make calcs on whole dataframe or on each group?
+
+    # Make ALL agg calcs (and only keep the requested ones later)
+    aggdict = {}
+    aggdict[&#34;mean&#34;] = xdr_groups.mean()
+    aggdict[&#34;median&#34;] = xdr_groups.median()
+    aggdict[&#34;sum&#34;] = xdr_groups.sum()
+    aggdict[&#34;perc95&#34;] = xdr_groups.quantile(q=0.95)
+    aggdict[&#34;perc5&#34;] = xdr_groups.quantile(q=0.05)
+    aggdict[&#34;max&#34;] = xdr_groups.max()
+    aggdict[&#34;min&#34;] = xdr_groups.min()
+
+    # Keep track of the names of all files produced
+    outfname_list = []
+    agg_list = []
+
+    # For all the different aggregation methods
+    for a in aggcheck:
+        # For each period of time in each of the groups, save it out!
+        for p in aggdict[a]:
+
+            # Each temporal grouping results in different group labels
+            if period == &#34;yearly&#34;:
+                label = str(p[&#34;year&#34;].values)
+            elif period == &#34;monthly&#34;:
+                label = str(p[&#34;month&#34;].values).zfill(2)
+            elif type(period) == int:
+                label = str(p[&#34;time_bins&#34;].values)[1:11]
+
+            p.rio.to_raster(outfile + &#34;_&#34; + a + &#34;_&#34; + label + &#34;.tif&#34;)
+            outfname_list.append(outfile + &#34;_&#34; + a + &#34;_&#34; + label + &#34;.tif&#34;)
+            agg_list.append(a)
+
+            print(a, &#34;of&#34;, label, &#34;saved in:&#34;, outfile + &#34;_&#34; + a + &#34;_&#34; + label + &#34;.tif&#34;)
+
+    return outfname_list, agg_list
+
+
+def group_by_custom_periods(xdr, periods: int, agg_range: int):
+
+
+    # def temporal_aggregate_multiband(file_list=None, data_dir=None, agg=[&#39;mean&#39;],
+    #    outfile=&#39;aggregation&#39;, timesteps=1):
+    &#34;&#34;&#34;
+    NOTE: NOT ALL IMPLEMENTED!!! Specifcally multiband data. But I don&#39;t think
+    we want to deal with that, as it is already accounted for previously? Maybe.
+
+    Aggregates over multiple files but keeps channels independently.
+    Results are written to new tif files.
+
+    This function should
+
+    dates of the from &#34;yyyy-mm-dd&#34;
+    rolling mean
+
+    Unit of measurment you are working in seconds, daily, monthly, yearly (or integers)
+    Time steps of channels (e.g. 12xmonthly)
+    time steps of files (each file represents X length of time)
+    time steps of aggregation (e.g. average monthly)
+    time steps of
+
+
+
+    Aggregrates over multiple files and over all channels
+    and writes results to new tif file(s).
+
+    Step 1: combine files (assumes consistent times and start finish points)
+    Step 2: roll data into outtime chunks
+    Step 3: perform aggregation on chunks
+
+    e.g. aggregate daily rainfall data for each month (for the duration of the files.)
+    e.g. aggregate monthly temperature data over a year (for the duration of the files.)
+
+    e.g. aggregate common months over multiple years, average rainfall in July from 2015 to 2020
+
+
+    Takes a stream of temporal data in a particular time increment and converts
+    to a new time-increment by averaging.
+    &#34;&#34;&#34;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="geodata_harvester.temporal.aggregate_temporal"><code class="name flex">
+<span>def <span class="ident">aggregate_temporal</span></span>(<span>xdr, period='yearly', agg=['mean'], outfile='temporal_agg', buffer=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a data aggregation (mean, median, sum, etc) through time on an xarray.
+Expects xarray coordinates to be x, y, time. Saves every aggregation for
+every time period as its own tif file.</p>
+<p>Example:
+file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
+'../data/mvp_daily_rain_silo/daily_rain_2018_cropped.tif']</p>
+<p>xdr = combine_rasters_temporal(file_list, channel_name='band',attribute_name='long_name')</p>
+<p>outfname_list, agg_list = aggregate_temporal(
+xdr,period=100,agg=['mean','sum'],outfile='temporal_agg')</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>xdr</code></strong> :&ensp;<code>xarray object</code> of <code>x,y,time</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>period</code></strong> :&ensp;<code>string</code> or <code>int. Time period to perform aggregation,</code></dt>
+<dd>'yearly', 'monthly', or number of periods to aggregate over.</dd>
+<dt><strong><code>agg</code></strong> :&ensp;<code>list</code> of <code>strings. Choice</code> of <code>aggregation methods to apply of</code></dt>
+<dd>['mean','median','sum','perc95','perc5']</dd>
+</dl>
+<p>outfile : string. Prefix of output file name.
+buffer: integer time period in same units as period to buffer into the future.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>outfname_list</code></strong> :&ensp;<code>list</code> of <code>strings</code> of <code>output file names</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>agg_list</code></strong> :&ensp;<code>list</code> of <code>strings</code> of <code>aggregation methods</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def aggregate_temporal(xdr,
+    period=&#34;yearly&#34;, agg=[&#34;mean&#34;], outfile=&#34;temporal_agg&#34;, buffer = None):
+    &#34;&#34;&#34;
+    Make a data aggregation (mean, median, sum, etc) through time on an xarray.
+    Expects xarray coordinates to be x, y, time. Saves every aggregation for
+    every time period as its own tif file.
+
+    Example:
+    file_list = [&#39;../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif&#39;,
+         &#39;../data/mvp_daily_rain_silo/daily_rain_2018_cropped.tif&#39;]
+
+    xdr = combine_rasters_temporal(file_list, channel_name=&#39;band&#39;,attribute_name=&#39;long_name&#39;)
+
+    outfname_list, agg_list = aggregate_temporal(
+        xdr,period=100,agg=[&#39;mean&#39;,&#39;sum&#39;],outfile=&#39;temporal_agg&#39;)
+
+    Parameters
+    ----------
+    xdr : xarray object of x,y,time
+    period : string or int. Time period to perform aggregation,
+        &#39;yearly&#39;, &#39;monthly&#39;, or number of periods to aggregate over.
+    agg: list of strings. Choice of aggregation methods to apply of
+        [&#39;mean&#39;,&#39;median&#39;,&#39;sum&#39;,&#39;perc95&#39;,&#39;perc5&#39;]
+    outfile : string. Prefix of output file name.
+    buffer: integer time period in same units as period to buffer into the future.
+
+    Returns
+    -------
+    outfname_list : list of strings of output file names
+    agg_list : list of strings of aggregation methods
+
+    &#34;&#34;&#34;
+
+    # Check the aggregation methods are okay
+    agg_types = [&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;perc95&#34;, &#34;perc5&#34;, &#34;max&#34;, &#34;min&#34;]
+    aggcheck = [a for a in agg if a in agg_types]
+    if aggcheck is None:
+        raise ValueError(&#34;Invalid Aggregation type. Expected any of: %s&#34; % agg_types)
+    else:
+        print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
+        print(&#34;for&#34;, period, &#34; period.&#34;)
+
+    # Group by the appropriate time period
+    if period == &#34;yearly&#34;:
+        xdr_groups = xdr.groupby(&#34;time.year&#34;)
+
+        if buffer != None:
+            xx = xdr_groups.apply(lambda x: x.isel(time=slice(0,buffer)))
+            xdr_groups = xx.groupby(&#34;time.year&#34;)
+
+    elif period == &#34;monthly&#34;:
+        xdr_groups = xdr.groupby(&#34;time.month&#34;)
+
+        if buffer != None:
+            xx = xdr_groups.apply(lambda x: x.isel(time=slice(0,buffer)))
+            xdr_groups = xx.groupby(&#34;time.month&#34;)
+
+    elif type(period) == int:
+        bins = int(np.floor(len(xdr) / period))
+        xdr_groups = xdr.groupby_bins(&#34;time&#34;, bins)
+
+        if buffer != None:
+            xx = xdr_groups.apply(lambda x: x.isel(time=slice(0,buffer)))
+            xdr_groups = xx.groupby_bins(&#34;time&#34;, period)
+
+
+    else:
+        raise ValueError(
+            &#34;Invalid temporal period. Expected any of: &#39;yearly&#39;, &#39;monthly&#39;, or an integer period&#34;
+        )
+
+    # What is more efficient? Make calcs on whole dataframe or on each group?
+
+    # Make ALL agg calcs (and only keep the requested ones later)
+    aggdict = {}
+    aggdict[&#34;mean&#34;] = xdr_groups.mean()
+    aggdict[&#34;median&#34;] = xdr_groups.median()
+    aggdict[&#34;sum&#34;] = xdr_groups.sum()
+    aggdict[&#34;perc95&#34;] = xdr_groups.quantile(q=0.95)
+    aggdict[&#34;perc5&#34;] = xdr_groups.quantile(q=0.05)
+    aggdict[&#34;max&#34;] = xdr_groups.max()
+    aggdict[&#34;min&#34;] = xdr_groups.min()
+
+    # Keep track of the names of all files produced
+    outfname_list = []
+    agg_list = []
+
+    # For all the different aggregation methods
+    for a in aggcheck:
+        # For each period of time in each of the groups, save it out!
+        for p in aggdict[a]:
+
+            # Each temporal grouping results in different group labels
+            if period == &#34;yearly&#34;:
+                label = str(p[&#34;year&#34;].values)
+            elif period == &#34;monthly&#34;:
+                label = str(p[&#34;month&#34;].values).zfill(2)
+            elif type(period) == int:
+                label = str(p[&#34;time_bins&#34;].values)[1:11]
+
+            p.rio.to_raster(outfile + &#34;_&#34; + a + &#34;_&#34; + label + &#34;.tif&#34;)
+            outfname_list.append(outfile + &#34;_&#34; + a + &#34;_&#34; + label + &#34;.tif&#34;)
+            agg_list.append(a)
+
+            print(a, &#34;of&#34;, label, &#34;saved in:&#34;, outfile + &#34;_&#34; + a + &#34;_&#34; + label + &#34;.tif&#34;)
+
+    return outfname_list, agg_list</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.temporal.combine_rasters_temporal"><code class="name flex">
+<span>def <span class="ident">combine_rasters_temporal</span></span>(<span>file_list, channel_name='band', attribute_name='long_name')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Combines multiple tif files into single xarray object. Assumes files are in
+temporal order, and additional channels contain sequential time step data.
+Also assumes files are of the same shape (x,y,t).</p>
+<p>Example:
+file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
+'../data/mvp_daily_rain_silo/daily_rain_2018_cropped.tif']</p>
+<p>xdr = combine_rasters_temporal(file_list, channel_name='band',attribute_name='long_name')</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt>file_list : list of filename strings in date order to concatenate.</dt>
+<dt>Expected to be of the form "x,y" or "x,y,z1"</dt>
+<dt><strong><code>channel_name</code></strong> :&ensp;<code>string</code> of <code>coordinate dimension to concatentate (band, time,</code></dt>
+<dd>etc). Check options with rioxarray.open_rasterio('filename').coords</dd>
+<dt><strong><code>attribute_name</code></strong> :&ensp;<code>string name</code> of <code>rioxarray attribute holding a time/date</code></dt>
+<dd>label. Check with rioxarray.open_rasterio('filename').attrs</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>xdr : xarray object of x,y,time, with approriate metadata.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def combine_rasters_temporal(
+    file_list, channel_name=&#34;band&#34;, attribute_name=&#34;long_name&#34;
+):
+    &#34;&#34;&#34;
+    Combines multiple tif files into single xarray object. Assumes files are in
+    temporal order, and additional channels contain sequential time step data.
+    Also assumes files are of the same shape (x,y,t).
+
+    Example:
+    file_list = [&#39;../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif&#39;,
+             &#39;../data/mvp_daily_rain_silo/daily_rain_2018_cropped.tif&#39;]
+
+    xdr = combine_rasters_temporal(file_list, channel_name=&#39;band&#39;,attribute_name=&#39;long_name&#39;)
+
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
+        Expected to be of the form &#34;x,y&#34; or &#34;x,y,z1&#34;
+    channel_name : string of coordinate dimension to concatentate (band, time,
+        etc). Check options with rioxarray.open_rasterio(&#39;filename&#39;).coords
+    attribute_name : string name of rioxarray attribute holding a time/date
+        label. Check with rioxarray.open_rasterio(&#39;filename&#39;).attrs
+
+    Returns
+    -------
+    xdr : xarray object of x,y,time, with approriate metadata.
+
+    &#34;&#34;&#34;
+    print(&#34;Concatenating&#34;, channel_name, &#34;and&#34;, attribute_name, &#34;over&#34;, file_list)
+    # file_list = glob(os.path.join(data_dir, &#39;*.tif&#39;))
+
+    # Append all data/channels, collect metadata lists
+    array_list = []
+    attrs = ()
+    first = True
+    for x in file_list:
+        xds = rioxarray.open_rasterio(x)
+
+        if channel_name not in xds.coords:
+            raise ValueError(
+                channel_name + &#34; not a channel in the raster &#34; + x + &#34; Options are&#34;,
+                [t for t in xds.coords],
+            )
+            return None
+
+        if attribute_name not in xds.attrs:
+            raise ValueError(
+                attribute_name
+                + &#34; not an attribute in the raster &#34;
+                + x
+                + &#34; Options are&#34;,
+                [t for t in xds.attrs],
+            )
+            return None
+
+        array_list.append(xds)
+        attrs = attrs + xds.attrs[attribute_name]
+        if first == True:
+            coords = xds[channel_name].values
+
+            first = False
+        else:
+            coords = np.append(coords, xds[channel_name].values + coords[-1])
+
+    xdr = xr.concat(array_list, channel_name)
+    # print(agg,coords,attrs)
+    # xdr = xdr.assign_attrs({attr: attrs})
+    xdr = xdr.assign_coords({channel_name: np.array(pd.to_datetime(attrs))})
+    xdr = xdr.rename({channel_name: &#34;time&#34;})
+    del xdr.attrs[attribute_name]
+
+    return xdr</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.temporal.group_by_custom_periods"><code class="name flex">
+<span>def <span class="ident">group_by_custom_periods</span></span>(<span>xdr, periods: int, agg_range: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>NOTE: NOT ALL IMPLEMENTED!!! Specifcally multiband data. But I don't think
+we want to deal with that, as it is already accounted for previously? Maybe.</p>
+<p>Aggregates over multiple files but keeps channels independently.
+Results are written to new tif files.</p>
+<p>This function should</p>
+<p>dates of the from "yyyy-mm-dd"
+rolling mean</p>
+<p>Unit of measurment you are working in seconds, daily, monthly, yearly (or integers)
+Time steps of channels (e.g. 12xmonthly)
+time steps of files (each file represents X length of time)
+time steps of aggregation (e.g. average monthly)
+time steps of</p>
+<p>Aggregrates over multiple files and over all channels
+and writes results to new tif file(s).</p>
+<p>Step 1: combine files (assumes consistent times and start finish points)
+Step 2: roll data into outtime chunks
+Step 3: perform aggregation on chunks</p>
+<p>e.g. aggregate daily rainfall data for each month (for the duration of the files.)
+e.g. aggregate monthly temperature data over a year (for the duration of the files.)</p>
+<p>e.g. aggregate common months over multiple years, average rainfall in July from 2015 to 2020</p>
+<p>Takes a stream of temporal data in a particular time increment and converts
+to a new time-increment by averaging.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def group_by_custom_periods(xdr, periods: int, agg_range: int):
+
+
+    # def temporal_aggregate_multiband(file_list=None, data_dir=None, agg=[&#39;mean&#39;],
+    #    outfile=&#39;aggregation&#39;, timesteps=1):
+    &#34;&#34;&#34;
+    NOTE: NOT ALL IMPLEMENTED!!! Specifcally multiband data. But I don&#39;t think
+    we want to deal with that, as it is already accounted for previously? Maybe.
+
+    Aggregates over multiple files but keeps channels independently.
+    Results are written to new tif files.
+
+    This function should
+
+    dates of the from &#34;yyyy-mm-dd&#34;
+    rolling mean
+
+    Unit of measurment you are working in seconds, daily, monthly, yearly (or integers)
+    Time steps of channels (e.g. 12xmonthly)
+    time steps of files (each file represents X length of time)
+    time steps of aggregation (e.g. average monthly)
+    time steps of
+
+
+
+    Aggregrates over multiple files and over all channels
+    and writes results to new tif file(s).
+
+    Step 1: combine files (assumes consistent times and start finish points)
+    Step 2: roll data into outtime chunks
+    Step 3: perform aggregation on chunks
+
+    e.g. aggregate daily rainfall data for each month (for the duration of the files.)
+    e.g. aggregate monthly temperature data over a year (for the duration of the files.)
+
+    e.g. aggregate common months over multiple years, average rainfall in July from 2015 to 2020
+
+
+    Takes a stream of temporal data in a particular time increment and converts
+    to a new time-increment by averaging.
+    &#34;&#34;&#34;</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.temporal.temporal_crop"><code class="name flex">
+<span>def <span class="ident">temporal_crop</span></span>(<span>xdr, start_time, end_time)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Cuts an xarray object by start and end times.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>xdr</code></strong> :&ensp;<code>xarray object</code> of <code>x,y,time</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>start_time : string time in 'yyyy-mm-dd' format.
+end_time : string time in 'yyyy-mm-dd' format.</p>
+<h2 id="returns">Returns</h2>
+<p>xdr_crop : xarray object of x,y,time, with approriate metadata.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def temporal_crop(xdr, start_time, end_time):
+    &#34;&#34;&#34;
+    Cuts an xarray object by start and end times.
+
+    Parameters
+    ----------
+    xdr : xarray object of x,y,time
+    start_time : string time in &#39;yyyy-mm-dd&#39; format.
+    end_time : string time in &#39;yyyy-mm-dd&#39; format.
+
+    Returns
+    -------
+    xdr_crop : xarray object of x,y,time, with approriate metadata.
+    &#34;&#34;&#34;
+
+    xdr_crop = xdr.sel(time=slice(start_time, end_time))
+
+    return(xdr_crop)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="geodata_harvester" href="index.html">geodata_harvester</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="geodata_harvester.temporal.aggregate_temporal" href="#geodata_harvester.temporal.aggregate_temporal">aggregate_temporal</a></code></li>
+<li><code><a title="geodata_harvester.temporal.combine_rasters_temporal" href="#geodata_harvester.temporal.combine_rasters_temporal">combine_rasters_temporal</a></code></li>
+<li><code><a title="geodata_harvester.temporal.group_by_custom_periods" href="#geodata_harvester.temporal.group_by_custom_periods">group_by_custom_periods</a></code></li>
+<li><code><a title="geodata_harvester.temporal.temporal_crop" href="#geodata_harvester.temporal.temporal_crop">temporal_crop</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

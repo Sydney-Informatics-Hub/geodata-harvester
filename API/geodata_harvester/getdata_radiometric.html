@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>geodata_harvester.getdata_radiometric API documentation</title>
+<meta name="description" content="Script to download Radiometric data from NCI’s GSKY Data Server (using WCS) for a given
+resolution, and bounding box. Final data is saved as geotiff …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>geodata_harvester.getdata_radiometric</code></h1>
+</header>
+<section id="section-intro">
+<p>Script to download Radiometric data from NCI’s GSKY Data Server (using WCS) for a given
+resolution, and bounding box. Final data is saved as geotiff or NetCDF.</p>
+<p>A full ist of datasets can be retrieved with get_radiometricdict() or get_capabilities() for a given url
+An overview of all datasets can be also found here:
+<a href="https://opus.nci.org.au/display/Help/Datasets">https://opus.nci.org.au/display/Help/Datasets</a></p>
+<p>For more details of the NCI GSKY WCS, please see here:
+<a href="https://opus.nci.org.au/pages/viewpage.action?pageId=137199852">https://opus.nci.org.au/pages/viewpage.action?pageId=137199852</a></p>
+<p>LIMITATIONS: for some layers the server readout time can occasionally exceed 30s (longer readout time in request seems to be ignored)
+In case this happens please try later again when the NCI server is less loaded.</p>
+<p>This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).</p>
+<p>Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney</p>
+<p>This open-source software is released under the LGPL-3.0 License.</p>
+<p>Author: Sebastian Haan</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Script to download Radiometric data from NCI’s GSKY Data Server (using WCS) for a given
+resolution, and bounding box. Final data is saved as geotiff or NetCDF.
+
+
+A full ist of datasets can be retrieved with get_radiometricdict() or get_capabilities() for a given url
+An overview of all datasets can be also found here:
+https://opus.nci.org.au/display/Help/Datasets
+
+For more details of the NCI GSKY WCS, please see here:
+https://opus.nci.org.au/pages/viewpage.action?pageId=137199852
+
+
+LIMITATIONS: for some layers the server readout time can occasionally exceed 30s (longer readout time in request seems to be ignored)
+In case this happens please try later again when the NCI server is less loaded.
+
+This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
+
+Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
+
+This open-source software is released under the LGPL-3.0 License.
+
+Author: Sebastian Haan
+
+&#34;&#34;&#34;
+
+import os
+from owslib.wcs import WebCoverageService
+import rasterio
+from rasterio.plot import show
+from datetime import datetime, timezone
+from termcolor import cprint, colored
+from alive_progress import alive_bar, config_handler
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
+
+
+def get_radiometricdict():
+    &#34;&#34;&#34;
+    Returns dictionary of keys and layer titles
+
+    To update manually please run get_capabilities() to retrieve all current layer details
+    &#34;&#34;&#34;
+    rmdict = {
+        &#34;resolution_arcsec&#34;: 3.6,
+        &#34;layernames&#34;: {
+            &#34;radmap2019_grid_dose_terr_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 unfiltered terrestrial dose rate&#34;,
+            &#34;radmap2019_grid_dose_terr_filtered_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 filtered terrestrial xf&#34;,
+            &#34;radmap2019_grid_k_conc_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 unfiltered pct potassium&#34;,
+            &#34;radmap2019_grid_k_conc_filtered_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 filtered pct potassium grid&#34;,
+            &#34;radmap2019_grid_th_conc_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 unfiltered ppm thorium&#34;,
+            &#34;radmap2019_grid_th_conc_filtered_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 filtered ppm thorium&#34;,
+            &#34;radmap2019_grid_thk_ratio_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 ratio thorium over potassium&#34;,
+            &#34;radmap2019_grid_u2th_ratio_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium squared over thorium&#34;,
+            &#34;radmap2019_grid_u_conc_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 unfiltered ppm uranium&#34;,
+            &#34;radmap2019_grid_u_conc_filtered_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 filtered ppm uranium&#34;,
+            &#34;radmap2019_grid_uk_ratio_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium over potassium&#34;,
+            &#34;radmap2019_grid_uth_ratio_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium over thorium&#34;,
+        },
+    }
+    return rmdict
+
+
+def getdict_license():
+    &#34;&#34;&#34;
+    Retrieves the Geoscience Australia data license and NCI attribution information as dict
+    &#34;&#34;&#34;
+    dict = {
+        &#34;name&#34;: &#34;Geoscience Australia National Geophysical Compilation Sub-collection Radiometrics&#34;,
+        &#34;source_url&#34;: &#34;https://opus.nci.org.au/display/Help/Datasets&#34;,
+        &#34;license&#34;: &#34;CC BY 4.0&#34;,
+        &#34;license_title&#34;: &#34;Creative Commons Attribution 4.0 International (CC BY 4.0)&#34;,
+        &#34;license_url&#34;: &#34;https://creativecommons.org/licenses/by/4.0/&#34;,
+        &#34;copyright&#34;: &#34;© Copyright 2017-2022, Geoscience Australia&#34;,
+        &#34;attribution&#34;: &#34;Geoscience Australia. The WCS service relies on GSKY - A Scalable, Distributed Geospatial Data Service \
+from the National Centre for Environmental Information (NCI).&#34;,
+    }
+    return dict
+
+
+def plot_raster(infname):
+    &#34;&#34;&#34;
+    Read in raster tif with rasterio and visualise as map.
+
+    Parameters
+    ----------
+    infname : str
+    &#34;&#34;&#34;
+    data = rasterio.open(infname)
+    # show image
+    show(data)
+
+
+def get_capabilities():
+    &#34;&#34;&#34;
+    Get capabilities from WCS layer.
+
+    Parameters
+    ----------
+    url : str
+        layer url
+
+    Returns
+    -------
+    keys    : list
+        layer identifiers
+    titles  : list  of str
+        layer titles
+    descriptions : list of str
+        layer descriptions
+    bboxs   : list of floats
+        layer bounding boxes
+    &#34;&#34;&#34;
+
+    # URL
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&amp;version=1.0.0&amp;request=GetCapabilities&#34;
+
+    # Create WCS object
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+
+    # Get coverages and content dict keys
+    content = wcs.contents
+    keys = content.keys()
+
+    print(&#34;Following data layers are available:&#34;)
+    title_list = []
+    description_list = []
+    bbox_list = []
+    for key in keys:
+        print(f&#34;key: {key}&#34;)
+        print(f&#34;title: {wcs[key].title}&#34;)
+        title_list.append(wcs[key].title)
+        print(f&#34;{wcs[key].abstract}&#34;)
+        description_list.append(wcs[key].abstract)
+        print(f&#34;bounding box: {wcs[key].boundingBoxWGS84}&#34;)
+        bbox_list.append(wcs[key].boundingBoxWGS84)
+        print(&#34;&#34;)
+
+    return keys, title_list, description_list, bbox_list
+
+
+def get_radiometric_layers(
+    outpath, layernames, bbox, resolution=1, crs=&#34;EPSG:4326&#34;, format_out=&#34;GeoTIFF&#34;
+):
+    &#34;&#34;&#34;
+    Wrapper function for downloading radiometric data layers and save geotiffs from WCS layer.
+
+    Parameters
+    ----------
+    outpath: str
+        output path
+    layername : list of strings
+        layer identifiers
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    url : str
+        url of wcs server
+    crs: str
+        crsm default &#39;EPSG:4326&#39;
+    format_out: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    list of output filenames
+    &#34;&#34;&#34;
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
+    if type(layernames) != list:
+        layernames = [layernames]
+    if format_out == &#34;GeoTIFF&#34;:
+        fname_end = &#34;.tif&#34;
+    elif format_out == &#34;NetCDF&#34;:
+        fname_end = &#34;.nc&#34;
+    else:
+        print(
+            f&#34;\u2716 {format_out} not supported. Choose either GeoTIFF or NetCDF.&#34;)
+        return outfnames
+
+    # Loop over all layers
+    fnames_out = []
+    for layername in layernames:
+        outfname = os.path.join(
+            outpath, &#34;radiometric_&#34; + layername + fname_end)
+        ok = get_radiometric_image(
+            outfname, layername, bbox, url, resolution=1, crs=crs, format_out=format_out
+        )
+        if ok:
+            fnames_out.append(outfname)
+    return fnames_out
+
+
+def get_radiometric_image(
+    outfname, layername, bbox, url, resolution=1, crs=&#34;EPSG:4326&#34;, format_out=&#34;GeoTIFF&#34;
+):
+    &#34;&#34;&#34;
+    Download radiometric data layer and save geotiff from WCS layer.
+
+    Parameters
+    ----------
+    outfname : str
+        output file name
+    layername : str
+        layer identifier
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    url : str
+        url of wcs server
+    crs: str
+        crsm default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    Exited ok: boolean
+    &#34;&#34;&#34;
+    # If the resolution passed is None, set to native resolution of datasource
+    if resolution is None:
+        resolution = get_radiometricdict()[&#34;resolution_arcsec&#34;]
+
+    # Convert resolution into width and height pixel number
+    width = abs(bbox[2] - bbox[0])
+    height = abs(bbox[3] - bbox[1])
+    nwidth = int(width / resolution * 3600)
+    nheight = int(height / resolution * 3600)
+    # Get date
+    times = get_times(url, layername)
+    # There is only one time available per layer
+    date = times[0]
+    # Get data
+    if os.path.exists(outfname):
+        utils.msg_warn(f&#34;{layername}.tif already exists, skipping download&#34;)
+    else:
+        try:
+            with spin(f&#34;Downloading {layername}&#34;) as s:
+                wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+                data = wcs.getCoverage(
+                    identifier=layername,
+                    time=[date],
+                    bbox=bbox,
+                    format=format_out,
+                    crs=crs,
+                    width=nwidth,
+                    height=nheight,
+                )
+                s(1)
+        except:
+            utils.msg_err(&#34;Download failed&#34;)
+            return False
+
+        # Save data
+        with open(outfname, &#34;wb&#34;) as f:
+            f.write(data.read())
+        # print(f&#34;Layer {layername} saved in {outfname}&#34;)
+    return True
+
+
+def get_times(url, layername, year=None):
+    &#34;&#34;&#34;
+    Return available dates for layer.
+
+    Parameters
+    ----------
+    url: str, layer url
+    layername: str, name of layer id
+    year: int or str, year of interest (if None, times for all available years are returned)
+
+    Return
+    ------
+    list of dates
+    &#34;&#34;&#34;
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+    times = wcs[layername].timepositions
+    if year is None:
+        return times
+    else:
+        year = int(year)
+        dates = []
+        for time in times:
+            if datetime.fromisoformat(time[:-1]).astimezone(timezone.utc).year == year:
+                dates.append(time)
+        return dates
+
+
+### Some test functions ###
+
+
+def test_get_capabilities():
+    &#34;&#34;&#34;
+    Test script to retrieve WCS capabilities
+    &#34;&#34;&#34;
+    # Get capabilities
+    keys, titles, descriptions, bboxs = get_capabilities()
+    assert len(keys) &gt; 0
+
+
+def test_get_times():
+    &#34;&#34;&#34;
+    Test script to retrieve available times for a layer
+    &#34;&#34;&#34;
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
+    times = get_times(url, layername)
+    assert len(times) &gt; 0
+
+
+def test_times():
+    &#34;&#34;&#34;
+    Check that there is only one time per layers.
+    &#34;&#34;&#34;
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
+    radiometricdict = get_radiometricdict()
+    layernames = radiometricdict[&#34;layernames&#34;]
+    for key in layernames:
+        times = get_times(url, key)
+        print(f&#34;{key}: {times}&#34;)
+        assert len(times) == 1
+
+
+def test_get_radiometric_image():
+    &#34;&#34;&#34;
+    Test script to retrieve and save image for one layer
+    &#34;&#34;&#34;
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
+    # &#34;radmap2019_grid_dose_terr_awags_rad_2019&#34;  # for some layers readout time of 30s is exceeding (server limited)
+    layername = &#34;radmap2019_grid_dose_terr_filtered_awags_rad_2019&#34;
+    crs = &#34;EPSG:4326&#34;  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = (114, -44, 153.9, -11)
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # define output file name
+    fname_out = f&#34;test_{layername}.tif&#34;
+    # Get data
+    download_ok = get_radiometric_image(
+        fname_out, layername, bbox, url, resolution=resolution
+    )
+    assert download_ok</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="geodata_harvester.getdata_radiometric.get_capabilities"><code class="name flex">
+<span>def <span class="ident">get_capabilities</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get capabilities from WCS layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>layer url</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>keys
+: list</code></dt>
+<dd>layer identifiers</dd>
+<dt><code>titles
+: list</code>
+of <code>str</code></dt>
+<dd>layer titles</dd>
+<dt><strong><code>descriptions</code></strong> :&ensp;<code>list</code> of <code>str</code></dt>
+<dd>layer descriptions</dd>
+<dt><code>bboxs
+: list</code> of <code>floats</code></dt>
+<dd>layer bounding boxes</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_capabilities():
+    &#34;&#34;&#34;
+    Get capabilities from WCS layer.
+
+    Parameters
+    ----------
+    url : str
+        layer url
+
+    Returns
+    -------
+    keys    : list
+        layer identifiers
+    titles  : list  of str
+        layer titles
+    descriptions : list of str
+        layer descriptions
+    bboxs   : list of floats
+        layer bounding boxes
+    &#34;&#34;&#34;
+
+    # URL
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&amp;version=1.0.0&amp;request=GetCapabilities&#34;
+
+    # Create WCS object
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+
+    # Get coverages and content dict keys
+    content = wcs.contents
+    keys = content.keys()
+
+    print(&#34;Following data layers are available:&#34;)
+    title_list = []
+    description_list = []
+    bbox_list = []
+    for key in keys:
+        print(f&#34;key: {key}&#34;)
+        print(f&#34;title: {wcs[key].title}&#34;)
+        title_list.append(wcs[key].title)
+        print(f&#34;{wcs[key].abstract}&#34;)
+        description_list.append(wcs[key].abstract)
+        print(f&#34;bounding box: {wcs[key].boundingBoxWGS84}&#34;)
+        bbox_list.append(wcs[key].boundingBoxWGS84)
+        print(&#34;&#34;)
+
+    return keys, title_list, description_list, bbox_list</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.get_radiometric_image"><code class="name flex">
+<span>def <span class="ident">get_radiometric_image</span></span>(<span>outfname, layername, bbox, url, resolution=1, crs='EPSG:4326', format_out='GeoTIFF')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Download radiometric data layer and save geotiff from WCS layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>outfname</code></strong> :&ensp;<code>str</code></dt>
+<dd>output file name</dd>
+<dt><strong><code>layername</code></strong> :&ensp;<code>str</code></dt>
+<dd>layer identifier</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>url of wcs server</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crsm default 'EPSG:4326'</dd>
+<dt><strong><code>format</code></strong> :&ensp;<code>str</code></dt>
+<dd>output format, either "GeoTIFF" or "NetCDF"</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>Exited ok: boolean</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_radiometric_image(
+    outfname, layername, bbox, url, resolution=1, crs=&#34;EPSG:4326&#34;, format_out=&#34;GeoTIFF&#34;
+):
+    &#34;&#34;&#34;
+    Download radiometric data layer and save geotiff from WCS layer.
+
+    Parameters
+    ----------
+    outfname : str
+        output file name
+    layername : str
+        layer identifier
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    url : str
+        url of wcs server
+    crs: str
+        crsm default &#39;EPSG:4326&#39;
+    format: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    Exited ok: boolean
+    &#34;&#34;&#34;
+    # If the resolution passed is None, set to native resolution of datasource
+    if resolution is None:
+        resolution = get_radiometricdict()[&#34;resolution_arcsec&#34;]
+
+    # Convert resolution into width and height pixel number
+    width = abs(bbox[2] - bbox[0])
+    height = abs(bbox[3] - bbox[1])
+    nwidth = int(width / resolution * 3600)
+    nheight = int(height / resolution * 3600)
+    # Get date
+    times = get_times(url, layername)
+    # There is only one time available per layer
+    date = times[0]
+    # Get data
+    if os.path.exists(outfname):
+        utils.msg_warn(f&#34;{layername}.tif already exists, skipping download&#34;)
+    else:
+        try:
+            with spin(f&#34;Downloading {layername}&#34;) as s:
+                wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+                data = wcs.getCoverage(
+                    identifier=layername,
+                    time=[date],
+                    bbox=bbox,
+                    format=format_out,
+                    crs=crs,
+                    width=nwidth,
+                    height=nheight,
+                )
+                s(1)
+        except:
+            utils.msg_err(&#34;Download failed&#34;)
+            return False
+
+        # Save data
+        with open(outfname, &#34;wb&#34;) as f:
+            f.write(data.read())
+        # print(f&#34;Layer {layername} saved in {outfname}&#34;)
+    return True</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.get_radiometric_layers"><code class="name flex">
+<span>def <span class="ident">get_radiometric_layers</span></span>(<span>outpath, layernames, bbox, resolution=1, crs='EPSG:4326', format_out='GeoTIFF')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Wrapper function for downloading radiometric data layers and save geotiffs from WCS layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>output path</dd>
+<dt><strong><code>layername</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>layer identifiers</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>url of wcs server</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crsm default 'EPSG:4326'</dd>
+<dt><strong><code>format_out</code></strong> :&ensp;<code>str</code></dt>
+<dd>output format, either "GeoTIFF" or "NetCDF"</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>list of output filenames</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_radiometric_layers(
+    outpath, layernames, bbox, resolution=1, crs=&#34;EPSG:4326&#34;, format_out=&#34;GeoTIFF&#34;
+):
+    &#34;&#34;&#34;
+    Wrapper function for downloading radiometric data layers and save geotiffs from WCS layer.
+
+    Parameters
+    ----------
+    outpath: str
+        output path
+    layername : list of strings
+        layer identifiers
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec
+    url : str
+        url of wcs server
+    crs: str
+        crsm default &#39;EPSG:4326&#39;
+    format_out: str
+        output format, either &#34;GeoTIFF&#34; or &#34;NetCDF&#34;
+
+    Return
+    ------
+    list of output filenames
+    &#34;&#34;&#34;
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
+    if type(layernames) != list:
+        layernames = [layernames]
+    if format_out == &#34;GeoTIFF&#34;:
+        fname_end = &#34;.tif&#34;
+    elif format_out == &#34;NetCDF&#34;:
+        fname_end = &#34;.nc&#34;
+    else:
+        print(
+            f&#34;\u2716 {format_out} not supported. Choose either GeoTIFF or NetCDF.&#34;)
+        return outfnames
+
+    # Loop over all layers
+    fnames_out = []
+    for layername in layernames:
+        outfname = os.path.join(
+            outpath, &#34;radiometric_&#34; + layername + fname_end)
+        ok = get_radiometric_image(
+            outfname, layername, bbox, url, resolution=1, crs=crs, format_out=format_out
+        )
+        if ok:
+            fnames_out.append(outfname)
+    return fnames_out</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.get_radiometricdict"><code class="name flex">
+<span>def <span class="ident">get_radiometricdict</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns dictionary of keys and layer titles</p>
+<p>To update manually please run get_capabilities() to retrieve all current layer details</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_radiometricdict():
+    &#34;&#34;&#34;
+    Returns dictionary of keys and layer titles
+
+    To update manually please run get_capabilities() to retrieve all current layer details
+    &#34;&#34;&#34;
+    rmdict = {
+        &#34;resolution_arcsec&#34;: 3.6,
+        &#34;layernames&#34;: {
+            &#34;radmap2019_grid_dose_terr_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 unfiltered terrestrial dose rate&#34;,
+            &#34;radmap2019_grid_dose_terr_filtered_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 filtered terrestrial xf&#34;,
+            &#34;radmap2019_grid_k_conc_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 unfiltered pct potassium&#34;,
+            &#34;radmap2019_grid_k_conc_filtered_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 filtered pct potassium grid&#34;,
+            &#34;radmap2019_grid_th_conc_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 unfiltered ppm thorium&#34;,
+            &#34;radmap2019_grid_th_conc_filtered_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 filtered ppm thorium&#34;,
+            &#34;radmap2019_grid_thk_ratio_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 ratio thorium over potassium&#34;,
+            &#34;radmap2019_grid_u2th_ratio_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium squared over thorium&#34;,
+            &#34;radmap2019_grid_u_conc_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 unfiltered ppm uranium&#34;,
+            &#34;radmap2019_grid_u_conc_filtered_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 filtered ppm uranium&#34;,
+            &#34;radmap2019_grid_uk_ratio_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium over potassium&#34;,
+            &#34;radmap2019_grid_uth_ratio_awags_rad_2019&#34;: &#34;Radiometric Grid of Australia (Radmap) v4 2019 ratio uranium over thorium&#34;,
+        },
+    }
+    return rmdict</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.get_times"><code class="name flex">
+<span>def <span class="ident">get_times</span></span>(<span>url, layername, year=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return available dates for layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str, layer url</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>layername</code></strong> :&ensp;<code>str, name</code> of <code>layer id</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>year</code></strong> :&ensp;<code>int</code> or <code>str, year</code> of <code>interest (if None, times for all available years are returned)</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>list of dates</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_times(url, layername, year=None):
+    &#34;&#34;&#34;
+    Return available dates for layer.
+
+    Parameters
+    ----------
+    url: str, layer url
+    layername: str, name of layer id
+    year: int or str, year of interest (if None, times for all available years are returned)
+
+    Return
+    ------
+    list of dates
+    &#34;&#34;&#34;
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+    times = wcs[layername].timepositions
+    if year is None:
+        return times
+    else:
+        year = int(year)
+        dates = []
+        for time in times:
+            if datetime.fromisoformat(time[:-1]).astimezone(timezone.utc).year == year:
+                dates.append(time)
+        return dates</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.getdict_license"><code class="name flex">
+<span>def <span class="ident">getdict_license</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the Geoscience Australia data license and NCI attribution information as dict</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getdict_license():
+    &#34;&#34;&#34;
+    Retrieves the Geoscience Australia data license and NCI attribution information as dict
+    &#34;&#34;&#34;
+    dict = {
+        &#34;name&#34;: &#34;Geoscience Australia National Geophysical Compilation Sub-collection Radiometrics&#34;,
+        &#34;source_url&#34;: &#34;https://opus.nci.org.au/display/Help/Datasets&#34;,
+        &#34;license&#34;: &#34;CC BY 4.0&#34;,
+        &#34;license_title&#34;: &#34;Creative Commons Attribution 4.0 International (CC BY 4.0)&#34;,
+        &#34;license_url&#34;: &#34;https://creativecommons.org/licenses/by/4.0/&#34;,
+        &#34;copyright&#34;: &#34;© Copyright 2017-2022, Geoscience Australia&#34;,
+        &#34;attribution&#34;: &#34;Geoscience Australia. The WCS service relies on GSKY - A Scalable, Distributed Geospatial Data Service \
+from the National Centre for Environmental Information (NCI).&#34;,
+    }
+    return dict</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.plot_raster"><code class="name flex">
+<span>def <span class="ident">plot_raster</span></span>(<span>infname)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read in raster tif with rasterio and visualise as map.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>infname</code></strong> :&ensp;<code>str</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_raster(infname):
+    &#34;&#34;&#34;
+    Read in raster tif with rasterio and visualise as map.
+
+    Parameters
+    ----------
+    infname : str
+    &#34;&#34;&#34;
+    data = rasterio.open(infname)
+    # show image
+    show(data)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.test_get_capabilities"><code class="name flex">
+<span>def <span class="ident">test_get_capabilities</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve WCS capabilities</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_capabilities():
+    &#34;&#34;&#34;
+    Test script to retrieve WCS capabilities
+    &#34;&#34;&#34;
+    # Get capabilities
+    keys, titles, descriptions, bboxs = get_capabilities()
+    assert len(keys) &gt; 0</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.test_get_radiometric_image"><code class="name flex">
+<span>def <span class="ident">test_get_radiometric_image</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve and save image for one layer</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_radiometric_image():
+    &#34;&#34;&#34;
+    Test script to retrieve and save image for one layer
+    &#34;&#34;&#34;
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
+    # &#34;radmap2019_grid_dose_terr_awags_rad_2019&#34;  # for some layers readout time of 30s is exceeding (server limited)
+    layername = &#34;radmap2019_grid_dose_terr_filtered_awags_rad_2019&#34;
+    crs = &#34;EPSG:4326&#34;  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = (114, -44, 153.9, -11)
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # define output file name
+    fname_out = f&#34;test_{layername}.tif&#34;
+    # Get data
+    download_ok = get_radiometric_image(
+        fname_out, layername, bbox, url, resolution=resolution
+    )
+    assert download_ok</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.test_get_times"><code class="name flex">
+<span>def <span class="ident">test_get_times</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script to retrieve available times for a layer</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_get_times():
+    &#34;&#34;&#34;
+    Test script to retrieve available times for a layer
+    &#34;&#34;&#34;
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
+    times = get_times(url, layername)
+    assert len(times) &gt; 0</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_radiometric.test_times"><code class="name flex">
+<span>def <span class="ident">test_times</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Check that there is only one time per layers.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_times():
+    &#34;&#34;&#34;
+    Check that there is only one time per layers.
+    &#34;&#34;&#34;
+    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
+    radiometricdict = get_radiometricdict()
+    layernames = radiometricdict[&#34;layernames&#34;]
+    for key in layernames:
+        times = get_times(url, key)
+        print(f&#34;{key}: {times}&#34;)
+        assert len(times) == 1</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="geodata_harvester" href="index.html">geodata_harvester</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="geodata_harvester.getdata_radiometric.get_capabilities" href="#geodata_harvester.getdata_radiometric.get_capabilities">get_capabilities</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.get_radiometric_image" href="#geodata_harvester.getdata_radiometric.get_radiometric_image">get_radiometric_image</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.get_radiometric_layers" href="#geodata_harvester.getdata_radiometric.get_radiometric_layers">get_radiometric_layers</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.get_radiometricdict" href="#geodata_harvester.getdata_radiometric.get_radiometricdict">get_radiometricdict</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.get_times" href="#geodata_harvester.getdata_radiometric.get_times">get_times</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.getdict_license" href="#geodata_harvester.getdata_radiometric.getdict_license">getdict_license</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.plot_raster" href="#geodata_harvester.getdata_radiometric.plot_raster">plot_raster</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.test_get_capabilities" href="#geodata_harvester.getdata_radiometric.test_get_capabilities">test_get_capabilities</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.test_get_radiometric_image" href="#geodata_harvester.getdata_radiometric.test_get_radiometric_image">test_get_radiometric_image</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.test_get_times" href="#geodata_harvester.getdata_radiometric.test_get_times">test_get_times</a></code></li>
+<li><code><a title="geodata_harvester.getdata_radiometric.test_times" href="#geodata_harvester.getdata_radiometric.test_times">test_times</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

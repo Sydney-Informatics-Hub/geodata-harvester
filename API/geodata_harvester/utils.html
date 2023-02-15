@@ -1,0 +1,1871 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>geodata_harvester.utils API documentation</title>
+<meta name="description" content="Utility functions for use in the Agrefed data harvesting pipeline …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>geodata_harvester.utils</code></h1>
+</header>
+<section id="section-intro">
+<p>Utility functions for use in the Agrefed data harvesting pipeline.</p>
+<p>&ndash;Function List, in order of appearence&ndash;</p>
+<p>plot_rasters: Plots a list of rasters.
+_getFeatures (internal): Extracts rasterio compatible test from geodataframe.
+reproj_mask: Masks a raster to the area of a shape, and reprojects.
+reproj_rastermatch: Reproject a file to match the shape and projection of
+existing raster.
+reproj_raster: Reproject and clip for a given output resolution, crs and bbox.
+_read_file (internal): Reads raster with rasterio returns numpy array
+aggregate_rasters: Averages (or similar) over multiple files and multiple
+channels.
+aggregate_multiband: Averages (or similar) over multiple files but keeps
+multi-channels independent.
+_get_coords_at_point (internal): Finds closest index of a point-location in an
+array (raster).
+raster_query: Given a longitude,latitude value, return the value at that point
+of a raster/tif.
+init_logtable: Stores metdata for each step of raster download and processing.
+update_logtable: Updates each the logtable with new information.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/bin/python
+&#34;&#34;&#34;
+Utility functions for use in the Agrefed data harvesting pipeline.
+
+--Function List, in order of appearence--
+
+plot_rasters: Plots a list of rasters.
+_getFeatures (internal): Extracts rasterio compatible test from geodataframe.
+reproj_mask: Masks a raster to the area of a shape, and reprojects.
+reproj_rastermatch: Reproject a file to match the shape and projection of
+    existing raster.
+reproj_raster: Reproject and clip for a given output resolution, crs and bbox.
+_read_file (internal): Reads raster with rasterio returns numpy array
+aggregate_rasters: Averages (or similar) over multiple files and multiple
+    channels.
+aggregate_multiband: Averages (or similar) over multiple files but keeps
+    multi-channels independent.
+_get_coords_at_point (internal): Finds closest index of a point-location in an
+    array (raster).
+raster_query: Given a longitude,latitude value, return the value at that point
+    of a raster/tif.
+init_logtable: Stores metdata for each step of raster download and processing.
+update_logtable: Updates each the logtable with new information.
+&#34;&#34;&#34;
+
+from glob import glob
+import os
+import json
+
+import rasterio
+from rasterio.mask import mask
+from rasterio.warp import calculate_default_transform, reproject, Resampling
+from rasterio.plot import show
+
+import numpy as np
+import pandas as pd
+import geopandas as gpd
+
+from pyproj import CRS
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
+
+from numba import jit
+
+import warnings
+import logging
+
+from termcolor import colored, cprint
+from alive_progress import alive_bar, config_handler
+
+
+config_handler.set_global(
+    force_tty=True,
+    bar=None,
+    spinner=&#34;waves&#34;,
+    monitor=False,
+    stats=False,
+    receipt=True,
+    elapsed=&#34;{elapsed}&#34;,
+)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format=&#34;%(asctime)s %(message)s&#34;,
+    filename=&#34;harvest.txt&#34;,
+    filemode=&#34;w&#34;,
+)
+
+## ------ Functions to show progress and provide feedback to the user ------ ##
+
+
+def spin(message=None, colour=&#34;magenta&#34;, events=1, log=False):
+    &#34;&#34;&#34;Spin animation as a progress inidicator&#34;&#34;&#34;
+    if log:
+        logging.info(message)
+    return alive_bar(events, title=colored(&#34;\u2299 &#34; + message, color=colour))
+
+
+def msg_info(message, icon=True, log=False):
+    &#34;&#34;&#34;Prints an info message&#34;&#34;&#34;
+    if log:
+        logging.info(message)
+    if icon:
+        cprint(&#34;\u2139 &#34; + message, color=&#34;magenta&#34;)
+    else:
+        cprint(&#34;  &#34; + message, color=&#34;magenta&#34;)
+
+
+def msg_dl(message, log=False):
+    &#34;&#34;&#34;Prints a downloading message&#34;&#34;&#34;
+    if log:
+        logging.info(message)
+    cprint(&#34;\u29e9 &#34; + message, color=&#34;magenta&#34;)
+
+
+def msg_warn(message, log=False):
+    &#34;&#34;&#34;Prints a warning message&#34;&#34;&#34;
+    if log:
+        logging.warning(message)
+    cprint(&#34;\u2691 &#34; + message, color=&#34;yellow&#34;)
+
+
+def msg_err(message, log=False):
+    &#34;&#34;&#34;Prints an error message&#34;&#34;&#34;
+    if log:
+        logging.error(message)
+    cprint(&#34;\u2716 &#34; + message, color=&#34;red&#34;, attrs=[&#34;bold&#34;])
+
+
+def msg_success(message, log=False):
+    &#34;&#34;&#34;Prints a success message&#34;&#34;&#34;
+    if log:
+        logging.info(message)
+    cprint(&#34;\u2714 &#34; + message, color=&#34;magenta&#34;)
+
+
+## ------------------------------------------------------------------------- ##
+
+
+def plot_rasters(rasters, longs=None, lats=None, titles=None):
+    &#34;&#34;&#34;
+    Plots multiple raster files (.tif) on a grid of nicely arranged figures.
+
+    Parameters:
+        raster: list of filenames (.tif).
+            Will only read the first band/channel if multiband.
+        longs: optional x values in list like object for plotting as points 
+            over raster images.
+        lats: optional x values in list like object for plotting as points
+            over raster images.
+        titles: title of plot default is raster file name.
+
+    Returns:  
+        None
+    &#34;&#34;&#34;
+    # Set the value for reasonable shaped plot based on the number of datasets
+    figlen = int(np.ceil(len(rasters) / 3))
+    # Make a blank canvas if there is no data
+    figlen = 2 if figlen &lt; 2 else figlen
+
+    # Create the figure
+    fig, axes = plt.subplots(figlen, 3, figsize=(12, figlen * 3))
+
+    if titles == None:
+        titles = rasters
+    # Loop through each subplot/axis on the figure.
+    # Use counters to know what axes we are up to.
+    i, j = 0, 0
+    for a, rast in enumerate(rasters):
+        if j == 3:
+            j = 0
+            i += 1
+
+        # print(a,i,j,figlen,rast)
+        src = rasterio.open(rast)
+        # Only read first Band for flexibility without complexity
+        data = src.read(1)
+        # Grab the percentiles for pretty plotting of color ranges
+        n95 = np.percentile(data, 5)
+        n5 = np.percentile(data, 95)
+
+        # Make the plot and clean it up
+        show(
+            data,
+            ax=axes[i, j],
+            title=titles[a],
+            transform=src.transform,
+            cmap=&#34;Greys&#34;,
+            vmin=n95,
+            vmax=n5,
+        )
+        axes[i, j].scatter(longs, lats, s=1, c=&#34;r&#34;)
+        axes[i, j].xaxis.set_major_formatter(FormatStrFormatter(&#34;%.2f&#34;))
+        axes[i, j].yaxis.set_major_formatter(FormatStrFormatter(&#34;%.2f&#34;))
+        axes[i, j].locator_params(axis=&#34;y&#34;, nbins=4)
+        axes[i, j].locator_params(axis=&#34;x&#34;, nbins=4)
+
+        j += 1
+
+    fig.tight_layout()
+    plt.show()
+
+
+def _getFeatures(gdf):
+    &#34;&#34;&#34;
+    Internal function to parse features from GeoDataFrame in such a manner that
+    rasterio wants them.
+
+    INPUTS
+        gdf: geodataframe
+
+    RETURNS
+        json object for rasterio to read
+    &#34;&#34;&#34;
+    return [json.loads(gdf.to_json())[&#34;features&#34;][0][&#34;geometry&#34;]]
+
+
+def reproj_mask(filepath, bbox, crscode=4326, filepath_out=None):
+    &#34;&#34;&#34;
+    Clips a raster to the area of a shape, and reprojects.
+
+    INPUTS
+        filepath: input filename (tif)
+        bbox: shapely geometry(polygon) defining mask boundary
+        crscode: optional, coordinate reference system as defined by EPSG
+        filepath_out: optional, the optional output filename of the raster. If False, 
+        does not save a new file
+
+    RETURNS
+        out_img: numpy array of the clipped and reprojected raster
+    &#34;&#34;&#34;
+    data = rasterio.open(filepath)
+    geo = gpd.GeoDataFrame({&#34;geometry&#34;: bbox}, index=[0], crs=CRS.from_epsg(crscode))
+    geo = geo.to_crs(crs=CRS.from_epsg(crscode))
+    coords = _getFeatures(geo)
+    out_img, out_transform = mask(data, shapes=coords, crop=True)
+
+    if filepath_out:
+        out_meta = data.meta.copy()
+        out_meta.update(
+            {
+                &#34;driver&#34;: &#34;GTiff&#34;,
+                &#34;height&#34;: out_img.shape[1],
+                &#34;width&#34;: out_img.shape[2],
+                &#34;transform&#34;: out_transform,
+                &#34;crs&#34;: CRS.from_epsg(crscode),
+            }
+        )
+
+        with rasterio.open(filepath_out, &#34;w&#34;, **out_meta) as dest:
+            dest.write(out_img)
+        print(&#34;Clipped raster written to:&#34;, filepath_out)
+
+    return out_img
+
+
+def reproj_rastermatch(infile, matchfile, outfile, nodata):
+    &#34;&#34;&#34;
+    Reproject a file to match the shape and projection of existing raster.
+    Output file is written to disk.
+
+    Parameters
+    ----------
+    infile : (string) path to input file to reproject
+    matchfile : (string) path to raster with desired shape and projection
+    outfile : (string) path to output file tif
+    nodata : (float) nodata value for output raster
+    &#34;&#34;&#34;
+    # open input
+    with rasterio.open(infile) as src:
+        src_transform = src.transform
+
+        # open input to match
+        with rasterio.open(matchfile) as match:
+            dst_crs = match.crs
+
+            # calculate the output transform matrix
+            dst_transform, dst_width, dst_height = calculate_default_transform(
+                src.crs,  # input CRS
+                dst_crs,  # output CRS
+                match.width,  # input width
+                match.height,  # input height
+                *match.bounds,  # unpacks input outer boundaries (left, bottom, right, top)
+            )
+
+        # set properties for output
+        dst_kwargs = src.meta.copy()
+        dst_kwargs.update(
+            {
+                &#34;crs&#34;: dst_crs,
+                &#34;transform&#34;: dst_transform,
+                &#34;width&#34;: dst_width,
+                &#34;height&#34;: dst_height,
+                &#34;nodata&#34;: nodata,
+            }
+        )
+        print(
+            &#34;Coregistered to shape:&#34;, dst_height, dst_width, &#34;\n Affine&#34;, dst_transform
+        )
+        # open output
+        with rasterio.open(outfile, &#34;w&#34;, **dst_kwargs) as dst:
+            # iterate through bands and write using reproject function
+            for i in range(1, src.count + 1):
+                reproject(
+                    source=rasterio.band(src, i),
+                    destination=rasterio.band(dst, i),
+                    src_transform=src.transform,
+                    src_crs=src.crs,
+                    dst_transform=dst_transform,
+                    dst_crs=dst_crs,
+                    resampling=Resampling.nearest,
+                )
+
+
+def reproj_raster(
+    infile, outfile, bbox_out, resolution_out=None, crs_out=&#34;EPSG:4326&#34;, nodata=0
+):
+    &#34;&#34;&#34;
+    Reproject and clip for a given output resolution, crs and bbox.
+    Output file is written to disk.
+
+    Parameters
+    ----------
+    infile : (string) path to input file to reproject
+    outfile : (string) path to output file tif
+    bbox_out : (left, bottom, right, top)
+    resolution_out : (float) resolution of output raster
+    crs_out : default &#34;EPSG:4326&#34;
+    nodata : (float) nodata value for output raster
+    &#34;&#34;&#34;
+    # open input
+    with rasterio.open(infile) as src:
+        src_transform = src.transform
+
+        width_out = int((bbox_out[2] - bbox_out[0]) / resolution_out)
+        height_out = int((bbox_out[3] - bbox_out[1]) / resolution_out)
+
+        # calculate the output transform matrix
+        dst_transform, dst_width, dst_height = calculate_default_transform(
+            src.crs,  # input CRS
+            crs_out,  # output CRS
+            width_out,  # output width
+            height_out,  # output height
+            *bbox_out,  # unpacks input outer boundaries (left, bottom, right, top)
+        )
+
+        # set properties for output
+        dst_kwargs = src.meta.copy()
+        dst_kwargs.update(
+            {
+                &#34;crs&#34;: crs_out,
+                &#34;transform&#34;: dst_transform,
+                &#34;width&#34;: dst_width,
+                &#34;height&#34;: dst_height,
+                &#34;nodata&#34;: nodata,
+            }
+        )
+        print(&#34;Converting to shape:&#34;, dst_height, dst_width, &#34;\n Affine&#34;, dst_transform)
+        # open output
+        with rasterio.open(outfile, &#34;w&#34;, **dst_kwargs) as dst:
+            # iterate through bands and write using reproject function
+            for i in range(1, src.count + 1):
+                reproject(
+                    source=rasterio.band(src, i),
+                    destination=rasterio.band(dst, i),
+                    src_transform=src.transform,
+                    src_crs=src.crs,
+                    dst_transform=dst_transform,
+                    dst_crs=crs_out,
+                    resampling=Resampling.nearest,
+                )
+
+
+def _read_file(file):
+    &#34;&#34;&#34;
+    Internal function to read a raster file with rasterio
+
+    INPUT:
+        file: filepath to raster file
+
+    RETURNS:
+        Either single data array or multi-dimensional array if input is multiband.
+    &#34;&#34;&#34;
+    with rasterio.open(file) as src:
+        temp = src.read()
+        dims = temp.shape[0]
+        if dims == 1:
+            return src.read(1)
+        else:
+            # Returns array in form [channels, long, lat]
+            return src.read()
+
+
+def aggregate_rasters(
+    file_list=None, data_dir=None, agg=[&#34;mean&#34;], outfile=&#34;aggregation&#34;
+):
+    &#34;&#34;&#34;
+    Aggregrates over multiple files and over all channels
+    and writes results to new tif file(s).
+
+    Parameters
+    ----------
+    file_list : list of strings
+        List of files to aggregate
+    data_dir : string
+        Path to directory containing files
+    agg : list of strings
+        List of aggregation methods to apply (mean, median, sum, perc95, perc5)
+    outfile : string
+        Name of output file
+
+    Returns
+    -------
+    list_outfnames : list of strings of output file names
+
+    &#34;&#34;&#34;
+
+    if (file_list != None) and (data_dir != None):
+        raise RuntimeWarning(
+            &#34;file_list and data_dir both set, only the data_dir will be used.&#34;
+        )
+
+    # Check the aggregation methods are okay
+    agg_types = [&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;perc95&#34;, &#34;perc5&#34;]
+    aggcheck = [a for a in agg if a in agg_types]
+    if aggcheck is None:
+        raise ValueError(&#34;Invalid Aggregation type. Expected any of: %s&#34; % agg_types)
+    else:
+        print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
+
+    # If a directory has been passed, add all the files to the list
+    if data_dir is not None:
+        # data_dir = &#39;/path/to/data&#39;
+        print(&#34;Reading all *.tif files in: &#34;, data_dir)
+        file_list = glob(os.path.join(data_dir, &#34;*.tif&#34;))
+
+    # Get metadata from one of the input files
+    with rasterio.open(file_list[0]) as src:
+        meta = src.meta
+
+    meta.update(dtype=rasterio.float32)
+
+    # Stack all data/channels as a list of numpy arrays
+    array_list = []
+    for x in file_list:
+        array_list.extend(_read_file(x))
+
+    # Perform aggregation over channels axis
+    mean_array = np.nanmean(array_list, axis=0)
+    median_array = np.nanmedian(array_list, axis=0)
+    sum_array = np.nansum(array_list, axis=0)
+    mean_array95 = np.nanpercentile(array_list, 95, axis=0)
+    mean_array5 = np.nanpercentile(array_list, 5, axis=0)
+
+    aggdict = {}
+    aggdict[&#34;mean&#34;] = mean_array
+    aggdict[&#34;median&#34;] = median_array
+    aggdict[&#34;sum&#34;] = sum_array
+    aggdict[&#34;perc95&#34;] = mean_array95
+    aggdict[&#34;perc5&#34;] = mean_array5
+
+    # Write output file
+    list_outfnames = []
+    for a in aggcheck:
+        with rasterio.open(outfile + &#34;_&#34; + a + &#34;.tif&#34;, &#34;w&#34;, **meta) as dst:
+            dst.write(aggdict[a].astype(rasterio.float32), 1)
+        print(a, &#34;of filelist saved in: &#34;, outfile + &#34;_&#34; + a + &#34;.tif&#34;)
+        list_outfnames.append(outfile + &#34;_&#34; + a + &#34;.tif&#34;)
+    return list_outfnames
+
+
+def aggregate_multiband(
+    file_list=None, data_dir=None, agg=[&#34;mean&#34;], outfile=&#34;aggregation&#34;
+):
+    &#34;&#34;&#34;
+    Aggregates over multiple files but keeps channels independently.
+    Results are written to new tif files.
+
+    Parameters
+    ----------
+    file_list : list of strings
+        List of files to aggregate
+    data_dir : string
+        Path to directory containing files
+    agg : list of strings
+        List of aggregation methods to apply
+    outfile : string
+        Name of output file
+
+    Returns
+    -------
+    outfname_list : list of strings of output file names
+    channel_list : list of strings of channel names
+    agg_list : list of strings of aggregation methods
+    &#34;&#34;&#34;
+
+    if (file_list != None) and (data_dir != None):
+        raise RuntimeWarning(
+            &#34;file_list and data_dir both set, only the data_dir will be used.&#34;
+        )
+
+    # Check the aggregation methods are okay
+    agg_types = [&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;perc95&#34;, &#34;perc5&#34;]
+    aggcheck = [a for a in agg if a in agg_types]
+    if aggcheck is None:
+        raise ValueError(&#34;Invalid Aggregation type. Expected any of: %s&#34; % agg_types)
+    else:
+        print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
+
+    # If a directory has been passed, add all the files to the list
+    if data_dir is not None:
+        # data_dir = &#39;/path/to/data&#39;
+        print(&#34;Reading all *.tif files in: &#34;, data_dir)
+        file_list = glob(os.path.join(data_dir, &#34;*.tif&#34;))
+
+    # Get metadata from one of the input files
+    with rasterio.open(file_list[0]) as src:
+        meta = src.meta
+        desc = src.descriptions
+
+    meta.update(dtype=rasterio.float32)
+
+    # Append all tif files for each channel as a list of numpy arrays
+    array_list = {k: [] for k in desc}
+
+    for x in file_list:
+        # print(x)
+        data = _read_file(x)
+        if data.shape[0] != len(desc):
+            print(&#34;Band number mismatch between files!&#34;)
+        for i in range(data.shape[0]):
+            # print(i,desc[i])
+            array_list[desc[i]].append(data[i, :, :])
+
+    # Perform aggregation over channels axis
+    outfname_list = []
+    channel_list = []
+    agg_list = []
+    for i, channel in enumerate(array_list):
+        mean_array = np.nanmean(array_list[channel], axis=0)
+        median_array = np.nanmedian(array_list[channel], axis=0)
+        sum_array = np.nansum(array_list[channel], axis=0)
+        mean_array95 = np.nanpercentile(array_list[channel], 95, axis=0)
+        mean_array5 = np.nanpercentile(array_list[channel], 5, axis=0)
+
+        aggdict = {}
+        aggdict[&#34;mean&#34;] = mean_array
+        aggdict[&#34;median&#34;] = median_array
+        aggdict[&#34;sum&#34;] = sum_array
+        aggdict[&#34;perc95&#34;] = mean_array95
+        aggdict[&#34;perc5&#34;] = mean_array5
+
+        # Write output file
+        for a in aggcheck:
+            outstring = outfile + &#34;_&#34; + a + &#34;_channel_&#34; + channel + &#34;.tif&#34;
+            with rasterio.open(
+                outstring, &#34;w&#34;, **meta
+            ) as dst:
+                dst.write(aggdict[a].astype(rasterio.float32), 1)
+            print(
+                a,
+                &#34;of filelist saved in: &#34;,
+                outstring,
+            )
+            outfname_list.append(outstring)
+            agg_list.append(a)
+            channel_list.append(str(i))
+    return outfname_list, channel_list, agg_list
+
+
+@jit(nopython=True)
+def _get_coords_at_point(gt, lon, lat):
+    &#34;&#34;&#34;
+    Internal function, given a point in some coordinate reference
+    (e.g. lat/lon) Find the closest point to that in an array (e.g.
+    a raster) and return the index location of that point in the raster.
+    
+    INPUTS:
+        gt: output from &#34;gdal_data.GetGeoTransform()&#34;
+        lon: x/row-coordinate of interest
+        lat: y/column-coordinate of interest
+    
+    RETURNS:
+        col: x index value from the raster
+        row: y index value from the raster
+    &#34;&#34;&#34;
+    row = int((lon - gt[2]) / gt[0])
+    col = int((lat - gt[5]) / gt[4])
+
+    return (col, row)
+
+
+def raster_query(longs, lats, rasters, titles=None):
+    &#34;&#34;&#34;
+    given a longitude,latitude value, return the value at that point of the
+        first channel/band in the raster/tif.
+
+    INPUTS
+        longs:list of longitudes
+        lats:list of latitudes
+        rasters:list of raster filenames (as strings)
+        titles:list of column titles (as strings) that correspond to rasters (if none provided, rasternames will be used)
+
+    RETURNS
+        gdf: geopandas dataframe where each row is long/lat point,
+            and columns are rasterfiles
+    &#34;&#34;&#34;
+
+    # Setup the dataframe to store the ML data
+    gdf = gpd.GeoDataFrame(
+        {&#34;Longitude&#34;: longs, &#34;Latitude&#34;: lats},
+        geometry=gpd.points_from_xy(longs, lats),
+        crs=&#34;EPSG:4326&#34;,
+    )
+
+    # Loop through each raster
+    for filepath in rasters:
+        filename = Path(filepath).resolve().stem
+        # print(&#34;Opening:&#34;, filename)
+        # Open the file:
+        raster = rasterio.open(filepath)
+        # Get the transformation crs data
+        gt = raster.transform
+        # This will only be the first band, usally multiband has same index.
+        arr = raster.read(1)
+
+        if titles is not None:
+            colname = titles[rasters.index(filepath)]
+        else:
+            colname = Path(filepath).stem
+            # colname = filepath.split(&#34;/&#34;)[-1][:-4]
+
+        # Interogate the tiff file as an array
+
+        # FIXME Check the number of bands and print a warning if more than 1
+
+        # Shape of raster
+        # print(&#34;Raster pixel size:&#34;, np.shape(arr))
+
+        # Slowest part of this function.
+        # Speed up with Numba/Dask etc
+        # (although previous attempts have not been worth it.)
+        # Query the raster at the points of interest
+        with spin(f&#34;• {filename} | pixel size: {np.shape(arr)}&#34;, &#34;blue&#34;) as s:
+            values = []
+            for (lon, lat) in zip(longs, lats):
+
+                # Convert lat/lon to raster units-index
+                point = _get_coords_at_point(gt, lon, lat)
+
+                # This will fail for small areas or on boundaries
+                try:
+                    val = arr[point[0], point[1]]
+                except:
+                    # print(lon,lat,point[0],point[1],&#34;has failed.&#34;)
+                    val = 0
+                values.append(val)
+            s(1)
+
+        # dd the values at the points to the dataframe
+        gdf[filepath] = values
+        gdf = gdf.rename(columns={filepath: colname})
+
+    return gdf
+
+
+def init_logtable():
+    &#34;&#34;&#34;
+    Create a log table to store information from the raster download or processing.
+
+    RETURNS:
+        df_log: dataframe to update
+    &#34;&#34;&#34;
+    return pd.DataFrame(
+        columns=[
+            &#34;layername&#34;,
+            &#34;agfunction&#34;,
+            &#34;dataset&#34;,
+            &#34;layertitle&#34;,
+            &#34;filename_out&#34;,
+            &#34;loginfo&#34;,
+        ]
+    )
+
+
+def update_logtable(
+    df_log,
+    filenames,
+    layernames,
+    datasource,
+    settings,
+    layertitles=[],
+    agfunctions=[],
+    loginfos=[],
+    force=False
+):
+    &#34;&#34;&#34;
+    Update the dataframe table with the information from the raster download or processing.
+    The dataframe is simultaneoulsy saved to a csv file in default output directory.
+
+    INPUTS
+    df_log: dataframe to update
+    filenames: list of filenames to add to the dataframe (captured in output of getdata_* functions)
+    layernames: list of layernames to add to the dataframe (must be same length as filenames)
+    datasource: datasource of the rasters (e.g. &#39;SLGA&#39;, &#39;SILO&#39;, &#39;DEA&#39;, see settings)
+    settings: settings Namespace object
+    layertitles: list of layer titles to add to the dataframe; if empty or none provided, it will be inferred from settings
+    agfunctions: list of aggregation functions to add to the dataframe; if empty or none provided, it will be inferred from settings
+    loginfos: string or list of log information strings to add to the dataframe;
+
+    RETURNS
+    df_log: updated dataframe
+    &#34;&#34;&#34;
+    # First automatically check consistency of inputs and set defaults if necessary
+    if len(filenames) != len(layernames):
+        print(
+            &#34;Error: Number of filenames does not match number of layernames. Dataframe not updated.&#34;
+        )
+        return df_log
+    if type(agfunctions) == str:
+        agfunctions = [agfunctions] * len(layernames)
+    if agfunctions == []:
+        try:
+            if &#34;agfunctions&#34; in settings.target_sources[&#34;SLGA&#34;]:
+                agfunctions = settings.target_sources[datasource][&#34;agfunctions&#34;]
+            else:
+                agfunctions = list(settings.target_sources[datasource].values())
+                # flatten possible list of lists
+                # check if list of lists
+                if type(agfunctions[0]) == list:
+                    agfunctions = [item for sublist in agfunctions for item in sublist]
+            if agfunctions == None:
+                agfunctions = [&#34;None&#34;] * len(layernames)
+        except:
+            agfunctions = [&#34;None&#34;] * len(layernames)
+
+    if len(agfunctions) != len(layernames):
+        print(
+            &#34;Error: Number of agfunctions does not match number of layernames. Dataframe not updated.&#34;
+        )
+        return df_log
+    if layertitles == []:
+        layertitles = [
+            layernames[i] + &#34;_&#34; + agfunctions[i] for i in range(len(layernames))
+        ]
+
+    # check if you are adding a duplicate entry to the log
+    for f in filenames:
+        warnings.simplefilter(action=&#34;ignore&#34;, category=FutureWarning)
+        if f in df_log.filename_out.values:
+            if force == False:
+                print(&#34;Error: &#34; + str(f) + &#34; exists in df_log! Dataframe not updated.\nCheck your inputs or overwrite with force=True&#34;)
+                return df_log
+            elif force==True:
+                print(&#34;Warning: &#34; + str(f) + &#34; exists in df_log and has been overitten by force=True&#34;)
+                df_log.drop(df_log[df_log.filename_out != f].index, inplace=True)
+
+    # check if loginfos is a list or a string
+    if type(loginfos) == str:
+        loginfos = [loginfos] * len(layernames)
+    else:
+        if loginfos == []:
+            loginfos = [&#34;processed&#34;] * len(layernames)
+        elif len(loginfos) != len(layernames):
+            print(
+                &#34;Error: Number of loginfos does not match number of layernames. Dataframe not updated.&#34;
+            )
+            return df_log
+    datasets = [datasource] * len(layernames)
+    data_add = {
+        &#34;layername&#34;: layernames,
+        &#34;agfunction&#34;: agfunctions,
+        &#34;dataset&#34;: datasets,
+        &#34;layertitle&#34;: layertitles,
+        &#34;filename_out&#34;: filenames,
+        &#34;loginfo&#34;: loginfos,
+    }
+    # Add to log dataframe
+    df_log = pd.concat([df_log, pd.DataFrame(data_add)], ignore_index=True)
+    # Save to csv in settings.outpath
+    df_log.to_csv(os.path.join(settings.outpath, &#34;df_log.csv&#34;), index=False)
+    return df_log
+
+
+@jit(nopython=True)
+def points_in_circle(circle, arr):
+    &#34;&#34;&#34;
+    A generator to return all points whose indices are within a given circle.
+    http://stackoverflow.com/a/2774284
+    Warning: If a point is near the the edges of the raster it will not loop
+    around to the other side of the raster!
+
+    INPUTS
+    circle: a tuple of (i0, j0, r) where i0, j0 are the indices of the center of the circle and r is the radius
+
+    arr: a two-dimensional numpy array
+
+    RETURNS
+    A generator that yields all points within the circle    
+    &#34;&#34;&#34;
+    i0, j0, r = circle
+
+    def intceil(x):
+        return int(np.ceil(x))
+
+    for i in range(intceil(i0 - r), intceil(i0 + r)):
+        ri = np.sqrt(r**2 - (i - i0) ** 2)
+        for j in range(intceil(j0 - ri), intceil(j0 + ri)):
+            if (i &gt;= 0 and i &lt; len(arr[:, 0])) and (j &gt;= 0 and j &lt; len(arr[0, :])):
+                yield arr[i][j]
+
+
+def coreg_raster(i0, j0, data, region):
+    &#34;&#34;&#34;
+    Coregisters a point with a buffer region of a raster.
+    
+    INPUTS
+        i0: column-index of point of interest
+        j0: row-index of point of interest
+        data: two-dimensional numpy array (raster)
+        region: integer, same units as data resolution
+
+    RETURNS
+        pts: all values from array within region
+    &#34;&#34;&#34;
+    pts_iterator = points_in_circle((i0, j0, region), data)
+    pts = np.array(list(pts_iterator))
+
+    return pts</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="geodata_harvester.utils.aggregate_multiband"><code class="name flex">
+<span>def <span class="ident">aggregate_multiband</span></span>(<span>file_list=None, data_dir=None, agg=['mean'], outfile='aggregation')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Aggregates over multiple files but keeps channels independently.
+Results are written to new tif files.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_list</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>List of files to aggregate</dd>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>string</code></dt>
+<dd>Path to directory containing files</dd>
+<dt><strong><code>agg</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>List of aggregation methods to apply</dd>
+<dt><strong><code>outfile</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of output file</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>outfname_list</code></strong> :&ensp;<code>list</code> of <code>strings</code> of <code>output file names</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>channel_list</code></strong> :&ensp;<code>list</code> of <code>strings</code> of <code>channel names</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>agg_list</code></strong> :&ensp;<code>list</code> of <code>strings</code> of <code>aggregation methods</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def aggregate_multiband(
+    file_list=None, data_dir=None, agg=[&#34;mean&#34;], outfile=&#34;aggregation&#34;
+):
+    &#34;&#34;&#34;
+    Aggregates over multiple files but keeps channels independently.
+    Results are written to new tif files.
+
+    Parameters
+    ----------
+    file_list : list of strings
+        List of files to aggregate
+    data_dir : string
+        Path to directory containing files
+    agg : list of strings
+        List of aggregation methods to apply
+    outfile : string
+        Name of output file
+
+    Returns
+    -------
+    outfname_list : list of strings of output file names
+    channel_list : list of strings of channel names
+    agg_list : list of strings of aggregation methods
+    &#34;&#34;&#34;
+
+    if (file_list != None) and (data_dir != None):
+        raise RuntimeWarning(
+            &#34;file_list and data_dir both set, only the data_dir will be used.&#34;
+        )
+
+    # Check the aggregation methods are okay
+    agg_types = [&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;perc95&#34;, &#34;perc5&#34;]
+    aggcheck = [a for a in agg if a in agg_types]
+    if aggcheck is None:
+        raise ValueError(&#34;Invalid Aggregation type. Expected any of: %s&#34; % agg_types)
+    else:
+        print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
+
+    # If a directory has been passed, add all the files to the list
+    if data_dir is not None:
+        # data_dir = &#39;/path/to/data&#39;
+        print(&#34;Reading all *.tif files in: &#34;, data_dir)
+        file_list = glob(os.path.join(data_dir, &#34;*.tif&#34;))
+
+    # Get metadata from one of the input files
+    with rasterio.open(file_list[0]) as src:
+        meta = src.meta
+        desc = src.descriptions
+
+    meta.update(dtype=rasterio.float32)
+
+    # Append all tif files for each channel as a list of numpy arrays
+    array_list = {k: [] for k in desc}
+
+    for x in file_list:
+        # print(x)
+        data = _read_file(x)
+        if data.shape[0] != len(desc):
+            print(&#34;Band number mismatch between files!&#34;)
+        for i in range(data.shape[0]):
+            # print(i,desc[i])
+            array_list[desc[i]].append(data[i, :, :])
+
+    # Perform aggregation over channels axis
+    outfname_list = []
+    channel_list = []
+    agg_list = []
+    for i, channel in enumerate(array_list):
+        mean_array = np.nanmean(array_list[channel], axis=0)
+        median_array = np.nanmedian(array_list[channel], axis=0)
+        sum_array = np.nansum(array_list[channel], axis=0)
+        mean_array95 = np.nanpercentile(array_list[channel], 95, axis=0)
+        mean_array5 = np.nanpercentile(array_list[channel], 5, axis=0)
+
+        aggdict = {}
+        aggdict[&#34;mean&#34;] = mean_array
+        aggdict[&#34;median&#34;] = median_array
+        aggdict[&#34;sum&#34;] = sum_array
+        aggdict[&#34;perc95&#34;] = mean_array95
+        aggdict[&#34;perc5&#34;] = mean_array5
+
+        # Write output file
+        for a in aggcheck:
+            outstring = outfile + &#34;_&#34; + a + &#34;_channel_&#34; + channel + &#34;.tif&#34;
+            with rasterio.open(
+                outstring, &#34;w&#34;, **meta
+            ) as dst:
+                dst.write(aggdict[a].astype(rasterio.float32), 1)
+            print(
+                a,
+                &#34;of filelist saved in: &#34;,
+                outstring,
+            )
+            outfname_list.append(outstring)
+            agg_list.append(a)
+            channel_list.append(str(i))
+    return outfname_list, channel_list, agg_list</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.aggregate_rasters"><code class="name flex">
+<span>def <span class="ident">aggregate_rasters</span></span>(<span>file_list=None, data_dir=None, agg=['mean'], outfile='aggregation')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Aggregrates over multiple files and over all channels
+and writes results to new tif file(s).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_list</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>List of files to aggregate</dd>
+<dt><strong><code>data_dir</code></strong> :&ensp;<code>string</code></dt>
+<dd>Path to directory containing files</dd>
+<dt><strong><code>agg</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>List of aggregation methods to apply (mean, median, sum, perc95, perc5)</dd>
+<dt><strong><code>outfile</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of output file</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>list_outfnames</code></strong> :&ensp;<code>list</code> of <code>strings</code> of <code>output file names</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def aggregate_rasters(
+    file_list=None, data_dir=None, agg=[&#34;mean&#34;], outfile=&#34;aggregation&#34;
+):
+    &#34;&#34;&#34;
+    Aggregrates over multiple files and over all channels
+    and writes results to new tif file(s).
+
+    Parameters
+    ----------
+    file_list : list of strings
+        List of files to aggregate
+    data_dir : string
+        Path to directory containing files
+    agg : list of strings
+        List of aggregation methods to apply (mean, median, sum, perc95, perc5)
+    outfile : string
+        Name of output file
+
+    Returns
+    -------
+    list_outfnames : list of strings of output file names
+
+    &#34;&#34;&#34;
+
+    if (file_list != None) and (data_dir != None):
+        raise RuntimeWarning(
+            &#34;file_list and data_dir both set, only the data_dir will be used.&#34;
+        )
+
+    # Check the aggregation methods are okay
+    agg_types = [&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;perc95&#34;, &#34;perc5&#34;]
+    aggcheck = [a for a in agg if a in agg_types]
+    if aggcheck is None:
+        raise ValueError(&#34;Invalid Aggregation type. Expected any of: %s&#34; % agg_types)
+    else:
+        print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
+
+    # If a directory has been passed, add all the files to the list
+    if data_dir is not None:
+        # data_dir = &#39;/path/to/data&#39;
+        print(&#34;Reading all *.tif files in: &#34;, data_dir)
+        file_list = glob(os.path.join(data_dir, &#34;*.tif&#34;))
+
+    # Get metadata from one of the input files
+    with rasterio.open(file_list[0]) as src:
+        meta = src.meta
+
+    meta.update(dtype=rasterio.float32)
+
+    # Stack all data/channels as a list of numpy arrays
+    array_list = []
+    for x in file_list:
+        array_list.extend(_read_file(x))
+
+    # Perform aggregation over channels axis
+    mean_array = np.nanmean(array_list, axis=0)
+    median_array = np.nanmedian(array_list, axis=0)
+    sum_array = np.nansum(array_list, axis=0)
+    mean_array95 = np.nanpercentile(array_list, 95, axis=0)
+    mean_array5 = np.nanpercentile(array_list, 5, axis=0)
+
+    aggdict = {}
+    aggdict[&#34;mean&#34;] = mean_array
+    aggdict[&#34;median&#34;] = median_array
+    aggdict[&#34;sum&#34;] = sum_array
+    aggdict[&#34;perc95&#34;] = mean_array95
+    aggdict[&#34;perc5&#34;] = mean_array5
+
+    # Write output file
+    list_outfnames = []
+    for a in aggcheck:
+        with rasterio.open(outfile + &#34;_&#34; + a + &#34;.tif&#34;, &#34;w&#34;, **meta) as dst:
+            dst.write(aggdict[a].astype(rasterio.float32), 1)
+        print(a, &#34;of filelist saved in: &#34;, outfile + &#34;_&#34; + a + &#34;.tif&#34;)
+        list_outfnames.append(outfile + &#34;_&#34; + a + &#34;.tif&#34;)
+    return list_outfnames</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.coreg_raster"><code class="name flex">
+<span>def <span class="ident">coreg_raster</span></span>(<span>i0, j0, data, region)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Coregisters a point with a buffer region of a raster.</p>
+<p>INPUTS
+i0: column-index of point of interest
+j0: row-index of point of interest
+data: two-dimensional numpy array (raster)
+region: integer, same units as data resolution</p>
+<p>RETURNS
+pts: all values from array within region</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def coreg_raster(i0, j0, data, region):
+    &#34;&#34;&#34;
+    Coregisters a point with a buffer region of a raster.
+    
+    INPUTS
+        i0: column-index of point of interest
+        j0: row-index of point of interest
+        data: two-dimensional numpy array (raster)
+        region: integer, same units as data resolution
+
+    RETURNS
+        pts: all values from array within region
+    &#34;&#34;&#34;
+    pts_iterator = points_in_circle((i0, j0, region), data)
+    pts = np.array(list(pts_iterator))
+
+    return pts</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.init_logtable"><code class="name flex">
+<span>def <span class="ident">init_logtable</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a log table to store information from the raster download or processing.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>df_log</code></dt>
+<dd>dataframe to update</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def init_logtable():
+    &#34;&#34;&#34;
+    Create a log table to store information from the raster download or processing.
+
+    RETURNS:
+        df_log: dataframe to update
+    &#34;&#34;&#34;
+    return pd.DataFrame(
+        columns=[
+            &#34;layername&#34;,
+            &#34;agfunction&#34;,
+            &#34;dataset&#34;,
+            &#34;layertitle&#34;,
+            &#34;filename_out&#34;,
+            &#34;loginfo&#34;,
+        ]
+    )</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.msg_dl"><code class="name flex">
+<span>def <span class="ident">msg_dl</span></span>(<span>message, log=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prints a downloading message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def msg_dl(message, log=False):
+    &#34;&#34;&#34;Prints a downloading message&#34;&#34;&#34;
+    if log:
+        logging.info(message)
+    cprint(&#34;\u29e9 &#34; + message, color=&#34;magenta&#34;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.msg_err"><code class="name flex">
+<span>def <span class="ident">msg_err</span></span>(<span>message, log=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prints an error message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def msg_err(message, log=False):
+    &#34;&#34;&#34;Prints an error message&#34;&#34;&#34;
+    if log:
+        logging.error(message)
+    cprint(&#34;\u2716 &#34; + message, color=&#34;red&#34;, attrs=[&#34;bold&#34;])</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.msg_info"><code class="name flex">
+<span>def <span class="ident">msg_info</span></span>(<span>message, icon=True, log=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prints an info message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def msg_info(message, icon=True, log=False):
+    &#34;&#34;&#34;Prints an info message&#34;&#34;&#34;
+    if log:
+        logging.info(message)
+    if icon:
+        cprint(&#34;\u2139 &#34; + message, color=&#34;magenta&#34;)
+    else:
+        cprint(&#34;  &#34; + message, color=&#34;magenta&#34;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.msg_success"><code class="name flex">
+<span>def <span class="ident">msg_success</span></span>(<span>message, log=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prints a success message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def msg_success(message, log=False):
+    &#34;&#34;&#34;Prints a success message&#34;&#34;&#34;
+    if log:
+        logging.info(message)
+    cprint(&#34;\u2714 &#34; + message, color=&#34;magenta&#34;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.msg_warn"><code class="name flex">
+<span>def <span class="ident">msg_warn</span></span>(<span>message, log=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prints a warning message</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def msg_warn(message, log=False):
+    &#34;&#34;&#34;Prints a warning message&#34;&#34;&#34;
+    if log:
+        logging.warning(message)
+    cprint(&#34;\u2691 &#34; + message, color=&#34;yellow&#34;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.plot_rasters"><code class="name flex">
+<span>def <span class="ident">plot_rasters</span></span>(<span>rasters, longs=None, lats=None, titles=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plots multiple raster files (.tif) on a grid of nicely arranged figures.</p>
+<h2 id="parameters">Parameters</h2>
+<p>raster: list of filenames (.tif).
+Will only read the first band/channel if multiband.
+longs: optional x values in list like object for plotting as points
+over raster images.
+lats: optional x values in list like object for plotting as points
+over raster images.
+titles: title of plot default is raster file name.</p>
+<p>Returns:<br>
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_rasters(rasters, longs=None, lats=None, titles=None):
+    &#34;&#34;&#34;
+    Plots multiple raster files (.tif) on a grid of nicely arranged figures.
+
+    Parameters:
+        raster: list of filenames (.tif).
+            Will only read the first band/channel if multiband.
+        longs: optional x values in list like object for plotting as points 
+            over raster images.
+        lats: optional x values in list like object for plotting as points
+            over raster images.
+        titles: title of plot default is raster file name.
+
+    Returns:  
+        None
+    &#34;&#34;&#34;
+    # Set the value for reasonable shaped plot based on the number of datasets
+    figlen = int(np.ceil(len(rasters) / 3))
+    # Make a blank canvas if there is no data
+    figlen = 2 if figlen &lt; 2 else figlen
+
+    # Create the figure
+    fig, axes = plt.subplots(figlen, 3, figsize=(12, figlen * 3))
+
+    if titles == None:
+        titles = rasters
+    # Loop through each subplot/axis on the figure.
+    # Use counters to know what axes we are up to.
+    i, j = 0, 0
+    for a, rast in enumerate(rasters):
+        if j == 3:
+            j = 0
+            i += 1
+
+        # print(a,i,j,figlen,rast)
+        src = rasterio.open(rast)
+        # Only read first Band for flexibility without complexity
+        data = src.read(1)
+        # Grab the percentiles for pretty plotting of color ranges
+        n95 = np.percentile(data, 5)
+        n5 = np.percentile(data, 95)
+
+        # Make the plot and clean it up
+        show(
+            data,
+            ax=axes[i, j],
+            title=titles[a],
+            transform=src.transform,
+            cmap=&#34;Greys&#34;,
+            vmin=n95,
+            vmax=n5,
+        )
+        axes[i, j].scatter(longs, lats, s=1, c=&#34;r&#34;)
+        axes[i, j].xaxis.set_major_formatter(FormatStrFormatter(&#34;%.2f&#34;))
+        axes[i, j].yaxis.set_major_formatter(FormatStrFormatter(&#34;%.2f&#34;))
+        axes[i, j].locator_params(axis=&#34;y&#34;, nbins=4)
+        axes[i, j].locator_params(axis=&#34;x&#34;, nbins=4)
+
+        j += 1
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.points_in_circle"><code class="name flex">
+<span>def <span class="ident">points_in_circle</span></span>(<span>circle, arr)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A generator to return all points whose indices are within a given circle.
+<a href="http://stackoverflow.com/a/2774284">http://stackoverflow.com/a/2774284</a>
+Warning: If a point is near the the edges of the raster it will not loop
+around to the other side of the raster!</p>
+<p>INPUTS
+circle: a tuple of (i0, j0, r) where i0, j0 are the indices of the center of the circle and r is the radius</p>
+<p>arr: a two-dimensional numpy array</p>
+<p>RETURNS
+A generator that yields all points within the circle</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@jit(nopython=True)
+def points_in_circle(circle, arr):
+    &#34;&#34;&#34;
+    A generator to return all points whose indices are within a given circle.
+    http://stackoverflow.com/a/2774284
+    Warning: If a point is near the the edges of the raster it will not loop
+    around to the other side of the raster!
+
+    INPUTS
+    circle: a tuple of (i0, j0, r) where i0, j0 are the indices of the center of the circle and r is the radius
+
+    arr: a two-dimensional numpy array
+
+    RETURNS
+    A generator that yields all points within the circle    
+    &#34;&#34;&#34;
+    i0, j0, r = circle
+
+    def intceil(x):
+        return int(np.ceil(x))
+
+    for i in range(intceil(i0 - r), intceil(i0 + r)):
+        ri = np.sqrt(r**2 - (i - i0) ** 2)
+        for j in range(intceil(j0 - ri), intceil(j0 + ri)):
+            if (i &gt;= 0 and i &lt; len(arr[:, 0])) and (j &gt;= 0 and j &lt; len(arr[0, :])):
+                yield arr[i][j]</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.raster_query"><code class="name flex">
+<span>def <span class="ident">raster_query</span></span>(<span>longs, lats, rasters, titles=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>given a longitude,latitude value, return the value at that point of the
+first channel/band in the raster/tif.</p>
+<p>INPUTS
+longs:list of longitudes
+lats:list of latitudes
+rasters:list of raster filenames (as strings)
+titles:list of column titles (as strings) that correspond to rasters (if none provided, rasternames will be used)</p>
+<p>RETURNS
+gdf: geopandas dataframe where each row is long/lat point,
+and columns are rasterfiles</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def raster_query(longs, lats, rasters, titles=None):
+    &#34;&#34;&#34;
+    given a longitude,latitude value, return the value at that point of the
+        first channel/band in the raster/tif.
+
+    INPUTS
+        longs:list of longitudes
+        lats:list of latitudes
+        rasters:list of raster filenames (as strings)
+        titles:list of column titles (as strings) that correspond to rasters (if none provided, rasternames will be used)
+
+    RETURNS
+        gdf: geopandas dataframe where each row is long/lat point,
+            and columns are rasterfiles
+    &#34;&#34;&#34;
+
+    # Setup the dataframe to store the ML data
+    gdf = gpd.GeoDataFrame(
+        {&#34;Longitude&#34;: longs, &#34;Latitude&#34;: lats},
+        geometry=gpd.points_from_xy(longs, lats),
+        crs=&#34;EPSG:4326&#34;,
+    )
+
+    # Loop through each raster
+    for filepath in rasters:
+        filename = Path(filepath).resolve().stem
+        # print(&#34;Opening:&#34;, filename)
+        # Open the file:
+        raster = rasterio.open(filepath)
+        # Get the transformation crs data
+        gt = raster.transform
+        # This will only be the first band, usally multiband has same index.
+        arr = raster.read(1)
+
+        if titles is not None:
+            colname = titles[rasters.index(filepath)]
+        else:
+            colname = Path(filepath).stem
+            # colname = filepath.split(&#34;/&#34;)[-1][:-4]
+
+        # Interogate the tiff file as an array
+
+        # FIXME Check the number of bands and print a warning if more than 1
+
+        # Shape of raster
+        # print(&#34;Raster pixel size:&#34;, np.shape(arr))
+
+        # Slowest part of this function.
+        # Speed up with Numba/Dask etc
+        # (although previous attempts have not been worth it.)
+        # Query the raster at the points of interest
+        with spin(f&#34;• {filename} | pixel size: {np.shape(arr)}&#34;, &#34;blue&#34;) as s:
+            values = []
+            for (lon, lat) in zip(longs, lats):
+
+                # Convert lat/lon to raster units-index
+                point = _get_coords_at_point(gt, lon, lat)
+
+                # This will fail for small areas or on boundaries
+                try:
+                    val = arr[point[0], point[1]]
+                except:
+                    # print(lon,lat,point[0],point[1],&#34;has failed.&#34;)
+                    val = 0
+                values.append(val)
+            s(1)
+
+        # dd the values at the points to the dataframe
+        gdf[filepath] = values
+        gdf = gdf.rename(columns={filepath: colname})
+
+    return gdf</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.reproj_mask"><code class="name flex">
+<span>def <span class="ident">reproj_mask</span></span>(<span>filepath, bbox, crscode=4326, filepath_out=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Clips a raster to the area of a shape, and reprojects.</p>
+<p>INPUTS
+filepath: input filename (tif)
+bbox: shapely geometry(polygon) defining mask boundary
+crscode: optional, coordinate reference system as defined by EPSG
+filepath_out: optional, the optional output filename of the raster. If False,
+does not save a new file</p>
+<p>RETURNS
+out_img: numpy array of the clipped and reprojected raster</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reproj_mask(filepath, bbox, crscode=4326, filepath_out=None):
+    &#34;&#34;&#34;
+    Clips a raster to the area of a shape, and reprojects.
+
+    INPUTS
+        filepath: input filename (tif)
+        bbox: shapely geometry(polygon) defining mask boundary
+        crscode: optional, coordinate reference system as defined by EPSG
+        filepath_out: optional, the optional output filename of the raster. If False, 
+        does not save a new file
+
+    RETURNS
+        out_img: numpy array of the clipped and reprojected raster
+    &#34;&#34;&#34;
+    data = rasterio.open(filepath)
+    geo = gpd.GeoDataFrame({&#34;geometry&#34;: bbox}, index=[0], crs=CRS.from_epsg(crscode))
+    geo = geo.to_crs(crs=CRS.from_epsg(crscode))
+    coords = _getFeatures(geo)
+    out_img, out_transform = mask(data, shapes=coords, crop=True)
+
+    if filepath_out:
+        out_meta = data.meta.copy()
+        out_meta.update(
+            {
+                &#34;driver&#34;: &#34;GTiff&#34;,
+                &#34;height&#34;: out_img.shape[1],
+                &#34;width&#34;: out_img.shape[2],
+                &#34;transform&#34;: out_transform,
+                &#34;crs&#34;: CRS.from_epsg(crscode),
+            }
+        )
+
+        with rasterio.open(filepath_out, &#34;w&#34;, **out_meta) as dest:
+            dest.write(out_img)
+        print(&#34;Clipped raster written to:&#34;, filepath_out)
+
+    return out_img</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.reproj_raster"><code class="name flex">
+<span>def <span class="ident">reproj_raster</span></span>(<span>infile, outfile, bbox_out, resolution_out=None, crs_out='EPSG:4326', nodata=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reproject and clip for a given output resolution, crs and bbox.
+Output file is written to disk.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>infile</code></strong> :&ensp;<code>(string) path to input file to reproject</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>outfile</code></strong> :&ensp;<code>(string) path to output file tif</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>bbox_out</code></strong> :&ensp;<code>(left, bottom, right, top)</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>resolution_out</code></strong> :&ensp;<code>(float) resolution</code> of <code>output raster</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>crs_out</code></strong> :&ensp;<code>default "EPSG:4326"</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>(float) nodata value for output raster</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reproj_raster(
+    infile, outfile, bbox_out, resolution_out=None, crs_out=&#34;EPSG:4326&#34;, nodata=0
+):
+    &#34;&#34;&#34;
+    Reproject and clip for a given output resolution, crs and bbox.
+    Output file is written to disk.
+
+    Parameters
+    ----------
+    infile : (string) path to input file to reproject
+    outfile : (string) path to output file tif
+    bbox_out : (left, bottom, right, top)
+    resolution_out : (float) resolution of output raster
+    crs_out : default &#34;EPSG:4326&#34;
+    nodata : (float) nodata value for output raster
+    &#34;&#34;&#34;
+    # open input
+    with rasterio.open(infile) as src:
+        src_transform = src.transform
+
+        width_out = int((bbox_out[2] - bbox_out[0]) / resolution_out)
+        height_out = int((bbox_out[3] - bbox_out[1]) / resolution_out)
+
+        # calculate the output transform matrix
+        dst_transform, dst_width, dst_height = calculate_default_transform(
+            src.crs,  # input CRS
+            crs_out,  # output CRS
+            width_out,  # output width
+            height_out,  # output height
+            *bbox_out,  # unpacks input outer boundaries (left, bottom, right, top)
+        )
+
+        # set properties for output
+        dst_kwargs = src.meta.copy()
+        dst_kwargs.update(
+            {
+                &#34;crs&#34;: crs_out,
+                &#34;transform&#34;: dst_transform,
+                &#34;width&#34;: dst_width,
+                &#34;height&#34;: dst_height,
+                &#34;nodata&#34;: nodata,
+            }
+        )
+        print(&#34;Converting to shape:&#34;, dst_height, dst_width, &#34;\n Affine&#34;, dst_transform)
+        # open output
+        with rasterio.open(outfile, &#34;w&#34;, **dst_kwargs) as dst:
+            # iterate through bands and write using reproject function
+            for i in range(1, src.count + 1):
+                reproject(
+                    source=rasterio.band(src, i),
+                    destination=rasterio.band(dst, i),
+                    src_transform=src.transform,
+                    src_crs=src.crs,
+                    dst_transform=dst_transform,
+                    dst_crs=crs_out,
+                    resampling=Resampling.nearest,
+                )</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.reproj_rastermatch"><code class="name flex">
+<span>def <span class="ident">reproj_rastermatch</span></span>(<span>infile, matchfile, outfile, nodata)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reproject a file to match the shape and projection of existing raster.
+Output file is written to disk.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>infile</code></strong> :&ensp;<code>(string) path to input file to reproject</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>matchfile</code></strong> :&ensp;<code>(string) path to raster with desired shape and projection</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>outfile</code></strong> :&ensp;<code>(string) path to output file tif</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>(float) nodata value for output raster</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reproj_rastermatch(infile, matchfile, outfile, nodata):
+    &#34;&#34;&#34;
+    Reproject a file to match the shape and projection of existing raster.
+    Output file is written to disk.
+
+    Parameters
+    ----------
+    infile : (string) path to input file to reproject
+    matchfile : (string) path to raster with desired shape and projection
+    outfile : (string) path to output file tif
+    nodata : (float) nodata value for output raster
+    &#34;&#34;&#34;
+    # open input
+    with rasterio.open(infile) as src:
+        src_transform = src.transform
+
+        # open input to match
+        with rasterio.open(matchfile) as match:
+            dst_crs = match.crs
+
+            # calculate the output transform matrix
+            dst_transform, dst_width, dst_height = calculate_default_transform(
+                src.crs,  # input CRS
+                dst_crs,  # output CRS
+                match.width,  # input width
+                match.height,  # input height
+                *match.bounds,  # unpacks input outer boundaries (left, bottom, right, top)
+            )
+
+        # set properties for output
+        dst_kwargs = src.meta.copy()
+        dst_kwargs.update(
+            {
+                &#34;crs&#34;: dst_crs,
+                &#34;transform&#34;: dst_transform,
+                &#34;width&#34;: dst_width,
+                &#34;height&#34;: dst_height,
+                &#34;nodata&#34;: nodata,
+            }
+        )
+        print(
+            &#34;Coregistered to shape:&#34;, dst_height, dst_width, &#34;\n Affine&#34;, dst_transform
+        )
+        # open output
+        with rasterio.open(outfile, &#34;w&#34;, **dst_kwargs) as dst:
+            # iterate through bands and write using reproject function
+            for i in range(1, src.count + 1):
+                reproject(
+                    source=rasterio.band(src, i),
+                    destination=rasterio.band(dst, i),
+                    src_transform=src.transform,
+                    src_crs=src.crs,
+                    dst_transform=dst_transform,
+                    dst_crs=dst_crs,
+                    resampling=Resampling.nearest,
+                )</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.spin"><code class="name flex">
+<span>def <span class="ident">spin</span></span>(<span>message=None, colour='magenta', events=1, log=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Spin animation as a progress inidicator</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def spin(message=None, colour=&#34;magenta&#34;, events=1, log=False):
+    &#34;&#34;&#34;Spin animation as a progress inidicator&#34;&#34;&#34;
+    if log:
+        logging.info(message)
+    return alive_bar(events, title=colored(&#34;\u2299 &#34; + message, color=colour))</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.update_logtable"><code class="name flex">
+<span>def <span class="ident">update_logtable</span></span>(<span>df_log, filenames, layernames, datasource, settings, layertitles=[], agfunctions=[], loginfos=[], force=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update the dataframe table with the information from the raster download or processing.
+The dataframe is simultaneoulsy saved to a csv file in default output directory.</p>
+<p>INPUTS
+df_log: dataframe to update
+filenames: list of filenames to add to the dataframe (captured in output of getdata_* functions)
+layernames: list of layernames to add to the dataframe (must be same length as filenames)
+datasource: datasource of the rasters (e.g. 'SLGA', 'SILO', 'DEA', see settings)
+settings: settings Namespace object
+layertitles: list of layer titles to add to the dataframe; if empty or none provided, it will be inferred from settings
+agfunctions: list of aggregation functions to add to the dataframe; if empty or none provided, it will be inferred from settings
+loginfos: string or list of log information strings to add to the dataframe;</p>
+<p>RETURNS
+df_log: updated dataframe</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_logtable(
+    df_log,
+    filenames,
+    layernames,
+    datasource,
+    settings,
+    layertitles=[],
+    agfunctions=[],
+    loginfos=[],
+    force=False
+):
+    &#34;&#34;&#34;
+    Update the dataframe table with the information from the raster download or processing.
+    The dataframe is simultaneoulsy saved to a csv file in default output directory.
+
+    INPUTS
+    df_log: dataframe to update
+    filenames: list of filenames to add to the dataframe (captured in output of getdata_* functions)
+    layernames: list of layernames to add to the dataframe (must be same length as filenames)
+    datasource: datasource of the rasters (e.g. &#39;SLGA&#39;, &#39;SILO&#39;, &#39;DEA&#39;, see settings)
+    settings: settings Namespace object
+    layertitles: list of layer titles to add to the dataframe; if empty or none provided, it will be inferred from settings
+    agfunctions: list of aggregation functions to add to the dataframe; if empty or none provided, it will be inferred from settings
+    loginfos: string or list of log information strings to add to the dataframe;
+
+    RETURNS
+    df_log: updated dataframe
+    &#34;&#34;&#34;
+    # First automatically check consistency of inputs and set defaults if necessary
+    if len(filenames) != len(layernames):
+        print(
+            &#34;Error: Number of filenames does not match number of layernames. Dataframe not updated.&#34;
+        )
+        return df_log
+    if type(agfunctions) == str:
+        agfunctions = [agfunctions] * len(layernames)
+    if agfunctions == []:
+        try:
+            if &#34;agfunctions&#34; in settings.target_sources[&#34;SLGA&#34;]:
+                agfunctions = settings.target_sources[datasource][&#34;agfunctions&#34;]
+            else:
+                agfunctions = list(settings.target_sources[datasource].values())
+                # flatten possible list of lists
+                # check if list of lists
+                if type(agfunctions[0]) == list:
+                    agfunctions = [item for sublist in agfunctions for item in sublist]
+            if agfunctions == None:
+                agfunctions = [&#34;None&#34;] * len(layernames)
+        except:
+            agfunctions = [&#34;None&#34;] * len(layernames)
+
+    if len(agfunctions) != len(layernames):
+        print(
+            &#34;Error: Number of agfunctions does not match number of layernames. Dataframe not updated.&#34;
+        )
+        return df_log
+    if layertitles == []:
+        layertitles = [
+            layernames[i] + &#34;_&#34; + agfunctions[i] for i in range(len(layernames))
+        ]
+
+    # check if you are adding a duplicate entry to the log
+    for f in filenames:
+        warnings.simplefilter(action=&#34;ignore&#34;, category=FutureWarning)
+        if f in df_log.filename_out.values:
+            if force == False:
+                print(&#34;Error: &#34; + str(f) + &#34; exists in df_log! Dataframe not updated.\nCheck your inputs or overwrite with force=True&#34;)
+                return df_log
+            elif force==True:
+                print(&#34;Warning: &#34; + str(f) + &#34; exists in df_log and has been overitten by force=True&#34;)
+                df_log.drop(df_log[df_log.filename_out != f].index, inplace=True)
+
+    # check if loginfos is a list or a string
+    if type(loginfos) == str:
+        loginfos = [loginfos] * len(layernames)
+    else:
+        if loginfos == []:
+            loginfos = [&#34;processed&#34;] * len(layernames)
+        elif len(loginfos) != len(layernames):
+            print(
+                &#34;Error: Number of loginfos does not match number of layernames. Dataframe not updated.&#34;
+            )
+            return df_log
+    datasets = [datasource] * len(layernames)
+    data_add = {
+        &#34;layername&#34;: layernames,
+        &#34;agfunction&#34;: agfunctions,
+        &#34;dataset&#34;: datasets,
+        &#34;layertitle&#34;: layertitles,
+        &#34;filename_out&#34;: filenames,
+        &#34;loginfo&#34;: loginfos,
+    }
+    # Add to log dataframe
+    df_log = pd.concat([df_log, pd.DataFrame(data_add)], ignore_index=True)
+    # Save to csv in settings.outpath
+    df_log.to_csv(os.path.join(settings.outpath, &#34;df_log.csv&#34;), index=False)
+    return df_log</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="geodata_harvester" href="index.html">geodata_harvester</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="geodata_harvester.utils.aggregate_multiband" href="#geodata_harvester.utils.aggregate_multiband">aggregate_multiband</a></code></li>
+<li><code><a title="geodata_harvester.utils.aggregate_rasters" href="#geodata_harvester.utils.aggregate_rasters">aggregate_rasters</a></code></li>
+<li><code><a title="geodata_harvester.utils.coreg_raster" href="#geodata_harvester.utils.coreg_raster">coreg_raster</a></code></li>
+<li><code><a title="geodata_harvester.utils.init_logtable" href="#geodata_harvester.utils.init_logtable">init_logtable</a></code></li>
+<li><code><a title="geodata_harvester.utils.msg_dl" href="#geodata_harvester.utils.msg_dl">msg_dl</a></code></li>
+<li><code><a title="geodata_harvester.utils.msg_err" href="#geodata_harvester.utils.msg_err">msg_err</a></code></li>
+<li><code><a title="geodata_harvester.utils.msg_info" href="#geodata_harvester.utils.msg_info">msg_info</a></code></li>
+<li><code><a title="geodata_harvester.utils.msg_success" href="#geodata_harvester.utils.msg_success">msg_success</a></code></li>
+<li><code><a title="geodata_harvester.utils.msg_warn" href="#geodata_harvester.utils.msg_warn">msg_warn</a></code></li>
+<li><code><a title="geodata_harvester.utils.plot_rasters" href="#geodata_harvester.utils.plot_rasters">plot_rasters</a></code></li>
+<li><code><a title="geodata_harvester.utils.points_in_circle" href="#geodata_harvester.utils.points_in_circle">points_in_circle</a></code></li>
+<li><code><a title="geodata_harvester.utils.raster_query" href="#geodata_harvester.utils.raster_query">raster_query</a></code></li>
+<li><code><a title="geodata_harvester.utils.reproj_mask" href="#geodata_harvester.utils.reproj_mask">reproj_mask</a></code></li>
+<li><code><a title="geodata_harvester.utils.reproj_raster" href="#geodata_harvester.utils.reproj_raster">reproj_raster</a></code></li>
+<li><code><a title="geodata_harvester.utils.reproj_rastermatch" href="#geodata_harvester.utils.reproj_rastermatch">reproj_rastermatch</a></code></li>
+<li><code><a title="geodata_harvester.utils.spin" href="#geodata_harvester.utils.spin">spin</a></code></li>
+<li><code><a title="geodata_harvester.utils.update_logtable" href="#geodata_harvester.utils.update_logtable">update_logtable</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

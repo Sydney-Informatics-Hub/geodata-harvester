@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>geodata_harvester.getdata_dem API documentation</title>
+<meta name="description" content="This script downloads the National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced product,
+derived from the National DEM SRTM 1 Second …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>geodata_harvester.getdata_dem</code></h1>
+</header>
+<section id="section-intro">
+<p>This script downloads the National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced product,
+derived from the National DEM SRTM 1 Second and National Watercourses, lakes and Reservoirs.
+The output image is a geotiff file with a user defined resolution and bbox.
+This script also includes the capabilities to generate slope and aspect from the extracted DEM.</p>
+<p>Core functions:
+get_capabilities(): get the available layers and their metadata
+getwcs_dem(): download the data as geotiff file for given bbox and resolution
+dem2slope(): convert geotiff to slope raster
+dem2aspect(): convert geotiff to aspect raster
+getdict_license(): get the license and attributes for the DEM 1 arc second grid</p>
+<p>The DEM layer metadata can be retrieved with the function get_capabilities().
+and the respective licensing and attribution are availabe with the module function getdict_license()</p>
+<p>To download the DEM data, the function getwcs_dem() is used.</p>
+<p>For more details about the data, see:
+<a href="https://ecat.ga.gov.au/geonetwork/srv/eng/catalog.search#/metadata/72759">https://ecat.ga.gov.au/geonetwork/srv/eng/catalog.search#/metadata/72759</a></p>
+<p>WCS url:
+<a href="https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS">https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS</a></p>
+<p>This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).</p>
+<p>Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney</p>
+<p>This open-source software is released under the LGPL-3.0 License.</p>
+<p>Author: Sebastian Haan</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+This script downloads the National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced product,
+derived from the National DEM SRTM 1 Second and National Watercourses, lakes and Reservoirs.
+The output image is a geotiff file with a user defined resolution and bbox.
+This script also includes the capabilities to generate slope and aspect from the extracted DEM.
+
+Core functions:
+    get_capabilities(): get the available layers and their metadata
+    getwcs_dem(): download the data as geotiff file for given bbox and resolution
+    dem2slope(): convert geotiff to slope raster
+    dem2aspect(): convert geotiff to aspect raster
+    getdict_license(): get the license and attributes for the DEM 1 arc second grid
+
+The DEM layer metadata can be retrieved with the function get_capabilities().
+and the respective licensing and attribution are availabe with the module function getdict_license()
+
+To download the DEM data, the function getwcs_dem() is used.
+
+For more details about the data, see:
+https://ecat.ga.gov.au/geonetwork/srv/eng/catalog.search#/metadata/72759
+
+WCS url:
+https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS
+
+This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
+
+Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
+
+This open-source software is released under the LGPL-3.0 License.
+
+Author: Sebastian Haan
+&#34;&#34;&#34;
+
+import logging
+import os
+from datetime import datetime, timezone
+from geodata_harvester import utils
+from geodata_harvester.utils import spin
+
+import rasterio
+
+# logger setup
+from geodata_harvester import write_logs
+from owslib.wcs import WebCoverageService
+from rasterio.plot import show
+from termcolor import cprint
+
+try:
+    from osgeo import gdal
+except ImportError:
+    import gdal
+
+
+def get_demdict():
+    &#34;&#34;&#34;
+    Get dictionary of meta data
+
+    OUTPUT:
+    layerdict : dict
+        dictionary of meta data
+    &#34;&#34;&#34;
+    demdict = {}
+    demdict[&#34;title&#34;] = &#34;DEM 1 Second Grid&#34;
+    demdict[
+        &#34;description&#34;
+    ] = &#34;Digital Elevation Model (DEM) of Australia derived from STRM with 1 Second Grid - Hydrologically Enforced.&#34;
+    demdict[&#34;crs&#34;] = &#34;EPSG:4326&#34;
+    demdict[&#34;bbox&#34;] = [
+        112.99986111100009,
+        -44.0001388895483,
+        153.9998611116614,
+        -10.000138888999906,
+    ]
+    demdict[&#34;resolution_arcsec&#34;] = 1
+    demdict[&#34;layernames&#34;] = {
+        &#34;DEM&#34;: &#34;Digital Elevation Model&#34;,
+        &#34;Slope&#34;: &#34;Slope&#34;,
+        &#34;Aspect&#34;: &#34;Aspect Ratio&#34;,
+    }
+    return demdict
+
+
+def getdict_license():
+    &#34;&#34;&#34;
+    Retrieves the Geoscience Australia data license for the DEM Web Map Service as dict
+    &#34;&#34;&#34;
+    dict = {
+        &#34;name&#34;: &#34;Digital Elevation Model (DEM) of Australia derived from STRM with 1 Second Grid - Hydrologically Enforced&#34;,
+        &#34;source_url&#34;: &#34;https://www.clw.csiro.au/aclep/soilandlandscapegrid/ProductDetails.html&#34;,
+        &#34;license&#34;: &#34;CC BY 4.0&#34;,
+        &#34;license_title&#34;: &#34;Creative Commons Attribution 4.0 International (CC BY 4.0)&#34;,
+        &#34;license_url&#34;: &#34;https://creativecommons.org/licenses/by/4.0/&#34;,
+        &#34;copyright&#34;: &#34;© Copyright 2017-2022, Geoscience Australia&#34;,
+        &#34;attribution&#34;: &#34;Commonwealth of Australia (Geoscience Australia) &#34;,
+    }
+    return dict
+
+
+def get_capabilities(url):
+    &#34;&#34;&#34;
+    Get capabilities from WCS layer.
+
+    Parameters
+    ----------
+    url : str
+        layer url
+
+    Returns
+    -------
+    keys    : list
+        layer identifiers
+    titles  : list  of str
+        layer titles
+    descriptions : list of str
+        layer descriptions
+    bboxs   : list of floats
+        layer bounding boxes
+    &#34;&#34;&#34;
+
+    # Create WCS object
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+
+    # Get coverages and content dict keys
+    content = wcs.contents
+    keys = content.keys()
+
+    print(&#34;Following data layers are available:&#34;)
+    title_list = []
+    description_list = []
+    bbox_list = []
+    for key in keys:
+        print(f&#34;key: {key}&#34;)
+        print(f&#34;title: {wcs[key].title}&#34;)
+        title_list.append(wcs[key].title)
+        print(f&#34;{wcs[key].abstract}&#34;)
+        description_list.append(wcs[key].abstract)
+        print(f&#34;bounding box: {wcs[key].boundingBoxWGS84}&#34;)
+        bbox_list.append(wcs[key].boundingBoxWGS84)
+        print(&#34;&#34;)
+
+    return keys, title_list, description_list, bbox_list
+
+
+def getwcs_dem(
+    outpath,
+    bbox,
+    resolution=1,
+    url=&#34;https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS&#34;,
+    crs=&#34;EPSG:4326&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Function to download and save geotiff from WCS layer.
+    Default downloads the DEM 1 arc second grid from Geoscience Australia using the folllwing WCS url:
+    Url = https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS
+
+    Parameters
+    ----------
+    outpath : str
+        output directory for the downloaded file
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec (default 1)
+    url : str
+        url of wcs server, default is the Geoscience Australia DEM 1 arc second grid
+    crs: str
+        crs default &#39;EPSG:4326&#39;
+
+    Return
+    ------
+    Output filename
+    &#34;&#34;&#34;
+    # Convert resolution into width and height pixel number
+    # width = abs(bbox[2] - bbox[0])
+    # height = abs(bbox[3] - bbox[1])
+    # nwidth = int(width / resolution * 3600)
+    # nheight = int(height / resolution * 3600)
+
+    # If the resolution passed is None, set to native resolution of datasource
+
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    if resolution is None:
+        resolution = get_demdict()[&#34;resolution_arcsec&#34;]
+
+    os.makedirs(outpath, exist_ok=True)
+    # Create WCS object and get data
+    try:
+        with spin(&#34;Retrieving coverage from WCS server&#34;) as s:
+            wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+            s(1)
+        layername = wcs[&#34;1&#34;].title
+        date = datetime.now(timezone.utc).strftime(&#34;%Y_%m_%d&#34;)
+        fname_out = layername.replace(&#34; &#34;, &#34;_&#34;) + &#34;_&#34; + date + &#34;.tif&#34;
+        outfname = os.path.join(outpath, fname_out)
+        if os.path.exists(outfname):
+            utils.msg_warn(f&#34;{fname_out} already exists, skipping download&#34;)
+            # logging.warning(f&#34;△ | download skipped: {outfname} already exists&#34;)
+        else:
+            with spin(f&#34;Downloading {fname_out}&#34;) as s:
+                data = wcs.getCoverage(
+                    identifier=&#34;1&#34;,
+                    bbox=bbox,
+                    format=&#34;GeoTIFF&#34;,
+                    crs=crs,
+                    resx=resolution / 3600,
+                    resy=resolution / 3600,
+                    Styles=&#34;tc&#34;,
+                )
+                s(1)
+            # Save data to file
+            with open(outfname, &#34;wb&#34;) as f:
+                f.write(data.read())
+            # logging.print(f&#34;✓ | DEM downloaded to: {outfname}&#34;)
+    except Exception as e:
+        print(e)
+        utils.msg_err(&#34;Download failed, is the server down?&#34;)
+        return False
+    return outfname
+
+
+def get_dem_layers(layernames, outpath, bbox, resolution=1, crs=&#34;EPSG:4326&#34;):
+    &#34;&#34;&#34;
+    Wrapper funtion to get the layers from the Geoscience Australia DEM 1 arc second grid
+    and to calculate slope and aspect layers
+
+    Parameters
+    ----------
+    layernames : list
+        list of layer names to download
+        [&#39;DEM&#39;, &#39;Slope&#39;, &#39;Aspect&#39;]
+    outpath : str
+        output directory for the downloaded file
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec (default 1)
+    crs: str
+        crs default &#39;EPSG:4326&#39;
+
+    Return
+    ------
+    Output outnames: lits of output filenames
+    &#34;&#34;&#34;
+    outfnames = []
+    dem_ok = False
+    for layername in layernames:
+        if layername == &#34;DEM&#34;:
+            outfname = outfname_dem = getwcs_dem(
+                outpath, bbox, resolution, crs=crs)
+            dem_ok = True
+        elif layername == &#34;Slope&#34;:
+            if not dem_ok:
+                outfname_dem = getwcs_dem(outpath, bbox, resolution, crs=crs)
+                dem_ok = True
+            outfname = dem2slope(outfname_dem)
+        elif layername == &#34;Aspect&#34;:
+            if not dem_ok:
+                outfname_dem = getwcs_dem(outpath, bbox, resolution, crs=crs)
+                dem_ok = True
+            outfname = dem2aspect(outfname_dem)
+        else:
+            utils.msg_warn(f&#34;Layername {layername} not recognised, skipping&#34;)
+            outfname = None
+        outfnames.append(outfname)
+    return outfnames
+
+
+def plot_raster(infname):
+    &#34;&#34;&#34;
+    Read in raster tif with rasterio and visualise as map
+
+    Parameters
+    ----------
+    infname : str
+    &#34;&#34;&#34;
+    data = rasterio.open(infname)
+    # show image
+    show(data)
+
+
+def dem2slope(fname_dem):
+    &#34;&#34;&#34;
+    Calculate slope from DEM and save as geotiff
+
+    Parameters
+    ----------
+    fname_dem : str
+        DEM path + file name
+    &#34;&#34;&#34;
+    # Get filename
+    fname = os.path.basename(fname_dem)
+    # Get path for output
+    path = os.path.dirname(fname_dem)
+    fname_out = os.path.join(path, &#34;Slope_&#34; + fname)
+    gdal.DEMProcessing(fname_out, fname_dem, &#34;slope&#34;)
+    logging.info(f&#34;✔  DEM slope from: {fname_dem}&#34;)
+    utils.msg_success(f&#34;DEM slope generated at: {fname_out}&#34;)
+    return fname_out
+
+
+def dem2aspect(fname_dem):
+    &#34;&#34;&#34;
+    Calculate aspect from DEM and save as geotiff
+
+    Parameters
+    ----------
+    fname_dem : str
+        DEM file name
+    &#34;&#34;&#34;
+    # Get filename
+    fname = os.path.basename(fname_dem)
+    # Get path for output
+    path = os.path.dirname(fname_dem)
+    fname_out = os.path.join(path, &#34;Aspect_&#34; + fname)
+    gdal.DEMProcessing(fname_out, fname_dem, &#34;aspect&#34;)
+    logging.info(f&#34;✓ | DEM aspect from: {fname_dem}&#34;)
+    utils.msg_success(f&#34;Aspect (from DEM) generated at: {fname_out}&#34;)
+    return fname_out
+
+
+def test_getwcs_dem(outpath=&#34;./test_DEM/&#34;):
+    &#34;&#34;&#34;
+    Test script
+    &#34;&#34;&#34;
+    bbox = (114, -44, 153.9, -11)
+    resolution = 100
+    url = &#34;https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS&#34;
+    crs = &#34;EPSG:4326&#34;
+    # get capabilities
+    keys, title_list, description_list, bbox_list = get_capabilities(url)
+    # get data
+    print(&#34;Retrieving data from Geoscience Australia DEM 1 arc second grid...&#34;)
+    outfname = getwcs_dem(outpath, bbox, resolution, url, crs)
+    # Convert to slope and aspect
+    print(&#34;Convert to slope and aspect...&#34;)
+    dem2slope(outfname)
+    dem2aspect(outfname)
+    # plot DEM
+    plot_raster(outfname)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="geodata_harvester.getdata_dem.dem2aspect"><code class="name flex">
+<span>def <span class="ident">dem2aspect</span></span>(<span>fname_dem)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate aspect from DEM and save as geotiff</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fname_dem</code></strong> :&ensp;<code>str</code></dt>
+<dd>DEM file name</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dem2aspect(fname_dem):
+    &#34;&#34;&#34;
+    Calculate aspect from DEM and save as geotiff
+
+    Parameters
+    ----------
+    fname_dem : str
+        DEM file name
+    &#34;&#34;&#34;
+    # Get filename
+    fname = os.path.basename(fname_dem)
+    # Get path for output
+    path = os.path.dirname(fname_dem)
+    fname_out = os.path.join(path, &#34;Aspect_&#34; + fname)
+    gdal.DEMProcessing(fname_out, fname_dem, &#34;aspect&#34;)
+    logging.info(f&#34;✓ | DEM aspect from: {fname_dem}&#34;)
+    utils.msg_success(f&#34;Aspect (from DEM) generated at: {fname_out}&#34;)
+    return fname_out</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dem.dem2slope"><code class="name flex">
+<span>def <span class="ident">dem2slope</span></span>(<span>fname_dem)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate slope from DEM and save as geotiff</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fname_dem</code></strong> :&ensp;<code>str</code></dt>
+<dd>DEM path + file name</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dem2slope(fname_dem):
+    &#34;&#34;&#34;
+    Calculate slope from DEM and save as geotiff
+
+    Parameters
+    ----------
+    fname_dem : str
+        DEM path + file name
+    &#34;&#34;&#34;
+    # Get filename
+    fname = os.path.basename(fname_dem)
+    # Get path for output
+    path = os.path.dirname(fname_dem)
+    fname_out = os.path.join(path, &#34;Slope_&#34; + fname)
+    gdal.DEMProcessing(fname_out, fname_dem, &#34;slope&#34;)
+    logging.info(f&#34;✔  DEM slope from: {fname_dem}&#34;)
+    utils.msg_success(f&#34;DEM slope generated at: {fname_out}&#34;)
+    return fname_out</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dem.get_capabilities"><code class="name flex">
+<span>def <span class="ident">get_capabilities</span></span>(<span>url)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get capabilities from WCS layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>layer url</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>keys
+: list</code></dt>
+<dd>layer identifiers</dd>
+<dt><code>titles
+: list</code>
+of <code>str</code></dt>
+<dd>layer titles</dd>
+<dt><strong><code>descriptions</code></strong> :&ensp;<code>list</code> of <code>str</code></dt>
+<dd>layer descriptions</dd>
+<dt><code>bboxs
+: list</code> of <code>floats</code></dt>
+<dd>layer bounding boxes</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_capabilities(url):
+    &#34;&#34;&#34;
+    Get capabilities from WCS layer.
+
+    Parameters
+    ----------
+    url : str
+        layer url
+
+    Returns
+    -------
+    keys    : list
+        layer identifiers
+    titles  : list  of str
+        layer titles
+    descriptions : list of str
+        layer descriptions
+    bboxs   : list of floats
+        layer bounding boxes
+    &#34;&#34;&#34;
+
+    # Create WCS object
+    wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+
+    # Get coverages and content dict keys
+    content = wcs.contents
+    keys = content.keys()
+
+    print(&#34;Following data layers are available:&#34;)
+    title_list = []
+    description_list = []
+    bbox_list = []
+    for key in keys:
+        print(f&#34;key: {key}&#34;)
+        print(f&#34;title: {wcs[key].title}&#34;)
+        title_list.append(wcs[key].title)
+        print(f&#34;{wcs[key].abstract}&#34;)
+        description_list.append(wcs[key].abstract)
+        print(f&#34;bounding box: {wcs[key].boundingBoxWGS84}&#34;)
+        bbox_list.append(wcs[key].boundingBoxWGS84)
+        print(&#34;&#34;)
+
+    return keys, title_list, description_list, bbox_list</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dem.get_dem_layers"><code class="name flex">
+<span>def <span class="ident">get_dem_layers</span></span>(<span>layernames, outpath, bbox, resolution=1, crs='EPSG:4326')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Wrapper funtion to get the layers from the Geoscience Australia DEM 1 arc second grid
+and to calculate slope and aspect layers</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>layernames</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of layer names to download
+['DEM', 'Slope', 'Aspect']</dd>
+<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>output directory for the downloaded file</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec (default 1)</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crs default 'EPSG:4326'</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>Output outnames: lits of output filenames</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_dem_layers(layernames, outpath, bbox, resolution=1, crs=&#34;EPSG:4326&#34;):
+    &#34;&#34;&#34;
+    Wrapper funtion to get the layers from the Geoscience Australia DEM 1 arc second grid
+    and to calculate slope and aspect layers
+
+    Parameters
+    ----------
+    layernames : list
+        list of layer names to download
+        [&#39;DEM&#39;, &#39;Slope&#39;, &#39;Aspect&#39;]
+    outpath : str
+        output directory for the downloaded file
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec (default 1)
+    crs: str
+        crs default &#39;EPSG:4326&#39;
+
+    Return
+    ------
+    Output outnames: lits of output filenames
+    &#34;&#34;&#34;
+    outfnames = []
+    dem_ok = False
+    for layername in layernames:
+        if layername == &#34;DEM&#34;:
+            outfname = outfname_dem = getwcs_dem(
+                outpath, bbox, resolution, crs=crs)
+            dem_ok = True
+        elif layername == &#34;Slope&#34;:
+            if not dem_ok:
+                outfname_dem = getwcs_dem(outpath, bbox, resolution, crs=crs)
+                dem_ok = True
+            outfname = dem2slope(outfname_dem)
+        elif layername == &#34;Aspect&#34;:
+            if not dem_ok:
+                outfname_dem = getwcs_dem(outpath, bbox, resolution, crs=crs)
+                dem_ok = True
+            outfname = dem2aspect(outfname_dem)
+        else:
+            utils.msg_warn(f&#34;Layername {layername} not recognised, skipping&#34;)
+            outfname = None
+        outfnames.append(outfname)
+    return outfnames</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dem.get_demdict"><code class="name flex">
+<span>def <span class="ident">get_demdict</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get dictionary of meta data</p>
+<p>OUTPUT:
+layerdict : dict
+dictionary of meta data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_demdict():
+    &#34;&#34;&#34;
+    Get dictionary of meta data
+
+    OUTPUT:
+    layerdict : dict
+        dictionary of meta data
+    &#34;&#34;&#34;
+    demdict = {}
+    demdict[&#34;title&#34;] = &#34;DEM 1 Second Grid&#34;
+    demdict[
+        &#34;description&#34;
+    ] = &#34;Digital Elevation Model (DEM) of Australia derived from STRM with 1 Second Grid - Hydrologically Enforced.&#34;
+    demdict[&#34;crs&#34;] = &#34;EPSG:4326&#34;
+    demdict[&#34;bbox&#34;] = [
+        112.99986111100009,
+        -44.0001388895483,
+        153.9998611116614,
+        -10.000138888999906,
+    ]
+    demdict[&#34;resolution_arcsec&#34;] = 1
+    demdict[&#34;layernames&#34;] = {
+        &#34;DEM&#34;: &#34;Digital Elevation Model&#34;,
+        &#34;Slope&#34;: &#34;Slope&#34;,
+        &#34;Aspect&#34;: &#34;Aspect Ratio&#34;,
+    }
+    return demdict</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dem.getdict_license"><code class="name flex">
+<span>def <span class="ident">getdict_license</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieves the Geoscience Australia data license for the DEM Web Map Service as dict</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getdict_license():
+    &#34;&#34;&#34;
+    Retrieves the Geoscience Australia data license for the DEM Web Map Service as dict
+    &#34;&#34;&#34;
+    dict = {
+        &#34;name&#34;: &#34;Digital Elevation Model (DEM) of Australia derived from STRM with 1 Second Grid - Hydrologically Enforced&#34;,
+        &#34;source_url&#34;: &#34;https://www.clw.csiro.au/aclep/soilandlandscapegrid/ProductDetails.html&#34;,
+        &#34;license&#34;: &#34;CC BY 4.0&#34;,
+        &#34;license_title&#34;: &#34;Creative Commons Attribution 4.0 International (CC BY 4.0)&#34;,
+        &#34;license_url&#34;: &#34;https://creativecommons.org/licenses/by/4.0/&#34;,
+        &#34;copyright&#34;: &#34;© Copyright 2017-2022, Geoscience Australia&#34;,
+        &#34;attribution&#34;: &#34;Commonwealth of Australia (Geoscience Australia) &#34;,
+    }
+    return dict</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dem.getwcs_dem"><code class="name flex">
+<span>def <span class="ident">getwcs_dem</span></span>(<span>outpath, bbox, resolution=1, url='https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&service=WCS', crs='EPSG:4326', verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to download and save geotiff from WCS layer.
+Default downloads the DEM 1 arc second grid from Geoscience Australia using the folllwing WCS url:
+Url = <a href="https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS">https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS</a></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>outpath</code></strong> :&ensp;<code>str</code></dt>
+<dd>output directory for the downloaded file</dd>
+<dt><strong><code>bbox</code></strong> :&ensp;<code>list</code></dt>
+<dd>layer bounding box</dd>
+<dt><strong><code>resolution</code></strong> :&ensp;<code>int</code></dt>
+<dd>layer resolution in arcsec (default 1)</dd>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>url of wcs server, default is the Geoscience Australia DEM 1 arc second grid</dd>
+<dt><strong><code>crs</code></strong> :&ensp;<code>str</code></dt>
+<dd>crs default 'EPSG:4326'</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>Output filename</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getwcs_dem(
+    outpath,
+    bbox,
+    resolution=1,
+    url=&#34;https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS&#34;,
+    crs=&#34;EPSG:4326&#34;,
+    verbose=False,
+):
+    &#34;&#34;&#34;
+    Function to download and save geotiff from WCS layer.
+    Default downloads the DEM 1 arc second grid from Geoscience Australia using the folllwing WCS url:
+    Url = https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS
+
+    Parameters
+    ----------
+    outpath : str
+        output directory for the downloaded file
+    bbox : list
+        layer bounding box
+    resolution : int
+        layer resolution in arcsec (default 1)
+    url : str
+        url of wcs server, default is the Geoscience Australia DEM 1 arc second grid
+    crs: str
+        crs default &#39;EPSG:4326&#39;
+
+    Return
+    ------
+    Output filename
+    &#34;&#34;&#34;
+    # Convert resolution into width and height pixel number
+    # width = abs(bbox[2] - bbox[0])
+    # height = abs(bbox[3] - bbox[1])
+    # nwidth = int(width / resolution * 3600)
+    # nheight = int(height / resolution * 3600)
+
+    # If the resolution passed is None, set to native resolution of datasource
+
+    # Logger setup
+    if verbose:
+        write_logs.setup(level=&#34;info&#34;)
+    else:
+        write_logs.setup()
+
+    if resolution is None:
+        resolution = get_demdict()[&#34;resolution_arcsec&#34;]
+
+    os.makedirs(outpath, exist_ok=True)
+    # Create WCS object and get data
+    try:
+        with spin(&#34;Retrieving coverage from WCS server&#34;) as s:
+            wcs = WebCoverageService(url, version=&#34;1.0.0&#34;, timeout=300)
+            s(1)
+        layername = wcs[&#34;1&#34;].title
+        date = datetime.now(timezone.utc).strftime(&#34;%Y_%m_%d&#34;)
+        fname_out = layername.replace(&#34; &#34;, &#34;_&#34;) + &#34;_&#34; + date + &#34;.tif&#34;
+        outfname = os.path.join(outpath, fname_out)
+        if os.path.exists(outfname):
+            utils.msg_warn(f&#34;{fname_out} already exists, skipping download&#34;)
+            # logging.warning(f&#34;△ | download skipped: {outfname} already exists&#34;)
+        else:
+            with spin(f&#34;Downloading {fname_out}&#34;) as s:
+                data = wcs.getCoverage(
+                    identifier=&#34;1&#34;,
+                    bbox=bbox,
+                    format=&#34;GeoTIFF&#34;,
+                    crs=crs,
+                    resx=resolution / 3600,
+                    resy=resolution / 3600,
+                    Styles=&#34;tc&#34;,
+                )
+                s(1)
+            # Save data to file
+            with open(outfname, &#34;wb&#34;) as f:
+                f.write(data.read())
+            # logging.print(f&#34;✓ | DEM downloaded to: {outfname}&#34;)
+    except Exception as e:
+        print(e)
+        utils.msg_err(&#34;Download failed, is the server down?&#34;)
+        return False
+    return outfname</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dem.plot_raster"><code class="name flex">
+<span>def <span class="ident">plot_raster</span></span>(<span>infname)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read in raster tif with rasterio and visualise as map</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>infname</code></strong> :&ensp;<code>str</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_raster(infname):
+    &#34;&#34;&#34;
+    Read in raster tif with rasterio and visualise as map
+
+    Parameters
+    ----------
+    infname : str
+    &#34;&#34;&#34;
+    data = rasterio.open(infname)
+    # show image
+    show(data)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.getdata_dem.test_getwcs_dem"><code class="name flex">
+<span>def <span class="ident">test_getwcs_dem</span></span>(<span>outpath='./test_DEM/')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Test script</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_getwcs_dem(outpath=&#34;./test_DEM/&#34;):
+    &#34;&#34;&#34;
+    Test script
+    &#34;&#34;&#34;
+    bbox = (114, -44, 153.9, -11)
+    resolution = 100
+    url = &#34;https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS&#34;
+    crs = &#34;EPSG:4326&#34;
+    # get capabilities
+    keys, title_list, description_list, bbox_list = get_capabilities(url)
+    # get data
+    print(&#34;Retrieving data from Geoscience Australia DEM 1 arc second grid...&#34;)
+    outfname = getwcs_dem(outpath, bbox, resolution, url, crs)
+    # Convert to slope and aspect
+    print(&#34;Convert to slope and aspect...&#34;)
+    dem2slope(outfname)
+    dem2aspect(outfname)
+    # plot DEM
+    plot_raster(outfname)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="geodata_harvester" href="index.html">geodata_harvester</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="geodata_harvester.getdata_dem.dem2aspect" href="#geodata_harvester.getdata_dem.dem2aspect">dem2aspect</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem.dem2slope" href="#geodata_harvester.getdata_dem.dem2slope">dem2slope</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem.get_capabilities" href="#geodata_harvester.getdata_dem.get_capabilities">get_capabilities</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem.get_dem_layers" href="#geodata_harvester.getdata_dem.get_dem_layers">get_dem_layers</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem.get_demdict" href="#geodata_harvester.getdata_dem.get_demdict">get_demdict</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem.getdict_license" href="#geodata_harvester.getdata_dem.getdict_license">getdict_license</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem.getwcs_dem" href="#geodata_harvester.getdata_dem.getwcs_dem">getwcs_dem</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem.plot_raster" href="#geodata_harvester.getdata_dem.plot_raster">plot_raster</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem.test_getwcs_dem" href="#geodata_harvester.getdata_dem.test_getwcs_dem">test_getwcs_dem</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
