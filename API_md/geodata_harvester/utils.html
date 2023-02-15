@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Geodata-Harvester – utils</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Geodata-Harvester</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../py_dataharvester.html">
+ <span class="menu-text">Python</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../R_dataharvester.html">
+ <span class="menu-text">R-Package</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contributing.html">
+ <span class="menu-text">Contributing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../events.html">
+ <span class="menu-text">Events</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#module-geodata_harvester.utils" id="toc-module-geodata_harvester.utils" class="nav-link active" data-scroll-target="#module-geodata_harvester.utils">Module geodata_harvester.utils</a>
+  <ul class="collapse">
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="module-geodata_harvester.utils" class="level1">
+<h1>Module geodata_harvester.utils</h1>
+<p>Utility functions for use in the Agrefed data harvesting pipeline.</p>
+<p>–Function List, in order of appearence–</p>
+<p>plot_rasters: Plots a list of rasters. _getFeatures (internal): Extracts rasterio compatible test from geodataframe. reproj_mask: Masks a raster to the area of a shape, and reprojects. reproj_rastermatch: Reproject a file to match the shape and projection of existing raster. reproj_raster: Reproject and clip for a given output resolution, crs and bbox. _read_file (internal): Reads raster with rasterio returns numpy array aggregate_rasters: Averages (or similar) over multiple files and multiple channels. aggregate_multiband: Averages (or similar) over multiple files but keeps multi-channels independent. _get_coords_at_point (internal): Finds closest index of a point-location in an array (raster). raster_query: Given a longitude,latitude value, return the value at that point of a raster/tif. init_logtable: Stores metdata for each step of raster download and processing. update_logtable: Updates each the logtable with new information.</p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<dl>
+<dt><code>aggregate_multiband(file_list=None, data_dir=None, agg=['mean'], outfile='aggregation')</code></dt>
+<dd>
+<p>Aggregates over multiple files but keeps channels independently. Results are written to new tif files.</p>
+<h2 id="parameters" class="anchored">Parameters</h2>
+<p>file_list : list of strings List of files to aggregate data_dir : string Path to directory containing files agg : list of strings List of aggregation methods to apply outfile : string Name of output file</p>
+<h2 id="returns" class="anchored">Returns</h2>
+<p>outfname_list : list of strings of output file names channel_list : list of strings of channel names agg_list : list of strings of aggregation methods</p>
+</dd>
+<dt><code>aggregate_rasters(file_list=None, data_dir=None, agg=['mean'], outfile='aggregation')</code></dt>
+<dd>
+<p>Aggregrates over multiple files and over all channels and writes results to new tif file(s).</p>
+<h2 id="parameters-1" class="anchored">Parameters</h2>
+<p>file_list : list of strings List of files to aggregate data_dir : string Path to directory containing files agg : list of strings List of aggregation methods to apply (mean, median, sum, perc95, perc5) outfile : string Name of output file</p>
+<h2 id="returns-1" class="anchored">Returns</h2>
+<p>list_outfnames : list of strings of output file names</p>
+</dd>
+<dt><code>coreg_raster(i0, j0, data, region)</code></dt>
+<dd>
+<p>Coregisters a point with a buffer region of a raster.</p>
+<p>INPUTS i0: column-index of point of interest j0: row-index of point of interest data: two-dimensional numpy array (raster) region: integer, same units as data resolution</p>
+<p>RETURNS pts: all values from array within region</p>
+</dd>
+<dt><code>init_logtable()</code></dt>
+<dd>
+<p>Create a log table to store information from the raster download or processing.</p>
+<p>RETURNS: df_log: dataframe to update</p>
+</dd>
+<dt><code>msg_dl(message, log=False)</code></dt>
+<dd>
+Prints a downloading message
+</dd>
+<dt><code>msg_err(message, log=False)</code></dt>
+<dd>
+Prints an error message
+</dd>
+<dt><code>msg_info(message, icon=True, log=False)</code></dt>
+<dd>
+Prints an info message
+</dd>
+<dt><code>msg_success(message, log=False)</code></dt>
+<dd>
+Prints a success message
+</dd>
+<dt><code>msg_warn(message, log=False)</code></dt>
+<dd>
+Prints a warning message
+</dd>
+<dt><code>plot_rasters(rasters, longs=None, lats=None, titles=None)</code></dt>
+<dd>
+<p>Plots multiple raster files (.tif) on a grid of nicely arranged figures.</p>
+<p>Parameters: raster: list of filenames (.tif). Will only read the first band/channel if multiband. longs: optional x values in list like object for plotting as points over raster images. lats: optional x values in list like object for plotting as points over raster images. titles: title of plot default is raster file name.</p>
+<p>Returns:<br>
+None</p>
+</dd>
+<dt><code>points_in_circle(circle, arr)</code></dt>
+<dd>
+<p>A generator to return all points whose indices are within a given circle. http://stackoverflow.com/a/2774284 Warning: If a point is near the the edges of the raster it will not loop around to the other side of the raster!</p>
+<p>INPUTS circle: a tuple of (i0, j0, r) where i0, j0 are the indices of the center of the circle and r is the radius</p>
+<p>arr: a two-dimensional numpy array</p>
+<p>RETURNS A generator that yields all points within the circle</p>
+</dd>
+<dt><code>raster_query(longs, lats, rasters, titles=None)</code></dt>
+<dd>
+<p>given a longitude,latitude value, return the value at that point of the first channel/band in the raster/tif.</p>
+<p>INPUTS longs:list of longitudes lats:list of latitudes rasters:list of raster filenames (as strings) titles:list of column titles (as strings) that correspond to rasters (if none provided, rasternames will be used)</p>
+<p>RETURNS gdf: geopandas dataframe where each row is long/lat point, and columns are rasterfiles</p>
+</dd>
+<dt><code>reproj_mask(filepath, bbox, crscode=4326, filepath_out=None)</code></dt>
+<dd>
+<p>Clips a raster to the area of a shape, and reprojects.</p>
+<p>INPUTS filepath: input filename (tif) bbox: shapely geometry(polygon) defining mask boundary crscode: optional, coordinate reference system as defined by EPSG filepath_out: optional, the optional output filename of the raster. If False, does not save a new file</p>
+<p>RETURNS out_img: numpy array of the clipped and reprojected raster</p>
+</dd>
+<dt><code>reproj_raster(infile, outfile, bbox_out, resolution_out=None, crs_out='EPSG:4326', nodata=0)</code></dt>
+<dd>
+<p>Reproject and clip for a given output resolution, crs and bbox. Output file is written to disk.</p>
+<h2 id="parameters-2" class="anchored">Parameters</h2>
+<p>infile : (string) path to input file to reproject outfile : (string) path to output file tif bbox_out : (left, bottom, right, top) resolution_out : (float) resolution of output raster crs_out : default “EPSG:4326” nodata : (float) nodata value for output raster</p>
+</dd>
+<dt><code>reproj_rastermatch(infile, matchfile, outfile, nodata)</code></dt>
+<dd>
+<p>Reproject a file to match the shape and projection of existing raster. Output file is written to disk.</p>
+<h2 id="parameters-3" class="anchored">Parameters</h2>
+<p>infile : (string) path to input file to reproject matchfile : (string) path to raster with desired shape and projection outfile : (string) path to output file tif nodata : (float) nodata value for output raster</p>
+</dd>
+<dt><code>spin(message=None, colour='magenta', events=1, log=False)</code></dt>
+<dd>
+Spin animation as a progress inidicator
+</dd>
+<dt><code>update_logtable(df_log, filenames, layernames, datasource, settings, layertitles=[], agfunctions=[], loginfos=[], force=False)</code></dt>
+<dd>
+<p>Update the dataframe table with the information from the raster download or processing. The dataframe is simultaneoulsy saved to a csv file in default output directory.</p>
+<p>INPUTS df_log: dataframe to update filenames: list of filenames to add to the dataframe (captured in output of getdata_* functions) layernames: list of layernames to add to the dataframe (must be same length as filenames) datasource: datasource of the rasters (e.g.&nbsp;‘SLGA’, ‘SILO’, ‘DEA’, see settings) settings: settings Namespace object layertitles: list of layer titles to add to the dataframe; if empty or none provided, it will be inferred from settings agfunctions: list of aggregation functions to add to the dataframe; if empty or none provided, it will be inferred from settings loginfos: string or list of log information strings to add to the dataframe;</p>
+<p>RETURNS df_log: updated dataframe</p>
+</dd>
+</dl>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

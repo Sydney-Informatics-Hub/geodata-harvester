@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Geodata-Harvester – getdata_slga</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Geodata-Harvester</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../py_dataharvester.html">
+ <span class="menu-text">Python</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../R_dataharvester.html">
+ <span class="menu-text">R-Package</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../contributing.html">
+ <span class="menu-text">Contributing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../events.html">
+ <span class="menu-text">Events</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#module-geodata_harvester.getdata_slga" id="toc-module-geodata_harvester.getdata_slga" class="nav-link active" data-scroll-target="#module-geodata_harvester.getdata_slga">Module geodata_harvester.getdata_slga</a>
+  <ul class="collapse">
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="module-geodata_harvester.getdata_slga" class="level1">
+<h1>Module geodata_harvester.getdata_slga</h1>
+<p>Python script to download data from Soil and Landscape Grid of Australia (SLGA).</p>
+<p>Core functionality: - Retrieval of WCS capability with function get_capabilities() - automatic download SLGA data for given depth range and layer(s) via Web Coverage Service (WCS) - clip data to custom bounding box - save data as multi-band geotiff - plot data as map</p>
+<p>The SLGA layers and metadata are described as dictionary in the module function get_slgadict() and the respective licensing and attribution are availabe with the module function getdict_license()</p>
+<p>More details about the SLGA data and attributions can be found here: https://www.clw.csiro.au/aclep/soilandlandscapegrid/ProductDetails-SoilAttributes.html</p>
+<p>This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).</p>
+<p>Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney</p>
+<p>This open-source software is released under the LGPL-3.0 License.</p>
+<p>Author: Sebastian Haan</p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<dl>
+<dt><code>depth2identifier(depth_min, depth_max)</code></dt>
+<dd>
+<p>Get identifiers that correspond to depths and their corresponding confidence interval identifiers that lie within the depth range depth_min to depth_max.</p>
+<h2 id="parameters" class="anchored">Parameters</h2>
+<p>depth_min : minimum depth [cm] depth_max : maximum depth [cm]</p>
+<h2 id="returns" class="anchored">Returns</h2>
+<p>identifiers : layer identifiers identifiers_ci_5pc : identifiers for confidence interval 5% identifiers_ci_95pc : identifiers for confidence interval 95% depth_lower : lower depth of interval depth_upper : upper depth of interval</p>
+</dd>
+<dt><code>get_capabilities(url)</code></dt>
+<dd>
+<p>Get capabilities from WCS layer</p>
+<h2 id="parameters-1" class="anchored">Parameters</h2>
+<p>url : str layer url</p>
+<h2 id="returns-1" class="anchored">Returns</h2>
+<p>keys : list layer identifiers titles : list of str layer titles descriptions : list of str layer descriptions bboxs : list of floats layer bounding boxes</p>
+</dd>
+<dt><code>get_slga_layers(layernames, bbox, outpath, resolution=3, depth_min=0, depth_max=200, get_ci=True, verbose=False)</code></dt>
+<dd>
+<p>Download layers from SLGA data server and saves as geotif.</p>
+<h2 id="parameters-2" class="anchored">Parameters</h2>
+<p>layernames : list of layer names bbox : bounding box [min, miny, maxx, maxy] in resolution : resolution in arcsec (Default: 3 arcsec ~ 90m, which is native resolution of SLGA data) depth_min : minimum depth (Default: 0 cm). If depth_min and depth_max are lists, then must have same length as layernames depth_max : maximum depth (Default: 200 cm, maximum depth of SLGA data) outpath : output path</p>
+<h2 id="returns-2" class="anchored">Returns</h2>
+<p>fnames_out : list of output file names</p>
+<p>TBD: check that Request image size does not exceeds allowed limit. Set Timeout?</p>
+</dd>
+<dt><code>get_slgadict()</code></dt>
+<dd>
+<p>Get dictionary of SLGA data.</p>
+<p>The Soil Facility produced a range of digital soil attribute products. Each product contains six digital soil attribute maps, and their upper and lower confidence limits, representing the soil attribute at six depths: 0-5cm, 5-15cm, 15-30cm, 30-60cm, 60-100cm and 100-200cm. These depths are consistent with the specifications of the GlobalSoilMap.net project (http://www.globalsoilmap.net/). The digital soil attribute maps are in raster format at a resolution of 3 arc sec (~90 x 90 m pixels).</p>
+<p>Period (temporal coverage; approximately): 1950-2013; Spatial resolution: 3 arc seconds (approx 90m); Data license : Creative Commons Attribution 3.0 (CC By); Target data standard: GlobalSoilMap specifications; Format: GeoTIFF.</p>
+<p>Run function get_capabilities(url) to update dictionary</p>
+<h2 id="returns-3" class="anchored">Returns</h2>
+<p>slgadict : dictionary of National Soil Map data</p>
+</dd>
+<dt><code>get_wcsmap(url, identifier, crs, bbox, resolution, outfname)</code></dt>
+<dd>
+<p>Download and save geotiff from WCS layer</p>
+<h2 id="parameters-3" class="anchored">Parameters</h2>
+<p>url : str identifier : str layer identifier crs : str layer crs bbox : list layer bounding box resolution : int layer resolution outfname : str output file name</p>
+</dd>
+<dt><code>getdict_license()</code></dt>
+<dd>
+Retrieves the SLGA license and attribution information as dict
+</dd>
+<dt><code>identifier2depthbounds(depths)</code></dt>
+<dd>
+<p>Get min and max depth of list of depth strings</p>
+<h2 id="parameters-4" class="anchored">Parameters</h2>
+<p>depth_list: list of depth</p>
+<h2 id="returns-4" class="anchored">Returns</h2>
+<p>min depth max depth</p>
+</dd>
+<dt><code>plot_raster(infname)</code></dt>
+<dd>
+<p>Read in raster tif with rasterio and visualise as map</p>
+<h2 id="parameters-5" class="anchored">Parameters</h2>
+<p>infname : str</p>
+</dd>
+</dl>
+<p><code>test_wcs()</code> :</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
