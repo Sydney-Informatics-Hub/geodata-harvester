@@ -4,7 +4,8 @@ title: Settings Overview
 
 # Overview and Description of Settings for the AgReFed Data-Harvester
 
-The following documentation outlines the available settings for the Data Harvester
+The following documentation outlines the available settings for the Data Harvester.
+For a more interactive exploration of settings, please use the harvesterwidget (see, e.g., [example widget notebook](https://github.com/Sydney-Informatics-Hub/geodata-harvester/blob/main/notebooks/example_harvest_with_widgets.ipynb)).
 
 ## Table of Contents
 - [YAML File Format](#yaml-file-format)
@@ -19,7 +20,6 @@ The following documentation outlines the available settings for the Data Harvest
 The settings are specified by the user in a .yaml settings file (see e.g., settings/settings_v0.3.yaml). A YAML file is a Unicode based language and is designed for human interaction and to work well with modern programming languages, and is typically used for configuration settings and reusable workflows. YAML uses the .yaml extension (alternatively .yml) for its files. Its syntax is independent of a specific programming language. 
 
 Templates for the .yaml settings file are provided in the folder `settings`. More information about YAML Syntax can be found [here](https://docs.fileformat.com/programming/yaml/).
-
 
 
 ## Jupyter Settings Widget
@@ -65,15 +65,13 @@ colname_lng: Long
 
 ## Spatial and Temporal Settings
 
-The spatial extent of the requested images can be given as bounding box list in the settings `target_bbox`, in the order: lng_min, lat_min, lng_max, lat_max (left, bottom, right, top corner of box). If no bounding box is provided, Data-Harvetser will automatically infer a padded bounding box based on the extent of the coordinates given in the input file.
+The spatial extent of the requested images can be given as bounding box list in the settings `target_bbox`, in the order: lng_min, lat_min, lng_max, lat_max (left, bottom, right, top corner of box). If no bounding box is provided, Geodata-Harvester will automatically infer a padded bounding box based on the extent of the coordinates given in the input file.
 
 The spatial resolution of the requested images is specified in `target_res` and given in arcsec (1 arcsec corresponds to roughly 30m on the Equator, please see `arc2meter.py`for calculating exact conversion of meter to arcsec and vice versa).
 
-The years for the requested data is specified via `target_dates` and can be one specific year or a list of multiple years.
+The time range for the requested data is specified via minimum date `date_min` and maximum date `date_max` (format: YYYY-MM-DD). All data available withon this time interval will be extracted.
 
-TBD:
-- The temporal resolution specifies the length of the time (in days) for which data is aggregated. The date range will then be subdivided in n bins = maximum year - minimum year divided by temporal resolution
-- Spatial buffer
+For data extraction, the user can choose a number of times slices for the given period which is given as integer number `temp_intervals`. The time buffer window can be provided as number of days in `temp_buffer`, which specifies the number of days for which data is aggregated around each time slice. For example, if `date_min` to `date_max` is 24 weeks, `temp_intervals` = 24, and `temp_buffer` = 7, the data-table will be populated with the aggregated stats for each week within the specified time period. If `temp_buffer` is set to 1, the nearest available date will be extracted for each time slice.
 
 
 **Example:**
@@ -83,16 +81,16 @@ TBD:
 target_bbox: ''
 
 #Select start date:
-date_min: : 2023-01-10
+date_min: : 2023-01-01
 
 #Select end date:
-date_min: : 2023-01-01
+date_max: : 2023-02-01
 
 #Spatial Resolution [in arcsec]:
 target_res: 6.0
 
 #Temporal buffer window (in days)
-temp_buffer: 2
+temp_buffer: 1
 
 # Number of time interval slices in given date range
 temp_intervals: 4
@@ -120,7 +118,7 @@ For an overview of the radiometric layer options see [Data Overview Radiometric]
 
 SILO is containing continuous daily climate data for Australia. An overview of the available data layers is provided in [Data Overview SILO](Data_Overview.md#silo-climate-database).
 
-For each requested SILO data layer, at least one temporal aggregation method has to be provided, which will be applied to aggregate climate data over the specified temporal range. The following aptions are available: 'mean', 'median', 'sum', 'std', 'perc95', 'perc5', 'max', 'min'
+For each requested SILO data layer, at least one temporal aggregation method has to be provided, which will be applied to aggregate climate data over the specified temporal range. The following options are available: 'mean', 'median', 'sum', 'std', 'perc95', 'perc5', 'max', 'min'
 
 ### Soil data from SLGA 
 
@@ -128,9 +126,14 @@ An overview of the soil attributes is given in in [Data Overview SLGA](Data_Over
 
 Each soil attribute has six depth layers (plus their upper and lower confidence limits), with the following options:'0-5cm', '5-15cm', '15-30cm', '30-60cm', '60-100cm' and '100-200cm'. 
 
-### Google Earth Engine  Data
+### Google Earth Engine Data
 
-An overview of the available Google Earth Engine (GEE) data and options is provided in [Data Overview GEE](Earth_Engine_Data_Overview.md) 
+An overview of the available Google Earth Engine (GEE) data and options is provided in [Data Overview GEE](Earth_Engine_Data_Overview.md).
+Settings for GEE are added in the entry `GEE` (see example with descriptions below). 
+
+A complete list of the available spectral indices can be found [here](https://github.com/awesome-spectral-indices/awesome-spectral-indices)
+
+For more details on GEE settings, please visit the [GEE API documentation](https://developers.google.com/earth-engine/apidocs) or [eeharvest documentation ](https://github.com/Sydney-Informatics-Hub/eeharvest).
 
 
 **Example:**
@@ -177,7 +180,8 @@ target_sources:
   GEE: 
     preprocess:
 
-      ### collection as defined in the Earth Engine Catalog
+      ### collection as defined in the Earth Engine Catalog 
+      # NEW: for multiple collections please add list of collection names
       collection: LANDSAT/LC09/C02/T1_L2
 
       #### circular buffer in metres (optional)
@@ -193,19 +197,20 @@ target_sources:
       mask_probability: null
 
       #### composite image based on summary stat provided
+      # e.g.: min, max, median, mean, stdDev (see GEE API references)
       reduce: median
 
       #### spectral indices to calculate via Awesome Spectral Indices site
+      # examples: NDVI, EVI, AVI, BI 
       spectral:
         - NDVI
-        - NDWI
 
     download:
+      # set bands (either band names or spectral index names) If multiple collections are selected, 
+      # add for each collection a list of bands, e.g., [[NDVI, SR_B2],[SR_B23, SR_B4]]
       bands: 
         - NDVI
         - SR_B2
         - SR_B3
         - SR_B4
-      scale: 100   # in metres
-      format: tif  # available: tif, png
 ```
