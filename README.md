@@ -8,10 +8,10 @@
 <!-- Badges  start -->
 
 [![License](https://img.shields.io/badge/License-LGPL3-blue)](#license)
-[![PyPI-Server](https://img.shields.io/pypi/v/eeharvest.svg)](https://pypi.org/project/geodata-harvester/)
+[![PyPI-Server](https://img.shields.io/pypi/v/geodata-harvester.svg)](https://pypi.org/project/geodata-harvester/)
 [![Conda
-Version](https://img.shields.io/conda/vn/conda-forge/eeharvest.svg)](https://anaconda.org/conda-forge/geodata-harvester)
-[![Monthly Downloads](https://pepy.tech/badge/eeharvest/month)](https://pepy.tech/project/geodata-harvester)
+Version](https://img.shields.io/conda/vn/conda-forge/geodata-harvester.svg)](https://anaconda.org/conda-forge/geodata-harvester)
+[![Monthly Downloads](https://pepy.tech/badge/geodata-harvester/month)](https://pepy.tech/project/geodata-harvester)
 
 
 <!-- [![GitHub tag](https://img.shields.io/github/tag/Sydney-Informatics-Hub/AgReFed-DataHarvester?include_prereleases=&sort=semver&color=blue)](https://github.com/Sydney-Informatics-Hub/AgReFed-DataHarvester/releases/)
