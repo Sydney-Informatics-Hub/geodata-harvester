@@ -76,6 +76,7 @@ Below is a list of features available for the geodata-harvester package. Please 
 - support for saving and loading settings via interactive widgets
 - with connectivity support to the Google Earth Engine API, perform petabyte-scale operations which include temporal cloud/shadow masking and automatic calculation of spectral indices
 
+For more features, please see the [API reference documentation](https://sydney-informatics-hub.github.io/geodata-harvester/API/geodata_harvester/index.html).
 
 ## Installation
 
@@ -120,7 +121,7 @@ You may now invoke the geodata-harvester directly from a python terminal with:
 
 ```python
 import geodata_harvester as gh
-gh.harvest.run()
+gh.harvest.run(PATH_TO_SETTINGS_YAMLFILE)
 ```
 
 **Note the subtle but important difference in use of an underscore `_` to import the package and the use of a dash `-` to install it!**
