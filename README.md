@@ -8,6 +8,11 @@
 <!-- Badges  start -->
 
 [![License](https://img.shields.io/badge/License-LGPL3-blue)](#license)
+[![PyPI-Server](https://img.shields.io/pypi/v/eeharvest.svg)](https://pypi.org/project/geodata-harvester/)
+[![Conda
+Version](https://img.shields.io/conda/vn/conda-forge/eeharvest.svg)](https://anaconda.org/conda-forge/geodata-harvester)
+[![Monthly Downloads](https://pepy.tech/badge/eeharvest/month)](https://pepy.tech/project/geodata-harvester)
+
 
 <!-- [![GitHub tag](https://img.shields.io/github/tag/Sydney-Informatics-Hub/AgReFed-DataHarvester?include_prereleases=&sort=semver&color=blue)](https://github.com/Sydney-Informatics-Hub/AgReFed-DataHarvester/releases/)
 [![issues - AgReFed-DataHarvester](https://img.shields.io/github/issues/Sydney-Informatics-Hub/AgReFed-DataHarvester)](https://github.com/Sydney-Informatics-Hub/AgReFed-DataHarvester/issues) -->
@@ -27,6 +32,7 @@ For the R-package wrapper of the Geodata-Harvester, please visit the [Github dat
 - [Installation](#installation)
 - [How to get started](#how-to-get-started)
 - [How to add new data source modules](#how-to-add-new-data-source-modules)
+- [Code reference API](#code-reference-api)
 - [Contributions](#contributions)
 - [Attribution and Acknowledgments](#attribution-and-acknowledgments)
 - [License](#license)
@@ -140,6 +146,10 @@ The Geodata-Harvester is designed to be extendable and new data source modules c
 
 We recommend to fork the geodata-harvester repo and develop new modules in a local environment. If you would like to contribute your data source module to the geodata-harvester package, please visit the [geodata-harvester contribution guidelines](quarto/docs/Contributing.md).
 
+
+## Code reference API
+
+An auto-generated API reference documentation is available [here](https://sydney-informatics-hub.github.io/geodata-harvester/API/geodata_harvester/index.html).
 
 ## Contributions
 We are happy for any contribution to the geodata-harvester, whether feedbacks and bug reports via github Issues, adding use-case examples via notebook contributions, to improving source-code and adding new or updating existing data source modules. 
