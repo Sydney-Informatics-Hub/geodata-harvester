@@ -43,5 +43,7 @@ Data-Harvester is designed as a modular and maintainable project in the form of 
 - automatic generation of ready-made aligned maps and dataframes for ML prediction models
 - preview of data map layers
 
+If you would like to learn more about the Geodata-Harvester, please visit our [Workshop webpage](https://sydney-informatics-hub.github.io/AgReFed-Workshop/).
+
 
 <center><a><img src="images/code_supported.png" alt="Programming Languages supported" width="80%"/></a></center>
