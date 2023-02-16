@@ -133,7 +133,9 @@ Settings for GEE are added in the entry `GEE` (see example with descriptions bel
 
 A complete list of the available spectral indices can be found [here](https://github.com/awesome-spectral-indices/awesome-spectral-indices)
 
-For more details on GEE settings, please visit the [GEE API documentation](https://developers.google.com/earth-engine/apidocs) or [eeharvest documentation ](https://github.com/Sydney-Informatics-Hub/eeharvest).
+For more details on GEE settings, please visit the [GEE API documentation](https://developers.google.com/earth-engine/apidocs) or [eeharvest documentation ](https://github.com/Sydney-Informatics-Hub/eeharvest). 
+
+Note that GEE requires a Google account and a GEE authorization. If this is you first time using GEE, please follow [these instructions](https://earthengine.google.com/signup/). In the next step you must authorise Geodata-Harvester to use the Google Earth Engine API. See a preview of the process [here](https://sydney-informatics-hub.github.io/AgReFed-Workshop/pydocs/setup-gee.html#part-ii-authorising-your-workstation-with-gee).
 
 
 **Example:**

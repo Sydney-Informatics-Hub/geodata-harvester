@@ -13,10 +13,6 @@
 Version](https://img.shields.io/conda/vn/conda-forge/geodata-harvester.svg)](https://anaconda.org/conda-forge/geodata-harvester)
 [![Monthly Downloads](https://pepy.tech/badge/geodata-harvester/month)](https://pepy.tech/project/geodata-harvester)
 
-
-<!-- [![GitHub tag](https://img.shields.io/github/tag/Sydney-Informatics-Hub/AgReFed-DataHarvester?include_prereleases=&sort=semver&color=blue)](https://github.com/Sydney-Informatics-Hub/AgReFed-DataHarvester/releases/)
-[![issues - AgReFed-DataHarvester](https://img.shields.io/github/issues/Sydney-Informatics-Hub/AgReFed-DataHarvester)](https://github.com/Sydney-Informatics-Hub/AgReFed-DataHarvester/issues) -->
-
 <!-- Badges end -->
 
 The Geodata-Harvester Python package offers reusable and automated workflows for data extraction from a wide range of geospatial and environmental data sources. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and environmental models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period.
@@ -87,9 +83,9 @@ For more features, please see the [API reference documentation](https://sydney-i
 ## Installation
 
 Geodata-Harvester can be run on cloud-servers (e.g., in JupyterHub environment) or on your local machine. 
-Example notebooks for importing and using the package can be found in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks). To install the package run one of the following
+Example notebooks for importing and using the package can be found in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks). The package can be installed via PyPI or Conda:
 
-### Conda or Mamba install
+### Conda/Mamba
 
 The package geodata-harvester is available via the conda-forge channel:
 
@@ -103,9 +99,9 @@ Note that the geodata-harvester is imported with underscore as
 import geodata_harvester
 ```
 
-### Pip install
+### PyPI
 
-Installation via pypi requires a pre-installation of gdal (see, e.g., [pypi.org/project/GDAL/installation guide](https://pypi.org/project/GDAL/)) in your environment. Once gdal is installed, you can install geodata-harvester via
+Installation via PyPI requires a pre-installation of gdal (see, e.g., [pypi.org/project/GDAL/installation guide](https://pypi.org/project/GDAL/)) in your environment. Once gdal is installed, you can install geodata-harvester via
 
 ```bash
 pip install geodata-harvester
@@ -116,9 +112,21 @@ The geodata-harvester library can then be imported via
 import geodata_harvester
 ```
 
-### Requirements
+### Google Earth Engine extension
 
-If you like to develop Data Harvester locally, it is recommended to setup a virtual environment for the installation, e.g., via conda miniforge (see for dependencies `environment.yaml`).
+You can include Google Earth Engine (GEE) data layers in Geodata-Harvester (see [Settings_Overview](quarto/docs/Settings_Overview.md)).
+GEE requires a Google account and a GEE authorization. If this is you first time using GEE, please follow [these instructions](https://earthengine.google.com/signup/). In the next step you must authorise Geodata-Harvester to use the Google Earth Engine API. See a preview of the process [here](https://sydney-informatics-hub.github.io/AgReFed-Workshop/pydocs/setup-gee.html#part-ii-authorising-your-workstation-with-gee).
+
+NOTE: You only have to perform this authorisation ONCE. Or at least you only have to do it once per “connection” or if you use an incognito window.  
+
+
+### Local Development
+
+If you like to develop Data Harvester locally, it is recommended to setup a virtual environment for the installation, e.g., via conda miniforge (see for dependencies `environment.yaml`) and to fork the Geodata-harvester repo. To install only the latest development version use:
+
+```bash
+pip install git+https://github.com/Sydney-Informatics-Hub/geodata-harvester
+```
 
 
 ## How to get started
