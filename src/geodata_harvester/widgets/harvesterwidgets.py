@@ -818,8 +818,8 @@ def eval_widgets(w_settings, names):
             slist_download['bands'] = ast.literal_eval(slist_download['bands'])
         except:
             pass
-        if isinstance(slist_preprocess['bands'], tuple):
-            slist_preprocess['bands'] = list(slist_preprocess['bands'])
+        if isinstance(slist_download['bands'], tuple):
+            slist_download['bands'] = list(slist_download['bands'])
         if len(slist_download['bands']) == 1:
             slist_download['bands'] = slist_download['bands'][0]
     slist["preprocess"] = slist_preprocess
