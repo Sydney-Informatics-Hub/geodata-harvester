@@ -225,7 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="overview-and-description-of-settings-for-the-agrefed-data-harvester" class="level1">
 <h1>Overview and Description of Settings for the AgReFed Data-Harvester</h1>
-<p>The following documentation outlines the available settings for the Data Harvester</p>
+<p>The following documentation outlines the available settings for the Data Harvester. For a more interactive exploration of settings, please use the harvesterwidget (see, e.g., <a href="https://github.com/Sydney-Informatics-Hub/geodata-harvester/blob/main/notebooks/example_harvest_with_widgets.ipynb">example widget notebook</a>).</p>
 <section id="table-of-contents" class="level2">
 <h2 class="anchored" data-anchor-id="table-of-contents">Table of Contents</h2>
 <ul>
@@ -274,25 +274,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="spatial-and-temporal-settings" class="level2">
 <h2 class="anchored" data-anchor-id="spatial-and-temporal-settings">Spatial and Temporal Settings</h2>
-<p>The spatial extent of the requested images can be given as bounding box list in the settings <code>target_bbox</code>, in the order: lng_min, lat_min, lng_max, lat_max (left, bottom, right, top corner of box). If no bounding box is provided, Data-Harvetser will automatically infer a padded bounding box based on the extent of the coordinates given in the input file.</p>
+<p>The spatial extent of the requested images can be given as bounding box list in the settings <code>target_bbox</code>, in the order: lng_min, lat_min, lng_max, lat_max (left, bottom, right, top corner of box). If no bounding box is provided, Geodata-Harvester will automatically infer a padded bounding box based on the extent of the coordinates given in the input file.</p>
 <p>The spatial resolution of the requested images is specified in <code>target_res</code> and given in arcsec (1 arcsec corresponds to roughly 30m on the Equator, please see <code>arc2meter.py</code>for calculating exact conversion of meter to arcsec and vice versa).</p>
-<p>The years for the requested data is specified via <code>target_dates</code> and can be one specific year or a list of multiple years.</p>
-<p>TBD: - The temporal resolution specifies the length of the time (in days) for which data is aggregated. The date range will then be subdivided in n bins = maximum year - minimum year divided by temporal resolution - Spatial buffer</p>
+<p>The time range for the requested data is specified via minimum date <code>date_min</code> and maximum date <code>date_max</code> (format: YYYY-MM-DD). All data available withon this time interval will be extracted.</p>
+<p>For data extraction, the user can choose a number of times slices for the given period which is given as integer number <code>temp_intervals</code>. The time buffer window can be provided as number of days in <code>temp_buffer</code>, which specifies the number of days for which data is aggregated around each time slice. For example, if <code>date_min</code> to <code>date_max</code> is 24 weeks, <code>temp_intervals</code> = 24, and <code>temp_buffer</code> = 7, the data-table will be populated with the aggregated stats for each week within the specified time period. If <code>temp_buffer</code> is set to 1, the nearest available date will be extracted for each time slice.</p>
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Bounding Box as (lng_min, lat_min, lng_max, lat_max):</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">target_bbox</span><span class="kw">:</span><span class="at"> </span><span class="st">''</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Select start date:</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date_min</span><span class="kw">:</span><span class="at"> : 2023-01-10</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date_min</span><span class="kw">:</span><span class="at"> : 2023-01-01</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Select end date:</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">date_min</span><span class="kw">:</span><span class="at"> : 2023-01-01</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">date_max</span><span class="kw">:</span><span class="at"> : 2023-02-01</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Spatial Resolution [in arcsec]:</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">target_res</span><span class="kw">:</span><span class="at"> </span><span class="fl">6.0</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Temporal buffer window (in days)</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">temp_buffer</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">temp_buffer</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of time interval slices in given date range</span></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">temp_intervals</span><span class="kw">:</span><span class="at"> </span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -319,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="silo-climate-database" class="level3">
 <h3 class="anchored" data-anchor-id="silo-climate-database">SILO Climate Database</h3>
 <p>SILO is containing continuous daily climate data for Australia. An overview of the available data layers is provided in <a href="../docs/Data_Overview.html#silo-climate-database">Data Overview SILO</a>.</p>
-<p>For each requested SILO data layer, at least one temporal aggregation method has to be provided, which will be applied to aggregate climate data over the specified temporal range. The following aptions are available: ‘mean’, ‘median’, ‘sum’, ‘std’, ‘perc95’, ‘perc5’, ‘max’, ‘min’</p>
+<p>For each requested SILO data layer, at least one temporal aggregation method has to be provided, which will be applied to aggregate climate data over the specified temporal range. The following options are available: ‘mean’, ‘median’, ‘sum’, ‘std’, ‘perc95’, ‘perc5’, ‘max’, ‘min’</p>
 </section>
 <section id="soil-data-from-slga" class="level3">
 <h3 class="anchored" data-anchor-id="soil-data-from-slga">Soil data from SLGA</h3>
@@ -328,7 +328,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="google-earth-engine-data" class="level3">
 <h3 class="anchored" data-anchor-id="google-earth-engine-data">Google Earth Engine Data</h3>
-<p>An overview of the available Google Earth Engine (GEE) data and options is provided in <a href="../docs/Earth_Engine_Data_Overview.html">Data Overview GEE</a></p>
+<p>An overview of the available Google Earth Engine (GEE) data and options is provided in <a href="../docs/Earth_Engine_Data_Overview.html">Data Overview GEE</a>. Settings for GEE are added in the entry <code>GEE</code> (see example with descriptions below).</p>
+<p>A complete list of the available spectral indices can be found <a href="https://github.com/awesome-spectral-indices/awesome-spectral-indices">here</a></p>
+<p>For more details on GEE settings, please visit the <a href="https://developers.google.com/earth-engine/apidocs">GEE API documentation</a> or <a href="https://github.com/Sydney-Informatics-Hub/eeharvest">eeharvest documentation</a>.</p>
 <p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">target_sources</span><span class="kw">:</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">  #Satellite data from Digital Earth Australia</span></span>
@@ -371,37 +373,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">GEE</span><span class="kw">:</span><span class="at"> </span></span>
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">preprocess</span><span class="kw">:</span></span>
 <span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">      ### collection as defined in the Earth Engine Catalog</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">collection</span><span class="kw">:</span><span class="at"> LANDSAT/LC09/C02/T1_L2</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">      #### circular buffer in metres (optional)</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">buffer</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="co">      #### convert buffer into square bounding box instead (optional)</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">bound</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">      #### cloud masking option</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">mask_clouds</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co">      #### Set probability for mask cloud (between 0 to 1), optional</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">mask_probability</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="co">      #### composite image based on summary stat provided</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">reduce</span><span class="kw">:</span><span class="at"> median</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="co">      #### spectral indices to calculate via Awesome Spectral Indices site</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">spectral</span><span class="kw">:</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> NDVI</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> NDWI</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">download</span><span class="kw">:</span></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">bands</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> NDVI</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> SR_B2</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> SR_B3</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> SR_B4</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">scale</span><span class="kw">:</span><span class="at"> </span><span class="dv">100</span><span class="co">   # in metres</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">format</span><span class="kw">:</span><span class="at"> tif</span><span class="co">  # available: tif, png</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">      ### collection as defined in the Earth Engine Catalog </span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">      # NEW: for multiple collections please add list of collection names</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">collection</span><span class="kw">:</span><span class="at"> LANDSAT/LC09/C02/T1_L2</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">      #### circular buffer in metres (optional)</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">buffer</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">      #### convert buffer into square bounding box instead (optional)</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">bound</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="co">      #### cloud masking option</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">mask_clouds</span><span class="kw">:</span><span class="at"> </span><span class="ch">True</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="co">      #### Set probability for mask cloud (between 0 to 1), optional</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">mask_probability</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="co">      #### composite image based on summary stat provided</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co">      # e.g.: min, max, median, mean, stdDev (see GEE API references)</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">reduce</span><span class="kw">:</span><span class="at"> median</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="co">      #### spectral indices to calculate via Awesome Spectral Indices site</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="co">      # examples: NDVI, EVI, AVI, BI </span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">spectral</span><span class="kw">:</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> NDVI</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">download</span><span class="kw">:</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co">      # set bands (either band names or spectral index names) If multiple collections are selected, </span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a><span class="co">      # add for each collection a list of bands, e.g., [[NDVI, SR_B2],[SR_B23, SR_B4]]</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">bands</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> NDVI</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> SR_B2</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> SR_B3</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> SR_B4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
