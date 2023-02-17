@@ -26,6 +26,11 @@ For the R-package wrapper of the Geodata-Harvester, please visit the [Github dat
 - [Functionality](#functionality)
 - [Key Features](#key-features)
 - [Installation](#installation)
+    - [Conda or Mamba](#conda-or-mamba)
+    - [PyPI](#pypi)
+    - [Google Earth Engine extension](#google-earth-engine-extension)
+    - [Local development](#local-development)
+    - [Workshop Cloud Sandbox](#workshop-cloud-sandbox)
 - [How to get started](#how-to-get-started)
 - [How to add new data source modules](#how-to-add-new-data-source-modules)
 - [Code reference API](#code-reference-api)
@@ -85,7 +90,7 @@ For more features, please see the [API reference documentation](https://sydney-i
 Geodata-Harvester can be run on cloud-servers (e.g., in JupyterHub environment) or on your local machine. 
 Example notebooks for importing and using the package can be found in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks). The package can be installed via PyPI or Conda:
 
-### Conda/Mamba
+### Conda or Mamba
 
 The package geodata-harvester is available via the conda-forge channel:
 
@@ -114,19 +119,27 @@ import geodata_harvester
 
 ### Google Earth Engine extension
 
-You can include Google Earth Engine (GEE) data layers in Geodata-Harvester (see [Settings_Overview](quarto/docs/Settings_Overview.md)).
-GEE requires a Google account and a GEE authorization. If this is you first time using GEE, please follow [these instructions](https://earthengine.google.com/signup/). In the next step you must authorise Geodata-Harvester to use the Google Earth Engine API. See a preview of the process [here](https://sydney-informatics-hub.github.io/AgReFed-Workshop/pydocs/setup-gee.html#part-ii-authorising-your-workstation-with-gee).
+Optionally you can include Google Earth Engine (GEE) data in Geodata-Harvester (see [Settings_Overview](quarto/docs/Settings_Overview.md)).
+GEE requires a Google account and a GEE authorization. If this is your first time using GEE, please follow [these instructions](https://earthengine.google.com/signup/) and authorise Geodata-Harvester to use the Google Earth Engine API. See a preview of the process [here](https://sydney-informatics-hub.github.io/AgReFed-Workshop/pydocs/setup-gee.html#part-ii-authorising-your-workstation-with-gee).
 
 NOTE: You only have to perform this authorisation ONCE. Or at least you only have to do it once per “connection” or if you use an incognito window.  
 
 
-### Local Development
+### Local development
 
 If you like to develop Data Harvester locally, it is recommended to setup a virtual environment for the installation, e.g., via conda miniforge (see for dependencies `environment.yaml`) and to fork the Geodata-harvester repo. To install only the latest development version use:
 
 ```bash
 pip install git+https://github.com/Sydney-Informatics-Hub/geodata-harvester
 ```
+
+### Workshop Cloud Sandbox
+
+As play-ground for workshop training sessions and testing of the Geodata-Harvester we provide a pre-installed cloud Python Jupyterlab environment, which does not require any local installation. For login instructions and how to access the sandbox, please visit our [Python workshop page](https://sydney-informatics-hub.github.io/AgReFed-Workshop/pydocs/py00-workshop.html).
+
+The Jupyter environment is hosted on the ARDC Nectar Research Cloud in partnership with AgReFed and Australian Research Data Commons (ARDC). Note that this sandbox is currently hosted for test purposes only and generated data is not permanently stored.
+
+The Geodata-Harvester can be easily installed also on other cloud services (e.g., Google Colab, Azure Notebooks).
 
 
 ## How to get started
