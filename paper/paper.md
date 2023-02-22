@@ -74,7 +74,7 @@ Below is a list of main features available for the ``Geodata-Harvester`` package
 
 - enabling reproducible workflows via YAML settings files
 - automatic data retrieval from geodata APIs for given locations and dates
-- automatic download and spatial-temporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale.
+- automatic download and spatial-temporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale
 - support for multiple temporal aggregation options and spatial-temporal buffer
 - automatic extraction of retrieved data into ready-made dataframes for ML training
 - automatic generation of ready-made aligned maps and data for ML prediction models
@@ -88,15 +88,15 @@ Below is a list of main features available for the ``Geodata-Harvester`` package
 
 The following data sources are currently implemented:
 
-- Soil and Landscape Grid of Australia (SLGA, )
+- Soil and Landscape Grid of Australia (SLGA)
 - SILO Climate Database, Australia [@Jeffrey:2001]
 - National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced, Australia
 - Digital Earth Australia (DEA) Geoscience Earth Observations, Australia [@Krause:2021]
 - GSKY Data Server for DEA Geoscience Earth Observations, Australia
 - Radiometric Data, Australia
-- Google Earth Engine Data (GEE account needed), see for overview .
+- Google Earth Engine Data (GEE account needed)
 
-A detailed list of all available layers and their description can be found in [Data Overview](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/quarto/docs/Data_Overview.md). The ``Geodata-Harvester`` is designed to be extendable and new data source modules can be added (see [adding new data source guidelines](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/quarto/docs/How_to_add_DataSources.md))
+A detailed list of all available layers and their description can be found in [Data Overview](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/quarto/docs/Data_Overview.md). The ``Geodata-Harvester`` is designed to be extendable and new data source modules can be added (see [adding new data source guidelines](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/quarto/docs/How_to_add_DataSources.md)).
 
 
 # Acknowledgements
