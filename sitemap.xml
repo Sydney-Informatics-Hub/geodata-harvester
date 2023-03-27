@@ -2,134 +2,134 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/py_dataharvester.html</loc>
-    <lastmod>2023-03-27T23:09:46.346Z</lastmod>
+    <lastmod>2023-03-27T23:13:02.536Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/about.html</loc>
-    <lastmod>2023-03-27T23:09:47.182Z</lastmod>
+    <lastmod>2023-03-27T23:13:03.236Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/R_dataharvester.html</loc>
-    <lastmod>2023-03-27T23:09:47.550Z</lastmod>
+    <lastmod>2023-03-27T23:13:03.792Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/events.html</loc>
-    <lastmod>2023-03-27T23:09:47.922Z</lastmod>
+    <lastmod>2023-03-27T23:13:04.248Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/getdata_radiometric.html</loc>
-    <lastmod>2023-03-27T23:09:48.326Z</lastmod>
+    <lastmod>2023-03-27T23:13:04.664Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/index.html</loc>
-    <lastmod>2023-03-27T23:09:48.666Z</lastmod>
+    <lastmod>2023-03-27T23:13:04.932Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/temporal.html</loc>
-    <lastmod>2023-03-27T23:09:49.090Z</lastmod>
+    <lastmod>2023-03-27T23:13:05.236Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/write_logs.html</loc>
-    <lastmod>2023-03-27T23:09:49.454Z</lastmod>
+    <lastmod>2023-03-27T23:13:05.516Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/spatial.html</loc>
-    <lastmod>2023-03-27T23:09:49.810Z</lastmod>
+    <lastmod>2023-03-27T23:13:05.792Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/harvest.html</loc>
-    <lastmod>2023-03-27T23:09:50.162Z</lastmod>
+    <lastmod>2023-03-27T23:13:06.072Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/getdata_dem.html</loc>
-    <lastmod>2023-03-27T23:09:50.558Z</lastmod>
+    <lastmod>2023-03-27T23:13:06.368Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/validate_settings.html</loc>
-    <lastmod>2023-03-27T23:09:50.934Z</lastmod>
+    <lastmod>2023-03-27T23:13:06.676Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/utils.html</loc>
-    <lastmod>2023-03-27T23:09:51.378Z</lastmod>
+    <lastmod>2023-03-27T23:13:07.004Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/getdata_silo.html</loc>
-    <lastmod>2023-03-27T23:09:51.782Z</lastmod>
+    <lastmod>2023-03-27T23:13:07.332Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/settingshandler.html</loc>
-    <lastmod>2023-03-27T23:09:52.194Z</lastmod>
+    <lastmod>2023-03-27T23:13:07.596Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/getdata_slga.html</loc>
-    <lastmod>2023-03-27T23:09:52.594Z</lastmod>
+    <lastmod>2023-03-27T23:13:07.904Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/arc2meter.html</loc>
-    <lastmod>2023-03-27T23:09:52.970Z</lastmod>
+    <lastmod>2023-03-27T23:13:08.168Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/getdata_landscape.html</loc>
-    <lastmod>2023-03-27T23:09:53.350Z</lastmod>
+    <lastmod>2023-03-27T23:13:08.468Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/getdata_dea.html</loc>
-    <lastmod>2023-03-27T23:09:53.782Z</lastmod>
+    <lastmod>2023-03-27T23:13:08.796Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/widgets/index.html</loc>
-    <lastmod>2023-03-27T23:09:54.154Z</lastmod>
+    <lastmod>2023-03-27T23:13:09.088Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/widgets/ipyfilechooser/index.html</loc>
-    <lastmod>2023-03-27T23:09:54.498Z</lastmod>
+    <lastmod>2023-03-27T23:13:09.352Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/widgets/ipyfilechooser/utils.html</loc>
-    <lastmod>2023-03-27T23:09:54.870Z</lastmod>
+    <lastmod>2023-03-27T23:13:09.616Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/widgets/ipyfilechooser/filechooser.html</loc>
-    <lastmod>2023-03-27T23:09:55.238Z</lastmod>
+    <lastmod>2023-03-27T23:13:09.896Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/widgets/ipyfilechooser/errors.html</loc>
-    <lastmod>2023-03-27T23:09:55.570Z</lastmod>
+    <lastmod>2023-03-27T23:13:10.160Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/widgets/harvesterwidgets.html</loc>
-    <lastmod>2023-03-27T23:09:56.030Z</lastmod>
+    <lastmod>2023-03-27T23:13:10.500Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/API_md/geodata_harvester/widgets/ipywidgets_file_selector.html</loc>
-    <lastmod>2023-03-27T23:09:56.390Z</lastmod>
+    <lastmod>2023-03-27T23:13:10.776Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/contributing.html</loc>
-    <lastmod>2023-03-27T23:09:56.794Z</lastmod>
+    <lastmod>2023-03-27T23:13:11.084Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Settings_Overview.html</loc>
-    <lastmod>2023-03-27T23:09:57.346Z</lastmod>
+    <lastmod>2023-03-27T23:13:11.496Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Contributing.html</loc>
-    <lastmod>2023-03-27T23:09:57.790Z</lastmod>
+    <lastmod>2023-03-27T23:13:11.804Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Earth_Engine_Data_Overview.html</loc>
-    <lastmod>2023-03-27T23:09:58.242Z</lastmod>
+    <lastmod>2023-03-27T23:13:12.100Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/Data_Overview.html</loc>
-    <lastmod>2023-03-27T23:09:59.758Z</lastmod>
+    <lastmod>2023-03-27T23:13:13.256Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/docs/How_to_add_DataSources.html</loc>
-    <lastmod>2023-03-27T23:10:00.150Z</lastmod>
+    <lastmod>2023-03-27T23:13:13.540Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/Sydney-Informatics-Hub/geodata-harvester/index.html</loc>
-    <lastmod>2023-03-27T23:10:00.514Z</lastmod>
+    <lastmod>2023-03-27T23:13:13.824Z</lastmod>
   </url>
 </urlset>
