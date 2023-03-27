@@ -291,7 +291,7 @@
     "href": "index.html#what-is-it",
     "title": "Geodata-Harvester",
     "section": "What is it?",
-    "text": "What is it?\nThe Geodata-Harvester project enables researchers with reusable workflows and provides open-source software for automatic data extraction from a wide range of data sources including spatial-temporal processing. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning models. All data layer maps are automatically extracted and aligned for a specific region and time period.\n<embed type=“text/html” src=“https://sydney-informatics-hub.github.io/geodata-harvester/_includes/embed_chat.html” width=“100%”, height=“80%”>"
+    "text": "What is it?\nThe Geodata-Harvester project enables researchers with reusable workflows and provides open-source software for automatic data extraction from a wide range of data sources including spatial-temporal processing. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning models. All data layer maps are automatically extracted and aligned for a specific region and time period.\n<embed type=“text/html” src=“https://sydney-informatics-hub.github.io/geodata-harvester/_includes/embed_chat.html” width=“1200”, height=“600”>"
   },
   {
     "objectID": "index.html#data-sources",
