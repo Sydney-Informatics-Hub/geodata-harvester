@@ -7,6 +7,8 @@ resources:
 
 <center><a><img src="images/Python_jupyter_logo.png" alt="SIH and AgReFed logo" width="50%"/></a></center>
 
+Github repository: [https://github.com/Sydney-Informatics-Hub/geodata-harvester](https://github.com/Sydney-Informatics-Hub/geodata-harvester)
+
 ## Pipeline Overview
 
 <center><a><img src="images/pipeline.png" alt="Schematic Pipeline Overview" width="100%"/></a></center>
@@ -88,8 +90,7 @@ To get started, some example workflows are provided as Jupyter notebooks:
 
 ## API reference
 
-A detailed API documentation is available [here](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/quarto/docs/API/geodata_
-harvester/index.html).
+A detailed API documentation is available [here](https://sydney-informatics-hub.github.io/geodata-harvester/API/geodata_harvester/index.html).
 
 ## New data source modules
 
