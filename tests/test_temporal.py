@@ -36,3 +36,36 @@ def test_temporal_silo():
     assert len(outfname_list) > 0
     #shutil.rmtree(OUTPATH, ignore_errors=True)
     print('temporal test passed for DEA')
+
+
+def get_testdata_dea():
+    # Get data (here only for first layer)
+    layername = "ga_ls8c_ard_3"
+    # Crs for output
+    crs = "EPSG:4326"  # WGS84
+    # define bounding box for retrieval (simple test here for entire Australia)
+    bbox = [120, -40, 140, -20]
+    # define resolution (in arcsecs per pixel since crs is in WGS84)
+    resolution = 100
+    # define daterange
+    date_min = '2019-01-01' 
+    date_max = '2019-01-14' 
+    # Get data
+    outfnames = getdata_dea.get_dea_images_daterange(layername, date_min, date_max, bbox, resolution, OUTPATH, crs=crs)
+    assert len(outfnames) > 0
+    return outfnames
+
+
+def test_temporal_dea():
+    """
+    Test script to retrieve and save images for a given year
+    """
+    os.makedirs(name=OUTPATH, exist_ok=True)
+    # Download test data using dea
+    file_list = get_testdata_dea()
+    # Test temporal
+    xdr = temporal.multiband_raster_to_xarray(file_list)
+    outfname_list, agg_list = temporal.aggregate_temporal(xdr,period=7, agg=["mean"], outfile="temporal_agg", buffer = None)
+    assert len(outfname_list) > 0
+    #shutil.rmtree(OUTPATH, ignore_errors=True)
+    print('temporal test passed for DEA')
