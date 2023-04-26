@@ -20,8 +20,9 @@ def combine_rasters_temporal(
     file_list, channel_name="band", attribute_name="long_name"
 ):
     """
-    Combines multiple tif files into single xarray object. Assumes files are in
-    temporal order, and additional channels contain sequential time step data.
+    Combines multiple tif files into single xarray object. 
+    Assumes additional channels contain sequential time step data. 
+    If multiple files in file_list, files must be in temporal order and same data type.
     Also assumes files are of the same shape (x,y,t).
 
     Example:
@@ -32,7 +33,7 @@ def combine_rasters_temporal(
 
     Parameters
     ----------
-    file_list : list of filename strings in date order to concatenate.
+    file_list : str or list of filename strings in date order to concatenate.
         Expected to be of the form "x,y" or "x,y,z1"
     channel_name : string of coordinate dimension to concatentate (band, time,
         etc). Check options with rioxarray.open_rasterio('filename').coords
@@ -46,6 +47,9 @@ def combine_rasters_temporal(
     """
     print("Concatenating", channel_name, "and", attribute_name, "over", file_list)
     # file_list = glob(os.path.join(data_dir, '*.tif'))
+
+    if type(file_list) == str:
+        file_list = [file_list]
 
     # Append all data/channels, collect metadata lists
     array_list = []
@@ -88,6 +92,44 @@ def combine_rasters_temporal(
     del xdr.attrs[attribute_name]
 
     return xdr
+
+
+def multiband_raster_to_xarray(file_list, date_list = None, mask_bandname = None):
+    """
+    Converts a stack of multiband raster with different dates to an xarray object.
+    
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
+    date_list : list of dates in date order to concatenate. 
+        If None provided, the dates will be extracted from the file names.
+        This assumes that the date is given at the end of the file name after an underscore.
+    """
+    # Extract the dates from the file names if no date list is provided
+    if date_list is None:
+        date_list = get_date_after_last_underscore(file_list)
+
+    # Check if the lists have the same length
+    assert len(file_list) == len(date_list), "File list and date list must have the same length."
+    
+    # Create an empty list to store the DataArrays
+    data_arrays = []
+
+    for file, date in zip(file_list, date_list):
+        # Read the raster file using rioxarray
+        xds = rioxarray.open_rasterio(file)
+
+        # Assign the time coordinate
+        xds = xds.assign_coords({"time": pd.to_datetime(date)})
+        xds = xds.expand_dims("time")
+
+        # Append the DataArray to the list
+        data_arrays.append(xds)
+
+    # Concatenate the DataArrays along the time dimension
+    stacked_data = xr.concat(data_arrays, dim="time")
+
+    return stacked_data
 
 
 def temporal_crop(xdr, start_time, end_time):
@@ -219,44 +261,67 @@ def aggregate_temporal(xdr,
     return outfname_list, agg_list
 
 
-def group_by_custom_periods(xdr, periods: int, agg_range: int):
+def get_date_after_last_underscore(file_list):
+    result = []
+
+    for filename in file_list:
+        split_string = filename.rsplit('_', 1)  # Split the string from the right side, keeping only the last part
+
+        # Check if the string was split
+        if len(split_string) > 1:
+            last_part = split_string[-1]  # Get the part after the last "_"
+        else:
+            last_part = filename  # If the string didn't have any "_", return the original string
+
+        # Remove the file format ending
+        last_part = last_part.rsplit('.', 1)[0]
+
+        result.append(last_part)
+
+    return result
 
 
-    # def temporal_aggregate_multiband(file_list=None, data_dir=None, agg=['mean'],
-    #    outfile='aggregation', timesteps=1):
+def get_mask_array(xdr, mask_band = None, verbose = True):
     """
-    NOTE: NOT ALL IMPLEMENTED!!! Specifcally multiband data. But I don't think
-    we want to deal with that, as it is already accounted for previously? Maybe.
+    Return mask of the data, e.g. for cloud-cover.
+    The mask values will be set to True if the mask band is not 0, and False otherwise.
+    If no mask band is provided, a mask band will be searched for in the xarray attribute metadata.
 
-    Aggregates over multiple files but keeps channels independently.
-    Results are written to new tif files.
+    Parameters
+    ----------
+    xdr : xarray
+        xarray dataset to mask
+    mask_band : str or int, optional   
+        Name or index of the band to use as a mask. 
+        If not provided, a mask abd will be searched for in the xarray attribute metadata.
 
-    This function should
-
-    dates of the from "yyyy-mm-dd"
-    rolling mean
-
-    Unit of measurment you are working in seconds, daily, monthly, yearly (or integers)
-    Time steps of channels (e.g. 12xmonthly)
-    time steps of files (each file represents X length of time)
-    time steps of aggregation (e.g. average monthly)
-    time steps of
-
-
-
-    Aggregrates over multiple files and over all channels
-    and writes results to new tif file(s).
-
-    Step 1: combine files (assumes consistent times and start finish points)
-    Step 2: roll data into outtime chunks
-    Step 3: perform aggregation on chunks
-
-    e.g. aggregate daily rainfall data for each month (for the duration of the files.)
-    e.g. aggregate monthly temperature data over a year (for the duration of the files.)
-
-    e.g. aggregate common months over multiple years, average rainfall in July from 2015 to 2020
-
-
-    Takes a stream of temporal data in a particular time increment and converts
-    to a new time-increment by averaging.
+    Returns
+    -------
+    mask: array, bool
     """
+    if mask_band is not None:
+        if isinstance(mask_band, int):
+            if verbose: print(f"Masking values with Nan where mask band {mask_band} is not 0")
+        elif isinstance(mask_band, str):
+            if verbose: print(f"Masking values with Nan where mask band {mask_band} is not 0")
+            mask_band = [i for i, s in enumerate(xdr.attrs['long_name']) if s == mask_band]
+            mask_band = mask_band[0] + 1
+        else:
+            if verbose: print("Mask band must be an integer or string")
+            return
+        mask = xdr.sel(band=mask_band).values != 0
+
+    if mask_band is None:
+        # find band number for attribute that includes 'mask'
+        mask_band = [i for i, s in enumerate(xdr.attrs['long_name']) if 'mask' in s]
+        if len(mask_band) == 0:
+            if verbose: print('No mask band found in attributes. Proceeding without masking.')
+        else:
+            if len(mask_band) > 1:
+                if verbose: print(f"Multiple mask bands found in attributes. Proceeding with mask band: {xdr.attrs['long_name'][mask_band[0]]}")
+            mask_band = mask_band[0] + 1
+            if verbose: print(f"Masking values with Nan where mask band {xdr.attrs['long_name'][mask_band[0]]} is valid")
+            mask = xdr.sel(band=mask_band).values != 0
+
+    return mask
+
