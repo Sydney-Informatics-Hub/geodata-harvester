@@ -1,19 +1,24 @@
 import os
+import shutil
 import pytest
+import rioxarray
 
 import geodata_harvester
 from geodata_harvester import getdata_dea, getdata_silo, temporal
 
 OUTPATH = "test_temporal"
 
+# Remove folder with test data after tests:
+REMOVE_TESTDATA = False
+
 
 def get_testdata_silo():
     """
     Get SILO testdata
     """
-    layernames = ["daily_rain","max_temp"]
+    layernames = ["daily_rain"]
     date_start = '2019-01-01'
-    date_end = '2020-02-01'
+    date_end = '2020-06-01'
     outpath = "silo_test"
     bbox = (130, -44, 153.9, -11)
     # test first for tif output format
@@ -30,11 +35,18 @@ def test_temporal_silo():
     os.makedirs(name=OUTPATH, exist_ok=True)
     # Download test data using dea
     file_list = get_testdata_silo()
-    # Test temporal
-    xdr = temporal.combine_rasters_temporal(file_list, channel_name="band", attribute_name="long_name")
-    outfname_list, agg_list = temporal.aggregate_temporal(xdr,period="yearly", agg=["mean"], outfile="temporal_agg", buffer = None)
-    assert len(outfname_list) > 0
-    #shutil.rmtree(OUTPATH, ignore_errors=True)
+    for fname in file_list:
+        assert os.path.exists(fname)
+        xdr = temporal.combine_rasters_temporal(fname, channel_name="band", attribute_name="long_name")
+        outfname_list, agg_list = temporal.aggregate_temporal(
+            xdr,
+            period="yearly", 
+            agg=["mean"], 
+            outfile=f"{fname.split('.')[0]}", 
+            buffer = None)
+        assert len(outfname_list) > 0
+    if REMOVE_TESTDATA:
+        shutil.rmtree(OUTPATH, ignore_errors=True)
     print('temporal test passed for DEA')
 
 
@@ -65,7 +77,13 @@ def test_temporal_dea():
     file_list = get_testdata_dea()
     # Test temporal
     xdr = temporal.multiband_raster_to_xarray(file_list)
-    outfname_list, agg_list = temporal.aggregate_temporal(xdr,period=7, agg=["mean"], outfile="temporal_agg", buffer = None)
+    outfname_list, agg_list = temporal.aggregate_temporal(
+        xdr,
+        period=7, 
+        agg=["mean"], 
+        outfile=os.path.join(OUTPATH,"DEA_temporal_agg"), 
+        buffer = None)
     assert len(outfname_list) > 0
-    #shutil.rmtree(OUTPATH, ignore_errors=True)
+    if REMOVE_TESTDATA:
+        shutil.rmtree(OUTPATH, ignore_errors=True)
     print('temporal test passed for DEA')
