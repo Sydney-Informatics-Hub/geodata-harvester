@@ -1,5 +1,0 @@
----
-title: "About"
----
-
-The Data Harvester project enables researchers with reusable workflows for automatic data extraction from a wide range of data sources including spatial-temporal processing. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning and agriculture models. In addition, all requested data layer maps are automatically extracted and aligned for a specific region and time period.
