@@ -2,9 +2,12 @@ import os
 import shutil
 import pytest
 import rioxarray
+import datetime
 
 import geodata_harvester
 from geodata_harvester import getdata_dea, getdata_silo, temporal
+
+from eeharvest import harvester as eeharvester
 
 OUTPATH = "test_temporal"
 
@@ -84,6 +87,41 @@ def test_temporal_dea():
         outfile=os.path.join(OUTPATH,"DEA_temporal_agg"), 
         buffer = None)
     assert len(outfname_list) > 0
+    if REMOVE_TESTDATA:
+        shutil.rmtree(OUTPATH, ignore_errors=True)
+    print('temporal test passed for DEA')
+
+
+def test_temporal_gee():
+    """
+    Test of temporal functions for GEE extraction
+    """
+    path_to_config = os.path.join('settings', 'settings_test_temporal.yaml')
+
+    eeharvester.initialise()
+
+    gee = eeharvester.auto(config=path_to_config)
+    if not isinstance(gee.filenames, list):
+        # convert to list
+        gee.filenames = [gee.filenames]
+
+    # find all subdirectories OUTPATH that start with string 'ee_'
+    ee_subdirs = [os.path.join(OUTPATH, name) for name in os.listdir(OUTPATH) if name.startswith('ee_')]
+
+    cfg = gee.obj.config
+
+    period = (cfg['date_max'] - cfg['date_min']).days // cfg['time_intervals']
+
+    for layername in ee_subdirs:
+        outfname_list = [os.path.join(layername,filename) for filename in gee.filenames]
+        xdr = temporal.multiband_raster_to_xarray(outfname_list)
+        outfname_list, agg_list = temporal.aggregate_temporal(
+            xdr,
+            period=2, 
+            agg=["median"], 
+            outfile=layername + "_temporal_agg", 
+            buffer = None)
+        assert len(outfname_list) > 0
     if REMOVE_TESTDATA:
         shutil.rmtree(OUTPATH, ignore_errors=True)
     print('temporal test passed for DEA')
