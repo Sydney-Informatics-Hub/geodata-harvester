@@ -1,0 +1,34 @@
+# This settings file works for Google Earth Engine functionality on
+# the Data Harvester notebook.
+
+infile: data/example-site_llara.csv
+outpath: test_temporal
+colname_lat: Lat
+colname_lng: Long
+
+# Bounding box: Left, Top, Right, Bottom
+target_bbox: [149.769345, -30.335861, 149.949173, -30.206271]
+# Resolution of data download in arcseconds
+target_res: 6.0
+#target_dates: 2021
+date_min : 2022-09-01
+time_intervals : 2
+date_max : 2022-11-30
+time_buffer : 
+
+target_sources:
+  DEA:
+  - ga_ls8c_ard_3
+  SILO:
+    max_temp: mean
+    min_temp: mean
+  GEE:
+    preprocess:
+      collection: [LANDSAT/LC09/C02/T1_L2]
+      buffer: null
+      bound: null
+      mask_clouds: True
+      reduce:
+      spectral:
+    download:
+      bands: ['SR_B2', 'SR_B3', 'SR_B4']
