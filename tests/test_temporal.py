@@ -12,8 +12,7 @@ from eeharvest import harvester as eeharvester
 OUTPATH = "test_temporal"
 
 # Remove folder with test data after tests:
-REMOVE_TESTDATA = False
-
+REMOVE_TESTDATA = True
 
 def get_testdata_silo():
     """
@@ -94,7 +93,7 @@ def test_temporal_dea():
 
 def test_temporal_gee():
     """
-    Test of temporal functions for GEE extraction
+    Test for temporal functions for GEE processing
     """
     path_to_config = os.path.join('settings', 'settings_test_temporal.yaml')
 
