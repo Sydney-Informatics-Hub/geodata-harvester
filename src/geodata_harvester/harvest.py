@@ -100,6 +100,8 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
     if settings.time_intervals is not None:
         period_days = (datetime.strptime(settings.date_max, "%Y-%m-%d") 
         - datetime.strptime(settings.date_min, "%Y-%m-%d")).days // settings.time_intervals
+    else:
+        period_days = None
 
     # Create download log
     download_log = init_logtable()
@@ -283,23 +285,29 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             fnames_out_silo += fnames_out
         except Exception as e:
             print(e)
-        try:
-            outfname_list = []
-            layername_list = []
-            aggfunction_list = []
-            for i, fname in enumerate(fnames_out_silo):
-                xdr = temporal.combine_rasters_temporal(fname, channel_name="band", attribute_name="long_name")
-                outfnames_, agg_list = temporal.aggregate_temporal(
-                    xdr,
-                    period=period_days, 
-                    agg=[settings.target_sources['SILO'][silo_layernames[i]]], 
-                    outfile=f"{fname.split('.')[0]}", 
-                    buffer = None)
-                outfname_list += outfnames_temp
-                layername_list += [silo_layernames[i]]*len(outfnames_temp)
-                aggfunction_list += agg_list
-        except Exception as e:
-            print(e)
+        # aggregate the data along time windows if period_days is not None
+        if period_days is not None:
+            try:
+                outfname_list = []
+                layername_list = []
+                aggfunction_list = []
+                for i, fname in enumerate(fnames_out_silo):
+                    xdr = temporal.combine_rasters_temporal(fname, channel_name="band", attribute_name="long_name")
+                    outfnames_, agg_list = temporal.aggregate_temporal(
+                        xdr,
+                        period=period_days, 
+                        agg=[settings.target_sources['SILO'][silo_layernames[i]]], 
+                        outfile=f"{fname.split('.')[0]}", 
+                        buffer = None)
+                    outfname_list += outfnames_temp
+                    layername_list += [silo_layernames[i]]*len(outfnames_temp)
+                    aggfunction_list += agg_list
+            except Exception as e:
+                print(e)
+        else:
+            outfname_list = fnames_out_silo
+            layername_list = silo_layernames
+            aggfunction_list = ['']*len(fnames_out_silo)
         var_exists = "files_silo" in locals() or "files_silo" in globals()
         if var_exists:
             # Add download info to log dataframe
