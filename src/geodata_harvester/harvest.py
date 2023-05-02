@@ -18,11 +18,12 @@ from pathlib import Path
 import geopandas as gpd
 from termcolor import cprint
 import yaml
+from datetime import datetime
 from geodata_harvester.widgets import harvesterwidgets as hw
 from geodata_harvester.utils import init_logtable, update_logtable
 from geodata_harvester import (getdata_dea, getdata_dem,  getdata_landscape,
                                getdata_radiometric, getdata_silo, getdata_slga,
-                               utils)
+                               utils, temporal)
 from eeharvest import harvester as eeharvester
 
 
@@ -93,6 +94,12 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
     # Stop if bounding box cannot be calculated or was not provided
     if settings.infile is None and settings.target_bbox is None:
         raise ValueError("No sampling file or bounding box provided")
+
+    # Temporal range
+    # convert date strings to datetime objects
+    if settings.time_intervals is not None:
+        period_days = (datetime.strptime(settings.date_max, "%Y-%m-%d") 
+        - datetime.strptime(settings.date_min, "%Y-%m-%d")).days // settings.time_intervals
 
     # Create download log
     download_log = init_logtable()
@@ -263,7 +270,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
         # print(silo_layernames)
         try:
             # run the download
-            files_silo = settings.outpath + "silo"
+            files_silo = os.path.join(settings.outpath, "silo")
             fnames_out = getdata_silo.get_SILO_layers(
                 silo_layernames,
                 settings.date_min,
@@ -276,16 +283,35 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             fnames_out_silo += fnames_out
         except Exception as e:
             print(e)
+        try:
+            outfname_list = []
+            layername_list = []
+            aggfunction_list = []
+            for i, fname in enumerate(fnames_out_silo):
+                xdr = temporal.combine_rasters_temporal(fname, channel_name="band", attribute_name="long_name")
+                outfnames_, agg_list = temporal.aggregate_temporal(
+                    xdr,
+                    period=period_days, 
+                    agg=[settings.target_sources['SILO'][silo_layernames[i]]], 
+                    outfile=f"{fname.split('.')[0]}", 
+                    buffer = None)
+                outfname_list += outfnames_temp
+                layername_list += [silo_layernames[i]]*len(outfnames_temp)
+                aggfunction_list += agg_list
+        except Exception as e:
+            print(e)
         var_exists = "files_silo" in locals() or "files_silo" in globals()
         if var_exists:
             # Add download info to log dataframe
             download_log = update_logtable(
                 download_log,
-                fnames_out_silo,
-                silo_layernames,
-                "SILO",
-                settings,
-                layertitles=[],
+                #fnames_out_silo,
+                filenames = outfname_list,
+                layernames = layername_list,
+                datasource = "SILO",
+                settings = settings,
+                layertitles=[os.path.basename(fname).split('.')[0] for fname in outfname_list],
+                agfunctions = aggfunction_list,
                 loginfos="downloaded",
             )
         else:
