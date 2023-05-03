@@ -18,7 +18,8 @@ from pathlib import Path
 import geopandas as gpd
 from termcolor import cprint
 import yaml
-from datetime import datetime
+import numpy as np
+from datetime import datetime, timedelta
 from geodata_harvester.widgets import harvesterwidgets as hw
 from geodata_harvester.utils import init_logtable, update_logtable
 from geodata_harvester import (getdata_dea, getdata_dem,  getdata_landscape,
@@ -161,29 +162,66 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             crs="EPSG:4326",
             format_out="GeoTIFF",
         )
+        if period_days is not None:
+            # aggregate temporal data
+            outfname_dea_list = []
+            layer_list = []
+            layer_titles = []
+            for layername in dea_layernames:
+                # get files for layername 
+                files_layer = [os.path.basename(x) for x in files_dea if layername in x]
+                xdr = temporal.multiband_raster_to_xarray(files_layer)
 
-        # DEA layers come in many lengths, so unravel them all based on name
-        # This may be better suited to fit in utils.update_logtable
-        layer_list = []
-        for layername in dea_layernames:
-            s = sum(layername in s for s in files_dea)
-            l = [layername]*s
-            layer_list.append(l)
+                # replace values with nan_value with nan so that aggregation works properly
+                nan_value = xdr.attrs["_FillValue"]
+                xdr = xdr.where(xdr != nan_value, np.nan)
 
-        layer_list = sum(layer_list, [])
-        # Need a unique name for each layer
-        layer_titles = [os.path.splitext(
-            x)[0].split('/')[-1] for x in files_dea]
-        # layernames = []
-        # for layername in dea_layernames:
-        #   layernames += [layername + '_channel' + channel_list[i] for i in range(len(channel_list))]
+                """
+                Aggregate over temporal period (use median by default to avoid potential outliers such as clouds)
+                Note that some DEA layers have quality flags that can be used to filter out clouds. 
+                This is not implemented here because it is layer-specific.
+                """
+                outfname_list, agg_list = temporal.aggregate_temporal(
+                    xdr,
+                    period=period_days, 
+                    agg=["median"], 
+                    outfile=os.path.join(settings.outpath,f"DEA_{layername}"), 
+                    buffer = None)
+                outfname_dea_list += outfname_list
+
+                # create layer titles with proper date range format
+                for filename in outfname_list:
+                    # get date from filename without extension
+                    date_start = os.path.splitext(os.path.basename(filename).rsplit('_')[-1])[0]
+                    # convert date string YYYY-MM-D to datetime object
+                    date_start = datetime.strptime(date_start, "%Y-%m-%d")
+                    date_end = date_start + timedelta(days=period_days)
+                    date_str = date_start.strftime("%Y-%m-%d") + "-to-" + date_end.strftime("%Y-%m-%d")
+                    new_name = "DEA_" + layername + "_median_" + date_str
+                    layer_titles += [new_name]
+                layer_list += [layername]*len(outfname_list)
+            agg_list = ['median']*len(layer_titles),
+        else:
+            outfname_dea_list = files_dea
+            # get string dea_layernames from filenames in files_dea
+            layer_list = []
+            for fname in files_dea:
+                for layername in dea_layernames:
+                    if layername in fname:
+                        layer_list.append(layername)
+                        break
+            layer_titles = [os.path.basename(path).rsplit('.')[0] for path in files_dea]
+            agg_list = ['None']*len(layer_titles)
+
+        # Update download log table
         download_log = update_logtable(
             download_log,
-            files_dea,
+            outfname_dea_list,
             layer_list,
             'DEA',
             settings,
             layertitles=layer_titles,
+            agfunctions = agg_list,
             loginfos='downloaded'
         )
 
@@ -291,6 +329,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
                 outfname_list = []
                 layername_list = []
                 aggfunction_list = []
+                layer_titles = []
                 for i, fname in enumerate(fnames_out_silo):
                     xdr = temporal.combine_rasters_temporal(fname, channel_name="band", attribute_name="long_name")
                     outfnames_, agg_list = temporal.aggregate_temporal(
@@ -302,12 +341,25 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
                     outfname_list += outfnames_temp
                     layername_list += [silo_layernames[i]]*len(outfnames_temp)
                     aggfunction_list += agg_list
+
+                    # define proper titles for the layers
+                    layername = silo_layernames[i]
+                    for filename in outfnames: 
+                        # get date from filename without extension
+                        date_start = os.path.splitext(os.path.basename(filename).rsplit('_')[-1])[0]
+                        # convert date string YYYY-MM-D to datetime object
+                        date_start = datetime.strptime(date_start, "%Y-%m-%d")
+                        date_end = date_start + timedelta(days=period_days)
+                        date_str = date_start.strftime("%Y-%m-%d") + "-to-" + date_end.strftime("%Y-%m-%d")
+                        new_name = "SILO_" + layername + "_" + settings.target_sources['SILO'][silo_layernames[i]] + "_" + date_str
+                        layer_titles += [new_name]
             except Exception as e:
                 print(e)
         else:
             outfname_list = fnames_out_silo
             layername_list = silo_layernames
             aggfunction_list = ['']*len(fnames_out_silo)
+            layer_titles = ["SILO_" + layername for layername in silo_layernames]
         var_exists = "files_silo" in locals() or "files_silo" in globals()
         if var_exists:
             # Add download info to log dataframe
