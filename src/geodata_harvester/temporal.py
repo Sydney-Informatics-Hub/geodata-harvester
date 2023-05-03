@@ -45,7 +45,7 @@ def combine_rasters_temporal(
     xdr : xarray object of x,y,time, with approriate metadata.
 
     """
-    print("Concatenating", channel_name, "and", attribute_name, "over", file_list)
+    #print("Concatenating", channel_name, "and", attribute_name, "over", file_list)
     # file_list = glob(os.path.join(data_dir, '*.tif'))
 
     if type(file_list) == str:
@@ -153,7 +153,7 @@ def temporal_crop(xdr, start_time, end_time):
 
 
 def aggregate_temporal(xdr,
-    period="yearly", agg=["mean"], outfile="temporal_agg", buffer = None):
+    period="yearly", agg=["mean"], outfile="temporal_agg", buffer = None, fill_nan = True):
     """
     Make a data aggregation (mean, median, sum, etc) through time on an xarray.
     Expects xarray coordinates to be x, y, time. Saves every aggregation for
@@ -177,6 +177,8 @@ def aggregate_temporal(xdr,
         ['mean','median','sum','perc95','perc5']
     outfile : string. Prefix of output file name.
     buffer: integer time period in same units as period to buffer into the future.
+    fill_nan: boolean. If True (Default), will automatically try to find the value for missing data 
+        from header and fills with nan before aggregating. If False, will not fill nan.
 
     Returns
     -------
@@ -184,15 +186,21 @@ def aggregate_temporal(xdr,
     agg_list : list of strings of aggregation methods
 
     """
+    nodata_names = ["_FillValue", "missing_value", "nodata", "nodatavalue"]
+    if fill_nan:
+        for nodata_name in nodata_names:
+            if nodata_name in xdr.attrs:
+                xdr = xdr.where(xdr != xdr.attrs[nodata_name], np.nan)
+
 
     # Check the aggregation methods are okay
     agg_types = ["mean", "median", "sum", "perc95", "perc5", "max", "min"]
     aggcheck = [a for a in agg if a in agg_types]
     if aggcheck is None:
         raise ValueError("Invalid Aggregation type. Expected any of: %s" % agg_types)
-    else:
-        print("Finding", aggcheck, " out of possible", agg_types)
-        print("for", period, " period.")
+    #else:
+        #print("Finding", aggcheck, " out of possible", agg_types)
+        #print("for", period, " period.")
 
     # Group by the appropriate time period
     if period == "yearly":
