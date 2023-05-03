@@ -191,7 +191,7 @@ def aggregate_temporal(xdr,
         for nodata_name in nodata_names:
             if nodata_name in xdr.attrs:
                 xdr = xdr.where(xdr != xdr.attrs[nodata_name], np.nan)
-
+                break
 
     # Check the aggregation methods are okay
     agg_types = ["mean", "median", "sum", "perc95", "perc5", "max", "min"]
@@ -231,17 +231,23 @@ def aggregate_temporal(xdr,
             "Invalid temporal period. Expected any of: 'yearly', 'monthly', or an integer period"
         )
 
-    # What is more efficient? Make calcs on whole dataframe or on each group?
-
-    # Make ALL agg calcs (and only keep the requested ones later)
     aggdict = {}
-    aggdict["mean"] = xdr_groups.mean()
-    aggdict["median"] = xdr_groups.median()
-    aggdict["sum"] = xdr_groups.sum()
-    aggdict["perc95"] = xdr_groups.quantile(q=0.95)
-    aggdict["perc5"] = xdr_groups.quantile(q=0.05)
-    aggdict["max"] = xdr_groups.max()
-    aggdict["min"] = xdr_groups.min()
+    for agg_type in aggcheck:
+        if agg_type == "mean":
+            aggdict["mean"] = xdr_groups.mean()
+        elif agg_type == "median":
+            aggdict["median"] = xdr_groups.median()
+        elif agg_type == "sum":
+            aggdict["sum"] = xdr_groups.sum()
+        elif agg_type == "perc95":
+            aggdict["perc95"] = xdr_groups.quantile(q=0.95)
+        elif agg_type == "perc5":
+            aggdict["perc5"] = xdr_groups.quantile(q=0.05)
+        elif agg_type == "max":
+            aggdict["max"] = xdr_groups.max()
+        elif agg_type == "min":
+            aggdict["min"] = xdr_groups.min()
+
 
     # Keep track of the names of all files produced
     outfname_list = []
