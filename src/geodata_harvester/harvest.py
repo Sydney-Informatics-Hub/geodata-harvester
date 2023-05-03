@@ -98,9 +98,12 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
 
     # Temporal range
     # convert date strings to datetime objects
+    date_diff = (datetime.strptime(settings.date_max, "%Y-%m-%d") 
+        - datetime.strptime(settings.date_min, "%Y-%m-%d")).days
     if settings.time_intervals is not None:
-        period_days = (datetime.strptime(settings.date_max, "%Y-%m-%d") 
-        - datetime.strptime(settings.date_min, "%Y-%m-%d")).days // settings.time_intervals
+        period_days = date_diff // settings.time_intervals
+        if period_days == 0:
+            period_days = 1
     else:
         period_days = None
 
@@ -125,14 +128,83 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
         #gee.preprocess()
         #gee.download()
         # use auto function to download and preprocess
-        gee = eeharvester.auto(config=path_to_config)
-        # add settings.outpath to all entries in list of gee.filenames
-        # if gee.filenames is a list of strings
-        if not isinstance(gee.filenames, list):
-            # convert to list
-            gee.filenames = [gee.filenames]
-        outfnames = [settings.outpath  + filename for filename in gee.filenames]
-        layernames = [Path(filename).resolve().stem for filename in gee.filenames]
+
+        if period_days is None:
+            gee_outpath = os.path.join(settings.outpath,'ee')
+            gee = eeharvester.auto(config=path_to_config, outpath=gee_outpath)
+            # add settings.outpath to all entries in list of gee.filenames
+            # if gee.filenames is a list of strings
+            if not isinstance(gee.filenames, list):
+                # convert to list
+                gee.filenames = [gee.filenames]
+            # get list of filenames in the directory
+            gee_filenames = []
+            # Walk through the directory and its subdirectories to find full paths
+            for root, _, files in os.walk(gee_outpath):
+                for file in files:
+                    if file in gee.filenames:
+                        # Join the root and file to get the full path
+                        file_path = os.path.join(root, file)
+                        gee_filenames.append(file_path)
+            outfnames =  gee_filenames 
+            agg_list = [None] * len(outfnames)
+            layernames = [Path(filename).resolve().stem for filename in gee_filenames]
+            layer_titles = layernames
+        else:
+            date_start_list = [datetime.strptime(settings.date_min, "%Y-%m-%d") + 
+            timedelta(days=i*period_days) for i in range(settings.time_intervals)]
+            date_end_list = [datetime.strptime(settings.date_min, "%Y-%m-%d") + 
+            timedelta(days=i*period_days) for i in range(1, settings.time_intervals+1)]
+            # clip end date to date_max
+            date_end_list[-1] = min(date_end_list[-1], datetime.strptime(settings.date_max, "%Y-%m-%d"))
+
+            if settings.target_sources['GEE']['preprocess']['reduce'] is None:
+                agg_type = "median"
+            else:
+                agg_type = settings.target_sources['GEE']['preprocess']['reduce']
+            # Check if agg_type is a list
+            if isinstance(agg_type, list):
+                agg_type = agg_type[0]
+
+            # run eeharvest extraction for each time interval
+            outfnames = []
+            layernames = []
+            agg_list = []
+            layer_titles = []
+            for i in range(settings.time_intervals):
+                # update settings.date_min and settings.date_max in config file
+                # make temporary copy of config file
+                tmp_config = path_to_config.replace(".yaml", "_tmp.yaml")
+                shutil.copy(path_to_config, tmp_config)
+                # update config file
+                with open(tmp_config, "r") as f:
+                    config = yaml.load(f, Loader=yaml.SafeLoader)
+                config['date_min'] = date_start_list[i].strftime("%Y-%m-%d")
+                config['date_max'] = date_end_list[i].strftime("%Y-%m-%d")
+                with open(tmp_config, "w") as f:
+                    yaml.dump(config, f)
+                # run eeharvest
+                gee_outpath = os.path.join(settings.outpath,'ee')
+                gee = eeharvester.auto(config=tmp_config, outpath=gee_outpath)
+                if not isinstance(gee.filenames, list):
+                    # convert to list
+                    gee.filenames = [gee.filenames]
+                gee_filenames = []
+                # Walk through the directory and its subdirectories to find full paths
+                for root, _, files in os.walk(gee_outpath):
+                    for file in files:
+                        if file in gee.filenames:
+                            # Join the root and file to get the full path
+                            file_path = os.path.join(root, file)
+                            gee_filenames.append(file_path)
+                outfnames += gee_filenames
+                layernames += [Path(filename).resolve().stem for filename in gee_filenames]
+                agg_list += [agg_type] * len(gee_filenames)
+                layer_titles += [layername + "_" + agg_type + "_" + date_start_list[i].strftime("%Y-%m-%d") + 
+                "-to-" + date_end_list[i].strftime("%Y-%m-%d") for layername in layernames]
+                
+                # remove temporary config file
+                os.remove(tmp_config)
 
         download_log = update_logtable(
             download_log,
@@ -140,8 +212,8 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             layernames,
             "GEE",
             settings,
-            layertitles=[],
-            agfunctions=settings.target_sources['GEE']['preprocess']['reduce'],
+            layertitles=layer_titles,
+            agfunctions=agg_list,
             loginfos="downloaded",
         )
 
