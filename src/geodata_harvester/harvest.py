@@ -288,7 +288,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
                     new_name = "DEA_" + layername + "_median_" + date_str
                     layer_titles += [new_name]
                 layer_list += [layername]*len(outfname_list)
-            agg_list = ['median']*len(layer_titles),
+            agg_list = ['median']*len(layer_titles)
         else:
             outfname_dea_list = files_dea
             # get string dea_layernames from filenames in files_dea
@@ -413,36 +413,36 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             print(e)
         # aggregate the data along time windows if period_days is not None
         if period_days is not None:
-            try:
-                outfname_list = []
-                layername_list = []
-                aggfunction_list = []
-                layer_titles = []
-                for i, fname in enumerate(fnames_out_silo):
-                    xdr = temporal.combine_rasters_temporal(fname, channel_name="band", attribute_name="long_name")
-                    outfnames_, agg_list = temporal.aggregate_temporal(
-                        xdr,
-                        period=period_days, 
-                        agg=[settings.target_sources['SILO'][silo_layernames[i]]], 
-                        outfile=f"{fname.split('.')[0]}", 
-                        buffer = None)
-                    outfname_list += outfnames_temp
-                    layername_list += [silo_layernames[i]]*len(outfnames_temp)
-                    aggfunction_list += agg_list
+            #try:
+            outfname_list = []
+            layername_list = []
+            aggfunction_list = []
+            layer_titles = []
+            for i, fname in enumerate(fnames_out_silo):
+                xdr = temporal.combine_rasters_temporal(fname, channel_name="band", attribute_name="long_name")
+                outfnames, agg_list = temporal.aggregate_temporal(
+                    xdr,
+                    period=period_days, 
+                    agg=[settings.target_sources['SILO'][silo_layernames[i]]], 
+                    outfile=f"{fname.split('.')[0]}", 
+                    buffer = None)
+                outfname_list += outfnames
+                layername_list += [silo_layernames[i]]*len(outfnames)
+                aggfunction_list += agg_list
 
-                    # define proper titles for the layers
-                    layername = silo_layernames[i]
-                    for filename in outfnames: 
-                        # get date from filename without extension
-                        date_start = os.path.splitext(os.path.basename(filename).rsplit('_')[-1])[0]
-                        # convert date string YYYY-MM-D to datetime object
-                        date_start = datetime.strptime(date_start, "%Y-%m-%d")
-                        date_end = date_start + timedelta(days=period_days)
-                        date_str = date_start.strftime("%Y-%m-%d") + "-to-" + date_end.strftime("%Y-%m-%d")
-                        new_name = "SILO_" + layername + "_" + settings.target_sources['SILO'][silo_layernames[i]] + "_" + date_str
-                        layer_titles += [new_name]
-            except Exception as e:
-                print(e)
+                # define proper titles for the layers
+                layername = silo_layernames[i]
+                for filename in outfnames: 
+                    # get date from filename without extension
+                    date_start = os.path.splitext(os.path.basename(filename).rsplit('_')[-1])[0]
+                    # convert date string YYYY-MM-D to datetime object
+                    date_start = datetime.strptime(date_start, "%Y-%m-%d")
+                    date_end = date_start + timedelta(days=period_days)
+                    date_str = date_start.strftime("%Y-%m-%d") + "-to-" + date_end.strftime("%Y-%m-%d")
+                    new_name = "SILO_" + layername + "_" + settings.target_sources['SILO'][silo_layernames[i]] + "_" + date_str
+                    layer_titles += [new_name]
+            #except Exception as e:
+            #   print(e)
         else:
             outfname_list = fnames_out_silo
             layername_list = silo_layernames
