@@ -18,6 +18,7 @@ from pathlib import Path
 import geopandas as gpd
 from termcolor import cprint
 import yaml
+import shutil
 import numpy as np
 from datetime import datetime, timedelta
 from geodata_harvester.widgets import harvesterwidgets as hw
@@ -130,6 +131,11 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
         # use auto function to download and preprocess
 
         if period_days is None:
+            """
+            If no time intervals are specified and reduce is not set, download all datasets.
+            If no time intervals are specified, but reduce is set, 
+            download the temporal reduced (aggregated) set over the entire time range.
+            """
             gee_outpath = os.path.join(settings.outpath,'ee')
             gee = eeharvester.auto(config=path_to_config, outpath=gee_outpath)
             # add settings.outpath to all entries in list of gee.filenames
@@ -151,6 +157,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             layernames = [Path(filename).resolve().stem for filename in gee_filenames]
             layer_titles = layernames
         else:
+            # run data extraction for each time interval
             date_start_list = [datetime.strptime(settings.date_min, "%Y-%m-%d") + 
             timedelta(days=i*period_days) for i in range(settings.time_intervals)]
             date_end_list = [datetime.strptime(settings.date_min, "%Y-%m-%d") + 
@@ -178,9 +185,11 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
                 shutil.copy(path_to_config, tmp_config)
                 # update config file
                 with open(tmp_config, "r") as f:
-                    config = yaml.load(f, Loader=yaml.SafeLoader)
-                config['date_min'] = date_start_list[i].strftime("%Y-%m-%d")
-                config['date_max'] = date_end_list[i].strftime("%Y-%m-%d")
+                    config = yaml.load(f, Loader=yaml.SafeLoader)   
+                config['date_min'] = date_start_list[i].date() #.strftime("%Y-%m-%d") # can't be string since eeharvest can't strings
+                config['date_max'] = date_end_list[i].date() #.strftime("%Y-%m-%d")
+                if config['target_sources']['GEE']['preprocess']['reduce'] is None:
+                    config['target_sources']['GEE']['preprocess']['reduce'] = agg_type
                 with open(tmp_config, "w") as f:
                     yaml.dump(config, f)
                 # run eeharvest
@@ -197,14 +206,20 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
                             # Join the root and file to get the full path
                             file_path = os.path.join(root, file)
                             gee_filenames.append(file_path)
+                layers = [Path(filename).resolve().stem for filename in gee_filenames]
                 outfnames += gee_filenames
-                layernames += [Path(filename).resolve().stem for filename in gee_filenames]
+                layernames += layers
                 agg_list += [agg_type] * len(gee_filenames)
-                layer_titles += [layername + "_" + agg_type + "_" + date_start_list[i].strftime("%Y-%m-%d") + 
-                "-to-" + date_end_list[i].strftime("%Y-%m-%d") for layername in layernames]
+                layer_titles += [layer + "_" + agg_type + "_" + date_start_list[i].strftime("%Y-%m-%d") + 
+                "-to-" + date_end_list[i].strftime("%Y-%m-%d") for layer in layers]
                 
                 # remove temporary config file
                 os.remove(tmp_config)
+
+        # rename outfname files to layer_titles + .tif
+        for i in range(len(outfnames)):
+            os.rename(outfnames[i], os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + ".tif"))
+            outfnames[i] = os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + ".tif")
 
         download_log = update_logtable(
             download_log,
@@ -241,7 +256,8 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             layer_titles = []
             for layername in dea_layernames:
                 # get files for layername 
-                files_layer = [os.path.basename(x) for x in files_dea if layername in x]
+                #files_layer = [os.path.basename(x) for x in files_dea if layername in x]
+                files_layer = [x for x in files_dea if layername in x]
                 xdr = temporal.multiband_raster_to_xarray(files_layer)
 
                 # replace values with nan_value with nan so that aggregation works properly
