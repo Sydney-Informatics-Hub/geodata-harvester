@@ -186,12 +186,26 @@ def aggregate_temporal(xdr,
     agg_list : list of strings of aggregation methods
 
     """
-    nodata_names = ["_FillValue", "missing_value", "nodata", "nodatavalue"]
+
     if fill_nan:
+        # Define the possible attribute names for fill values
+        nodata_names = ["_FillValue", "missing_value", "nodata", "nodatavalue"]
+        nodata_name_found = False
         for nodata_name in nodata_names:
             if nodata_name in xdr.attrs:
                 xdr = xdr.where(xdr != xdr.attrs[nodata_name], np.nan)
+                nodata_name_found = True
                 break
+        # Check for case-insensitive nodata names
+        if not nodata_name_found:
+            for key, value in xdr.attrs.items():
+                if key.lower() in [attr.lower() for attr in nodata_names]:
+                    xdr = xdr.where(xdr != value, np.nan)
+                    nodata_name_found = True
+                    break
+        if not nodata_name_found:
+            print("No nodata value found in attributes. Will not fill nan values.")
+
 
     # Check the aggregation methods are okay
     agg_types = ["mean", "median", "sum", "perc95", "perc5", "max", "min"]
