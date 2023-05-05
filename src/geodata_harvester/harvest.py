@@ -258,6 +258,16 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
                 # get files for layername 
                 #files_layer = [os.path.basename(x) for x in files_dea if layername in x]
                 files_layer = [x for x in files_dea if layername in x]
+
+                # Check if there are multiple files for the same layer, 
+                # if not assume no temporal aggregation and skip loop
+                if len(files_layer) == 1:
+                    outfname_dea_list += files_layer
+                    layer_titles += [layername]
+                    layer_list += [layername]
+                    agg_list += ['None']
+                    continue
+
                 xdr = temporal.multiband_raster_to_xarray(files_layer)
 
                 # replace values with nan_value with nan so that aggregation works properly
