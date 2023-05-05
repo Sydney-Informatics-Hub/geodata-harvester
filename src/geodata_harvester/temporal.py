@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 import rioxarray
 import xarray as xr
+import datetime
 
 
 def combine_rasters_temporal(
@@ -303,6 +304,13 @@ def get_date_after_last_underscore(file_list):
 
         # Remove the file format ending
         last_part = last_part.rsplit('.', 1)[0]
+
+        # test if the last part is a date
+        try:
+            datetime.datetime.strptime(last_part, '%Y%m%d')
+        except ValueError:
+            print("The last part of the filename is not a date: ", last_part)
+            raise ValueError
 
         result.append(last_part)
 
