@@ -149,21 +149,26 @@ def xarray2tif(ds, outfname, layername):
 
     for i in range(len(ds.time)):
 
-        # We will use the date of the image to name the GeoTIFF
+        # We will the date of the image to name the GeoTIFF
         date = ds.isel(time=i).time.dt.strftime("%Y-%m-%d").data
         # print(f'Writing {date}')
 
         da = ds.isel(time=i)
+        attr = ds.attrs
         dsnew[str(date)] = xarray.DataArray(
             da.variables[layername][:],
             dims=["lat", "lon"],
             coords={"lat": da.variables["lat"], "lon": da.variables["lon"]},
+            name = str(date)     
         )
+        dsnew[str(date)].attrs = {'long_name': str(date)}
 
         # Write GeoTIFF with datacube libary for cloud optimized GeoTIFFs (COG)
         # write_cog(geo_im=singletimestamp_da,
         #         fname=os.path.join(outpath,f'{outfname_base}_{date}.tif',
         #         overwrite=True)
+
+    
     # Set crs
     dsnew.rio.write_crs(4326, inplace=True)
 
@@ -272,35 +277,6 @@ def get_SILO_layers(
 
     return fnames_out_silo
     
-
-
-def process_raster_daterange(infnames, date_start, date_end, outfname, layername):
-    """ Combines all the raster data into one xarray dataset, trimming to the date range, 
-    and saves it as a multiband tif file.
-
-    Input:
-        infnames : list of input filenames
-        date_start : str, start date of time series in format 'YYYY-MM-DD'
-        date_end : str, end date of time series in format 'YYYY-MM-DD'
-        outfname : str, path+name of output file
-    """
-    # Read all the raster data into one xarray dataset
-    try:
-        # Requires dask installed
-        ds = xarray.open_mfdataset(infnames, combine="by_coords")
-    except:
-        # If dask is not installed, merge it this way (not as memory efficient)
-        ds = xarray.merge([xarray.open_dataset(f) for f in infnames])
-    # Clip to date range
-    ds = ds.sel(time=slice(date_start, date_end))
-    # Save file
-    # if file extension is tif, save as 
-    if outfname.endswith('.tif'):
-        xarray2tif(ds, outfname, layername)
-    if outfname.endswith('.nc'):
-        ds.to_netcdf(outfname)
-    # Close file
-    ds.close()
 
 
 

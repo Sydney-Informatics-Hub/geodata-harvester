@@ -307,7 +307,7 @@ def get_date_after_last_underscore(file_list):
 
         # test if the last part is a date
         try:
-            datetime.datetime.strptime(last_part, '%Y%m%d')
+            datetime.datetime.strptime(last_part, '%Y-%m-%d')
         except ValueError:
             print("The last part of the filename is not a date: ", last_part)
             raise ValueError
