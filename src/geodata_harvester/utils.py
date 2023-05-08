@@ -35,6 +35,7 @@ from rasterio.plot import show
 import numpy as np
 import pandas as pd
 import geopandas as gpd
+import rioxarray as rxr
 
 from pyproj import CRS
 from pathlib import Path
@@ -603,6 +604,7 @@ def raster_query(longs, lats, rasters, titles=None):
         raster = rasterio.open(filepath)
         # Get the transformation crs data
         gt = raster.transform
+
         # This will only be the first band, usally multiband has same index.
         arr = raster.read(1)
 
@@ -642,6 +644,85 @@ def raster_query(longs, lats, rasters, titles=None):
         # dd the values at the points to the dataframe
         gdf[filepath] = values
         gdf = gdf.rename(columns={filepath: colname})
+
+    return gdf
+
+
+def extract_values_from_rasters(coords, raster_files, method = "nearest"):
+    """
+    Extract values from a list of raster files at given coordinates using rioxarray.
+    Values will be extracted for all bands in each raster file.
+    Return geopandas DataFrame with extracted values and geometry.
+
+    Input:
+        coords: A list of tuples containing longitude and latitude coordinates.
+                Format: [(lng1, lat1), (lng2, lat2), ...]
+
+        raster_files: A list of raster file paths.
+                      Format: ["path/to/raster1.tif", "path/to/raster2.tif", ...]
+
+        method: The method to select values from raster files for 
+                inexact matches between input coords and raster coords:
+                 {"nearest", "pad", "ffill", "backfill", "bfill"}, optional
+            - nearest (Default): use nearest valid index value. 
+            - pad / ffill: propagate last valid index value forward
+            - backfill / bfill: propagate next valid index value backward
+            - None: only exact matches
+
+    Output:
+        A geopandas DataFrame containing the extracted values and geometry, where each row represents
+        a coordinate point and the columns represent the bands for each raster file.
+        Output column names are the raster file name plus the band name.
+    """
+    all_coords_data = []
+    column_names = []
+    
+    for raster_file in raster_files:
+        # Open the raster file with rioxarray
+        ds = rxr.open_rasterio(raster_file)
+        
+        # Extract values for all coordinates
+        coords_data = []
+        for lng, lat in coords:
+            # Select the nearest lat and lon coordinates from the dataset
+            data = ds.sel(x=lng, y=lat, method=method)
+            
+            # Convert the data to a numpy array and flatten it
+            data_array = data.values.flatten().tolist()
+            
+            # Add the extracted values to the list
+            coords_data.append(data_array)
+
+        # Concatenate the extracted values from all raster files
+        all_coords_data.append(coords_data)
+
+        # try to det the band names from the dataset, otherwise use the band number
+        try:
+            band_names = ds.attrs['long_name']
+            if isinstance(band_names, str):
+                band_names = [band_names]
+            if isinstance(band_names, tuple):
+                band_names = list(band_names)
+            if len(band_names) != len(ds.band.values.tolist()):
+                band_names = ds.band.values.tolist()
+        except:
+            band_names = ds.band.values.tolist()
+        # get the raster name
+        raster_name = os.path.basename(raster_file).split(".")[0]
+        # Add the raster name to the band names
+        band_names = [f"{raster_name}_{band_name}" for band_name in band_names]
+        # Add the band names to the column names list
+        column_names.extend(band_names)
+
+    # Convert the data to a pandas DataFrame and include the column names
+    all_coords_data = pd.DataFrame(np.hstack(all_coords_data), columns=column_names)
+
+    # save all_coords_data with coords as geopackage with geopandas
+    gdf = gpd.GeoDataFrame(all_coords_data, geometry=gpd.points_from_xy(longs, lats), crs="EPSG:4326")
+
+    # insert the coords into the dataframe
+    gdf.insert(0, 'Longitude', coords[:,0])
+    gdf.insert(1, 'Latitude', coords[:,1])
 
     return gdf
 
