@@ -4,14 +4,12 @@ This script is running the headless version of the data harvester.
 The following main steps are automatically executed within the run() function:
     - loading settings from config file
     - creating bounding box from input file points if not provided
-    - downloading data layers as sepcified in config file
+    - downloading data layers as specified in config file
+    - processing data layers as specified in config file
     - extract data for point locations provided in input file (name specified in settings)
     - save results to disk as csv and geopackage
 """
 
-# TODO: add validation to infile, colname_lng, colname_lat, if not in config, to
-# generate blanks so that the script doesn't crash. In the future, maybe let the
-# main code handle this, but for now, this is a quick fix.
 
 import os
 from pathlib import Path
@@ -52,8 +50,6 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
     cprint("Starting the data harvester -----", "magenta", attrs=["bold"])
 
     # Load config file (based on notebook for now, will optimise later)
-    # with open(path_to_config, "r") as f:
-    # settings = yaml.load(f, Loader=yaml.SafeLoader)
     settings = hw.load_settings(path_to_config)
 
     # Count number of sources to download from
@@ -531,13 +527,13 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
         # Extract datatable from rasters given input coordinates
         # gdf = utils.raster_query(longs, lats, rasters, titles) # old slower version
         gdf = utils.extract_values_from_rasters(coords, rasters)
-        # Save the results table to a csv
-        gdf.to_csv(
-            os.path.join(settings.outpath, "results.csv"), index=True, mode="w"
-        )
-        # Save also as geopackage
+        # Save as geopackage
         gdf.to_file(os.path.join(settings.outpath,
                     "results.gpkg"), driver="GPKG")
+        # Save the results table to a csv as well
+        gdf.drop("geometry", axis=1).to_csv(
+            os.path.join(settings.outpath, "results.csv"), index=True, mode="w"
+        )
         utils.msg_success(
             f"Data points extracted to {settings.outpath}results.gpkg")
 
