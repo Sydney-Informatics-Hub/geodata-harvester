@@ -722,7 +722,7 @@ def extract_values_from_rasters(coords, raster_files, method = "nearest"):
     all_coords_data = pd.DataFrame(np.hstack(all_coords_data), columns=column_names)
 
     # save all_coords_data with coords as geopackage with geopandas
-    gdf = gpd.GeoDataFrame(all_coords_data, geometry=gpd.points_from_xy(longs, lats), crs="EPSG:4326")
+    gdf = gpd.GeoDataFrame(all_coords_data, geometry=gpd.points_from_xy(coords[:,0], coords[:,1]), crs="EPSG:4326")
 
     # insert the coords into the dataframe
     gdf.insert(0, 'Longitude', coords[:,0])

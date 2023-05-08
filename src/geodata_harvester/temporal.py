@@ -77,6 +77,7 @@ def combine_rasters_temporal(
             return None
 
         array_list.append(xds)
+        print("attrs", xds.attrs[attribute_name])
         attrs = attrs + xds.attrs[attribute_name]
         if first == True:
             coords = xds[channel_name].values
