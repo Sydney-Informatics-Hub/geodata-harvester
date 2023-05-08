@@ -84,6 +84,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
         gdfpoints = gpd.read_file(settings.infile)
         longs = gdfpoints[settings.colname_lng].astype(float)
         lats = gdfpoints[settings.colname_lat].astype(float)
+        coords = np.vstack((longs, lats)).T
 
         if settings.target_bbox is None:
             settings.target_bbox = (
@@ -528,7 +529,8 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
         cprint(
             f"\nExtracting data points for {fn}  -----", "magenta", attrs=["bold"])
         # Extract datatable from rasters given input coordinates
-        gdf = utils.raster_query(longs, lats, rasters, titles)
+        # gdf = utils.raster_query(longs, lats, rasters, titles) # old slower version
+        gdf = utils.extract_values_from_rasters(coords, rasters)
         # Save the results table to a csv
         gdf.to_csv(
             os.path.join(settings.outpath, "results.csv"), index=True, mode="w"

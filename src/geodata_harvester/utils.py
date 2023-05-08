@@ -19,6 +19,7 @@ _get_coords_at_point (internal): Finds closest index of a point-location in an
     array (raster).
 raster_query: Given a longitude,latitude value, return the value at that point
     of a raster/tif.
+extract_values_from_rasters: Given a list of rasters, extract the values at coords.
 init_logtable: Stores metdata for each step of raster download and processing.
 update_logtable: Updates each the logtable with new information.
 """
@@ -576,7 +577,7 @@ def _get_coords_at_point(gt, lon, lat):
 def raster_query(longs, lats, rasters, titles=None):
     """
     DEPRECATED: Use extract_values_from_rasters instead.
-    
+
     given a longitude,latitude value, return the value at that point of the
         first channel/band in the raster/tif.
 
