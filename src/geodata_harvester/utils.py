@@ -575,6 +575,8 @@ def _get_coords_at_point(gt, lon, lat):
 
 def raster_query(longs, lats, rasters, titles=None):
     """
+    DEPRECATED: Use extract_values_from_rasters instead.
+    
     given a longitude,latitude value, return the value at that point of the
         first channel/band in the raster/tif.
 
@@ -676,43 +678,44 @@ def extract_values_from_rasters(coords, raster_files, method = "nearest"):
     """
     all_coords_data = []
     column_names = []
-    
-    for raster_file in raster_files:
-        # Open the raster file with rioxarray
-        ds = rxr.open_rasterio(raster_file)
-        
-        # Extract values for all coordinates
-        coords_data = []
-        for lng, lat in coords:
-            # Select the nearest lat and lon coordinates from the dataset
-            data = ds.sel(x=lng, y=lat, method=method)
-            
-            # Convert the data to a numpy array and flatten it
-            data_array = data.values.flatten().tolist()
-            
-            # Add the extracted values to the list
-            coords_data.append(data_array)
 
-        # Concatenate the extracted values from all raster files
-        all_coords_data.append(coords_data)
+    with spin("Extracting values from raster files...", "blue") as s:
+        for raster_file in raster_files:
+            # Open the raster file with rioxarray
+            ds = rxr.open_rasterio(raster_file)
+            
+            # Extract values for all coordinates
+            coords_data = []
+            for lng, lat in coords:
+                # Select the nearest lat and lon coordinates from the dataset
+                data = ds.sel(x=lng, y=lat, method=method)
+                
+                # Convert the data to a numpy array and flatten it
+                data_array = data.values.flatten().tolist()
+                
+                # Add the extracted values to the list
+                coords_data.append(data_array)
 
-        # try to det the band names from the dataset, otherwise use the band number
-        try:
-            band_names = ds.attrs['long_name']
-            if isinstance(band_names, str):
-                band_names = [band_names]
-            if isinstance(band_names, tuple):
-                band_names = list(band_names)
-            if len(band_names) != len(ds.band.values.tolist()):
+            # Concatenate the extracted values from all raster files
+            all_coords_data.append(coords_data)
+
+            # try to det the band names from the dataset, otherwise use the band number
+            try:
+                band_names = ds.attrs['long_name']
+                if isinstance(band_names, str):
+                    band_names = [band_names]
+                if isinstance(band_names, tuple):
+                    band_names = list(band_names)
+                if len(band_names) != len(ds.band.values.tolist()):
+                    band_names = ds.band.values.tolist()
+            except:
                 band_names = ds.band.values.tolist()
-        except:
-            band_names = ds.band.values.tolist()
-        # get the raster name
-        raster_name = os.path.basename(raster_file).split(".")[0]
-        # Add the raster name to the band names
-        band_names = [f"{raster_name}_{band_name}" for band_name in band_names]
-        # Add the band names to the column names list
-        column_names.extend(band_names)
+            # get the raster name
+            raster_name = os.path.basename(raster_file).split(".")[0]
+            # Add the raster name to the band names
+            band_names = [f"{raster_name}_{band_name}" for band_name in band_names]
+            # Add the band names to the column names list
+            column_names.extend(band_names)
 
     # Convert the data to a pandas DataFrame and include the column names
     all_coords_data = pd.DataFrame(np.hstack(all_coords_data), columns=column_names)
