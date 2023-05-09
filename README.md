@@ -1,6 +1,6 @@
 # Geodata-Harvester
 
-<h3><em>Automate geodata harvesting from the web and jumpstart your analysis with a ready-made set of spatial-temporal processed maps and dataframes.</em></h3> 
+<h3><em>Automate geodata harvesting from the web and jumpstart your analysis with a ready-made set of spatiotemporal processed maps and data tables.</em></h3> 
 
 <center><a><img src="quarto/images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
 
@@ -73,15 +73,16 @@ Geodata-Harvester is designed as a modular and maintainable project in the form 
 
 Below is a list of features available for the geodata-harvester package. Please check the project Github webpage and notebooks for examples, data selection, and other settings.
 
-- enabling reproducible workflows via YAML settings files
-- automatic data retrieval from geodata APIs for given locations and dates
-- automatic download and spatial-temporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale.
-- support for multiple temporal aggregation options and spatial-temporal buffer
-- automatic extraction of retrieved data into ready-made dataframes for ML training
-- automatic generation of ready-made aligned maps and data for ML prediction models
-- visualisation of downloaded and aligned maps
-- support for saving and loading settings via interactive widgets
-- with connectivity support to the Google Earth Engine API, perform petabyte-scale operations which include temporal cloud/shadow masking and automatic calculation of spectral indices
+- enabling reproducible workflows via YAML settings files.
+- automatic data retrieval from geodata APIs for given locations and dates.
+- automatic download and spatiotemporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale.
+- support for time-series data extraction for multiple time slices. 
+- automatic extraction of retrieved data into ready-made dataframes for ML training.
+- automatic generation of ready-made aligned maps in GeoTiff format.
+- preview of downloaded and aligned maps.
+- support for saving and loading settings via interactive widgets.
+- with connectivity support to the Google Earth Engine API, perform petabyte-scale operations which include temporal cloud/shadow masking and automatic calculation of spectral indices.
+- example notebooks and use-cases are provided for the user to get started.
 
 For more features, please see the [API reference documentation](https://sydney-informatics-hub.github.io/geodata-harvester/API/geodata_harvester/index.html).
 
@@ -147,8 +148,8 @@ The Geodata-Harvester can be easily installed also on other cloud services (e.g.
 You may now invoke the geodata-harvester directly from a python terminal with:
 
 ```python
-import geodata_harvester as gh
-gh.harvest.run(PATH_TO_SETTINGS_YAMLFILE)
+import geodata_harvester as gdh
+gdh.harvest.run(PATH_TO_SETTINGS_YAMLFILE)
 ```
 
 **Note the subtle but important difference in use of an underscore `_` to import the package and the use of a dash `-` to install it!**
