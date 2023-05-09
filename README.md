@@ -21,7 +21,7 @@ For the R-package wrapper of the Geodata-Harvester, please visit the [Github dat
 
 ## 📚 Table of Contents
 
-- [Introduction](#🌐-introduction)
+- [Introduction](#💡-introduction)
 - [Data Sources](#🌍-data-sources)
 - [Functionality](#⚙️-functionality)
 - [Key Features](#🌟-key-features)
@@ -39,7 +39,7 @@ For the R-package wrapper of the Geodata-Harvester, please visit the [Github dat
 - [License](#📄-license)
 
 
-## 🌐 Introduction
+## 💡 Introduction
 
 There is an enormous amount of national/global space-time data that is free and accessible. Examples are the numerous satellite platforms, weather, soil landscape grid of Australia. Many have a temporal dimension so for any point in Australia you can extract a time series of remote sensing and weather data and soil and terrain site variables. In the case of time series covariates there are a number of post-processing steps that a user can undertake to extract meaning, e.g. temporal means, aggregating in time. All of the above is a non-trivial task and a workflow where a user could enter a point (s) and get a tidy data frame of data cube variables would be a step towards people understanding its value and being able to jumpstart their analysis. This project will contribute processing tools for finding, extracting and converting these key data layers.
 
