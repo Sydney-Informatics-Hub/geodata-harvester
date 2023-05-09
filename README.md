@@ -21,9 +21,9 @@ For the R-package wrapper of the Geodata-Harvester, please visit the [Github dat
 
 ## 📚 Table of Contents
 
-- [Introduction](#💡-introduction)
-- [Data Sources](#🌍-data-sources)
-- [Functionality](#⚙️-functionality)
+- [Introduction](#-introduction)
+- [Data Sources](#-data-sources)
+- [Functionality](#-functionality)
 - [Key Features](#🌟-key-features)
 - [Installation](#🔧-installation)
     - [Conda or Mamba](#conda-or-mamba)
