@@ -1,13 +1,19 @@
 """
-This script is running the headless version of the data harvester.
+This script is running the headless version of the geodata-harvester.
 
 The following main steps are automatically executed within the run() function:
     - loading settings from config file
     - creating bounding box from input file points if not provided
     - downloading data layers as specified in config file
     - processing data layers as specified in config file
+    - save downloaded image files to disk as GeoTiffs
+    - save summary table of downloaded files as CSV
     - extract data for point locations provided in input file (name specified in settings)
-    - save results to disk as csv and geopackage
+    - save extracted point results to disk as CSV and as geopackage 
+
+Example call within Python:
+    from geodata_harvester import harvest
+    harvest.run(path_to_config))
 """
 
 
@@ -17,6 +23,7 @@ import geopandas as gpd
 from termcolor import cprint
 import yaml
 import shutil
+import argparse
 import numpy as np
 from datetime import datetime, timedelta
 from geodata_harvester.widgets import harvesterwidgets as hw
@@ -27,7 +34,7 @@ from geodata_harvester import (getdata_dea, getdata_dem,  getdata_landscape,
 from eeharvest import harvester as eeharvester
 
 
-def run(path_to_config, log_name="download_log", preview=False, return_df=False):
+def run(path_to_config, log_name="download_summary", preview=False, return_df=False):
     """
     A headless version of the Data-Harvester (with some limitations).
     Results are saved to disk.
@@ -272,9 +279,8 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
                 xdr = xdr.where(xdr != nan_value, np.nan)
 
                 """
-                Aggregate over temporal period (use median by default to avoid potential outliers such as clouds)
-                Note that some DEA layers have quality flags that can be used to filter out clouds. 
-                This is not implemented here because it is layer-specific.
+                Aggregate over temporal period by using median along the time dimension.
+                Note that some DEA layers may have quality flags but these are not applied here because it is layer-specific.
                 """
                 outfname_list, agg_list = temporal.aggregate_temporal(
                     xdr,
@@ -512,8 +518,7 @@ def run(path_to_config, log_name="download_log", preview=False, return_df=False)
             pass
 
     # save log to file
-    logfile = settings.outpath + log_name + ".csv"
-    download_log.to_csv(logfile, index=False)
+    download_log.to_csv(os.path.join(settings.outpath, log_name + ".csv"), index=False)
 
     # extract filename from settings.infile
     # Select all processed data
