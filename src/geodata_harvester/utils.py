@@ -722,7 +722,7 @@ def extract_values_from_rasters(coords, raster_files, method = "nearest"):
     # Convert the data to a pandas DataFrame and include the column names
     all_coords_data = pd.DataFrame(np.hstack(all_coords_data), columns=column_names)
     
-    # Check for poteniral duplicate column names in all_coords_data
+    # Check for potential duplicate column names in all_coords_data
     if all_coords_data.columns.duplicated().any():
         print("Duplicate column names found. Please check the input raster files.")
         # drop duplicate columns and leave only first occurence
