@@ -19,33 +19,33 @@ The Geodata-Harvester Python package offers reusable and automated workflows for
 
 For the R-package wrapper of the Geodata-Harvester, please visit the [Github dataharvesteR project](https://github.com/Sydney-Informatics-Hub/dataharvester).
 
-## Content
+## 📚 Table of Contents
 
-- [Introduction](#introduction)
-- [Data Sources](#data-sources)
-- [Functionality](#functionality)
-- [Key Features](#key-features)
-- [Installation](#installation)
+- [Introduction](#🌐-introduction)
+- [Data Sources](#🌍-data-sources)
+- [Functionality](#⚙️-functionality)
+- [Key Features](#🌟-key-features)
+- [Installation](#🔧-installation)
     - [Conda or Mamba](#conda-or-mamba)
     - [PyPI](#pypi)
     - [Google Earth Engine extension](#google-earth-engine-extension)
     - [Local development](#local-development)
     - [Workshop Cloud Sandbox](#workshop-cloud-sandbox)
-- [How to get started](#how-to-get-started)
-- [How to add new data source modules](#how-to-add-new-data-source-modules)
-- [Code reference API](#code-reference-api)
-- [Contributions](#contributions)
-- [Attribution and Acknowledgments](#attribution-and-acknowledgments)
-- [License](#license)
+- [How to get started](#🚀-how-to-get-started)
+- [How to add new data source modules](#➕-how-to-add-new-data-source-modules)
+- [Code reference API](#📚-code-reference-api)
+- [Contributions](#🤝-contributions)
+- [Attribution and Acknowledgments](#👏-attribution-and-acknowledgments)
+- [License](#📄-license)
 
 
-## Introduction
+## 🌐 Introduction
 
 There is an enormous amount of national/global space-time data that is free and accessible. Examples are the numerous satellite platforms, weather, soil landscape grid of Australia. Many have a temporal dimension so for any point in Australia you can extract a time series of remote sensing and weather data and soil and terrain site variables. In the case of time series covariates there are a number of post-processing steps that a user can undertake to extract meaning, e.g. temporal means, aggregating in time. All of the above is a non-trivial task and a workflow where a user could enter a point (s) and get a tidy data frame of data cube variables would be a step towards people understanding its value and being able to jumpstart their analysis. This project will contribute processing tools for finding, extracting and converting these key data layers.
 
 Developed as part of the Agricultural Research Federation (AgReFed), Geodata-Harvester is an open-source software that allows users to jumpstart their analysis with a suitable set of spatial-temporal aligned raster maps and dataframes.
 
-## Data Sources
+## 🌍 Data Sources
 
 A detailed list of all available layers and their description can be found in [Data Overview](quarto/docs/Data_Overview.md).
 
@@ -69,7 +69,7 @@ The main goal of the Data Harvester is to enable researchers with reusable workf
 
 Geodata-Harvester is designed as a modular and maintainable project in the form of a multi-stage pipeline by providing explicit boundaries among tasks. To encourage interaction and experimentation with the pipeline, multiple frontend notebooks and use case scenarios are provided.
 
-## Key Features
+## 🌟 Key Features
 
 Below is a list of features available for the geodata-harvester package. Please check the project Github webpage and notebooks for examples, data selection, and other settings.
 
@@ -86,7 +86,7 @@ Below is a list of features available for the geodata-harvester package. Please 
 
 For more features, please see the [API reference documentation](https://sydney-informatics-hub.github.io/geodata-harvester/API/geodata_harvester/index.html).
 
-## Installation
+## 🔧 Installation
 
 Geodata-Harvester can be run on cloud-servers (e.g., in JupyterHub environment) or on your local machine. 
 Example notebooks for importing and using the package can be found in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks). The package can be installed via PyPI or Conda:
@@ -143,7 +143,7 @@ The Jupyter environment is hosted on the ARDC Nectar Research Cloud in partnersh
 The Geodata-Harvester can be easily installed also on other cloud services (e.g., Google Colab, Azure Notebooks).
 
 
-## How to get started
+## 🚀 How to get started
 
 You may now invoke the geodata-harvester directly from a python terminal with:
 
@@ -162,24 +162,24 @@ To get started, some example workflows are provided as Jupyter notebooks:
 
 If you would like to learn more about the Geodata-Harvester, please visit our [Workshop webpage](https://sydney-informatics-hub.github.io/AgReFed-Workshop/).
 
-## How to add new data source modules
+## ➕ How to add new data source modules
 
 The Geodata-Harvester is designed to be extendable and new data source modules can be added as Python modules (for examples, see `getdata_*.py` modules). If you would like to add a new data source, please follow the [adding new data source guidelines](quarto/docs/How_to_add_DataSources.md)  
 
 We recommend to fork the geodata-harvester repo and develop new modules in a local environment. If you would like to contribute your data source module to the geodata-harvester package, please visit the [geodata-harvester contribution guidelines](quarto/docs/Contributing.md).
 
 
-## Code reference API
+## 📚 Code reference API
 
 An auto-generated API reference documentation is available [here](https://sydney-informatics-hub.github.io/geodata-harvester/API/geodata_harvester/index.html).
 
-## Contributions
+## 🤝 Contributions
 We are happy for any contribution to the geodata-harvester, whether feedbacks and bug reports via github Issues, adding use-case examples via notebook contributions, to improving source-code and adding new or updating existing data source modules. 
 
 For more details about about how to contribute to the development, please visit the [Geodata-Harvester contribution guidelines](quarto/docs/Contributing.md).
 
 
-## Attribution and Acknowledgments
+## 👏 Attribution and Acknowledgments
 
 This software was developed by the Sydney Informatics Hub, a core research facility of the University of Sydney, as part of the Data Harvesting project for the Agricultural Research Federation (AgReFed).
 
@@ -191,7 +191,7 @@ If you make use of this software for your research project, please include the f
 
 AgReFed is supported by the Australian Research Data Commons (ARDC) and the Australian Government through the National Collaborative Research Infrastructure Strategy (NCRIS).
 
-## License
+## 📄 License
 
 Copyright 2023 The University of Sydney
 
