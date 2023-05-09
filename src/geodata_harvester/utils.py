@@ -715,11 +715,18 @@ def extract_values_from_rasters(coords, raster_files, method = "nearest"):
             raster_name = os.path.basename(raster_file).split(".")[0]
             # Add the raster name to the band names
             band_names = [f"{raster_name}_{band_name}" for band_name in band_names]
+
             # Add the band names to the column names list
             column_names.extend(band_names)
 
     # Convert the data to a pandas DataFrame and include the column names
     all_coords_data = pd.DataFrame(np.hstack(all_coords_data), columns=column_names)
+    
+    # Check for poteniral duplicate column names in all_coords_data
+    if all_coords_data.columns.duplicated().any():
+        print("Duplicate column names found. Please check the input raster files.")
+        # drop duplicate columns and leave only first occurence
+        all_coords_data = all_coords_data.loc[:,~all_coords_data.columns.duplicated()].copy()
 
     # save all_coords_data with coords as geopackage with geopandas
     gdf = gpd.GeoDataFrame(all_coords_data, geometry=gpd.points_from_xy(coords[:,0], coords[:,1]), crs="EPSG:4326")
