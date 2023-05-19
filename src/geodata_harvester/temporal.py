@@ -77,7 +77,7 @@ def combine_rasters_temporal(
             return None
 
         array_list.append(xds)
-        print("attrs", xds.attrs[attribute_name])
+        #print("attrs", xds.attrs[attribute_name])
         attrs = attrs + xds.attrs[attribute_name]
         if first == True:
             coords = xds[channel_name].values
@@ -234,7 +234,13 @@ def aggregate_temporal(xdr,
             xdr_groups = xx.groupby("time.month")
 
     elif type(period) == int:
-        bins = int(np.floor(len(xdr) / period))
+        time_start = xdr.time.values[0].astype('datetime64[s]').tolist()
+        time_end = xdr.time.values[-1].astype('datetime64[s]').tolist()
+        bins = (time_end - time_start).days // period
+        #bins = int(np.floor(len(xdr) / period)) # this only works if len(xdr) is in days
+        if bins == 0:
+            # If the period is smaller than the time step, use the time step as the period
+            bins = 1
         xdr_groups = xdr.groupby_bins("time", bins)
 
         if buffer != None:
