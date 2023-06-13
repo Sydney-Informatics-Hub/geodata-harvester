@@ -264,6 +264,7 @@ def run(path_to_config, log_name="download_summary", preview=False, return_df=Fa
             outfname_dea_list = []
             layer_list = []
             layer_titles = []
+            agg_list = []
             for layername in dea_layernames:
                 # get files for layername 
                 #files_layer = [os.path.basename(x) for x in files_dea if layername in x]
