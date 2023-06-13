@@ -24,7 +24,7 @@ https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapSe
 
 This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
 
-Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
+Copyright 2023 Sydney Informatics Hub (SIH), The University of Sydney
 
 This open-source software is released under the LGPL-3.0 License.
 
@@ -36,6 +36,7 @@ import os
 from datetime import datetime, timezone
 from geodata_harvester import utils
 from geodata_harvester.utils import spin
+from geodata_harvester import arc2meter
 
 import rasterio
 
@@ -44,11 +45,8 @@ from geodata_harvester import write_logs
 from owslib.wcs import WebCoverageService
 from rasterio.plot import show
 from termcolor import cprint
-
-try:
-    from osgeo import gdal
-except ImportError:
-    import gdal
+import rioxarray
+import numpy as np
 
 
 def get_demdict():
@@ -284,6 +282,57 @@ def plot_raster(infname):
     show(data)
 
 
+
+def calculate_slope_aspect(fname_dem, fname_out, type='slope'):
+    """
+    Calculate slope or aspect from DEM and save as geotiff.
+
+    Parameters
+    ----------
+    fname_dem : str
+        DEM file name
+    fname_out : str
+        output filename
+    type : str
+        'slope' or 'aspect'
+    """
+    # check if type is valid
+    if type not in ['slope', 'aspect']:
+        raise ValueError(f"Type {type} not recognised, must be 'slope' or 'aspect'")
+
+    # Open the DEM file
+    dem = rioxarray.open_rasterio(fname_dem, masked=True)
+
+    # convert dem  to meters if necessary
+    if dem.rio.crs != 'EPSG:4326':
+        dem = dem.rio.reproject('EPSG:4326')
+    # caculate factor for converting degrees to meter based on Latitude
+    deg2meter_x = arc2meter.calc_arc2meter(3600, dem.y)[0] # this is an array (due to Latitude dependency in conversion)
+    deg2meter_y = arc2meter.calc_arc2meter(3600, dem.y)[1] # ths is a constant
+
+    # Calculate the gradient in the x and y directions
+    gradient_x = dem.differentiate("x") / deg2meter_x
+    gradient_y = dem.differentiate("y") / deg2meter_y
+
+    # Calculate slope:
+    if type == 'slope':
+        gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
+        result = np.arctan(gradient_magnitude) * 180 / np.pi
+
+    if type == 'aspect':
+        result = np.arctan2(gradient_x, gradient_y) * 180 / np.pi + 180
+
+    # mask out values where dem has zero
+    result = result.where(dem != 0, 0)
+
+    # Assign the coordinate reference system of the original DEM to the new raster
+    result = result.rio.write_crs(dem.rio.crs)
+
+    # Save the result as a new GeoTIFF file
+    result.rio.to_raster(fname_out)
+
+
+
 def dem2slope(fname_dem):
     """
     Calculate slope from DEM and save as geotiff
@@ -298,7 +347,7 @@ def dem2slope(fname_dem):
     # Get path for output
     path = os.path.dirname(fname_dem)
     fname_out = os.path.join(path, "Slope_" + fname)
-    gdal.DEMProcessing(fname_out, fname_dem, "slope")
+    calculate_slope_aspect(fname_dem, fname_out, type='slope')
     logging.info(f"✔  DEM slope from: {fname_dem}")
     utils.msg_success(f"DEM slope generated at: {fname_out}")
     return fname_out
@@ -318,7 +367,7 @@ def dem2aspect(fname_dem):
     # Get path for output
     path = os.path.dirname(fname_dem)
     fname_out = os.path.join(path, "Aspect_" + fname)
-    gdal.DEMProcessing(fname_out, fname_dem, "aspect")
+    calculate_slope_aspect(fname_dem, fname_out, type='aspect')
     logging.info(f"✓ | DEM aspect from: {fname_dem}")
     utils.msg_success(f"Aspect (from DEM) generated at: {fname_out}")
     return fname_out
