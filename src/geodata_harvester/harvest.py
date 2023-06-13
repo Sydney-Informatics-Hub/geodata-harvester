@@ -198,7 +198,12 @@ def run(path_to_config, log_name="download_summary", preview=False, return_df=Fa
                     yaml.dump(config, f)
                 # run eeharvest
                 gee_outpath = os.path.join(settings.outpath,'ee')
-                gee = eeharvester.auto(config=tmp_config, outpath=gee_outpath)
+                try:
+                    # Try to download gee images for the time interval. If no images available, skip.
+                    gee = eeharvester.auto(config=tmp_config, outpath=gee_outpath)
+                except Exception as e:
+                    print(e)
+                    continue
                 if not isinstance(gee.filenames, list):
                     # convert to list
                     gee.filenames = [gee.filenames]
@@ -220,21 +225,22 @@ def run(path_to_config, log_name="download_summary", preview=False, return_df=Fa
                 # remove temporary config file
                 os.remove(tmp_config)
 
-        # rename outfname files to layer_titles + .tif
-        for i in range(len(outfnames)):
-            os.rename(outfnames[i], os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + ".tif"))
-            outfnames[i] = os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + ".tif")
+        if len(outfnames) > 0:
+            # rename outfname files to layer_titles + .tif
+            for i in range(len(outfnames)):
+                os.rename(outfnames[i], os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + ".tif"))
+                outfnames[i] = os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + ".tif")
 
-        download_log = update_logtable(
-            download_log,
-            outfnames,
-            layernames,
-            "GEE",
-            settings,
-            layertitles=layer_titles,
-            agfunctions=agg_list,
-            loginfos="downloaded",
-        )
+            download_log = update_logtable(
+                download_log,
+                outfnames,
+                layernames,
+                "GEE",
+                settings,
+                layertitles=layer_titles,
+                agfunctions=agg_list,
+                loginfos="downloaded",
+            )
 
     # DEA
     if "DEA" in list_sources:
