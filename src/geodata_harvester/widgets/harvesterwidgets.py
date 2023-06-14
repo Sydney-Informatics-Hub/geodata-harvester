@@ -372,10 +372,10 @@ def gen_panel_silo():
         w_sel = widgets.Checkbox(
             value=False, description=option, disabled=False, indent=False
         )
-        w_temp = widgets.SelectMultiple(
+        w_temp = widgets.Select(
             # options=['Total','Median','Mean','Std','5pct','10pct','15pct','25pct','75pct','85pct','90pct','95pct'],
             options=["mean", "median", "sum", "std", "perc95", "perc5", "max", "min"],
-            value=["median"],
+            value="median",
             rows=2,
             description="",
             disabled=False,
@@ -766,7 +766,7 @@ def eval_widgets(w_settings, names):
     slist = {}
     for i in range(len(w_silo)):
         if w_silo[i][0].value:
-            slist[names_silo[i]] = list(w_silo[i][1].value)
+            slist[names_silo[i]] = w_silo[i][1].value
     dict_sources["SILO"] = slist
     # DEA
     slist = []
