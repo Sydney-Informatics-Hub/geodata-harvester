@@ -265,7 +265,7 @@ def gen_panel_st():
     disabled=False
 )
 
-    w_temp_intervals = widgets.IntSlider(
+    w_time_intervals = widgets.IntSlider(
         value=1,
         min=1,
         max=365,
@@ -295,15 +295,15 @@ def gen_panel_st():
         widgets.GridBox([widgets.Label("Bounding Box :"), w_target_bbox], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
         widgets.GridBox([widgets.Label("Spatial Resolution [arcsec]:"), w_target_res], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
         widgets.GridBox([widgets.Label(f"Start Date:".rjust(2)), w_date_min], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
-        widgets.GridBox([widgets.Label(f"Number of Temporal Slices:".rjust(3)), w_temp_intervals], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
+        widgets.GridBox([widgets.Label(f"Number of Temporal Slices:".rjust(3)), w_time_intervals], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
         widgets.GridBox([widgets.Label(f"End Date:".rjust(4)), w_date_max], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
         widgets.GridBox([widgets.Label(f"Temporal Buffer Window in Days:"), w_temp_buffer], layout=widgets.Layout(grid_template_columns="1fr 2fr")),
         # widgets.Box([widgets.Label("Select years:"), w_target_dates]),
         # widgets.Box([widgets.Label("Temporal Resolution [days]:"), w_temp_res]),
         ]
 
-    settings_st = [w_target_bbox, w_target_res, w_date_min, w_temp_intervals, w_date_max, w_temp_buffer]
-    settings_names = ["target_bbox", "target_res", "date_min", "temp_intervals", "date_max", "temp_buffer"]
+    settings_st = [w_target_bbox, w_target_res, w_date_min, w_time_intervals, w_date_max, w_temp_buffer]
+    settings_names = ["target_bbox", "target_res", "date_min", "time_intervals", "date_max", "temp_buffer"]
     panel_st = widgets.GridBox(
         items, layout=widgets.Layout(grid_template_columns="6fr 6fr")
     )
