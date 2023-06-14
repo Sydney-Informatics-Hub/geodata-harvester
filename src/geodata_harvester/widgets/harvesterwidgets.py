@@ -750,6 +750,8 @@ def eval_widgets(w_settings, names):
     assert len(names_st) == len(w_st)
     for i in range(len(w_st)):
         dict_settings[names_st[i]] = w_st[i].value
+    # correct potential floating error
+    dict_settings["target_res"] = round(dict_settings["target_res"], 4)
     # target sources settings
     # define for target source a dictionary
     # Loop over all settings and add the ones that are selected
@@ -832,19 +834,14 @@ def eval_widgets(w_settings, names):
     # Check bounding box:
     if type(dict_settings["target_bbox"]) == str:
         # remove string from list
-        if dict_settings["target_bbox"] != "":
-            dict_settings["target_bbox"] = ast.literal_eval(dict_settings["target_bbox"])
-        else:
-            # set bounding box around input data with padding +/- 0.05 deg
+        if dict_settings["target_bbox"] == "":
+             # set bounding box around input data with padding +/- 0.05 deg
             gdfpoints = gpd.read_file(dict_settings["infile"])
             longs = gdfpoints[dict_settings["colname_lng"]].astype(float)
-            lats = gdfpoints[dict_settings["colname_lng"]].astype(float)
-            dict_settings["target_bbox"] = [
-                min(longs) - 0.05,
-                min(lats) - 0.05,
-                max(longs) + 0.05,
-                max(lats) + 0.05,
-            ]
+            lats = gdfpoints[dict_settings["colname_lat"]].astype(float)
+            dict_settings["target_bbox"] = f"[{min(longs) - 0.05},{min(lats) - 0.05},{max(longs) + 0.05},{max(lats) + 0.05}]"
+        dict_settings["target_bbox"] = ast.literal_eval(dict_settings["target_bbox"])
+
     return dict_settings
 
 
