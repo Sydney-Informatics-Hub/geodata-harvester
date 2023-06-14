@@ -35,7 +35,7 @@ target_sources:
   - radmap2019_grid_dose_terr_awags_rad_2019
   - radmap2019_grid_dose_terr_filtered_awags_rad_2019
   SILO:
-  - monthly_rain: sum
+    monthly_rain: sum
   SLGA:
-  - Bulk_Density: [0-5cm]
-  - Clay: [0-5cm]
+    Bulk_Density: [0-5cm]
+    Clay: [0-5cm]
