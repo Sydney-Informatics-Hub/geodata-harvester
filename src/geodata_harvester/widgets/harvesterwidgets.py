@@ -23,6 +23,7 @@ import sys
 import ipywidgets as widgets
 from IPython.display import display
 import datetime
+import geopandas as gpd
 from types import SimpleNamespace
 
 # import data dictionaries
@@ -103,7 +104,7 @@ def gen_loadwidget():
     Output:
         w_load: widget for loading settings
     """
-    w_yamlfile = FileChooser(os.getcwd(), title="Settings File:")
+    w_yamlfile = FileChooser(os.getcwd(), title="Settings File (.yaml or .yml):")
     return w_yamlfile
 
 
@@ -182,7 +183,7 @@ def gen_panel_io():
         w_io: widget for input path
         w_names: list of names of widgets
     """ 
-    w_inpath = FileChooser(os.getcwd(), title="Input File:")
+    w_inpath = FileChooser(os.getcwd(), title="Input File (.csv):")
 
     # Write name relative output path
     w_outpath = widgets.Text(
@@ -238,7 +239,7 @@ def gen_panel_st():
     """
     w_target_bbox = widgets.Text(
         value="",
-        placeholder="[Lng_min, Lat_min, Lng_max, Lat_max]",
+        placeholder="[Long_min, Lat_min, Long_max, Lat_max]",
         description="",
         disabled=False,
     )
@@ -831,7 +832,19 @@ def eval_widgets(w_settings, names):
     # Check bounding box:
     if type(dict_settings["target_bbox"]) == str:
         # remove string from list
-        dict_settings["target_bbox"] = ast.literal_eval(dict_settings["target_bbox"])
+        if dict_settings["target_bbox"] != "":
+            dict_settings["target_bbox"] = ast.literal_eval(dict_settings["target_bbox"])
+        else:
+            # set bounding box around input data with padding +/- 0.05 deg
+            gdfpoints = gpd.read_file(dict_settings["infile"])
+            longs = gdfpoints[dict_settings["colname_lng"]].astype(float)
+            lats = gdfpoints[dict_settings["colname_lng"]].astype(float)
+            dict_settings["target_bbox"] = [
+                min(longs) - 0.05,
+                min(lats) - 0.05,
+                max(longs) + 0.05,
+                max(lats) + 0.05,
+            ]
     return dict_settings
 
 
