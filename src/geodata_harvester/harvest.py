@@ -411,7 +411,8 @@ def run(path_to_config, log_name="download_summary", preview=False, return_df=Fa
         else:
             pass
     if "SILO" in list_sources:
-        cprint("\n⌛ Downloading SILO data...", attrs=["bold"])
+        cprint("\n⌛ Downloading SILO data.\
+            This will take a couple of minutes, depending on your internet speed...", attrs=["bold"])
         # get data from SILO
         fnames_out_silo = []
         silo_layernames = list(settings.target_sources["SILO"].keys())
