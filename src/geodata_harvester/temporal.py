@@ -1,13 +1,17 @@
-#!/bin/python
 """
+Utility functions for temporal processing.
 
-Utility functions for for temporal processing.
-
---Function List, in order of appearence--
+--Main function list--
 
 combine_rasters_temporal: Concatenates files by time returns xarray.
 aggregate_temporal: Aggregates xarrays by specified function and time period.
+temporal_crop: Cuts an xarray object by start and end times.
+aggregate_temporal: Make a data aggregation (mean, median, sum, etc) through time on an xarray.
 
+--Helper function list--
+
+get_date_after_last_underscore: Extract the date from the file name after the last underscore.
+get_mask_array: Return mask of the data, e.g. for cloud-cover.
 """
 
 import numpy as np
@@ -205,8 +209,6 @@ def aggregate_temporal(xdr,
                     xdr = xdr.where(xdr != value, np.nan)
                     nodata_name_found = True
                     break
-        if not nodata_name_found:
-            print("No nodata value found in attributes. Will not fill nan values.")
 
 
     # Check the aggregation methods are okay
@@ -298,6 +300,17 @@ def aggregate_temporal(xdr,
 
 
 def get_date_after_last_underscore(file_list):
+    """
+    Extract the date from the file name after the last underscore.
+
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
+
+    Returns
+    -------
+    result : list of dates in date order to concatenate.
+    """
     result = []
 
     for filename in file_list:
@@ -367,4 +380,3 @@ def get_mask_array(xdr, mask_band = None, verbose = True):
             mask = xdr.sel(band=mask_band).values != 0
 
     return mask
-
