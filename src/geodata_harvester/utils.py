@@ -427,7 +427,9 @@ def aggregate_rasters(
     # Stack all data/channels as a list of numpy arrays
     array_list = []
     for x in file_list:
-        array_list.extend(_read_file(x))
+        array_list.append(_read_file(x))
+
+    array_list = np.asarray(array_list)
 
     # Perform aggregation over channels axis
     mean_array = np.nanmean(array_list, axis=0)
