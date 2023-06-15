@@ -87,4 +87,8 @@ def main(fname_settings=_fname_settings, to_namespace=True):
     # Check if bbox is valid
     settings = check_bbox(settings)
 
+    # convert dates to strings if not already
+    settings.date_min = str(settings.date_min)
+    settings.date_max = str(settings.date_max)
+
     return settings
