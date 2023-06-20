@@ -31,9 +31,10 @@ For the R-package wrapper of the Geodata-Harvester, please visit the [Github dat
     - [Google Earth Engine extension](#google-earth-engine-extension)
     - [Local development](#local-development)
     - [Workshop Cloud Sandbox](#workshop-cloud-sandbox)
-- [Settings Overview](#settings-overview)
+- [Settings Overview](#-settings-overview)
 - [How to get started](#-how-to-get-started)
 - [How to add new data source modules](#-how-to-add-new-data-source-modules)
+- [Testing](#-testing)
 - [Code reference API](#-code-reference-api)
 - [Contributions](#-contributions)
 - [Attribution and Acknowledgments](#-attribution-and-acknowledgments)
@@ -60,7 +61,7 @@ The following main data sources are currently implemented:
 - Radiometric Data
 - Google Earth Engine Data (GEE account needed), see for overview [Earth_Engine_Data_Overview](quarto/docs/Earth_Engine_Data_Overview.md).
 
-## Functionality
+## 🔄 Functionality
 
 The main goal of the Data Harvester is to enable researchers with reusable workflows for automatic data extraction and processing:
 
@@ -141,7 +142,7 @@ The Jupyter environment is hosted on the ARDC Nectar Research Cloud in partnersh
 
 The Geodata-Harvester can be easily installed also on other cloud services (e.g., Google Colab, Azure Notebooks).
 
-## Settings Overview
+## ⚙️ Settings Overview
 
 The Geodata-Harvester is controlled by a settings file in YAML format. The settings file contains all user-defined settings for the data extraction and processing. A detailed settings overview is provided in [Settings_Overview](quarto/docs/Settings_Overview.md). Example settings files are provided along the notebooks in the folder [notebooks/settings](notebooks/settings).  
 
@@ -167,13 +168,31 @@ To get started, some example workflows are provided as Jupyter notebooks:
 
 3. Run a jupyter notebook in the notebooks folder, such as  [example_harvest.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest.ipynb).
 
-4. The notebook will run the geodata-harvester with the settings file and download.process the data. The final data is saved in the folder `results_example_harvest` in the current working directory as specified in the settings file. There you can find the generated data table `results.csv` and the downloaded georeferenced .tif files (open with, e.g., rasterio, QGIS or ArcGIS). A summary of all generated images is provided in the table `download_summary.csv`.
+4. The notebook will run the geodata-harvester with the settings file and download/process all the requested data. The final data is saved in the folder `results_example_harvest` in the current working directory as specified in the settings file. There you can find the generated data table `results.csv` and the downloaded georeferenced .tif files (open with, e.g., rasterio, QGIS or ArcGIS). A summary of all generated images is provided in the table `download_summary.csv`.
 
 A step-by-step tutorial on how to use the individual modules of the Geodata-Harvester is provided in the notebook [example_harvest_stepwise.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest_stepwise.ipynb).
 
 To include Google Earth Engine (GEE) data in Geodata-Harvester, please follow the instructions in the notebook [example_harvest_withGEE.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest_withGEE.ipynb). Note that this requires a GEE account and authorisation (see [Google Earth Engine extension](#google-earth-engine-extension)).
 
 If you would like to learn more about the Geodata-Harvester, please also visit our [Workshop webpage](https://sydney-informatics-hub.github.io/AgReFed-Workshop/).
+
+## ✅ Testing
+
+Test functions are included in the [tests](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/tests) folder. Note that due to the nature of this package, these tests require an internet connection and may fail if the data source API servers are not available or the data source API has changed. To run automated tests with `pytest`, you need to install the package with
+```bash
+pip install pytest
+```
+and then run:
+```bash
+cd tests
+pytest ./
+```
+or test individual modules with, e.g.,
+```bash
+cd tests
+pytest test_getdata_dea.py
+```
+
 
 ## ➕ How to add new data source modules
 
