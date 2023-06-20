@@ -9,10 +9,10 @@ def test_get_SILO_raster():
     """
     test script
     """
-    layername = "daily_rain"
+    layername = "monthly_rain"
     years = 2019
     outpath = "silo_test"
-    bbox = (130, -44, 153.9, -11)
+    bbox = (140, -30, 150, -20)
     # test first for tif output format
     format_out = "tif"
     fnames_out = getdata_silo.get_SILO_raster(layername, years, outpath, bbox, format_out)
@@ -28,11 +28,11 @@ def test_get_SILO_layers():
     """
     test script
     """
-    layernames = ["daily_rain","max_temp"]
+    layernames = ["daily_rain"]
     date_start = '2019-01-01'
-    date_end = '2020-02-01'
+    date_end = '2019-01-10'
     outpath = "silo_test"
-    bbox = (130, -44, 153.9, -11)
+    bbox = (140, -30, 150, -20)
     # test first for tif output format
     format_out = "tif"
     fnames_out = getdata_silo.get_SILO_layers(layernames, date_start, date_end, outpath, bbox, format_out)
