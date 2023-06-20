@@ -284,14 +284,14 @@
     "href": "API_md/geodata_harvester/index.html",
     "title": "Module geodata_harvester",
     "section": "",
-    "text": "This Python package provides automation tools for harvesting and processing geodata from the web. https://github.com/Sydney-Informatics-Hub/geodata-harvester\n\n\n\ngeodata_harvester.arc2meter\ngeodata_harvester.getdata_dea\ngeodata_harvester.getdata_dem\ngeodata_harvester.getdata_dem copy\ngeodata_harvester.getdata_landscape\ngeodata_harvester.getdata_radiometric\ngeodata_harvester.getdata_silo\ngeodata_harvester.getdata_slga\ngeodata_harvester.harvest\ngeodata_harvester.settingshandler\ngeodata_harvester.spatial\ngeodata_harvester.temporal\ngeodata_harvester.utils\ngeodata_harvester.validate_settings\ngeodata_harvester.widgets\ngeodata_harvester.write_logs"
+    "text": "This Python package provides automation tools for harvesting and processing geodata from the web. https://github.com/Sydney-Informatics-Hub/geodata-harvester\n\n\n\ngeodata_harvester.arc2meter\ngeodata_harvester.getdata_dea\ngeodata_harvester.getdata_dem\ngeodata_harvester.getdata_landscape\ngeodata_harvester.getdata_radiometric\ngeodata_harvester.getdata_silo\ngeodata_harvester.getdata_slga\ngeodata_harvester.harvest\ngeodata_harvester.settingshandler\ngeodata_harvester.spatial\ngeodata_harvester.temporal\ngeodata_harvester.utils\ngeodata_harvester.validate_settings\ngeodata_harvester.widgets\ngeodata_harvester.write_logs"
   },
   {
     "objectID": "API_md/geodata_harvester/index.html#sub-modules",
     "href": "API_md/geodata_harvester/index.html#sub-modules",
     "title": "Module geodata_harvester",
     "section": "",
-    "text": "geodata_harvester.arc2meter\ngeodata_harvester.getdata_dea\ngeodata_harvester.getdata_dem\ngeodata_harvester.getdata_dem copy\ngeodata_harvester.getdata_landscape\ngeodata_harvester.getdata_radiometric\ngeodata_harvester.getdata_silo\ngeodata_harvester.getdata_slga\ngeodata_harvester.harvest\ngeodata_harvester.settingshandler\ngeodata_harvester.spatial\ngeodata_harvester.temporal\ngeodata_harvester.utils\ngeodata_harvester.validate_settings\ngeodata_harvester.widgets\ngeodata_harvester.write_logs"
+    "text": "geodata_harvester.arc2meter\ngeodata_harvester.getdata_dea\ngeodata_harvester.getdata_dem\ngeodata_harvester.getdata_landscape\ngeodata_harvester.getdata_radiometric\ngeodata_harvester.getdata_silo\ngeodata_harvester.getdata_slga\ngeodata_harvester.harvest\ngeodata_harvester.settingshandler\ngeodata_harvester.spatial\ngeodata_harvester.temporal\ngeodata_harvester.utils\ngeodata_harvester.validate_settings\ngeodata_harvester.widgets\ngeodata_harvester.write_logs"
   },
   {
     "objectID": "API_md/geodata_harvester/getdata_slga.html",
