@@ -194,21 +194,26 @@ def xarray2tif(ds, outfname, layername):
 
     for i in range(len(ds.time)):
 
-        # We will use the date of the image to name the GeoTIFF
+        # We will the date of the image to name the GeoTIFF
         date = ds.isel(time=i).time.dt.strftime(&#34;%Y-%m-%d&#34;).data
         # print(f&#39;Writing {date}&#39;)
 
         da = ds.isel(time=i)
+        attr = ds.attrs
         dsnew[str(date)] = xarray.DataArray(
             da.variables[layername][:],
             dims=[&#34;lat&#34;, &#34;lon&#34;],
             coords={&#34;lat&#34;: da.variables[&#34;lat&#34;], &#34;lon&#34;: da.variables[&#34;lon&#34;]},
+            name = str(date)     
         )
+        dsnew[str(date)].attrs = {&#39;long_name&#39;: str(date)}
 
         # Write GeoTIFF with datacube libary for cloud optimized GeoTIFFs (COG)
         # write_cog(geo_im=singletimestamp_da,
         #         fname=os.path.join(outpath,f&#39;{outfname_base}_{date}.tif&#39;,
         #         overwrite=True)
+
+    
     # Set crs
     dsnew.rio.write_crs(4326, inplace=True)
 
@@ -317,35 +322,6 @@ def get_SILO_layers(
 
     return fnames_out_silo
     
-
-
-def process_raster_daterange(infnames, date_start, date_end, outfname, layername):
-    &#34;&#34;&#34; Combines all the raster data into one xarray dataset, trimming to the date range, 
-    and saves it as a multiband tif file.
-
-    Input:
-        infnames : list of input filenames
-        date_start : str, start date of time series in format &#39;YYYY-MM-DD&#39;
-        date_end : str, end date of time series in format &#39;YYYY-MM-DD&#39;
-        outfname : str, path+name of output file
-    &#34;&#34;&#34;
-    # Read all the raster data into one xarray dataset
-    try:
-        # Requires dask installed
-        ds = xarray.open_mfdataset(infnames, combine=&#34;by_coords&#34;)
-    except:
-        # If dask is not installed, merge it this way (not as memory efficient)
-        ds = xarray.merge([xarray.open_dataset(f) for f in infnames])
-    # Clip to date range
-    ds = ds.sel(time=slice(date_start, date_end))
-    # Save file
-    # if file extension is tif, save as 
-    if outfname.endswith(&#39;.tif&#39;):
-        xarray2tif(ds, outfname, layername)
-    if outfname.endswith(&#39;.nc&#39;):
-        ds.to_netcdf(outfname)
-    # Close file
-    ds.close()
 
 
 
@@ -1164,21 +1140,26 @@ tif : str, name of multi-band geotiff</p></div>
 
     for i in range(len(ds.time)):
 
-        # We will use the date of the image to name the GeoTIFF
+        # We will the date of the image to name the GeoTIFF
         date = ds.isel(time=i).time.dt.strftime(&#34;%Y-%m-%d&#34;).data
         # print(f&#39;Writing {date}&#39;)
 
         da = ds.isel(time=i)
+        attr = ds.attrs
         dsnew[str(date)] = xarray.DataArray(
             da.variables[layername][:],
             dims=[&#34;lat&#34;, &#34;lon&#34;],
             coords={&#34;lat&#34;: da.variables[&#34;lat&#34;], &#34;lon&#34;: da.variables[&#34;lon&#34;]},
+            name = str(date)     
         )
+        dsnew[str(date)].attrs = {&#39;long_name&#39;: str(date)}
 
         # Write GeoTIFF with datacube libary for cloud optimized GeoTIFFs (COG)
         # write_cog(geo_im=singletimestamp_da,
         #         fname=os.path.join(outpath,f&#39;{outfname_base}_{date}.tif&#39;,
         #         overwrite=True)
+
+    
     # Set crs
     dsnew.rio.write_crs(4326, inplace=True)
 

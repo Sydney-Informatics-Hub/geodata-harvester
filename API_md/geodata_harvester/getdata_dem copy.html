@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Geodata-Harvester – getdata_radiometric</title>
+<title>Geodata-Harvester – getdata_dem-copy</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -121,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#module-geodata_harvester.getdata_radiometric" id="toc-module-geodata_harvester.getdata_radiometric" class="nav-link active" data-scroll-target="#module-geodata_harvester.getdata_radiometric">Module geodata_harvester.getdata_radiometric</a>
+  <li><a href="#module-geodata_harvester.getdata_dem-copy" id="toc-module-geodata_harvester.getdata_dem-copy" class="nav-link active" data-scroll-target="#module-geodata_harvester.getdata_dem-copy">Module geodata_harvester.getdata_dem copy</a>
   <ul class="collapse">
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a></li>
   </ul></li>
@@ -133,12 +133,14 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="module-geodata_harvester.getdata_radiometric" class="level1">
-<h1>Module geodata_harvester.getdata_radiometric</h1>
-<p>Script to download Radiometric data from NCI’s GSKY Data Server (using WCS) for a given resolution, and bounding box. Final data is saved as geotiff or NetCDF.</p>
-<p>A full ist of datasets can be retrieved with get_radiometricdict() or get_capabilities() for a given url An overview of all datasets can be also found here: https://opus.nci.org.au/display/Help/Datasets</p>
-<p>For more details of the NCI GSKY WCS, please see here: https://opus.nci.org.au/pages/viewpage.action?pageId=137199852</p>
-<p>LIMITATIONS: for some layers the server readout time can occasionally exceed 30s (longer readout time in request seems to be ignored) In case this happens please try later again when the NCI server is less loaded.</p>
+<section id="module-geodata_harvester.getdata_dem-copy" class="level1">
+<h1>Module geodata_harvester.getdata_dem copy</h1>
+<p>This script downloads the National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced product, derived from the National DEM SRTM 1 Second and National Watercourses, lakes and Reservoirs. The output image is a geotiff file with a user defined resolution and bbox. This script also includes the capabilities to generate slope and aspect from the extracted DEM.</p>
+<p>Core functions: get_capabilities(): get the available layers and their metadata getwcs_dem(): download the data as geotiff file for given bbox and resolution dem2slope(): convert geotiff to slope raster dem2aspect(): convert geotiff to aspect raster getdict_license(): get the license and attributes for the DEM 1 arc second grid</p>
+<p>The DEM layer metadata can be retrieved with the function get_capabilities(). and the respective licensing and attribution are availabe with the module function getdict_license()</p>
+<p>To download the DEM data, the function getwcs_dem() is used.</p>
+<p>For more details about the data, see: https://ecat.ga.gov.au/geonetwork/srv/eng/catalog.search#/metadata/72759</p>
+<p>WCS url: https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS</p>
 <p>This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).</p>
 <p>Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney</p>
 <p>This open-source software is released under the LGPL-3.0 License.</p>
@@ -146,52 +148,64 @@ ul.task-list li input[type="checkbox"] {
 <section id="functions" class="level2">
 <h2 class="anchored" data-anchor-id="functions">Functions</h2>
 <dl>
-<dt><code>get_capabilities()</code></dt>
+<dt><code>calc_gradiant(raster_dem)</code></dt>
+<dd>
+Calculate the gradiant from a DEM raster with rioxarray
+</dd>
+<dt><code>dem2aspect(fname_dem)</code></dt>
+<dd>
+<p>Calculate aspect from DEM and save as geotiff</p>
+<h2 id="parameters" class="anchored">Parameters</h2>
+<p>fname_dem : str DEM file name</p>
+</dd>
+<dt><code>dem2slope(fname_dem)</code></dt>
+<dd>
+<p>Calculate slope from DEM and save as geotiff</p>
+<h2 id="parameters-1" class="anchored">Parameters</h2>
+<p>fname_dem : str DEM path + file name</p>
+</dd>
+<dt><code>get_capabilities(url)</code></dt>
 <dd>
 <p>Get capabilities from WCS layer.</p>
-<h2 id="parameters" class="anchored">Parameters</h2>
+<h2 id="parameters-2" class="anchored">Parameters</h2>
 <p>url : str layer url</p>
 <h2 id="returns" class="anchored">Returns</h2>
 <p>keys : list layer identifiers titles : list of str layer titles descriptions : list of str layer descriptions bboxs : list of floats layer bounding boxes</p>
 </dd>
-<dt><code>get_radiometric_image(outfname, layername, bbox, url, resolution=1, crs='EPSG:4326', format_out='GeoTIFF')</code></dt>
+<dt><code>get_dem_layers(layernames, outpath, bbox, resolution=1, crs='EPSG:4326')</code></dt>
 <dd>
-<p>Download radiometric data layer and save geotiff from WCS layer.</p>
-<h2 id="parameters-1" class="anchored">Parameters</h2>
-<p>outfname : str output file name layername : str layer identifier bbox : list layer bounding box resolution : int layer resolution in arcsec url : str url of wcs server crs: str crsm default ‘EPSG:4326’ format: str output format, either “GeoTIFF” or “NetCDF”</p>
-<h2 id="return" class="anchored">Return</h2>
-<p>Exited ok: boolean</p>
-</dd>
-<dt><code>get_radiometric_layers(outpath, layernames, bbox, resolution=1, crs='EPSG:4326', format_out='GeoTIFF')</code></dt>
-<dd>
-<p>Wrapper function for downloading radiometric data layers and save geotiffs from WCS layer.</p>
-<h2 id="parameters-2" class="anchored">Parameters</h2>
-<p>outpath: str output path layername : list of strings layer identifiers bbox : list layer bounding box resolution : int layer resolution in arcsec url : str url of wcs server crs: str crsm default ‘EPSG:4326’ format_out: str output format, either “GeoTIFF” or “NetCDF”</p>
-<h2 id="return-1" class="anchored">Return</h2>
-<p>list of output filenames</p>
-</dd>
-<dt><code>get_radiometricdict()</code></dt>
-<dd>
-<p>Returns dictionary of keys and layer titles</p>
-<p>To update manually please run get_capabilities() to retrieve all current layer details</p>
-</dd>
-<dt><code>get_times(url, layername, year=None)</code></dt>
-<dd>
-<p>Return available dates for layer.</p>
+<p>Wrapper funtion to get the layers from the Geoscience Australia DEM 1 arc second grid and to calculate slope and aspect layers</p>
 <h2 id="parameters-3" class="anchored">Parameters</h2>
-<p>url: str, layer url layername: str, name of layer id year: int or str, year of interest (if None, times for all available years are returned)</p>
-<h2 id="return-2" class="anchored">Return</h2>
-<p>list of dates</p>
+<p>layernames : list list of layer names to download [‘DEM’, ‘Slope’, ‘Aspect’] outpath : str output directory for the downloaded file bbox : list layer bounding box resolution : int layer resolution in arcsec (default 1) crs: str crs default ‘EPSG:4326’</p>
+<h2 id="return" class="anchored">Return</h2>
+<p>Output outnames: lits of output filenames</p>
+</dd>
+<dt><code>get_demdict()</code></dt>
+<dd>
+<p>Get dictionary of meta data</p>
+<p>OUTPUT: layerdict : dict dictionary of meta data</p>
 </dd>
 <dt><code>getdict_license()</code></dt>
 <dd>
-Retrieves the Geoscience Australia data license and NCI attribution information as dict
+Retrieves the Geoscience Australia data license for the DEM Web Map Service as dict
+</dd>
+<dt><code>getwcs_dem(outpath, bbox, resolution=1, url='https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS', crs='EPSG:4326', verbose=False)</code></dt>
+<dd>
+<p>Function to download and save geotiff from WCS layer. Default downloads the DEM 1 arc second grid from Geoscience Australia using the folllwing WCS url: Url = https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS</p>
+<h2 id="parameters-4" class="anchored">Parameters</h2>
+<p>outpath : str output directory for the downloaded file bbox : list layer bounding box resolution : int layer resolution in arcsec (default 1) url : str url of wcs server, default is the Geoscience Australia DEM 1 arc second grid crs: str crs default ‘EPSG:4326’</p>
+<h2 id="return-1" class="anchored">Return</h2>
+<p>Output filename</p>
 </dd>
 <dt><code>plot_raster(infname)</code></dt>
 <dd>
-<p>Read in raster tif with rasterio and visualise as map.</p>
-<h2 id="parameters-4" class="anchored">Parameters</h2>
+<p>Read in raster tif with rasterio and visualise as map</p>
+<h2 id="parameters-5" class="anchored">Parameters</h2>
 <p>infname : str</p>
+</dd>
+<dt><code>test_getwcs_dem(outpath='./test_DEM/')</code></dt>
+<dd>
+Test script
 </dd>
 </dl>
 

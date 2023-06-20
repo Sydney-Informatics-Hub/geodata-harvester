@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>geodata_harvester.temporal API documentation</title>
-<meta name="description" content="Utility functions for for temporal processing …" />
+<meta name="description" content="Utility functions for temporal processing …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,38 +22,49 @@
 <h1 class="title">Module <code>geodata_harvester.temporal</code></h1>
 </header>
 <section id="section-intro">
-<p>Utility functions for for temporal processing.</p>
-<p>&ndash;Function List, in order of appearence&ndash;</p>
+<p>Utility functions for temporal processing.</p>
+<p>&ndash;Main function list&ndash;</p>
 <p>combine_rasters_temporal: Concatenates files by time returns xarray.
-aggregate_temporal: Aggregates xarrays by specified function and time period.</p>
+aggregate_temporal: Aggregates xarrays by specified function and time period.
+temporal_crop: Cuts an xarray object by start and end times.
+aggregate_temporal: Make a data aggregation (mean, median, sum, etc) through time on an xarray.</p>
+<p>&ndash;Helper function list&ndash;</p>
+<p>get_date_after_last_underscore: Extract the date from the file name after the last underscore.
+get_mask_array: Return mask of the data, e.g. for cloud-cover.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">#!/bin/python
-&#34;&#34;&#34;
+<pre><code class="python">&#34;&#34;&#34;
+Utility functions for temporal processing.
 
-Utility functions for for temporal processing.
-
---Function List, in order of appearence--
+--Main function list--
 
 combine_rasters_temporal: Concatenates files by time returns xarray.
 aggregate_temporal: Aggregates xarrays by specified function and time period.
+temporal_crop: Cuts an xarray object by start and end times.
+aggregate_temporal: Make a data aggregation (mean, median, sum, etc) through time on an xarray.
 
+--Helper function list--
+
+get_date_after_last_underscore: Extract the date from the file name after the last underscore.
+get_mask_array: Return mask of the data, e.g. for cloud-cover.
 &#34;&#34;&#34;
 
 import numpy as np
 import pandas as pd
 import rioxarray
 import xarray as xr
+import datetime
 
 
 def combine_rasters_temporal(
     file_list, channel_name=&#34;band&#34;, attribute_name=&#34;long_name&#34;
 ):
     &#34;&#34;&#34;
-    Combines multiple tif files into single xarray object. Assumes files are in
-    temporal order, and additional channels contain sequential time step data.
+    Combines multiple tif files into single xarray object. 
+    Assumes additional channels contain sequential time step data. 
+    If multiple files in file_list, files must be in temporal order and same data type.
     Also assumes files are of the same shape (x,y,t).
 
     Example:
@@ -64,7 +75,7 @@ def combine_rasters_temporal(
 
     Parameters
     ----------
-    file_list : list of filename strings in date order to concatenate.
+    file_list : str or list of filename strings in date order to concatenate.
         Expected to be of the form &#34;x,y&#34; or &#34;x,y,z1&#34;
     channel_name : string of coordinate dimension to concatentate (band, time,
         etc). Check options with rioxarray.open_rasterio(&#39;filename&#39;).coords
@@ -76,8 +87,11 @@ def combine_rasters_temporal(
     xdr : xarray object of x,y,time, with approriate metadata.
 
     &#34;&#34;&#34;
-    print(&#34;Concatenating&#34;, channel_name, &#34;and&#34;, attribute_name, &#34;over&#34;, file_list)
+    #print(&#34;Concatenating&#34;, channel_name, &#34;and&#34;, attribute_name, &#34;over&#34;, file_list)
     # file_list = glob(os.path.join(data_dir, &#39;*.tif&#39;))
+
+    if type(file_list) == str:
+        file_list = [file_list]
 
     # Append all data/channels, collect metadata lists
     array_list = []
@@ -104,7 +118,11 @@ def combine_rasters_temporal(
             return None
 
         array_list.append(xds)
-        attrs = attrs + xds.attrs[attribute_name]
+        #print(&#34;attrs&#34;, xds.attrs[attribute_name])
+        try:
+            attrs = attrs + xds.attrs[attribute_name]
+        except:
+            attrs = attrs + (xds.attrs[attribute_name],)
         if first == True:
             coords = xds[channel_name].values
 
@@ -120,6 +138,44 @@ def combine_rasters_temporal(
     del xdr.attrs[attribute_name]
 
     return xdr
+
+
+def multiband_raster_to_xarray(file_list, date_list = None, mask_bandname = None):
+    &#34;&#34;&#34;
+    Converts a stack of multiband raster with different dates to an xarray object.
+    
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
+    date_list : list of dates in date order to concatenate. 
+        If None provided, the dates will be extracted from the file names.
+        This assumes that the date is given at the end of the file name after an underscore.
+    &#34;&#34;&#34;
+    # Extract the dates from the file names if no date list is provided
+    if date_list is None:
+        date_list = get_date_after_last_underscore(file_list)
+
+    # Check if the lists have the same length
+    assert len(file_list) == len(date_list), &#34;File list and date list must have the same length.&#34;
+    
+    # Create an empty list to store the DataArrays
+    data_arrays = []
+
+    for file, date in zip(file_list, date_list):
+        # Read the raster file using rioxarray
+        xds = rioxarray.open_rasterio(file)
+
+        # Assign the time coordinate
+        xds = xds.assign_coords({&#34;time&#34;: pd.to_datetime(date)})
+        xds = xds.expand_dims(&#34;time&#34;)
+
+        # Append the DataArray to the list
+        data_arrays.append(xds)
+
+    # Concatenate the DataArrays along the time dimension
+    stacked_data = xr.concat(data_arrays, dim=&#34;time&#34;)
+
+    return stacked_data
 
 
 def temporal_crop(xdr, start_time, end_time):
@@ -143,7 +199,7 @@ def temporal_crop(xdr, start_time, end_time):
 
 
 def aggregate_temporal(xdr,
-    period=&#34;yearly&#34;, agg=[&#34;mean&#34;], outfile=&#34;temporal_agg&#34;, buffer = None):
+    period=&#34;yearly&#34;, agg=[&#34;mean&#34;], outfile=&#34;temporal_agg&#34;, buffer = None, fill_nan = True):
     &#34;&#34;&#34;
     Make a data aggregation (mean, median, sum, etc) through time on an xarray.
     Expects xarray coordinates to be x, y, time. Saves every aggregation for
@@ -167,6 +223,8 @@ def aggregate_temporal(xdr,
         [&#39;mean&#39;,&#39;median&#39;,&#39;sum&#39;,&#39;perc95&#39;,&#39;perc5&#39;]
     outfile : string. Prefix of output file name.
     buffer: integer time period in same units as period to buffer into the future.
+    fill_nan: boolean. If True (Default), will automatically try to find the value for missing data 
+        from header and fills with nan before aggregating. If False, will not fill nan.
 
     Returns
     -------
@@ -175,14 +233,32 @@ def aggregate_temporal(xdr,
 
     &#34;&#34;&#34;
 
+    if fill_nan:
+        # Define the possible attribute names for fill values
+        nodata_names = [&#34;_FillValue&#34;, &#34;missing_value&#34;, &#34;nodata&#34;, &#34;nodatavalue&#34;]
+        nodata_name_found = False
+        for nodata_name in nodata_names:
+            if nodata_name in xdr.attrs:
+                xdr = xdr.where(xdr != xdr.attrs[nodata_name], np.nan)
+                nodata_name_found = True
+                break
+        # Check for case-insensitive nodata names
+        if not nodata_name_found:
+            for key, value in xdr.attrs.items():
+                if key.lower() in [attr.lower() for attr in nodata_names]:
+                    xdr = xdr.where(xdr != value, np.nan)
+                    nodata_name_found = True
+                    break
+
+
     # Check the aggregation methods are okay
     agg_types = [&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;perc95&#34;, &#34;perc5&#34;, &#34;max&#34;, &#34;min&#34;]
     aggcheck = [a for a in agg if a in agg_types]
     if aggcheck is None:
         raise ValueError(&#34;Invalid Aggregation type. Expected any of: %s&#34; % agg_types)
-    else:
-        print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
-        print(&#34;for&#34;, period, &#34; period.&#34;)
+    #else:
+        #print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
+        #print(&#34;for&#34;, period, &#34; period.&#34;)
 
     # Group by the appropriate time period
     if period == &#34;yearly&#34;:
@@ -200,7 +276,13 @@ def aggregate_temporal(xdr,
             xdr_groups = xx.groupby(&#34;time.month&#34;)
 
     elif type(period) == int:
-        bins = int(np.floor(len(xdr) / period))
+        time_start = xdr.time.values[0].astype(&#39;datetime64[s]&#39;).tolist()
+        time_end = xdr.time.values[-1].astype(&#39;datetime64[s]&#39;).tolist()
+        bins = (time_end - time_start).days // period
+        #bins = int(np.floor(len(xdr) / period)) # this only works if len(xdr) is in days
+        if bins == 0:
+            # If the period is smaller than the time step, use the time step as the period
+            bins = 1
         xdr_groups = xdr.groupby_bins(&#34;time&#34;, bins)
 
         if buffer != None:
@@ -213,17 +295,23 @@ def aggregate_temporal(xdr,
             &#34;Invalid temporal period. Expected any of: &#39;yearly&#39;, &#39;monthly&#39;, or an integer period&#34;
         )
 
-    # What is more efficient? Make calcs on whole dataframe or on each group?
-
-    # Make ALL agg calcs (and only keep the requested ones later)
     aggdict = {}
-    aggdict[&#34;mean&#34;] = xdr_groups.mean()
-    aggdict[&#34;median&#34;] = xdr_groups.median()
-    aggdict[&#34;sum&#34;] = xdr_groups.sum()
-    aggdict[&#34;perc95&#34;] = xdr_groups.quantile(q=0.95)
-    aggdict[&#34;perc5&#34;] = xdr_groups.quantile(q=0.05)
-    aggdict[&#34;max&#34;] = xdr_groups.max()
-    aggdict[&#34;min&#34;] = xdr_groups.min()
+    for agg_type in aggcheck:
+        if agg_type == &#34;mean&#34;:
+            aggdict[&#34;mean&#34;] = xdr_groups.mean()
+        elif agg_type == &#34;median&#34;:
+            aggdict[&#34;median&#34;] = xdr_groups.median()
+        elif agg_type == &#34;sum&#34;:
+            aggdict[&#34;sum&#34;] = xdr_groups.sum()
+        elif agg_type == &#34;perc95&#34;:
+            aggdict[&#34;perc95&#34;] = xdr_groups.quantile(q=0.95)
+        elif agg_type == &#34;perc5&#34;:
+            aggdict[&#34;perc5&#34;] = xdr_groups.quantile(q=0.05)
+        elif agg_type == &#34;max&#34;:
+            aggdict[&#34;max&#34;] = xdr_groups.max()
+        elif agg_type == &#34;min&#34;:
+            aggdict[&#34;min&#34;] = xdr_groups.min()
+
 
     # Keep track of the names of all files produced
     outfname_list = []
@@ -251,47 +339,87 @@ def aggregate_temporal(xdr,
     return outfname_list, agg_list
 
 
-def group_by_custom_periods(xdr, periods: int, agg_range: int):
-
-
-    # def temporal_aggregate_multiband(file_list=None, data_dir=None, agg=[&#39;mean&#39;],
-    #    outfile=&#39;aggregation&#39;, timesteps=1):
+def get_date_after_last_underscore(file_list):
     &#34;&#34;&#34;
-    NOTE: NOT ALL IMPLEMENTED!!! Specifcally multiband data. But I don&#39;t think
-    we want to deal with that, as it is already accounted for previously? Maybe.
+    Extract the date from the file name after the last underscore.
 
-    Aggregates over multiple files but keeps channels independently.
-    Results are written to new tif files.
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
 
-    This function should
+    Returns
+    -------
+    result : list of dates in date order to concatenate.
+    &#34;&#34;&#34;
+    result = []
 
-    dates of the from &#34;yyyy-mm-dd&#34;
-    rolling mean
+    for filename in file_list:
+        split_string = filename.rsplit(&#39;_&#39;, 1)  # Split the string from the right side, keeping only the last part
 
-    Unit of measurment you are working in seconds, daily, monthly, yearly (or integers)
-    Time steps of channels (e.g. 12xmonthly)
-    time steps of files (each file represents X length of time)
-    time steps of aggregation (e.g. average monthly)
-    time steps of
+        # Check if the string was split
+        if len(split_string) &gt; 1:
+            last_part = split_string[-1]  # Get the part after the last &#34;_&#34;
+        else:
+            last_part = filename  # If the string didn&#39;t have any &#34;_&#34;, return the original string
+
+        # Remove the file format ending
+        last_part = last_part.rsplit(&#39;.&#39;, 1)[0]
+
+        # test if the last part is a date
+        try:
+            datetime.datetime.strptime(last_part, &#39;%Y-%m-%d&#39;)
+        except ValueError:
+            print(&#34;The last part of the filename is not a date: &#34;, last_part)
+            raise ValueError
+
+        result.append(last_part)
+
+    return result
 
 
+def get_mask_array(xdr, mask_band = None, verbose = True):
+    &#34;&#34;&#34;
+    Return mask of the data, e.g. for cloud-cover.
+    The mask values will be set to True if the mask band is not 0, and False otherwise.
+    If no mask band is provided, a mask band will be searched for in the xarray attribute metadata.
 
-    Aggregrates over multiple files and over all channels
-    and writes results to new tif file(s).
+    Parameters
+    ----------
+    xdr : xarray
+        xarray dataset to mask
+    mask_band : str or int, optional   
+        Name or index of the band to use as a mask. 
+        If not provided, a mask abd will be searched for in the xarray attribute metadata.
 
-    Step 1: combine files (assumes consistent times and start finish points)
-    Step 2: roll data into outtime chunks
-    Step 3: perform aggregation on chunks
+    Returns
+    -------
+    mask: array, bool
+    &#34;&#34;&#34;
+    if mask_band is not None:
+        if isinstance(mask_band, int):
+            if verbose: print(f&#34;Masking values with Nan where mask band {mask_band} is not 0&#34;)
+        elif isinstance(mask_band, str):
+            if verbose: print(f&#34;Masking values with Nan where mask band {mask_band} is not 0&#34;)
+            mask_band = [i for i, s in enumerate(xdr.attrs[&#39;long_name&#39;]) if s == mask_band]
+            mask_band = mask_band[0] + 1
+        else:
+            if verbose: print(&#34;Mask band must be an integer or string&#34;)
+            return
+        mask = xdr.sel(band=mask_band).values != 0
 
-    e.g. aggregate daily rainfall data for each month (for the duration of the files.)
-    e.g. aggregate monthly temperature data over a year (for the duration of the files.)
+    if mask_band is None:
+        # find band number for attribute that includes &#39;mask&#39;
+        mask_band = [i for i, s in enumerate(xdr.attrs[&#39;long_name&#39;]) if &#39;mask&#39; in s]
+        if len(mask_band) == 0:
+            if verbose: print(&#39;No mask band found in attributes. Proceeding without masking.&#39;)
+        else:
+            if len(mask_band) &gt; 1:
+                if verbose: print(f&#34;Multiple mask bands found in attributes. Proceeding with mask band: {xdr.attrs[&#39;long_name&#39;][mask_band[0]]}&#34;)
+            mask_band = mask_band[0] + 1
+            if verbose: print(f&#34;Masking values with Nan where mask band {xdr.attrs[&#39;long_name&#39;][mask_band[0]]} is valid&#34;)
+            mask = xdr.sel(band=mask_band).values != 0
 
-    e.g. aggregate common months over multiple years, average rainfall in July from 2015 to 2020
-
-
-    Takes a stream of temporal data in a particular time increment and converts
-    to a new time-increment by averaging.
-    &#34;&#34;&#34;</code></pre>
+    return mask</code></pre>
 </details>
 </section>
 <section>
@@ -302,7 +430,7 @@ def group_by_custom_periods(xdr, periods: int, agg_range: int):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="geodata_harvester.temporal.aggregate_temporal"><code class="name flex">
-<span>def <span class="ident">aggregate_temporal</span></span>(<span>xdr, period='yearly', agg=['mean'], outfile='temporal_agg', buffer=None)</span>
+<span>def <span class="ident">aggregate_temporal</span></span>(<span>xdr, period='yearly', agg=['mean'], outfile='temporal_agg', buffer=None, fill_nan=True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Make a data aggregation (mean, median, sum, etc) through time on an xarray.
@@ -322,9 +450,11 @@ xdr,period=100,agg=['mean','sum'],outfile='temporal_agg')</p>
 <dd>'yearly', 'monthly', or number of periods to aggregate over.</dd>
 <dt><strong><code>agg</code></strong> :&ensp;<code>list</code> of <code>strings. Choice</code> of <code>aggregation methods to apply of</code></dt>
 <dd>['mean','median','sum','perc95','perc5']</dd>
+<dt>outfile : string. Prefix of output file name.</dt>
+<dt>buffer: integer time period in same units as period to buffer into the future.</dt>
+<dt><strong><code>fill_nan</code></strong> :&ensp;<code>boolean. If True (Default), will automatically try to find the value for missing data </code></dt>
+<dd>from header and fills with nan before aggregating. If False, will not fill nan.</dd>
 </dl>
-<p>outfile : string. Prefix of output file name.
-buffer: integer time period in same units as period to buffer into the future.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><strong><code>outfname_list</code></strong> :&ensp;<code>list</code> of <code>strings</code> of <code>output file names</code></dt>
@@ -337,7 +467,7 @@ buffer: integer time period in same units as period to buffer into the future.</
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def aggregate_temporal(xdr,
-    period=&#34;yearly&#34;, agg=[&#34;mean&#34;], outfile=&#34;temporal_agg&#34;, buffer = None):
+    period=&#34;yearly&#34;, agg=[&#34;mean&#34;], outfile=&#34;temporal_agg&#34;, buffer = None, fill_nan = True):
     &#34;&#34;&#34;
     Make a data aggregation (mean, median, sum, etc) through time on an xarray.
     Expects xarray coordinates to be x, y, time. Saves every aggregation for
@@ -361,6 +491,8 @@ buffer: integer time period in same units as period to buffer into the future.</
         [&#39;mean&#39;,&#39;median&#39;,&#39;sum&#39;,&#39;perc95&#39;,&#39;perc5&#39;]
     outfile : string. Prefix of output file name.
     buffer: integer time period in same units as period to buffer into the future.
+    fill_nan: boolean. If True (Default), will automatically try to find the value for missing data 
+        from header and fills with nan before aggregating. If False, will not fill nan.
 
     Returns
     -------
@@ -369,14 +501,32 @@ buffer: integer time period in same units as period to buffer into the future.</
 
     &#34;&#34;&#34;
 
+    if fill_nan:
+        # Define the possible attribute names for fill values
+        nodata_names = [&#34;_FillValue&#34;, &#34;missing_value&#34;, &#34;nodata&#34;, &#34;nodatavalue&#34;]
+        nodata_name_found = False
+        for nodata_name in nodata_names:
+            if nodata_name in xdr.attrs:
+                xdr = xdr.where(xdr != xdr.attrs[nodata_name], np.nan)
+                nodata_name_found = True
+                break
+        # Check for case-insensitive nodata names
+        if not nodata_name_found:
+            for key, value in xdr.attrs.items():
+                if key.lower() in [attr.lower() for attr in nodata_names]:
+                    xdr = xdr.where(xdr != value, np.nan)
+                    nodata_name_found = True
+                    break
+
+
     # Check the aggregation methods are okay
     agg_types = [&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;perc95&#34;, &#34;perc5&#34;, &#34;max&#34;, &#34;min&#34;]
     aggcheck = [a for a in agg if a in agg_types]
     if aggcheck is None:
         raise ValueError(&#34;Invalid Aggregation type. Expected any of: %s&#34; % agg_types)
-    else:
-        print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
-        print(&#34;for&#34;, period, &#34; period.&#34;)
+    #else:
+        #print(&#34;Finding&#34;, aggcheck, &#34; out of possible&#34;, agg_types)
+        #print(&#34;for&#34;, period, &#34; period.&#34;)
 
     # Group by the appropriate time period
     if period == &#34;yearly&#34;:
@@ -394,7 +544,13 @@ buffer: integer time period in same units as period to buffer into the future.</
             xdr_groups = xx.groupby(&#34;time.month&#34;)
 
     elif type(period) == int:
-        bins = int(np.floor(len(xdr) / period))
+        time_start = xdr.time.values[0].astype(&#39;datetime64[s]&#39;).tolist()
+        time_end = xdr.time.values[-1].astype(&#39;datetime64[s]&#39;).tolist()
+        bins = (time_end - time_start).days // period
+        #bins = int(np.floor(len(xdr) / period)) # this only works if len(xdr) is in days
+        if bins == 0:
+            # If the period is smaller than the time step, use the time step as the period
+            bins = 1
         xdr_groups = xdr.groupby_bins(&#34;time&#34;, bins)
 
         if buffer != None:
@@ -407,17 +563,23 @@ buffer: integer time period in same units as period to buffer into the future.</
             &#34;Invalid temporal period. Expected any of: &#39;yearly&#39;, &#39;monthly&#39;, or an integer period&#34;
         )
 
-    # What is more efficient? Make calcs on whole dataframe or on each group?
-
-    # Make ALL agg calcs (and only keep the requested ones later)
     aggdict = {}
-    aggdict[&#34;mean&#34;] = xdr_groups.mean()
-    aggdict[&#34;median&#34;] = xdr_groups.median()
-    aggdict[&#34;sum&#34;] = xdr_groups.sum()
-    aggdict[&#34;perc95&#34;] = xdr_groups.quantile(q=0.95)
-    aggdict[&#34;perc5&#34;] = xdr_groups.quantile(q=0.05)
-    aggdict[&#34;max&#34;] = xdr_groups.max()
-    aggdict[&#34;min&#34;] = xdr_groups.min()
+    for agg_type in aggcheck:
+        if agg_type == &#34;mean&#34;:
+            aggdict[&#34;mean&#34;] = xdr_groups.mean()
+        elif agg_type == &#34;median&#34;:
+            aggdict[&#34;median&#34;] = xdr_groups.median()
+        elif agg_type == &#34;sum&#34;:
+            aggdict[&#34;sum&#34;] = xdr_groups.sum()
+        elif agg_type == &#34;perc95&#34;:
+            aggdict[&#34;perc95&#34;] = xdr_groups.quantile(q=0.95)
+        elif agg_type == &#34;perc5&#34;:
+            aggdict[&#34;perc5&#34;] = xdr_groups.quantile(q=0.05)
+        elif agg_type == &#34;max&#34;:
+            aggdict[&#34;max&#34;] = xdr_groups.max()
+        elif agg_type == &#34;min&#34;:
+            aggdict[&#34;min&#34;] = xdr_groups.min()
+
 
     # Keep track of the names of all files produced
     outfname_list = []
@@ -449,8 +611,9 @@ buffer: integer time period in same units as period to buffer into the future.</
 <span>def <span class="ident">combine_rasters_temporal</span></span>(<span>file_list, channel_name='band', attribute_name='long_name')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Combines multiple tif files into single xarray object. Assumes files are in
-temporal order, and additional channels contain sequential time step data.
+<div class="desc"><p>Combines multiple tif files into single xarray object.
+Assumes additional channels contain sequential time step data.
+If multiple files in file_list, files must be in temporal order and same data type.
 Also assumes files are of the same shape (x,y,t).</p>
 <p>Example:
 file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
@@ -458,7 +621,7 @@ file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
 <p>xdr = combine_rasters_temporal(file_list, channel_name='band',attribute_name='long_name')</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>file_list : list of filename strings in date order to concatenate.</dt>
+<dt>file_list : str or list of filename strings in date order to concatenate.</dt>
 <dt>Expected to be of the form "x,y" or "x,y,z1"</dt>
 <dt><strong><code>channel_name</code></strong> :&ensp;<code>string</code> of <code>coordinate dimension to concatentate (band, time,</code></dt>
 <dd>etc). Check options with rioxarray.open_rasterio('filename').coords</dd>
@@ -475,8 +638,9 @@ file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
     file_list, channel_name=&#34;band&#34;, attribute_name=&#34;long_name&#34;
 ):
     &#34;&#34;&#34;
-    Combines multiple tif files into single xarray object. Assumes files are in
-    temporal order, and additional channels contain sequential time step data.
+    Combines multiple tif files into single xarray object. 
+    Assumes additional channels contain sequential time step data. 
+    If multiple files in file_list, files must be in temporal order and same data type.
     Also assumes files are of the same shape (x,y,t).
 
     Example:
@@ -487,7 +651,7 @@ file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
 
     Parameters
     ----------
-    file_list : list of filename strings in date order to concatenate.
+    file_list : str or list of filename strings in date order to concatenate.
         Expected to be of the form &#34;x,y&#34; or &#34;x,y,z1&#34;
     channel_name : string of coordinate dimension to concatentate (band, time,
         etc). Check options with rioxarray.open_rasterio(&#39;filename&#39;).coords
@@ -499,8 +663,11 @@ file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
     xdr : xarray object of x,y,time, with approriate metadata.
 
     &#34;&#34;&#34;
-    print(&#34;Concatenating&#34;, channel_name, &#34;and&#34;, attribute_name, &#34;over&#34;, file_list)
+    #print(&#34;Concatenating&#34;, channel_name, &#34;and&#34;, attribute_name, &#34;over&#34;, file_list)
     # file_list = glob(os.path.join(data_dir, &#39;*.tif&#39;))
+
+    if type(file_list) == str:
+        file_list = [file_list]
 
     # Append all data/channels, collect metadata lists
     array_list = []
@@ -527,7 +694,11 @@ file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
             return None
 
         array_list.append(xds)
-        attrs = attrs + xds.attrs[attribute_name]
+        #print(&#34;attrs&#34;, xds.attrs[attribute_name])
+        try:
+            attrs = attrs + xds.attrs[attribute_name]
+        except:
+            attrs = attrs + (xds.attrs[attribute_name],)
         if first == True:
             coords = xds[channel_name].values
 
@@ -545,77 +716,178 @@ file_list = ['../data/mvp_daily_rain_silo/daily_rain_2017_cropped.tif',
     return xdr</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.temporal.group_by_custom_periods"><code class="name flex">
-<span>def <span class="ident">group_by_custom_periods</span></span>(<span>xdr, periods: int, agg_range: int)</span>
+<dt id="geodata_harvester.temporal.get_date_after_last_underscore"><code class="name flex">
+<span>def <span class="ident">get_date_after_last_underscore</span></span>(<span>file_list)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>NOTE: NOT ALL IMPLEMENTED!!! Specifcally multiband data. But I don't think
-we want to deal with that, as it is already accounted for previously? Maybe.</p>
-<p>Aggregates over multiple files but keeps channels independently.
-Results are written to new tif files.</p>
-<p>This function should</p>
-<p>dates of the from "yyyy-mm-dd"
-rolling mean</p>
-<p>Unit of measurment you are working in seconds, daily, monthly, yearly (or integers)
-Time steps of channels (e.g. 12xmonthly)
-time steps of files (each file represents X length of time)
-time steps of aggregation (e.g. average monthly)
-time steps of</p>
-<p>Aggregrates over multiple files and over all channels
-and writes results to new tif file(s).</p>
-<p>Step 1: combine files (assumes consistent times and start finish points)
-Step 2: roll data into outtime chunks
-Step 3: perform aggregation on chunks</p>
-<p>e.g. aggregate daily rainfall data for each month (for the duration of the files.)
-e.g. aggregate monthly temperature data over a year (for the duration of the files.)</p>
-<p>e.g. aggregate common months over multiple years, average rainfall in July from 2015 to 2020</p>
-<p>Takes a stream of temporal data in a particular time increment and converts
-to a new time-increment by averaging.</p></div>
+<div class="desc"><p>Extract the date from the file name after the last underscore.</p>
+<h2 id="parameters">Parameters</h2>
+<p>file_list : list of filename strings in date order to concatenate.</p>
+<h2 id="returns">Returns</h2>
+<p>result : list of dates in date order to concatenate.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def group_by_custom_periods(xdr, periods: int, agg_range: int):
-
-
-    # def temporal_aggregate_multiband(file_list=None, data_dir=None, agg=[&#39;mean&#39;],
-    #    outfile=&#39;aggregation&#39;, timesteps=1):
+<pre><code class="python">def get_date_after_last_underscore(file_list):
     &#34;&#34;&#34;
-    NOTE: NOT ALL IMPLEMENTED!!! Specifcally multiband data. But I don&#39;t think
-    we want to deal with that, as it is already accounted for previously? Maybe.
+    Extract the date from the file name after the last underscore.
 
-    Aggregates over multiple files but keeps channels independently.
-    Results are written to new tif files.
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
 
-    This function should
+    Returns
+    -------
+    result : list of dates in date order to concatenate.
+    &#34;&#34;&#34;
+    result = []
 
-    dates of the from &#34;yyyy-mm-dd&#34;
-    rolling mean
+    for filename in file_list:
+        split_string = filename.rsplit(&#39;_&#39;, 1)  # Split the string from the right side, keeping only the last part
 
-    Unit of measurment you are working in seconds, daily, monthly, yearly (or integers)
-    Time steps of channels (e.g. 12xmonthly)
-    time steps of files (each file represents X length of time)
-    time steps of aggregation (e.g. average monthly)
-    time steps of
+        # Check if the string was split
+        if len(split_string) &gt; 1:
+            last_part = split_string[-1]  # Get the part after the last &#34;_&#34;
+        else:
+            last_part = filename  # If the string didn&#39;t have any &#34;_&#34;, return the original string
 
+        # Remove the file format ending
+        last_part = last_part.rsplit(&#39;.&#39;, 1)[0]
 
+        # test if the last part is a date
+        try:
+            datetime.datetime.strptime(last_part, &#39;%Y-%m-%d&#39;)
+        except ValueError:
+            print(&#34;The last part of the filename is not a date: &#34;, last_part)
+            raise ValueError
 
-    Aggregrates over multiple files and over all channels
-    and writes results to new tif file(s).
+        result.append(last_part)
 
-    Step 1: combine files (assumes consistent times and start finish points)
-    Step 2: roll data into outtime chunks
-    Step 3: perform aggregation on chunks
+    return result</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.temporal.get_mask_array"><code class="name flex">
+<span>def <span class="ident">get_mask_array</span></span>(<span>xdr, mask_band=None, verbose=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return mask of the data, e.g. for cloud-cover.
+The mask values will be set to True if the mask band is not 0, and False otherwise.
+If no mask band is provided, a mask band will be searched for in the xarray attribute metadata.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>xdr</code></strong> :&ensp;<code>xarray</code></dt>
+<dd>xarray dataset to mask</dd>
+<dt><strong><code>mask_band</code></strong> :&ensp;<code>str</code> or <code>int</code>, optional</dt>
+<dd>Name or index of the band to use as a mask.
+If not provided, a mask abd will be searched for in the xarray attribute metadata.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>mask</code></strong> :&ensp;<code>array, bool</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_mask_array(xdr, mask_band = None, verbose = True):
+    &#34;&#34;&#34;
+    Return mask of the data, e.g. for cloud-cover.
+    The mask values will be set to True if the mask band is not 0, and False otherwise.
+    If no mask band is provided, a mask band will be searched for in the xarray attribute metadata.
 
-    e.g. aggregate daily rainfall data for each month (for the duration of the files.)
-    e.g. aggregate monthly temperature data over a year (for the duration of the files.)
+    Parameters
+    ----------
+    xdr : xarray
+        xarray dataset to mask
+    mask_band : str or int, optional   
+        Name or index of the band to use as a mask. 
+        If not provided, a mask abd will be searched for in the xarray attribute metadata.
 
-    e.g. aggregate common months over multiple years, average rainfall in July from 2015 to 2020
+    Returns
+    -------
+    mask: array, bool
+    &#34;&#34;&#34;
+    if mask_band is not None:
+        if isinstance(mask_band, int):
+            if verbose: print(f&#34;Masking values with Nan where mask band {mask_band} is not 0&#34;)
+        elif isinstance(mask_band, str):
+            if verbose: print(f&#34;Masking values with Nan where mask band {mask_band} is not 0&#34;)
+            mask_band = [i for i, s in enumerate(xdr.attrs[&#39;long_name&#39;]) if s == mask_band]
+            mask_band = mask_band[0] + 1
+        else:
+            if verbose: print(&#34;Mask band must be an integer or string&#34;)
+            return
+        mask = xdr.sel(band=mask_band).values != 0
 
+    if mask_band is None:
+        # find band number for attribute that includes &#39;mask&#39;
+        mask_band = [i for i, s in enumerate(xdr.attrs[&#39;long_name&#39;]) if &#39;mask&#39; in s]
+        if len(mask_band) == 0:
+            if verbose: print(&#39;No mask band found in attributes. Proceeding without masking.&#39;)
+        else:
+            if len(mask_band) &gt; 1:
+                if verbose: print(f&#34;Multiple mask bands found in attributes. Proceeding with mask band: {xdr.attrs[&#39;long_name&#39;][mask_band[0]]}&#34;)
+            mask_band = mask_band[0] + 1
+            if verbose: print(f&#34;Masking values with Nan where mask band {xdr.attrs[&#39;long_name&#39;][mask_band[0]]} is valid&#34;)
+            mask = xdr.sel(band=mask_band).values != 0
 
-    Takes a stream of temporal data in a particular time increment and converts
-    to a new time-increment by averaging.
-    &#34;&#34;&#34;</code></pre>
+    return mask</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.temporal.multiband_raster_to_xarray"><code class="name flex">
+<span>def <span class="ident">multiband_raster_to_xarray</span></span>(<span>file_list, date_list=None, mask_bandname=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converts a stack of multiband raster with different dates to an xarray object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt>file_list : list of filename strings in date order to concatenate.</dt>
+<dt><strong><code>date_list</code></strong> :&ensp;<code>list</code> of <code>dates in date order to concatenate. </code></dt>
+<dd>If None provided, the dates will be extracted from the file names.
+This assumes that the date is given at the end of the file name after an underscore.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def multiband_raster_to_xarray(file_list, date_list = None, mask_bandname = None):
+    &#34;&#34;&#34;
+    Converts a stack of multiband raster with different dates to an xarray object.
+    
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
+    date_list : list of dates in date order to concatenate. 
+        If None provided, the dates will be extracted from the file names.
+        This assumes that the date is given at the end of the file name after an underscore.
+    &#34;&#34;&#34;
+    # Extract the dates from the file names if no date list is provided
+    if date_list is None:
+        date_list = get_date_after_last_underscore(file_list)
+
+    # Check if the lists have the same length
+    assert len(file_list) == len(date_list), &#34;File list and date list must have the same length.&#34;
+    
+    # Create an empty list to store the DataArrays
+    data_arrays = []
+
+    for file, date in zip(file_list, date_list):
+        # Read the raster file using rioxarray
+        xds = rioxarray.open_rasterio(file)
+
+        # Assign the time coordinate
+        xds = xds.assign_coords({&#34;time&#34;: pd.to_datetime(date)})
+        xds = xds.expand_dims(&#34;time&#34;)
+
+        # Append the DataArray to the list
+        data_arrays.append(xds)
+
+    # Concatenate the DataArrays along the time dimension
+    stacked_data = xr.concat(data_arrays, dim=&#34;time&#34;)
+
+    return stacked_data</code></pre>
 </details>
 </dd>
 <dt id="geodata_harvester.temporal.temporal_crop"><code class="name flex">
@@ -676,7 +948,9 @@ end_time : string time in 'yyyy-mm-dd' format.</p>
 <ul class="">
 <li><code><a title="geodata_harvester.temporal.aggregate_temporal" href="#geodata_harvester.temporal.aggregate_temporal">aggregate_temporal</a></code></li>
 <li><code><a title="geodata_harvester.temporal.combine_rasters_temporal" href="#geodata_harvester.temporal.combine_rasters_temporal">combine_rasters_temporal</a></code></li>
-<li><code><a title="geodata_harvester.temporal.group_by_custom_periods" href="#geodata_harvester.temporal.group_by_custom_periods">group_by_custom_periods</a></code></li>
+<li><code><a title="geodata_harvester.temporal.get_date_after_last_underscore" href="#geodata_harvester.temporal.get_date_after_last_underscore">get_date_after_last_underscore</a></code></li>
+<li><code><a title="geodata_harvester.temporal.get_mask_array" href="#geodata_harvester.temporal.get_mask_array">get_mask_array</a></code></li>
+<li><code><a title="geodata_harvester.temporal.multiband_raster_to_xarray" href="#geodata_harvester.temporal.multiband_raster_to_xarray">multiband_raster_to_xarray</a></code></li>
 <li><code><a title="geodata_harvester.temporal.temporal_crop" href="#geodata_harvester.temporal.temporal_crop">temporal_crop</a></code></li>
 </ul>
 </li>

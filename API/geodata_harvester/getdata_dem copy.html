@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>geodata_harvester.getdata_dem API documentation</title>
+<title>geodata_harvester.getdata_dem copy API documentation</title>
 <meta name="description" content="This script downloads the National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced product,
 derived from the National DEM SRTM 1 Second …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
@@ -20,7 +20,7 @@ derived from the National DEM SRTM 1 Second …" />
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>geodata_harvester.getdata_dem</code></h1>
+<h1 class="title">Module <code>geodata_harvester.getdata_dem copy</code></h1>
 </header>
 <section id="section-intro">
 <p>This script downloads the National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced product,
@@ -41,7 +41,7 @@ and the respective licensing and attribution are availabe with the module functi
 <p>WCS url:
 <a href="https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS">https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&amp;service=WCS</a></p>
 <p>This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).</p>
-<p>Copyright 2023 Sydney Informatics Hub (SIH), The University of Sydney</p>
+<p>Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney</p>
 <p>This open-source software is released under the LGPL-3.0 License.</p>
 <p>Author: Sebastian Haan</p>
 <details class="source">
@@ -74,7 +74,7 @@ https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapSe
 
 This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
 
-Copyright 2023 Sydney Informatics Hub (SIH), The University of Sydney
+Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
 
 This open-source software is released under the LGPL-3.0 License.
 
@@ -86,7 +86,6 @@ import os
 from datetime import datetime, timezone
 from geodata_harvester import utils
 from geodata_harvester.utils import spin
-from geodata_harvester import arc2meter
 
 import rasterio
 
@@ -95,8 +94,11 @@ from geodata_harvester import write_logs
 from owslib.wcs import WebCoverageService
 from rasterio.plot import show
 from termcolor import cprint
-import rioxarray
-import numpy as np
+
+try:
+    from osgeo import gdal
+except ImportError:
+    import gdal
 
 
 def get_demdict():
@@ -331,56 +333,12 @@ def plot_raster(infname):
     # show image
     show(data)
 
-
-
-def calculate_slope_aspect(fname_dem, fname_out, type=&#39;slope&#39;):
+def calc_gradiant(raster_dem):
     &#34;&#34;&#34;
-    Calculate slope or aspect from DEM and save as geotiff.
+    Calculate the gradiant from a DEM raster with rioxarray
 
-    Parameters
-    ----------
-    fname_dem : str
-        DEM file name
-    fname_out : str
-        output filename
-    type : str
-        &#39;slope&#39; or &#39;aspect&#39;
+    
     &#34;&#34;&#34;
-    # check if type is valid
-    if type not in [&#39;slope&#39;, &#39;aspect&#39;]:
-        raise ValueError(f&#34;Type {type} not recognised, must be &#39;slope&#39; or &#39;aspect&#39;&#34;)
-
-    # Open the DEM file
-    dem = rioxarray.open_rasterio(fname_dem, masked=True)
-
-    # convert dem  to meters if necessary
-    if dem.rio.crs != &#39;EPSG:4326&#39;:
-        dem = dem.rio.reproject(&#39;EPSG:4326&#39;)
-    # caculate factor for converting degrees to meter based on Latitude
-    deg2meter_x = arc2meter.calc_arc2meter(3600, dem.y)[0] # this is an array (due to Latitude dependency in conversion)
-    deg2meter_y = arc2meter.calc_arc2meter(3600, dem.y)[1] # ths is a constant
-
-    # Calculate the gradient in the x and y directions
-    gradient_x = dem.differentiate(&#34;x&#34;) / deg2meter_x
-    gradient_y = dem.differentiate(&#34;y&#34;) / deg2meter_y
-
-    # Calculate slope:
-    if type == &#39;slope&#39;:
-        gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
-        result = np.arctan(gradient_magnitude) * 180 / np.pi
-
-    if type == &#39;aspect&#39;:
-        result = np.arctan2(gradient_x, gradient_y) * 180 / np.pi + 180
-
-    # mask out values where dem has zero
-    result = result.where(dem != 0, 0)
-
-    # Assign the coordinate reference system of the original DEM to the new raster
-    result = result.rio.write_crs(dem.rio.crs)
-
-    # Save the result as a new GeoTIFF file
-    result.rio.to_raster(fname_out)
-
 
 
 def dem2slope(fname_dem):
@@ -397,7 +355,7 @@ def dem2slope(fname_dem):
     # Get path for output
     path = os.path.dirname(fname_dem)
     fname_out = os.path.join(path, &#34;Slope_&#34; + fname)
-    calculate_slope_aspect(fname_dem, fname_out, type=&#39;slope&#39;)
+    gdal.DEMProcessing(fname_out, fname_dem, &#34;slope&#34;)
     logging.info(f&#34;✔  DEM slope from: {fname_dem}&#34;)
     utils.msg_success(f&#34;DEM slope generated at: {fname_out}&#34;)
     return fname_out
@@ -417,7 +375,7 @@ def dem2aspect(fname_dem):
     # Get path for output
     path = os.path.dirname(fname_dem)
     fname_out = os.path.join(path, &#34;Aspect_&#34; + fname)
-    calculate_slope_aspect(fname_dem, fname_out, type=&#39;aspect&#39;)
+    gdal.DEMProcessing(fname_out, fname_dem, &#34;aspect&#34;)
     logging.info(f&#34;✓ | DEM aspect from: {fname_dem}&#34;)
     utils.msg_success(f&#34;Aspect (from DEM) generated at: {fname_out}&#34;)
     return fname_out
@@ -451,74 +409,24 @@ def test_getwcs_dem(outpath=&#34;./test_DEM/&#34;):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="geodata_harvester.getdata_dem.calculate_slope_aspect"><code class="name flex">
-<span>def <span class="ident">calculate_slope_aspect</span></span>(<span>fname_dem, fname_out, type='slope')</span>
+<dt id="geodata_harvester.getdata_dem copy.calc_gradiant"><code class="name flex">
+<span>def <span class="ident">calc_gradiant</span></span>(<span>raster_dem)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Calculate slope or aspect from DEM and save as geotiff.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>fname_dem</code></strong> :&ensp;<code>str</code></dt>
-<dd>DEM file name</dd>
-<dt><strong><code>fname_out</code></strong> :&ensp;<code>str</code></dt>
-<dd>output filename</dd>
-<dt><strong><code>type</code></strong> :&ensp;<code>str</code></dt>
-<dd>'slope' or 'aspect'</dd>
-</dl></div>
+<div class="desc"><p>Calculate the gradiant from a DEM raster with rioxarray</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def calculate_slope_aspect(fname_dem, fname_out, type=&#39;slope&#39;):
+<pre><code class="python">def calc_gradiant(raster_dem):
     &#34;&#34;&#34;
-    Calculate slope or aspect from DEM and save as geotiff.
+    Calculate the gradiant from a DEM raster with rioxarray
 
-    Parameters
-    ----------
-    fname_dem : str
-        DEM file name
-    fname_out : str
-        output filename
-    type : str
-        &#39;slope&#39; or &#39;aspect&#39;
-    &#34;&#34;&#34;
-    # check if type is valid
-    if type not in [&#39;slope&#39;, &#39;aspect&#39;]:
-        raise ValueError(f&#34;Type {type} not recognised, must be &#39;slope&#39; or &#39;aspect&#39;&#34;)
-
-    # Open the DEM file
-    dem = rioxarray.open_rasterio(fname_dem, masked=True)
-
-    # convert dem  to meters if necessary
-    if dem.rio.crs != &#39;EPSG:4326&#39;:
-        dem = dem.rio.reproject(&#39;EPSG:4326&#39;)
-    # caculate factor for converting degrees to meter based on Latitude
-    deg2meter_x = arc2meter.calc_arc2meter(3600, dem.y)[0] # this is an array (due to Latitude dependency in conversion)
-    deg2meter_y = arc2meter.calc_arc2meter(3600, dem.y)[1] # ths is a constant
-
-    # Calculate the gradient in the x and y directions
-    gradient_x = dem.differentiate(&#34;x&#34;) / deg2meter_x
-    gradient_y = dem.differentiate(&#34;y&#34;) / deg2meter_y
-
-    # Calculate slope:
-    if type == &#39;slope&#39;:
-        gradient_magnitude = np.sqrt(gradient_x**2 + gradient_y**2)
-        result = np.arctan(gradient_magnitude) * 180 / np.pi
-
-    if type == &#39;aspect&#39;:
-        result = np.arctan2(gradient_x, gradient_y) * 180 / np.pi + 180
-
-    # mask out values where dem has zero
-    result = result.where(dem != 0, 0)
-
-    # Assign the coordinate reference system of the original DEM to the new raster
-    result = result.rio.write_crs(dem.rio.crs)
-
-    # Save the result as a new GeoTIFF file
-    result.rio.to_raster(fname_out)</code></pre>
+    
+    &#34;&#34;&#34;</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.dem2aspect"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.dem2aspect"><code class="name flex">
 <span>def <span class="ident">dem2aspect</span></span>(<span>fname_dem)</span>
 </code></dt>
 <dd>
@@ -546,13 +454,13 @@ def test_getwcs_dem(outpath=&#34;./test_DEM/&#34;):
     # Get path for output
     path = os.path.dirname(fname_dem)
     fname_out = os.path.join(path, &#34;Aspect_&#34; + fname)
-    calculate_slope_aspect(fname_dem, fname_out, type=&#39;aspect&#39;)
+    gdal.DEMProcessing(fname_out, fname_dem, &#34;aspect&#34;)
     logging.info(f&#34;✓ | DEM aspect from: {fname_dem}&#34;)
     utils.msg_success(f&#34;Aspect (from DEM) generated at: {fname_out}&#34;)
     return fname_out</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.dem2slope"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.dem2slope"><code class="name flex">
 <span>def <span class="ident">dem2slope</span></span>(<span>fname_dem)</span>
 </code></dt>
 <dd>
@@ -580,13 +488,13 @@ def test_getwcs_dem(outpath=&#34;./test_DEM/&#34;):
     # Get path for output
     path = os.path.dirname(fname_dem)
     fname_out = os.path.join(path, &#34;Slope_&#34; + fname)
-    calculate_slope_aspect(fname_dem, fname_out, type=&#39;slope&#39;)
+    gdal.DEMProcessing(fname_out, fname_dem, &#34;slope&#34;)
     logging.info(f&#34;✔  DEM slope from: {fname_dem}&#34;)
     utils.msg_success(f&#34;DEM slope generated at: {fname_out}&#34;)
     return fname_out</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.get_capabilities"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.get_capabilities"><code class="name flex">
 <span>def <span class="ident">get_capabilities</span></span>(<span>url)</span>
 </code></dt>
 <dd>
@@ -660,7 +568,7 @@ of <code>str</code></dt>
     return keys, title_list, description_list, bbox_list</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.get_dem_layers"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.get_dem_layers"><code class="name flex">
 <span>def <span class="ident">get_dem_layers</span></span>(<span>layernames, outpath, bbox, resolution=1, crs='EPSG:4326')</span>
 </code></dt>
 <dd>
@@ -733,7 +641,7 @@ and to calculate slope and aspect layers</p>
     return outfnames</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.get_demdict"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.get_demdict"><code class="name flex">
 <span>def <span class="ident">get_demdict</span></span>(<span>)</span>
 </code></dt>
 <dd>
@@ -774,7 +682,7 @@ dictionary of meta data</p></div>
     return demdict</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.getdict_license"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.getdict_license"><code class="name flex">
 <span>def <span class="ident">getdict_license</span></span>(<span>)</span>
 </code></dt>
 <dd>
@@ -799,7 +707,7 @@ dictionary of meta data</p></div>
     return dict</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.getwcs_dem"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.getwcs_dem"><code class="name flex">
 <span>def <span class="ident">getwcs_dem</span></span>(<span>outpath, bbox, resolution=1, url='https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapServer/WCSServer?request=GetCapabilities&service=WCS', crs='EPSG:4326', verbose=False)</span>
 </code></dt>
 <dd>
@@ -908,7 +816,7 @@ Url = <a href="https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro
     return outfname</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.plot_raster"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.plot_raster"><code class="name flex">
 <span>def <span class="ident">plot_raster</span></span>(<span>infname)</span>
 </code></dt>
 <dd>
@@ -935,7 +843,7 @@ Url = <a href="https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro
     show(data)</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_dem.test_getwcs_dem"><code class="name flex">
+<dt id="geodata_harvester.getdata_dem copy.test_getwcs_dem"><code class="name flex">
 <span>def <span class="ident">test_getwcs_dem</span></span>(<span>outpath='./test_DEM/')</span>
 </code></dt>
 <dd>
@@ -982,17 +890,17 @@ Url = <a href="https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
-<li><code><a title="geodata_harvester.getdata_dem.calculate_slope_aspect" href="#geodata_harvester.getdata_dem.calculate_slope_aspect">calculate_slope_aspect</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.dem2aspect" href="#geodata_harvester.getdata_dem.dem2aspect">dem2aspect</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.dem2slope" href="#geodata_harvester.getdata_dem.dem2slope">dem2slope</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.get_capabilities" href="#geodata_harvester.getdata_dem.get_capabilities">get_capabilities</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.get_dem_layers" href="#geodata_harvester.getdata_dem.get_dem_layers">get_dem_layers</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.get_demdict" href="#geodata_harvester.getdata_dem.get_demdict">get_demdict</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.getdict_license" href="#geodata_harvester.getdata_dem.getdict_license">getdict_license</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.getwcs_dem" href="#geodata_harvester.getdata_dem.getwcs_dem">getwcs_dem</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.plot_raster" href="#geodata_harvester.getdata_dem.plot_raster">plot_raster</a></code></li>
-<li><code><a title="geodata_harvester.getdata_dem.test_getwcs_dem" href="#geodata_harvester.getdata_dem.test_getwcs_dem">test_getwcs_dem</a></code></li>
+<ul class="two-column">
+<li><code><a title="geodata_harvester.getdata_dem copy.calc_gradiant" href="#geodata_harvester.getdata_dem copy.calc_gradiant">calc_gradiant</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.dem2aspect" href="#geodata_harvester.getdata_dem copy.dem2aspect">dem2aspect</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.dem2slope" href="#geodata_harvester.getdata_dem copy.dem2slope">dem2slope</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.get_capabilities" href="#geodata_harvester.getdata_dem copy.get_capabilities">get_capabilities</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.get_dem_layers" href="#geodata_harvester.getdata_dem copy.get_dem_layers">get_dem_layers</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.get_demdict" href="#geodata_harvester.getdata_dem copy.get_demdict">get_demdict</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.getdict_license" href="#geodata_harvester.getdata_dem copy.getdict_license">getdict_license</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.getwcs_dem" href="#geodata_harvester.getdata_dem copy.getwcs_dem">getwcs_dem</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.plot_raster" href="#geodata_harvester.getdata_dem copy.plot_raster">plot_raster</a></code></li>
+<li><code><a title="geodata_harvester.getdata_dem copy.test_getwcs_dem" href="#geodata_harvester.getdata_dem copy.test_getwcs_dem">test_getwcs_dem</a></code></li>
 </ul>
 </li>
 </ul>

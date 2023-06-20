@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
 <title>geodata_harvester.harvest API documentation</title>
-<meta name="description" content="This script is running the headless version of the data harvester …" />
+<meta name="description" content="This script is running the headless version of the geodata-harvester …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -22,46 +22,60 @@
 <h1 class="title">Module <code>geodata_harvester.harvest</code></h1>
 </header>
 <section id="section-intro">
-<p>This script is running the headless version of the data harvester.</p>
+<p>This script is running the headless version of the geodata-harvester.</p>
 <p>The following main steps are automatically executed within the run() function:
 - loading settings from config file
 - creating bounding box from input file points if not provided
-- downloading data layers as sepcified in config file
+- downloading data layers as specified in config file
+- processing data layers as specified in config file
+- save downloaded image files to disk as GeoTiffs
+- save summary table of downloaded files as CSV
 - extract data for point locations provided in input file (name specified in settings)
-- save results to disk as csv and geopackage</p>
+- save extracted point results to disk as CSV and as geopackage </p>
+<p>Example call within Python:
+from geodata_harvester import harvest
+harvest.run(path_to_config))</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
-This script is running the headless version of the data harvester.
+This script is running the headless version of the geodata-harvester.
 
 The following main steps are automatically executed within the run() function:
     - loading settings from config file
     - creating bounding box from input file points if not provided
-    - downloading data layers as sepcified in config file
+    - downloading data layers as specified in config file
+    - processing data layers as specified in config file
+    - save downloaded image files to disk as GeoTiffs
+    - save summary table of downloaded files as CSV
     - extract data for point locations provided in input file (name specified in settings)
-    - save results to disk as csv and geopackage
+    - save extracted point results to disk as CSV and as geopackage 
+
+Example call within Python:
+    from geodata_harvester import harvest
+    harvest.run(path_to_config))
 &#34;&#34;&#34;
 
-# TODO: add validation to infile, colname_lng, colname_lat, if not in config, to
-# generate blanks so that the script doesn&#39;t crash. In the future, maybe let the
-# main code handle this, but for now, this is a quick fix.
 
 import os
 from pathlib import Path
 import geopandas as gpd
 from termcolor import cprint
 import yaml
+import shutil
+import argparse
+import numpy as np
+from datetime import datetime, timedelta
 from geodata_harvester.widgets import harvesterwidgets as hw
 from geodata_harvester.utils import init_logtable, update_logtable
 from geodata_harvester import (getdata_dea, getdata_dem,  getdata_landscape,
                                getdata_radiometric, getdata_silo, getdata_slga,
-                               utils)
+                               utils, temporal)
 from eeharvest import harvester as eeharvester
 
 
-def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_df=False):
+def run(path_to_config, log_name=&#34;download_summary&#34;, preview=False, return_df=False):
     &#34;&#34;&#34;
     A headless version of the Data-Harvester (with some limitations).
     Results are saved to disk.
@@ -84,8 +98,6 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
     cprint(&#34;Starting the data harvester -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
 
     # Load config file (based on notebook for now, will optimise later)
-    # with open(path_to_config, &#34;r&#34;) as f:
-    # settings = yaml.load(f, Loader=yaml.SafeLoader)
     settings = hw.load_settings(path_to_config)
 
     # Count number of sources to download from
@@ -116,6 +128,7 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
         gdfpoints = gpd.read_file(settings.infile)
         longs = gdfpoints[settings.colname_lng].astype(float)
         lats = gdfpoints[settings.colname_lat].astype(float)
+        coords = np.vstack((longs, lats)).T
 
         if settings.target_bbox is None:
             settings.target_bbox = (
@@ -128,6 +141,17 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
     # Stop if bounding box cannot be calculated or was not provided
     if settings.infile is None and settings.target_bbox is None:
         raise ValueError(&#34;No sampling file or bounding box provided&#34;)
+
+    # Temporal range
+    # convert date strings to datetime objects
+    date_diff = (datetime.strptime(settings.date_max, &#34;%Y-%m-%d&#34;) 
+        - datetime.strptime(settings.date_min, &#34;%Y-%m-%d&#34;)).days
+    if settings.time_intervals is not None:
+        period_days = date_diff // settings.time_intervals
+        if period_days == 0:
+            period_days = 1
+    else:
+        period_days = None
 
     # Create download log
     download_log = init_logtable()
@@ -150,25 +174,114 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
         #gee.preprocess()
         #gee.download()
         # use auto function to download and preprocess
-        gee = eeharvester.auto(config=path_to_config)
-        # add settings.outpath to all entries in list of gee.filenames
-        # if gee.filenames is a list of strings
-        if not isinstance(gee.filenames, list):
-            # convert to list
-            gee.filenames = [gee.filenames]
-        outfnames = [settings.outpath  + filename for filename in gee.filenames]
-        layernames = [Path(filename).resolve().stem for filename in gee.filenames]
 
-        download_log = update_logtable(
-            download_log,
-            outfnames,
-            layernames,
-            &#34;GEE&#34;,
-            settings,
-            layertitles=[],
-            agfunctions=settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;],
-            loginfos=&#34;downloaded&#34;,
-        )
+        if period_days is None:
+            &#34;&#34;&#34;
+            If no time intervals are specified and reduce is not set, download all datasets.
+            If no time intervals are specified, but reduce is set, 
+            download the temporal reduced (aggregated) set over the entire time range.
+            &#34;&#34;&#34;
+            gee_outpath = os.path.join(settings.outpath,&#39;ee&#39;)
+            gee = eeharvester.auto(config=path_to_config, outpath=gee_outpath)
+            # add settings.outpath to all entries in list of gee.filenames
+            # if gee.filenames is a list of strings
+            if not isinstance(gee.filenames, list):
+                # convert to list
+                gee.filenames = [gee.filenames]
+            # get list of filenames in the directory
+            gee_filenames = []
+            # Walk through the directory and its subdirectories to find full paths
+            for root, _, files in os.walk(gee_outpath):
+                for file in files:
+                    if file in gee.filenames:
+                        # Join the root and file to get the full path
+                        file_path = os.path.join(root, file)
+                        gee_filenames.append(file_path)
+            outfnames =  gee_filenames 
+            agg_list = [None] * len(outfnames)
+            layernames = [Path(filename).resolve().stem for filename in gee_filenames]
+            layer_titles = layernames
+        else:
+            # run data extraction for each time interval
+            date_start_list = [datetime.strptime(settings.date_min, &#34;%Y-%m-%d&#34;) + 
+            timedelta(days=i*period_days) for i in range(settings.time_intervals)]
+            date_end_list = [datetime.strptime(settings.date_min, &#34;%Y-%m-%d&#34;) + 
+            timedelta(days=i*period_days) for i in range(1, settings.time_intervals+1)]
+            # clip end date to date_max
+            date_end_list[-1] = min(date_end_list[-1], datetime.strptime(settings.date_max, &#34;%Y-%m-%d&#34;))
+
+            if settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;] is None:
+                agg_type = &#34;median&#34;
+            else:
+                agg_type = settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;]
+            # Check if agg_type is a list
+            if isinstance(agg_type, list):
+                agg_type = agg_type[0]
+
+            # run eeharvest extraction for each time interval
+            outfnames = []
+            layernames = []
+            agg_list = []
+            layer_titles = []
+            for i in range(settings.time_intervals):
+                # update settings.date_min and settings.date_max in config file
+                # make temporary copy of config file
+                tmp_config = path_to_config.replace(&#34;.yaml&#34;, &#34;_tmp.yaml&#34;)
+                shutil.copy(path_to_config, tmp_config)
+                # update config file
+                with open(tmp_config, &#34;r&#34;) as f:
+                    config = yaml.load(f, Loader=yaml.SafeLoader)   
+                config[&#39;date_min&#39;] = date_start_list[i].date() #.strftime(&#34;%Y-%m-%d&#34;) # can&#39;t be string since eeharvest can&#39;t strings
+                config[&#39;date_max&#39;] = date_end_list[i].date() #.strftime(&#34;%Y-%m-%d&#34;)
+                if config[&#39;target_sources&#39;][&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;] is None:
+                    config[&#39;target_sources&#39;][&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;] = agg_type
+                with open(tmp_config, &#34;w&#34;) as f:
+                    yaml.dump(config, f)
+                # run eeharvest
+                gee_outpath = os.path.join(settings.outpath,&#39;ee&#39;)
+                try:
+                    # Try to download gee images for the time interval. If no images available, skip.
+                    gee = eeharvester.auto(config=tmp_config, outpath=gee_outpath)
+                except Exception as e:
+                    print(e)
+                    continue
+                if not isinstance(gee.filenames, list):
+                    # convert to list
+                    gee.filenames = [gee.filenames]
+                gee_filenames = []
+                # Walk through the directory and its subdirectories to find full paths
+                for root, _, files in os.walk(gee_outpath):
+                    for file in files:
+                        if file in gee.filenames:
+                            # Join the root and file to get the full path
+                            file_path = os.path.join(root, file)
+                            gee_filenames.append(file_path)
+                layers = [Path(filename).resolve().stem for filename in gee_filenames]
+                outfnames += gee_filenames
+                layernames += layers
+                agg_list += [agg_type] * len(gee_filenames)
+                layer_titles += [layer + &#34;_&#34; + agg_type + &#34;_&#34; + date_start_list[i].strftime(&#34;%Y-%m-%d&#34;) + 
+                &#34;-to-&#34; + date_end_list[i].strftime(&#34;%Y-%m-%d&#34;) for layer in layers]
+                
+                # remove temporary config file
+                os.remove(tmp_config)
+
+        if len(outfnames) &gt; 0:
+            # rename outfname files to layer_titles + .tif
+            for i in range(len(outfnames)):
+                os.rename(outfnames[i], os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + &#34;.tif&#34;))
+                outfnames[i] = os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + &#34;.tif&#34;)
+
+            download_log = update_logtable(
+                download_log,
+                outfnames,
+                layernames,
+                &#34;GEE&#34;,
+                settings,
+                layertitles=layer_titles,
+                agfunctions=agg_list,
+                loginfos=&#34;downloaded&#34;,
+            )
 
     # DEA
     if &#34;DEA&#34; in list_sources:
@@ -187,29 +300,77 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
             crs=&#34;EPSG:4326&#34;,
             format_out=&#34;GeoTIFF&#34;,
         )
+        if period_days is not None:
+            # aggregate temporal data
+            outfname_dea_list = []
+            layer_list = []
+            layer_titles = []
+            agg_list = []
+            for layername in dea_layernames:
+                # get files for layername 
+                #files_layer = [os.path.basename(x) for x in files_dea if layername in x]
+                files_layer = [x for x in files_dea if layername in x]
 
-        # DEA layers come in many lengths, so unravel them all based on name
-        # This may be better suited to fit in utils.update_logtable
-        layer_list = []
-        for layername in dea_layernames:
-            s = sum(layername in s for s in files_dea)
-            l = [layername]*s
-            layer_list.append(l)
+                # Check if there are multiple files for the same layer, 
+                # if not assume no temporal aggregation and skip loop
+                if len(files_layer) == 1:
+                    outfname_dea_list += files_layer
+                    layer_titles += [layername]
+                    layer_list += [layername]
+                    agg_list += [&#39;None&#39;]
+                    continue
 
-        layer_list = sum(layer_list, [])
-        # Need a unique name for each layer
-        layer_titles = [os.path.splitext(
-            x)[0].split(&#39;/&#39;)[-1] for x in files_dea]
-        # layernames = []
-        # for layername in dea_layernames:
-        #   layernames += [layername + &#39;_channel&#39; + channel_list[i] for i in range(len(channel_list))]
+                xdr = temporal.multiband_raster_to_xarray(files_layer)
+
+                # replace values with nan_value with nan so that aggregation works properly
+                nan_value = xdr.attrs[&#34;_FillValue&#34;]
+                xdr = xdr.where(xdr != nan_value, np.nan)
+
+                &#34;&#34;&#34;
+                Aggregate over temporal period by using median along the time dimension.
+                Note that some DEA layers may have quality flags but these are not applied here because it is layer-specific.
+                &#34;&#34;&#34;
+                outfname_list, agg_list = temporal.aggregate_temporal(
+                    xdr,
+                    period=period_days, 
+                    agg=[&#34;median&#34;], 
+                    outfile=os.path.join(settings.outpath,f&#34;DEA_{layername}&#34;), 
+                    buffer = None)
+                outfname_dea_list += outfname_list
+
+                # create layer titles with proper date range format
+                for filename in outfname_list:
+                    # get date from filename without extension
+                    date_start = os.path.splitext(os.path.basename(filename).rsplit(&#39;_&#39;)[-1])[0]
+                    # convert date string YYYY-MM-D to datetime object
+                    date_start = datetime.strptime(date_start, &#34;%Y-%m-%d&#34;)
+                    date_end = date_start + timedelta(days=period_days)
+                    date_str = date_start.strftime(&#34;%Y-%m-%d&#34;) + &#34;-to-&#34; + date_end.strftime(&#34;%Y-%m-%d&#34;)
+                    new_name = &#34;DEA_&#34; + layername + &#34;_median_&#34; + date_str
+                    layer_titles += [new_name]
+                layer_list += [layername]*len(outfname_list)
+            agg_list = [&#39;median&#39;]*len(layer_titles)
+        else:
+            outfname_dea_list = files_dea
+            # get string dea_layernames from filenames in files_dea
+            layer_list = []
+            for fname in files_dea:
+                for layername in dea_layernames:
+                    if layername in fname:
+                        layer_list.append(layername)
+                        break
+            layer_titles = [os.path.basename(path).rsplit(&#39;.&#39;)[0] for path in files_dea]
+            agg_list = [&#39;None&#39;]*len(layer_titles)
+
+        # Update download log table
         download_log = update_logtable(
             download_log,
-            files_dea,
+            outfname_dea_list,
             layer_list,
             &#39;DEA&#39;,
             settings,
             layertitles=layer_titles,
+            agfunctions = agg_list,
             loginfos=&#39;downloaded&#39;
         )
 
@@ -291,14 +452,15 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
         else:
             pass
     if &#34;SILO&#34; in list_sources:
-        cprint(&#34;\n⌛ Downloading SILO data...&#34;, attrs=[&#34;bold&#34;])
+        cprint(&#34;\n⌛ Downloading SILO data.\
+            This will take a couple of minutes, depending on your internet speed...&#34;, attrs=[&#34;bold&#34;])
         # get data from SILO
         fnames_out_silo = []
         silo_layernames = list(settings.target_sources[&#34;SILO&#34;].keys())
         # print(silo_layernames)
         try:
             # run the download
-            files_silo = settings.outpath + &#34;silo&#34;
+            files_silo = os.path.join(settings.outpath, &#34;silo&#34;)
             fnames_out = getdata_silo.get_SILO_layers(
                 silo_layernames,
                 settings.date_min,
@@ -311,16 +473,55 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
             fnames_out_silo += fnames_out
         except Exception as e:
             print(e)
+        # aggregate the data along time windows if period_days is not None
+        if period_days is not None:
+            #try:
+            outfname_list = []
+            layername_list = []
+            aggfunction_list = []
+            layer_titles = []
+            for i, fname in enumerate(fnames_out_silo):
+                xdr = temporal.combine_rasters_temporal(fname, channel_name=&#34;band&#34;, attribute_name=&#34;long_name&#34;)
+                outfnames, agg_list = temporal.aggregate_temporal(
+                    xdr,
+                    period=period_days, 
+                    agg=[settings.target_sources[&#39;SILO&#39;][silo_layernames[i]]], 
+                    outfile=f&#34;{fname.split(&#39;.&#39;)[0]}&#34;, 
+                    buffer = None)
+                outfname_list += outfnames
+                layername_list += [silo_layernames[i]]*len(outfnames)
+                aggfunction_list += agg_list
+
+                # define proper titles for the layers
+                layername = silo_layernames[i]
+                for filename in outfnames: 
+                    # get date from filename without extension
+                    date_start = os.path.splitext(os.path.basename(filename).rsplit(&#39;_&#39;)[-1])[0]
+                    # convert date string YYYY-MM-D to datetime object
+                    date_start = datetime.strptime(date_start, &#34;%Y-%m-%d&#34;)
+                    date_end = date_start + timedelta(days=period_days)
+                    date_str = date_start.strftime(&#34;%Y-%m-%d&#34;) + &#34;-to-&#34; + date_end.strftime(&#34;%Y-%m-%d&#34;)
+                    new_name = &#34;SILO_&#34; + layername + &#34;_&#34; + settings.target_sources[&#39;SILO&#39;][silo_layernames[i]] + &#34;_&#34; + date_str
+                    layer_titles += [new_name]
+            #except Exception as e:
+            #   print(e)
+        else:
+            outfname_list = fnames_out_silo
+            layername_list = silo_layernames
+            aggfunction_list = [&#39;&#39;]*len(fnames_out_silo)
+            layer_titles = [&#34;SILO_&#34; + layername for layername in silo_layernames]
         var_exists = &#34;files_silo&#34; in locals() or &#34;files_silo&#34; in globals()
         if var_exists:
             # Add download info to log dataframe
             download_log = update_logtable(
                 download_log,
-                fnames_out_silo,
-                silo_layernames,
-                &#34;SILO&#34;,
-                settings,
-                layertitles=[],
+                #fnames_out_silo,
+                filenames = outfname_list,
+                layernames = layername_list,
+                datasource = &#34;SILO&#34;,
+                settings = settings,
+                layertitles=[os.path.basename(fname).split(&#39;.&#39;)[0] for fname in outfname_list],
+                agfunctions = aggfunction_list,
                 loginfos=&#34;downloaded&#34;,
             )
         else:
@@ -366,8 +567,7 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
             pass
 
     # save log to file
-    logfile = settings.outpath + log_name + &#34;.csv&#34;
-    download_log.to_csv(logfile, index=False)
+    download_log.to_csv(os.path.join(settings.outpath, log_name + &#34;.csv&#34;), index=False)
 
     # extract filename from settings.infile
     # Select all processed data
@@ -379,14 +579,15 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
         cprint(
             f&#34;\nExtracting data points for {fn}  -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
         # Extract datatable from rasters given input coordinates
-        gdf = utils.raster_query(longs, lats, rasters, titles)
-        # Save the results table to a csv
-        gdf.to_csv(
-            os.path.join(settings.outpath, &#34;results.csv&#34;), index=True, mode=&#34;w&#34;
-        )
-        # Save also as geopackage
+        # gdf = utils.raster_query(longs, lats, rasters, titles) # old slower version
+        gdf = utils.extract_values_from_rasters(coords, rasters)
+        # Save as geopackage
         gdf.to_file(os.path.join(settings.outpath,
                     &#34;results.gpkg&#34;), driver=&#34;GPKG&#34;)
+        # Save the results table to a csv as well
+        gdf.drop(&#34;geometry&#34;, axis=1).to_csv(
+            os.path.join(settings.outpath, &#34;results.csv&#34;), index=True, mode=&#34;w&#34;
+        )
         utils.msg_success(
             f&#34;Data points extracted to {settings.outpath}results.gpkg&#34;)
 
@@ -411,7 +612,7 @@ def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_d
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="geodata_harvester.harvest.run"><code class="name flex">
-<span>def <span class="ident">run</span></span>(<span>path_to_config, log_name='download_log', preview=False, return_df=False)</span>
+<span>def <span class="ident">run</span></span>(<span>path_to_config, log_name='download_summary', preview=False, return_df=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A headless version of the Data-Harvester (with some limitations).
@@ -438,7 +639,7 @@ Results are saved to disk.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def run(path_to_config, log_name=&#34;download_log&#34;, preview=False, return_df=False):
+<pre><code class="python">def run(path_to_config, log_name=&#34;download_summary&#34;, preview=False, return_df=False):
     &#34;&#34;&#34;
     A headless version of the Data-Harvester (with some limitations).
     Results are saved to disk.
@@ -461,8 +662,6 @@ Results are saved to disk.</p>
     cprint(&#34;Starting the data harvester -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
 
     # Load config file (based on notebook for now, will optimise later)
-    # with open(path_to_config, &#34;r&#34;) as f:
-    # settings = yaml.load(f, Loader=yaml.SafeLoader)
     settings = hw.load_settings(path_to_config)
 
     # Count number of sources to download from
@@ -493,6 +692,7 @@ Results are saved to disk.</p>
         gdfpoints = gpd.read_file(settings.infile)
         longs = gdfpoints[settings.colname_lng].astype(float)
         lats = gdfpoints[settings.colname_lat].astype(float)
+        coords = np.vstack((longs, lats)).T
 
         if settings.target_bbox is None:
             settings.target_bbox = (
@@ -505,6 +705,17 @@ Results are saved to disk.</p>
     # Stop if bounding box cannot be calculated or was not provided
     if settings.infile is None and settings.target_bbox is None:
         raise ValueError(&#34;No sampling file or bounding box provided&#34;)
+
+    # Temporal range
+    # convert date strings to datetime objects
+    date_diff = (datetime.strptime(settings.date_max, &#34;%Y-%m-%d&#34;) 
+        - datetime.strptime(settings.date_min, &#34;%Y-%m-%d&#34;)).days
+    if settings.time_intervals is not None:
+        period_days = date_diff // settings.time_intervals
+        if period_days == 0:
+            period_days = 1
+    else:
+        period_days = None
 
     # Create download log
     download_log = init_logtable()
@@ -527,25 +738,114 @@ Results are saved to disk.</p>
         #gee.preprocess()
         #gee.download()
         # use auto function to download and preprocess
-        gee = eeharvester.auto(config=path_to_config)
-        # add settings.outpath to all entries in list of gee.filenames
-        # if gee.filenames is a list of strings
-        if not isinstance(gee.filenames, list):
-            # convert to list
-            gee.filenames = [gee.filenames]
-        outfnames = [settings.outpath  + filename for filename in gee.filenames]
-        layernames = [Path(filename).resolve().stem for filename in gee.filenames]
 
-        download_log = update_logtable(
-            download_log,
-            outfnames,
-            layernames,
-            &#34;GEE&#34;,
-            settings,
-            layertitles=[],
-            agfunctions=settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;],
-            loginfos=&#34;downloaded&#34;,
-        )
+        if period_days is None:
+            &#34;&#34;&#34;
+            If no time intervals are specified and reduce is not set, download all datasets.
+            If no time intervals are specified, but reduce is set, 
+            download the temporal reduced (aggregated) set over the entire time range.
+            &#34;&#34;&#34;
+            gee_outpath = os.path.join(settings.outpath,&#39;ee&#39;)
+            gee = eeharvester.auto(config=path_to_config, outpath=gee_outpath)
+            # add settings.outpath to all entries in list of gee.filenames
+            # if gee.filenames is a list of strings
+            if not isinstance(gee.filenames, list):
+                # convert to list
+                gee.filenames = [gee.filenames]
+            # get list of filenames in the directory
+            gee_filenames = []
+            # Walk through the directory and its subdirectories to find full paths
+            for root, _, files in os.walk(gee_outpath):
+                for file in files:
+                    if file in gee.filenames:
+                        # Join the root and file to get the full path
+                        file_path = os.path.join(root, file)
+                        gee_filenames.append(file_path)
+            outfnames =  gee_filenames 
+            agg_list = [None] * len(outfnames)
+            layernames = [Path(filename).resolve().stem for filename in gee_filenames]
+            layer_titles = layernames
+        else:
+            # run data extraction for each time interval
+            date_start_list = [datetime.strptime(settings.date_min, &#34;%Y-%m-%d&#34;) + 
+            timedelta(days=i*period_days) for i in range(settings.time_intervals)]
+            date_end_list = [datetime.strptime(settings.date_min, &#34;%Y-%m-%d&#34;) + 
+            timedelta(days=i*period_days) for i in range(1, settings.time_intervals+1)]
+            # clip end date to date_max
+            date_end_list[-1] = min(date_end_list[-1], datetime.strptime(settings.date_max, &#34;%Y-%m-%d&#34;))
+
+            if settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;] is None:
+                agg_type = &#34;median&#34;
+            else:
+                agg_type = settings.target_sources[&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;]
+            # Check if agg_type is a list
+            if isinstance(agg_type, list):
+                agg_type = agg_type[0]
+
+            # run eeharvest extraction for each time interval
+            outfnames = []
+            layernames = []
+            agg_list = []
+            layer_titles = []
+            for i in range(settings.time_intervals):
+                # update settings.date_min and settings.date_max in config file
+                # make temporary copy of config file
+                tmp_config = path_to_config.replace(&#34;.yaml&#34;, &#34;_tmp.yaml&#34;)
+                shutil.copy(path_to_config, tmp_config)
+                # update config file
+                with open(tmp_config, &#34;r&#34;) as f:
+                    config = yaml.load(f, Loader=yaml.SafeLoader)   
+                config[&#39;date_min&#39;] = date_start_list[i].date() #.strftime(&#34;%Y-%m-%d&#34;) # can&#39;t be string since eeharvest can&#39;t strings
+                config[&#39;date_max&#39;] = date_end_list[i].date() #.strftime(&#34;%Y-%m-%d&#34;)
+                if config[&#39;target_sources&#39;][&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;] is None:
+                    config[&#39;target_sources&#39;][&#39;GEE&#39;][&#39;preprocess&#39;][&#39;reduce&#39;] = agg_type
+                with open(tmp_config, &#34;w&#34;) as f:
+                    yaml.dump(config, f)
+                # run eeharvest
+                gee_outpath = os.path.join(settings.outpath,&#39;ee&#39;)
+                try:
+                    # Try to download gee images for the time interval. If no images available, skip.
+                    gee = eeharvester.auto(config=tmp_config, outpath=gee_outpath)
+                except Exception as e:
+                    print(e)
+                    continue
+                if not isinstance(gee.filenames, list):
+                    # convert to list
+                    gee.filenames = [gee.filenames]
+                gee_filenames = []
+                # Walk through the directory and its subdirectories to find full paths
+                for root, _, files in os.walk(gee_outpath):
+                    for file in files:
+                        if file in gee.filenames:
+                            # Join the root and file to get the full path
+                            file_path = os.path.join(root, file)
+                            gee_filenames.append(file_path)
+                layers = [Path(filename).resolve().stem for filename in gee_filenames]
+                outfnames += gee_filenames
+                layernames += layers
+                agg_list += [agg_type] * len(gee_filenames)
+                layer_titles += [layer + &#34;_&#34; + agg_type + &#34;_&#34; + date_start_list[i].strftime(&#34;%Y-%m-%d&#34;) + 
+                &#34;-to-&#34; + date_end_list[i].strftime(&#34;%Y-%m-%d&#34;) for layer in layers]
+                
+                # remove temporary config file
+                os.remove(tmp_config)
+
+        if len(outfnames) &gt; 0:
+            # rename outfname files to layer_titles + .tif
+            for i in range(len(outfnames)):
+                os.rename(outfnames[i], os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + &#34;.tif&#34;))
+                outfnames[i] = os.path.join(os.path.dirname(outfnames[i]), layer_titles[i] + &#34;.tif&#34;)
+
+            download_log = update_logtable(
+                download_log,
+                outfnames,
+                layernames,
+                &#34;GEE&#34;,
+                settings,
+                layertitles=layer_titles,
+                agfunctions=agg_list,
+                loginfos=&#34;downloaded&#34;,
+            )
 
     # DEA
     if &#34;DEA&#34; in list_sources:
@@ -564,29 +864,77 @@ Results are saved to disk.</p>
             crs=&#34;EPSG:4326&#34;,
             format_out=&#34;GeoTIFF&#34;,
         )
+        if period_days is not None:
+            # aggregate temporal data
+            outfname_dea_list = []
+            layer_list = []
+            layer_titles = []
+            agg_list = []
+            for layername in dea_layernames:
+                # get files for layername 
+                #files_layer = [os.path.basename(x) for x in files_dea if layername in x]
+                files_layer = [x for x in files_dea if layername in x]
 
-        # DEA layers come in many lengths, so unravel them all based on name
-        # This may be better suited to fit in utils.update_logtable
-        layer_list = []
-        for layername in dea_layernames:
-            s = sum(layername in s for s in files_dea)
-            l = [layername]*s
-            layer_list.append(l)
+                # Check if there are multiple files for the same layer, 
+                # if not assume no temporal aggregation and skip loop
+                if len(files_layer) == 1:
+                    outfname_dea_list += files_layer
+                    layer_titles += [layername]
+                    layer_list += [layername]
+                    agg_list += [&#39;None&#39;]
+                    continue
 
-        layer_list = sum(layer_list, [])
-        # Need a unique name for each layer
-        layer_titles = [os.path.splitext(
-            x)[0].split(&#39;/&#39;)[-1] for x in files_dea]
-        # layernames = []
-        # for layername in dea_layernames:
-        #   layernames += [layername + &#39;_channel&#39; + channel_list[i] for i in range(len(channel_list))]
+                xdr = temporal.multiband_raster_to_xarray(files_layer)
+
+                # replace values with nan_value with nan so that aggregation works properly
+                nan_value = xdr.attrs[&#34;_FillValue&#34;]
+                xdr = xdr.where(xdr != nan_value, np.nan)
+
+                &#34;&#34;&#34;
+                Aggregate over temporal period by using median along the time dimension.
+                Note that some DEA layers may have quality flags but these are not applied here because it is layer-specific.
+                &#34;&#34;&#34;
+                outfname_list, agg_list = temporal.aggregate_temporal(
+                    xdr,
+                    period=period_days, 
+                    agg=[&#34;median&#34;], 
+                    outfile=os.path.join(settings.outpath,f&#34;DEA_{layername}&#34;), 
+                    buffer = None)
+                outfname_dea_list += outfname_list
+
+                # create layer titles with proper date range format
+                for filename in outfname_list:
+                    # get date from filename without extension
+                    date_start = os.path.splitext(os.path.basename(filename).rsplit(&#39;_&#39;)[-1])[0]
+                    # convert date string YYYY-MM-D to datetime object
+                    date_start = datetime.strptime(date_start, &#34;%Y-%m-%d&#34;)
+                    date_end = date_start + timedelta(days=period_days)
+                    date_str = date_start.strftime(&#34;%Y-%m-%d&#34;) + &#34;-to-&#34; + date_end.strftime(&#34;%Y-%m-%d&#34;)
+                    new_name = &#34;DEA_&#34; + layername + &#34;_median_&#34; + date_str
+                    layer_titles += [new_name]
+                layer_list += [layername]*len(outfname_list)
+            agg_list = [&#39;median&#39;]*len(layer_titles)
+        else:
+            outfname_dea_list = files_dea
+            # get string dea_layernames from filenames in files_dea
+            layer_list = []
+            for fname in files_dea:
+                for layername in dea_layernames:
+                    if layername in fname:
+                        layer_list.append(layername)
+                        break
+            layer_titles = [os.path.basename(path).rsplit(&#39;.&#39;)[0] for path in files_dea]
+            agg_list = [&#39;None&#39;]*len(layer_titles)
+
+        # Update download log table
         download_log = update_logtable(
             download_log,
-            files_dea,
+            outfname_dea_list,
             layer_list,
             &#39;DEA&#39;,
             settings,
             layertitles=layer_titles,
+            agfunctions = agg_list,
             loginfos=&#39;downloaded&#39;
         )
 
@@ -668,14 +1016,15 @@ Results are saved to disk.</p>
         else:
             pass
     if &#34;SILO&#34; in list_sources:
-        cprint(&#34;\n⌛ Downloading SILO data...&#34;, attrs=[&#34;bold&#34;])
+        cprint(&#34;\n⌛ Downloading SILO data.\
+            This will take a couple of minutes, depending on your internet speed...&#34;, attrs=[&#34;bold&#34;])
         # get data from SILO
         fnames_out_silo = []
         silo_layernames = list(settings.target_sources[&#34;SILO&#34;].keys())
         # print(silo_layernames)
         try:
             # run the download
-            files_silo = settings.outpath + &#34;silo&#34;
+            files_silo = os.path.join(settings.outpath, &#34;silo&#34;)
             fnames_out = getdata_silo.get_SILO_layers(
                 silo_layernames,
                 settings.date_min,
@@ -688,16 +1037,55 @@ Results are saved to disk.</p>
             fnames_out_silo += fnames_out
         except Exception as e:
             print(e)
+        # aggregate the data along time windows if period_days is not None
+        if period_days is not None:
+            #try:
+            outfname_list = []
+            layername_list = []
+            aggfunction_list = []
+            layer_titles = []
+            for i, fname in enumerate(fnames_out_silo):
+                xdr = temporal.combine_rasters_temporal(fname, channel_name=&#34;band&#34;, attribute_name=&#34;long_name&#34;)
+                outfnames, agg_list = temporal.aggregate_temporal(
+                    xdr,
+                    period=period_days, 
+                    agg=[settings.target_sources[&#39;SILO&#39;][silo_layernames[i]]], 
+                    outfile=f&#34;{fname.split(&#39;.&#39;)[0]}&#34;, 
+                    buffer = None)
+                outfname_list += outfnames
+                layername_list += [silo_layernames[i]]*len(outfnames)
+                aggfunction_list += agg_list
+
+                # define proper titles for the layers
+                layername = silo_layernames[i]
+                for filename in outfnames: 
+                    # get date from filename without extension
+                    date_start = os.path.splitext(os.path.basename(filename).rsplit(&#39;_&#39;)[-1])[0]
+                    # convert date string YYYY-MM-D to datetime object
+                    date_start = datetime.strptime(date_start, &#34;%Y-%m-%d&#34;)
+                    date_end = date_start + timedelta(days=period_days)
+                    date_str = date_start.strftime(&#34;%Y-%m-%d&#34;) + &#34;-to-&#34; + date_end.strftime(&#34;%Y-%m-%d&#34;)
+                    new_name = &#34;SILO_&#34; + layername + &#34;_&#34; + settings.target_sources[&#39;SILO&#39;][silo_layernames[i]] + &#34;_&#34; + date_str
+                    layer_titles += [new_name]
+            #except Exception as e:
+            #   print(e)
+        else:
+            outfname_list = fnames_out_silo
+            layername_list = silo_layernames
+            aggfunction_list = [&#39;&#39;]*len(fnames_out_silo)
+            layer_titles = [&#34;SILO_&#34; + layername for layername in silo_layernames]
         var_exists = &#34;files_silo&#34; in locals() or &#34;files_silo&#34; in globals()
         if var_exists:
             # Add download info to log dataframe
             download_log = update_logtable(
                 download_log,
-                fnames_out_silo,
-                silo_layernames,
-                &#34;SILO&#34;,
-                settings,
-                layertitles=[],
+                #fnames_out_silo,
+                filenames = outfname_list,
+                layernames = layername_list,
+                datasource = &#34;SILO&#34;,
+                settings = settings,
+                layertitles=[os.path.basename(fname).split(&#39;.&#39;)[0] for fname in outfname_list],
+                agfunctions = aggfunction_list,
                 loginfos=&#34;downloaded&#34;,
             )
         else:
@@ -743,8 +1131,7 @@ Results are saved to disk.</p>
             pass
 
     # save log to file
-    logfile = settings.outpath + log_name + &#34;.csv&#34;
-    download_log.to_csv(logfile, index=False)
+    download_log.to_csv(os.path.join(settings.outpath, log_name + &#34;.csv&#34;), index=False)
 
     # extract filename from settings.infile
     # Select all processed data
@@ -756,14 +1143,15 @@ Results are saved to disk.</p>
         cprint(
             f&#34;\nExtracting data points for {fn}  -----&#34;, &#34;magenta&#34;, attrs=[&#34;bold&#34;])
         # Extract datatable from rasters given input coordinates
-        gdf = utils.raster_query(longs, lats, rasters, titles)
-        # Save the results table to a csv
-        gdf.to_csv(
-            os.path.join(settings.outpath, &#34;results.csv&#34;), index=True, mode=&#34;w&#34;
-        )
-        # Save also as geopackage
+        # gdf = utils.raster_query(longs, lats, rasters, titles) # old slower version
+        gdf = utils.extract_values_from_rasters(coords, rasters)
+        # Save as geopackage
         gdf.to_file(os.path.join(settings.outpath,
                     &#34;results.gpkg&#34;), driver=&#34;GPKG&#34;)
+        # Save the results table to a csv as well
+        gdf.drop(&#34;geometry&#34;, axis=1).to_csv(
+            os.path.join(settings.outpath, &#34;results.csv&#34;), index=True, mode=&#34;w&#34;
+        )
         utils.msg_success(
             f&#34;Data points extracted to {settings.outpath}results.gpkg&#34;)
 

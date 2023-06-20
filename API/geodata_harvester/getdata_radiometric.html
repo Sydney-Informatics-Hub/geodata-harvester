@@ -325,62 +325,7 @@ def get_times(url, layername, year=None):
         for time in times:
             if datetime.fromisoformat(time[:-1]).astimezone(timezone.utc).year == year:
                 dates.append(time)
-        return dates
-
-
-### Some test functions ###
-
-
-def test_get_capabilities():
-    &#34;&#34;&#34;
-    Test script to retrieve WCS capabilities
-    &#34;&#34;&#34;
-    # Get capabilities
-    keys, titles, descriptions, bboxs = get_capabilities()
-    assert len(keys) &gt; 0
-
-
-def test_get_times():
-    &#34;&#34;&#34;
-    Test script to retrieve available times for a layer
-    &#34;&#34;&#34;
-    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
-    times = get_times(url, layername)
-    assert len(times) &gt; 0
-
-
-def test_times():
-    &#34;&#34;&#34;
-    Check that there is only one time per layers.
-    &#34;&#34;&#34;
-    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
-    radiometricdict = get_radiometricdict()
-    layernames = radiometricdict[&#34;layernames&#34;]
-    for key in layernames:
-        times = get_times(url, key)
-        print(f&#34;{key}: {times}&#34;)
-        assert len(times) == 1
-
-
-def test_get_radiometric_image():
-    &#34;&#34;&#34;
-    Test script to retrieve and save image for one layer
-    &#34;&#34;&#34;
-    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
-    # &#34;radmap2019_grid_dose_terr_awags_rad_2019&#34;  # for some layers readout time of 30s is exceeding (server limited)
-    layername = &#34;radmap2019_grid_dose_terr_filtered_awags_rad_2019&#34;
-    crs = &#34;EPSG:4326&#34;  # WGS84
-    # define bounding box for retrieval (simple test here for entire Australia)
-    bbox = (114, -44, 153.9, -11)
-    # define resolution (in arcsecs per pixel since crs is in WGS84)
-    resolution = 100
-    # define output file name
-    fname_out = f&#34;test_{layername}.tif&#34;
-    # Get data
-    download_ok = get_radiometric_image(
-        fname_out, layername, bbox, url, resolution=resolution
-    )
-    assert download_ok</code></pre>
+        return dates</code></pre>
 </details>
 </section>
 <section>
@@ -779,94 +724,6 @@ from the National Centre for Environmental Information (NCI).&#34;,
     show(data)</code></pre>
 </details>
 </dd>
-<dt id="geodata_harvester.getdata_radiometric.test_get_capabilities"><code class="name flex">
-<span>def <span class="ident">test_get_capabilities</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Test script to retrieve WCS capabilities</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def test_get_capabilities():
-    &#34;&#34;&#34;
-    Test script to retrieve WCS capabilities
-    &#34;&#34;&#34;
-    # Get capabilities
-    keys, titles, descriptions, bboxs = get_capabilities()
-    assert len(keys) &gt; 0</code></pre>
-</details>
-</dd>
-<dt id="geodata_harvester.getdata_radiometric.test_get_radiometric_image"><code class="name flex">
-<span>def <span class="ident">test_get_radiometric_image</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Test script to retrieve and save image for one layer</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def test_get_radiometric_image():
-    &#34;&#34;&#34;
-    Test script to retrieve and save image for one layer
-    &#34;&#34;&#34;
-    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
-    # &#34;radmap2019_grid_dose_terr_awags_rad_2019&#34;  # for some layers readout time of 30s is exceeding (server limited)
-    layername = &#34;radmap2019_grid_dose_terr_filtered_awags_rad_2019&#34;
-    crs = &#34;EPSG:4326&#34;  # WGS84
-    # define bounding box for retrieval (simple test here for entire Australia)
-    bbox = (114, -44, 153.9, -11)
-    # define resolution (in arcsecs per pixel since crs is in WGS84)
-    resolution = 100
-    # define output file name
-    fname_out = f&#34;test_{layername}.tif&#34;
-    # Get data
-    download_ok = get_radiometric_image(
-        fname_out, layername, bbox, url, resolution=resolution
-    )
-    assert download_ok</code></pre>
-</details>
-</dd>
-<dt id="geodata_harvester.getdata_radiometric.test_get_times"><code class="name flex">
-<span>def <span class="ident">test_get_times</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Test script to retrieve available times for a layer</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def test_get_times():
-    &#34;&#34;&#34;
-    Test script to retrieve available times for a layer
-    &#34;&#34;&#34;
-    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
-    times = get_times(url, layername)
-    assert len(times) &gt; 0</code></pre>
-</details>
-</dd>
-<dt id="geodata_harvester.getdata_radiometric.test_times"><code class="name flex">
-<span>def <span class="ident">test_times</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Check that there is only one time per layers.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def test_times():
-    &#34;&#34;&#34;
-    Check that there is only one time per layers.
-    &#34;&#34;&#34;
-    url = &#34;https://gsky.nci.org.au/ows/national_geophysical_compilations?service=WCS&#34;
-    radiometricdict = get_radiometricdict()
-    layernames = radiometricdict[&#34;layernames&#34;]
-    for key in layernames:
-        times = get_times(url, key)
-        print(f&#34;{key}: {times}&#34;)
-        assert len(times) == 1</code></pre>
-</details>
-</dd>
 </dl>
 </section>
 <section>
@@ -892,10 +749,6 @@ from the National Centre for Environmental Information (NCI).&#34;,
 <li><code><a title="geodata_harvester.getdata_radiometric.get_times" href="#geodata_harvester.getdata_radiometric.get_times">get_times</a></code></li>
 <li><code><a title="geodata_harvester.getdata_radiometric.getdict_license" href="#geodata_harvester.getdata_radiometric.getdict_license">getdict_license</a></code></li>
 <li><code><a title="geodata_harvester.getdata_radiometric.plot_raster" href="#geodata_harvester.getdata_radiometric.plot_raster">plot_raster</a></code></li>
-<li><code><a title="geodata_harvester.getdata_radiometric.test_get_capabilities" href="#geodata_harvester.getdata_radiometric.test_get_capabilities">test_get_capabilities</a></code></li>
-<li><code><a title="geodata_harvester.getdata_radiometric.test_get_radiometric_image" href="#geodata_harvester.getdata_radiometric.test_get_radiometric_image">test_get_radiometric_image</a></code></li>
-<li><code><a title="geodata_harvester.getdata_radiometric.test_get_times" href="#geodata_harvester.getdata_radiometric.test_get_times">test_get_times</a></code></li>
-<li><code><a title="geodata_harvester.getdata_radiometric.test_times" href="#geodata_harvester.getdata_radiometric.test_times">test_times</a></code></li>
 </ul>
 </li>
 </ul>

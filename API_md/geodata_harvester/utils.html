@@ -137,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
 <h1>Module geodata_harvester.utils</h1>
 <p>Utility functions for use in the Agrefed data harvesting pipeline.</p>
 <p>–Function List, in order of appearence–</p>
-<p>plot_rasters: Plots a list of rasters. _getFeatures (internal): Extracts rasterio compatible test from geodataframe. reproj_mask: Masks a raster to the area of a shape, and reprojects. reproj_rastermatch: Reproject a file to match the shape and projection of existing raster. reproj_raster: Reproject and clip for a given output resolution, crs and bbox. _read_file (internal): Reads raster with rasterio returns numpy array aggregate_rasters: Averages (or similar) over multiple files and multiple channels. aggregate_multiband: Averages (or similar) over multiple files but keeps multi-channels independent. _get_coords_at_point (internal): Finds closest index of a point-location in an array (raster). raster_query: Given a longitude,latitude value, return the value at that point of a raster/tif. init_logtable: Stores metdata for each step of raster download and processing. update_logtable: Updates each the logtable with new information.</p>
+<p>plot_rasters: Plots a list of rasters. _getFeatures (internal): Extracts rasterio compatible test from geodataframe. reproj_mask: Masks a raster to the area of a shape, and reprojects. reproj_rastermatch: Reproject a file to match the shape and projection of existing raster. reproj_raster: Reproject and clip for a given output resolution, crs and bbox. _read_file (internal): Reads raster with rasterio returns numpy array aggregate_rasters: Averages (or similar) over multiple files and multiple channels. aggregate_multiband: Averages (or similar) over multiple files but keeps multi-channels independent. _get_coords_at_point (internal): Finds closest index of a point-location in an array (raster). raster_query: Given a longitude,latitude value, return the value at that point of a raster/tif. extract_values_from_rasters: Given a list of rasters, extract the values at coords. init_logtable: Stores metdata for each step of raster download and processing. update_logtable: Updates each the logtable with new information.</p>
 <section id="functions" class="level2">
 <h2 class="anchored" data-anchor-id="functions">Functions</h2>
 <dl>
@@ -162,6 +162,22 @@ ul.task-list li input[type="checkbox"] {
 <p>Coregisters a point with a buffer region of a raster.</p>
 <p>INPUTS i0: column-index of point of interest j0: row-index of point of interest data: two-dimensional numpy array (raster) region: integer, same units as data resolution</p>
 <p>RETURNS pts: all values from array within region</p>
+</dd>
+<dt><code>extract_values_from_rasters(coords, raster_files, method='nearest')</code></dt>
+<dd>
+<p>Extract values from a list of raster files at given coordinates using rioxarray. Values will be extracted for all bands in each raster file. Return geopandas DataFrame with extracted values and geometry.</p>
+<p>Input: coords: A list of tuples containing longitude and latitude coordinates. Format: [(lng1, lat1), (lng2, lat2), …]</p>
+<pre><code>raster_files: A list of raster file paths.
+              Format: ["path/to/raster1.tif", "path/to/raster2.tif", ...]
+
+method: The method to select values from raster files for 
+        inexact matches between input coords and raster coords:
+         {"nearest", "pad", "ffill", "backfill", "bfill"}, optional
+    - nearest (Default): use nearest valid index value. 
+    - pad / ffill: propagate last valid index value forward
+    - backfill / bfill: propagate next valid index value backward
+    - None: only exact matches</code></pre>
+<p>Output: A geopandas DataFrame containing the extracted values and geometry, where each row represents a coordinate point and the columns represent the bands for each raster file. Output column names are the raster file name plus the band name.</p>
 </dd>
 <dt><code>init_logtable()</code></dt>
 <dd>
@@ -204,6 +220,7 @@ None</p>
 </dd>
 <dt><code>raster_query(longs, lats, rasters, titles=None)</code></dt>
 <dd>
+<p>DEPRECATED: Use extract_values_from_rasters instead.</p>
 <p>given a longitude,latitude value, return the value at that point of the first channel/band in the raster/tif.</p>
 <p>INPUTS longs:list of longitudes lats:list of latitudes rasters:list of raster filenames (as strings) titles:list of column titles (as strings) that correspond to rasters (if none provided, rasternames will be used)</p>
 <p>RETURNS gdf: geopandas dataframe where each row is long/lat point, and columns are rasterfiles</p>
