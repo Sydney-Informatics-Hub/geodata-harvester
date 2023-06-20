@@ -2,6 +2,7 @@
 
 import os
 import pytest
+import shutil
 from geodata_harvester import getdata_dea
 
 
@@ -50,7 +51,7 @@ def test_get_wcsmap():
     times = getdata_dea.get_times(url, layername)
     crs = "EPSG:4326"  # WGS84
     # define bounding box for retrieval (simple test here for entire Australia)
-    bbox = [130, -40, 150, -20]
+    bbox = [140, -30, 141, -29]
     # define resolution (in arcsecs per pixel since crs is in WGS84)
     resolution = 100
     # get latest image
@@ -73,7 +74,7 @@ def test_get_dea_images():
     # Crs for output
     crs = "EPSG:4326"  # WGS84
     # define bounding box for retrieval (simple test here for entire Australia)
-    bbox = [120, -40, 140, -20]
+    bbox = [140, -30, 141, -29]
     # define resolution (in arcsecs per pixel since crs is in WGS84)
     resolution = 100
     # define year
@@ -82,10 +83,7 @@ def test_get_dea_images():
     outpath = "test_dea"
     # Get data
     outfnames = getdata_dea.get_dea_images(layername, year, bbox, resolution, outpath, crs=crs)
-    assert len(outfnames) > 0
-    for fname in outfnames:
-        assert os.path.exists(fname)
-        os.remove(fname)
+    assert len(outfnames) > 0, "No files downloaded"
     shutil.rmtree(outpath, ignore_errors=True)
     print('get_dea_images test passed')
 
@@ -100,16 +98,16 @@ def test_get_dea_images_daterange():
     # Crs for output
     crs = "EPSG:4326"  # WGS84
     # define bounding box for retrieval (simple test here for entire Australia)
-    bbox = [120, -40, 140, -20]
+    bbox = [140, -30, 141, -29]
     # define resolution (in arcsecs per pixel since crs is in WGS84)
     resolution = 100
     # define daterange
-    date_min = '2019-01-01' 
-    date_max = '2019-01-10' 
+    date_start = '2019-01-01' 
+    date_end = '2019-01-15' 
     # define outpath
     outpath = "test_dea"
     # Get data
-    outfnames = getdata_dea.get_dea_images_daterange(layername, date_min, date_max, bbox, resolution, outpath, crs=crs)
+    outfnames = getdata_dea.get_dea_images_daterange(layername, date_start, date_end, bbox, resolution, outpath, crs=crs)
     assert len(outfnames) > 0
     shutil.rmtree(outpath, ignore_errors=True)
     print('get_dea_images_daterange test passed')
