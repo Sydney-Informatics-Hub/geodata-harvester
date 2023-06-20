@@ -8,7 +8,6 @@ Sub-modules
 * geodata_harvester.arc2meter
 * geodata_harvester.getdata_dea
 * geodata_harvester.getdata_dem
-* geodata_harvester.getdata_dem copy
 * geodata_harvester.getdata_landscape
 * geodata_harvester.getdata_radiometric
 * geodata_harvester.getdata_silo
