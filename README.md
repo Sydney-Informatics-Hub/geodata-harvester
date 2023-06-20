@@ -31,6 +31,7 @@ For the R-package wrapper of the Geodata-Harvester, please visit the [Github dat
     - [Google Earth Engine extension](#google-earth-engine-extension)
     - [Local development](#local-development)
     - [Workshop Cloud Sandbox](#workshop-cloud-sandbox)
+- [Settings Overview](#settings-overview)
 - [How to get started](#-how-to-get-started)
 - [How to add new data source modules](#-how-to-add-new-data-source-modules)
 - [Code reference API](#-code-reference-api)
@@ -71,20 +72,18 @@ Geodata-Harvester is designed as a modular and maintainable project in the form 
 
 ## 🌟 Key Features
 
-Below is a list of features available for the geodata-harvester package. Please check the project Github webpage and notebooks for examples, data selection, and other settings.
+The geodata-harvester package provides the following core features:
 
-- enabling reproducible workflows via YAML settings files.
-- automatic data retrieval from geodata APIs for given locations and dates.
-- automatic download and spatiotemporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale.
-- support for time-series data extraction for multiple time slices. 
-- automatic extraction of retrieved data into ready-made dataframes for ML training.
-- automatic generation of ready-made aligned maps in GeoTiff format.
-- preview of downloaded and aligned maps.
-- support for saving and loading settings via interactive widgets.
-- with connectivity support to the Google Earth Engine API, perform petabyte-scale operations which include temporal cloud/shadow masking and automatic calculation of spectral indices.
-- example notebooks and use-cases are provided for the user to get started.
+- enabling reproducible workflows via YAML settings files (see for settings example [settings_harvest.yaml](notebooks/settings/settings_harvest.yaml)).
+- interactive widgets for settings selection (see for example notebook [example_harvest_with_widgets.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest_with_widgets.ipynb)).
+- automated download and processing pipeline for multiple data sources (supported by the `harvest.run()` function as demonstrated in the example notebook [example_harvest.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest.ipynb)).
+- automatic data retrieval from geodata APIs and spatiotemporal processing for given locations, bounding box, resoultion, and time-scales into ready-made aligned and geo-referenced maps in GeoTiff format (see [notebook API download and process step](https://nbviewer.jupyter.org/github/Sydney-Informatics-Hub/geodata-harvester/blob/main/notebooks/example_harvest_stepwise.ipynb#Download-and-process-data-from-API-sources)).
+- support for time-series data extraction for multiple time slices (see example notebook [example_harvest_temporal1.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest_temporal1.ipynb) and [example_harvest_temporal2.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest_temporal2.ipynb)). 
+- automatic extraction of retrieved data into ready-made dataframes for ML training ([see notebook point extraction process](https://nbviewer.jupyter.org/github/Sydney-Informatics-Hub/geodata-harvester/blob/main/notebooks/example_harvest_stepwise.ipynb#Points-extraction-from-downloaded/processed-data))).
+- preview of downloaded and aligned maps (see [notebook preview example](https://nbviewer.jupyter.org/github/Sydney-Informatics-Hub/geodata-harvester/blob/main/notebooks/example_harvest_stepwise.ipynb#Overview-plot-of-all-processed-rasters)).
+- with connectivity support to the Google Earth Engine API, perform petabyte-scale operations which include temporal cloud/shadow masking and automatic calculation of spectral indices (see pipeline notebook [example_harvest_withGEE.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest_withGEE.ipynb)) or the [step-by-step GEE process instructions](https://nbviewer.jupyter.org/github/Sydney-Informatics-Hub/geodata-harvester/blob/main/notebooks/example_harvest_stepwise.ipynb#Google-Earth-Engine).
 
-For more features, please see the [API reference documentation](https://sydney-informatics-hub.github.io/geodata-harvester/API/geodata_harvester/index.html).
+For more details about all functionalities, please consult the [API reference documentation](https://sydney-informatics-hub.github.io/geodata-harvester/API/geodata_harvester/index.html).
 
 ## 🔧 Installation
 
@@ -142,6 +141,12 @@ The Jupyter environment is hosted on the ARDC Nectar Research Cloud in partnersh
 
 The Geodata-Harvester can be easily installed also on other cloud services (e.g., Google Colab, Azure Notebooks).
 
+## Settings Overview
+
+The Geodata-Harvester is controlled by a settings file in YAML format. The settings file contains all user-defined settings for the data extraction and processing. A detailed settings overview is provided in [Settings_Overview](quarto/docs/Settings_Overview.md). Example settings files are provided along the notebooks in the folder [notebooks/settings](notebooks/settings).  
+
+Alternatively a settings file can be also created via the interactive widget-panels as demonstrated in the notebook [example_harvest_with_widgets.ipynb](notebooks/example_harvest_with_widgets.ipynb).
+
 
 ## 🚀 How to get started
 
@@ -156,11 +161,19 @@ gdh.harvest.run(PATH_TO_SETTINGS_YAMLFILE)
 
 To get started, some example workflows are provided as Jupyter notebooks:
 
-1. Options and user settings are defined by the user in the settings; see for settings documentation [Settings_Overview](quarto/docs/Settings_Overview.md)
+1. Clone the geodata-harvester repo to your local machine or cloud server. Alternatively, download the package as zip folder from the [geodata-harvester Github page](https://github.com/Sydney-Informatics-Hub/geodata-harvester/archive/refs/heads/main.zip) and unzip the folder. This will download the geodata-harvester package including the example notebooks, settings files and example input data.
 
-2. Run the jupyter notebook in the folder [notebooks](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks).
+2. Options and user settings are defined by the user in the settings; see for example settings file [settings_harvest.yaml](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/settings/settings_harvest.yaml)
 
-If you would like to learn more about the Geodata-Harvester, please visit our [Workshop webpage](https://sydney-informatics-hub.github.io/AgReFed-Workshop/).
+3. Run a jupyter notebook in the notebooks folder, such as  [example_harvest.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest.ipynb).
+
+4. The notebook will run the geodata-harvester with the settings file and download.process the data. The final data is saved in the folder `results_example_harvest` in the current working directory as specified in the settings file. There you can find the generated data table `results.csv` and the downloaded georeferenced .tif files (open with, e.g., rasterio, QGIS or ArcGIS). A summary of all generated images is provided in the table `download_summary.csv`.
+
+A step-by-step tutorial on how to use the individual modules of the Geodata-Harvester is provided in the notebook [example_harvest_stepwise.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest_stepwise.ipynb).
+
+To include Google Earth Engine (GEE) data in Geodata-Harvester, please follow the instructions in the notebook [example_harvest_withGEE.ipynb](https://github.com/Sydney-Informatics-Hub/geodata-harvester/tree/main/notebooks/example_harvest_withGEE.ipynb). Note that this requires a GEE account and authorisation (see [Google Earth Engine extension](#google-earth-engine-extension)).
+
+If you would like to learn more about the Geodata-Harvester, please also visit our [Workshop webpage](https://sydney-informatics-hub.github.io/AgReFed-Workshop/).
 
 ## ➕ How to add new data source modules
 
