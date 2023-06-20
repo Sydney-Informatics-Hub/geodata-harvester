@@ -250,29 +250,5 @@ Functions
     infname : str
 
     
-`test_get_capabilities()`
-:   Test script to retrieve WCS capabilities
-
-    
-`test_get_dea_images()`
-:   Test script to retrieve and save images for a given year
-
-    
-`test_get_dea_images_daterange()`
-:   Test script to retrieve and save images for a given year
-
-    
-`test_get_times()`
-:   Test script to retrieve available times for a layer
-
-    
-`test_get_times_startend()`
-:   Test script to retrieve available times for a layer
-
-    
-`test_get_wcsmap()`
-:   Test script to retrieve and save image for one layer and date
-
-    
 `write_deadict()`
 :   Generates new DEA dictionary from crawling WCS url

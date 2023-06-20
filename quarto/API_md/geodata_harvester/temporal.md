@@ -1,17 +1,24 @@
 Module geodata_harvester.temporal
 =================================
-Utility functions for for temporal processing.
+Utility functions for temporal processing.
 
---Function List, in order of appearence--
+--Main function list--
 
 combine_rasters_temporal: Concatenates files by time returns xarray.
 aggregate_temporal: Aggregates xarrays by specified function and time period.
+temporal_crop: Cuts an xarray object by start and end times.
+aggregate_temporal: Make a data aggregation (mean, median, sum, etc) through time on an xarray.
+
+--Helper function list--
+
+get_date_after_last_underscore: Extract the date from the file name after the last underscore.
+get_mask_array: Return mask of the data, e.g. for cloud-cover.
 
 Functions
 ---------
 
     
-`aggregate_temporal(xdr, period='yearly', agg=['mean'], outfile='temporal_agg', buffer=None)`
+`aggregate_temporal(xdr, period='yearly', agg=['mean'], outfile='temporal_agg', buffer=None, fill_nan=True)`
 :   Make a data aggregation (mean, median, sum, etc) through time on an xarray.
     Expects xarray coordinates to be x, y, time. Saves every aggregation for
     every time period as its own tif file.
@@ -34,6 +41,8 @@ Functions
         ['mean','median','sum','perc95','perc5']
     outfile : string. Prefix of output file name.
     buffer: integer time period in same units as period to buffer into the future.
+    fill_nan: boolean. If True (Default), will automatically try to find the value for missing data 
+        from header and fills with nan before aggregating. If False, will not fill nan.
     
     Returns
     -------
@@ -42,8 +51,9 @@ Functions
 
     
 `combine_rasters_temporal(file_list, channel_name='band', attribute_name='long_name')`
-:   Combines multiple tif files into single xarray object. Assumes files are in
-    temporal order, and additional channels contain sequential time step data.
+:   Combines multiple tif files into single xarray object. 
+    Assumes additional channels contain sequential time step data. 
+    If multiple files in file_list, files must be in temporal order and same data type.
     Also assumes files are of the same shape (x,y,t).
     
     Example:
@@ -54,7 +64,7 @@ Functions
     
     Parameters
     ----------
-    file_list : list of filename strings in date order to concatenate.
+    file_list : str or list of filename strings in date order to concatenate.
         Expected to be of the form "x,y" or "x,y,z1"
     channel_name : string of coordinate dimension to concatentate (band, time,
         etc). Check options with rioxarray.open_rasterio('filename').coords
@@ -66,41 +76,45 @@ Functions
     xdr : xarray object of x,y,time, with approriate metadata.
 
     
-`group_by_custom_periods(xdr, periods: int, agg_range: int)`
-:   NOTE: NOT ALL IMPLEMENTED!!! Specifcally multiband data. But I don't think
-    we want to deal with that, as it is already accounted for previously? Maybe.
+`get_date_after_last_underscore(file_list)`
+:   Extract the date from the file name after the last underscore.
     
-    Aggregates over multiple files but keeps channels independently.
-    Results are written to new tif files.
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
     
-    This function should
+    Returns
+    -------
+    result : list of dates in date order to concatenate.
+
     
-    dates of the from "yyyy-mm-dd"
-    rolling mean
+`get_mask_array(xdr, mask_band=None, verbose=True)`
+:   Return mask of the data, e.g. for cloud-cover.
+    The mask values will be set to True if the mask band is not 0, and False otherwise.
+    If no mask band is provided, a mask band will be searched for in the xarray attribute metadata.
     
-    Unit of measurment you are working in seconds, daily, monthly, yearly (or integers)
-    Time steps of channels (e.g. 12xmonthly)
-    time steps of files (each file represents X length of time)
-    time steps of aggregation (e.g. average monthly)
-    time steps of
+    Parameters
+    ----------
+    xdr : xarray
+        xarray dataset to mask
+    mask_band : str or int, optional   
+        Name or index of the band to use as a mask. 
+        If not provided, a mask abd will be searched for in the xarray attribute metadata.
     
+    Returns
+    -------
+    mask: array, bool
+
     
+`multiband_raster_to_xarray(file_list, date_list=None, mask_bandname=None)`
+:   Converts a stack of multiband raster with different dates to an xarray object.
     
-    Aggregrates over multiple files and over all channels
-    and writes results to new tif file(s).
-    
-    Step 1: combine files (assumes consistent times and start finish points)
-    Step 2: roll data into outtime chunks
-    Step 3: perform aggregation on chunks
-    
-    e.g. aggregate daily rainfall data for each month (for the duration of the files.)
-    e.g. aggregate monthly temperature data over a year (for the duration of the files.)
-    
-    e.g. aggregate common months over multiple years, average rainfall in July from 2015 to 2020
-    
-    
-    Takes a stream of temporal data in a particular time increment and converts
-    to a new time-increment by averaging.
+    Parameters
+    ----------
+    file_list : list of filename strings in date order to concatenate.
+    date_list : list of dates in date order to concatenate. 
+        If None provided, the dates will be extracted from the file names.
+        This assumes that the date is given at the end of the file name after an underscore.
 
     
 `temporal_crop(xdr, start_time, end_time)`

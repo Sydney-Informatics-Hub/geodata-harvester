@@ -59,6 +59,7 @@ import sys
 import ipywidgets as widgets
 from IPython.display import display
 import datetime
+import geopandas as gpd
 from types import SimpleNamespace
 
 # import data dictionaries
@@ -139,7 +140,7 @@ def gen_loadwidget():
     Output:
         w_load: widget for loading settings
     &#34;&#34;&#34;
-    w_yamlfile = FileChooser(os.getcwd(), title=&#34;Settings File:&#34;)
+    w_yamlfile = FileChooser(os.getcwd(), title=&#34;Settings File (.yaml or .yml):&#34;)
     return w_yamlfile
 
 
@@ -218,7 +219,7 @@ def gen_panel_io():
         w_io: widget for input path
         w_names: list of names of widgets
     &#34;&#34;&#34; 
-    w_inpath = FileChooser(os.getcwd(), title=&#34;Input File:&#34;)
+    w_inpath = FileChooser(os.getcwd(), title=&#34;Input File (.csv):&#34;)
 
     # Write name relative output path
     w_outpath = widgets.Text(
@@ -274,7 +275,7 @@ def gen_panel_st():
     &#34;&#34;&#34;
     w_target_bbox = widgets.Text(
         value=&#34;&#34;,
-        placeholder=&#34;[Lng_min, Lat_min, Lng_max, Lat_max]&#34;,
+        placeholder=&#34;[Long_min, Lat_min, Long_max, Lat_max]&#34;,
         description=&#34;&#34;,
         disabled=False,
     )
@@ -301,7 +302,7 @@ def gen_panel_st():
     disabled=False
 )
 
-    w_temp_intervals = widgets.IntSlider(
+    w_time_intervals = widgets.IntSlider(
         value=1,
         min=1,
         max=365,
@@ -331,15 +332,15 @@ def gen_panel_st():
         widgets.GridBox([widgets.Label(&#34;Bounding Box :&#34;), w_target_bbox], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         widgets.GridBox([widgets.Label(&#34;Spatial Resolution [arcsec]:&#34;), w_target_res], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         widgets.GridBox([widgets.Label(f&#34;Start Date:&#34;.rjust(2)), w_date_min], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
-        widgets.GridBox([widgets.Label(f&#34;Number of Temporal Slices:&#34;.rjust(3)), w_temp_intervals], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Number of Temporal Slices:&#34;.rjust(3)), w_time_intervals], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         widgets.GridBox([widgets.Label(f&#34;End Date:&#34;.rjust(4)), w_date_max], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         widgets.GridBox([widgets.Label(f&#34;Temporal Buffer Window in Days:&#34;), w_temp_buffer], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         # widgets.Box([widgets.Label(&#34;Select years:&#34;), w_target_dates]),
         # widgets.Box([widgets.Label(&#34;Temporal Resolution [days]:&#34;), w_temp_res]),
         ]
 
-    settings_st = [w_target_bbox, w_target_res, w_date_min, w_temp_intervals, w_date_max, w_temp_buffer]
-    settings_names = [&#34;target_bbox&#34;, &#34;target_res&#34;, &#34;date_min&#34;, &#34;temp_intervals&#34;, &#34;date_max&#34;, &#34;temp_buffer&#34;]
+    settings_st = [w_target_bbox, w_target_res, w_date_min, w_time_intervals, w_date_max, w_temp_buffer]
+    settings_names = [&#34;target_bbox&#34;, &#34;target_res&#34;, &#34;date_min&#34;, &#34;time_intervals&#34;, &#34;date_max&#34;, &#34;temp_buffer&#34;]
     panel_st = widgets.GridBox(
         items, layout=widgets.Layout(grid_template_columns=&#34;6fr 6fr&#34;)
     )
@@ -407,10 +408,10 @@ def gen_panel_silo():
         w_sel = widgets.Checkbox(
             value=False, description=option, disabled=False, indent=False
         )
-        w_temp = widgets.SelectMultiple(
+        w_temp = widgets.Select(
             # options=[&#39;Total&#39;,&#39;Median&#39;,&#39;Mean&#39;,&#39;Std&#39;,&#39;5pct&#39;,&#39;10pct&#39;,&#39;15pct&#39;,&#39;25pct&#39;,&#39;75pct&#39;,&#39;85pct&#39;,&#39;90pct&#39;,&#39;95pct&#39;],
             options=[&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;std&#34;, &#34;perc95&#34;, &#34;perc5&#34;, &#34;max&#34;, &#34;min&#34;],
-            value=[&#34;median&#34;],
+            value=&#34;median&#34;,
             rows=2,
             description=&#34;&#34;,
             disabled=False,
@@ -785,6 +786,8 @@ def eval_widgets(w_settings, names):
     assert len(names_st) == len(w_st)
     for i in range(len(w_st)):
         dict_settings[names_st[i]] = w_st[i].value
+    # correct potential floating error
+    dict_settings[&#34;target_res&#34;] = round(dict_settings[&#34;target_res&#34;], 4)
     # target sources settings
     # define for target source a dictionary
     # Loop over all settings and add the ones that are selected
@@ -799,7 +802,7 @@ def eval_widgets(w_settings, names):
     slist = {}
     for i in range(len(w_silo)):
         if w_silo[i][0].value:
-            slist[names_silo[i]] = list(w_silo[i][1].value)
+            slist[names_silo[i]] = w_silo[i][1].value
     dict_sources[&#34;SILO&#34;] = slist
     # DEA
     slist = []
@@ -854,8 +857,8 @@ def eval_widgets(w_settings, names):
             slist_download[&#39;bands&#39;] = ast.literal_eval(slist_download[&#39;bands&#39;])
         except:
             pass
-        if isinstance(slist_preprocess[&#39;bands&#39;], tuple):
-            slist_preprocess[&#39;bands&#39;] = list(slist_preprocess[&#39;bands&#39;])
+        if isinstance(slist_download[&#39;bands&#39;], tuple):
+            slist_download[&#39;bands&#39;] = list(slist_download[&#39;bands&#39;])
         if len(slist_download[&#39;bands&#39;]) == 1:
             slist_download[&#39;bands&#39;] = slist_download[&#39;bands&#39;][0]
     slist[&#34;preprocess&#34;] = slist_preprocess
@@ -867,7 +870,14 @@ def eval_widgets(w_settings, names):
     # Check bounding box:
     if type(dict_settings[&#34;target_bbox&#34;]) == str:
         # remove string from list
+        if dict_settings[&#34;target_bbox&#34;] == &#34;&#34;:
+             # set bounding box around input data with padding +/- 0.05 deg
+            gdfpoints = gpd.read_file(dict_settings[&#34;infile&#34;])
+            longs = gdfpoints[dict_settings[&#34;colname_lng&#34;]].astype(float)
+            lats = gdfpoints[dict_settings[&#34;colname_lat&#34;]].astype(float)
+            dict_settings[&#34;target_bbox&#34;] = f&#34;[{min(longs) - 0.05},{min(lats) - 0.05},{max(longs) + 0.05},{max(lats) + 0.05}]&#34;
         dict_settings[&#34;target_bbox&#34;] = ast.literal_eval(dict_settings[&#34;target_bbox&#34;])
+
     return dict_settings
 
 
@@ -949,6 +959,8 @@ names: list of setting names</p>
     assert len(names_st) == len(w_st)
     for i in range(len(w_st)):
         dict_settings[names_st[i]] = w_st[i].value
+    # correct potential floating error
+    dict_settings[&#34;target_res&#34;] = round(dict_settings[&#34;target_res&#34;], 4)
     # target sources settings
     # define for target source a dictionary
     # Loop over all settings and add the ones that are selected
@@ -963,7 +975,7 @@ names: list of setting names</p>
     slist = {}
     for i in range(len(w_silo)):
         if w_silo[i][0].value:
-            slist[names_silo[i]] = list(w_silo[i][1].value)
+            slist[names_silo[i]] = w_silo[i][1].value
     dict_sources[&#34;SILO&#34;] = slist
     # DEA
     slist = []
@@ -1018,8 +1030,8 @@ names: list of setting names</p>
             slist_download[&#39;bands&#39;] = ast.literal_eval(slist_download[&#39;bands&#39;])
         except:
             pass
-        if isinstance(slist_preprocess[&#39;bands&#39;], tuple):
-            slist_preprocess[&#39;bands&#39;] = list(slist_preprocess[&#39;bands&#39;])
+        if isinstance(slist_download[&#39;bands&#39;], tuple):
+            slist_download[&#39;bands&#39;] = list(slist_download[&#39;bands&#39;])
         if len(slist_download[&#39;bands&#39;]) == 1:
             slist_download[&#39;bands&#39;] = slist_download[&#39;bands&#39;][0]
     slist[&#34;preprocess&#34;] = slist_preprocess
@@ -1031,7 +1043,14 @@ names: list of setting names</p>
     # Check bounding box:
     if type(dict_settings[&#34;target_bbox&#34;]) == str:
         # remove string from list
+        if dict_settings[&#34;target_bbox&#34;] == &#34;&#34;:
+             # set bounding box around input data with padding +/- 0.05 deg
+            gdfpoints = gpd.read_file(dict_settings[&#34;infile&#34;])
+            longs = gdfpoints[dict_settings[&#34;colname_lng&#34;]].astype(float)
+            lats = gdfpoints[dict_settings[&#34;colname_lat&#34;]].astype(float)
+            dict_settings[&#34;target_bbox&#34;] = f&#34;[{min(longs) - 0.05},{min(lats) - 0.05},{max(longs) + 0.05},{max(lats) + 0.05}]&#34;
         dict_settings[&#34;target_bbox&#34;] = ast.literal_eval(dict_settings[&#34;target_bbox&#34;])
+
     return dict_settings</code></pre>
 </details>
 </dd>
@@ -1091,7 +1110,7 @@ panel_titles: list of panel titles</p>
     Output:
         w_load: widget for loading settings
     &#34;&#34;&#34;
-    w_yamlfile = FileChooser(os.getcwd(), title=&#34;Settings File:&#34;)
+    w_yamlfile = FileChooser(os.getcwd(), title=&#34;Settings File (.yaml or .yml):&#34;)
     return w_yamlfile</code></pre>
 </details>
 </dd>
@@ -1374,7 +1393,7 @@ w_names: list of names of widgets</p></div>
         w_io: widget for input path
         w_names: list of names of widgets
     &#34;&#34;&#34; 
-    w_inpath = FileChooser(os.getcwd(), title=&#34;Input File:&#34;)
+    w_inpath = FileChooser(os.getcwd(), title=&#34;Input File (.csv):&#34;)
 
     # Write name relative output path
     w_outpath = widgets.Text(
@@ -1548,10 +1567,10 @@ options_silo: list of SILO options</p></div>
         w_sel = widgets.Checkbox(
             value=False, description=option, disabled=False, indent=False
         )
-        w_temp = widgets.SelectMultiple(
+        w_temp = widgets.Select(
             # options=[&#39;Total&#39;,&#39;Median&#39;,&#39;Mean&#39;,&#39;Std&#39;,&#39;5pct&#39;,&#39;10pct&#39;,&#39;15pct&#39;,&#39;25pct&#39;,&#39;75pct&#39;,&#39;85pct&#39;,&#39;90pct&#39;,&#39;95pct&#39;],
             options=[&#34;mean&#34;, &#34;median&#34;, &#34;sum&#34;, &#34;std&#34;, &#34;perc95&#34;, &#34;perc5&#34;, &#34;max&#34;, &#34;min&#34;],
-            value=[&#34;median&#34;],
+            value=&#34;median&#34;,
             rows=2,
             description=&#34;&#34;,
             disabled=False,
@@ -1653,7 +1672,7 @@ settings_names: list of names of settings</p></div>
     &#34;&#34;&#34;
     w_target_bbox = widgets.Text(
         value=&#34;&#34;,
-        placeholder=&#34;[Lng_min, Lat_min, Lng_max, Lat_max]&#34;,
+        placeholder=&#34;[Long_min, Lat_min, Long_max, Lat_max]&#34;,
         description=&#34;&#34;,
         disabled=False,
     )
@@ -1680,7 +1699,7 @@ settings_names: list of names of settings</p></div>
     disabled=False
 )
 
-    w_temp_intervals = widgets.IntSlider(
+    w_time_intervals = widgets.IntSlider(
         value=1,
         min=1,
         max=365,
@@ -1710,15 +1729,15 @@ settings_names: list of names of settings</p></div>
         widgets.GridBox([widgets.Label(&#34;Bounding Box :&#34;), w_target_bbox], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         widgets.GridBox([widgets.Label(&#34;Spatial Resolution [arcsec]:&#34;), w_target_res], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         widgets.GridBox([widgets.Label(f&#34;Start Date:&#34;.rjust(2)), w_date_min], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
-        widgets.GridBox([widgets.Label(f&#34;Number of Temporal Slices:&#34;.rjust(3)), w_temp_intervals], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
+        widgets.GridBox([widgets.Label(f&#34;Number of Temporal Slices:&#34;.rjust(3)), w_time_intervals], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         widgets.GridBox([widgets.Label(f&#34;End Date:&#34;.rjust(4)), w_date_max], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         widgets.GridBox([widgets.Label(f&#34;Temporal Buffer Window in Days:&#34;), w_temp_buffer], layout=widgets.Layout(grid_template_columns=&#34;1fr 2fr&#34;)),
         # widgets.Box([widgets.Label(&#34;Select years:&#34;), w_target_dates]),
         # widgets.Box([widgets.Label(&#34;Temporal Resolution [days]:&#34;), w_temp_res]),
         ]
 
-    settings_st = [w_target_bbox, w_target_res, w_date_min, w_temp_intervals, w_date_max, w_temp_buffer]
-    settings_names = [&#34;target_bbox&#34;, &#34;target_res&#34;, &#34;date_min&#34;, &#34;temp_intervals&#34;, &#34;date_max&#34;, &#34;temp_buffer&#34;]
+    settings_st = [w_target_bbox, w_target_res, w_date_min, w_time_intervals, w_date_max, w_temp_buffer]
+    settings_names = [&#34;target_bbox&#34;, &#34;target_res&#34;, &#34;date_min&#34;, &#34;time_intervals&#34;, &#34;date_max&#34;, &#34;temp_buffer&#34;]
     panel_st = widgets.GridBox(
         items, layout=widgets.Layout(grid_template_columns=&#34;6fr 6fr&#34;)
     )

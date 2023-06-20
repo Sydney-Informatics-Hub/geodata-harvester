@@ -1,5 +1,5 @@
-Module geodata_harvester.getdata_dem
-====================================
+Module geodata_harvester.getdata_dem copy
+=========================================
 This script downloads the National Digital Elevation Model (DEM) 1 Second Hydrologically Enforced product,
 derived from the National DEM SRTM 1 Second and National Watercourses, lakes and Reservoirs.
 The output image is a geotiff file with a user defined resolution and bbox.
@@ -25,7 +25,7 @@ https://services.ga.gov.au/site_9/services/DEM_SRTM_1Second_Hydro_Enforced/MapSe
 
 This package is part of the Data Harvester project developed for the Agricultural Research Federation (AgReFed).
 
-Copyright 2023 Sydney Informatics Hub (SIH), The University of Sydney
+Copyright 2022 Sydney Informatics Hub (SIH), The University of Sydney
 
 This open-source software is released under the LGPL-3.0 License.
 
@@ -35,17 +35,8 @@ Functions
 ---------
 
     
-`calculate_slope_aspect(fname_dem, fname_out, type='slope')`
-:   Calculate slope or aspect from DEM and save as geotiff.
-    
-    Parameters
-    ----------
-    fname_dem : str
-        DEM file name
-    fname_out : str
-        output filename
-    type : str
-        'slope' or 'aspect'
+`calc_gradiant(raster_dem)`
+:   Calculate the gradiant from a DEM raster with rioxarray
 
     
 `dem2aspect(fname_dem)`

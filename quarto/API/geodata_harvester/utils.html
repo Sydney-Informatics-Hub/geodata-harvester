@@ -39,6 +39,7 @@ _get_coords_at_point (internal): Finds closest index of a point-location in an
 array (raster).
 raster_query: Given a longitude,latitude value, return the value at that point
 of a raster/tif.
+extract_values_from_rasters: Given a list of rasters, extract the values at coords.
 init_logtable: Stores metdata for each step of raster download and processing.
 update_logtable: Updates each the logtable with new information.</p>
 <details class="source">
@@ -66,6 +67,7 @@ _get_coords_at_point (internal): Finds closest index of a point-location in an
     array (raster).
 raster_query: Given a longitude,latitude value, return the value at that point
     of a raster/tif.
+extract_values_from_rasters: Given a list of rasters, extract the values at coords.
 init_logtable: Stores metdata for each step of raster download and processing.
 update_logtable: Updates each the logtable with new information.
 &#34;&#34;&#34;
@@ -82,6 +84,7 @@ from rasterio.plot import show
 import numpy as np
 import pandas as pd
 import geopandas as gpd
+import rioxarray as rxr
 
 from pyproj import CRS
 from pathlib import Path
@@ -472,7 +475,9 @@ def aggregate_rasters(
     # Stack all data/channels as a list of numpy arrays
     array_list = []
     for x in file_list:
-        array_list.extend(_read_file(x))
+        array_list.append(_read_file(x))
+
+    array_list = np.asarray(array_list)
 
     # Perform aggregation over channels axis
     mean_array = np.nanmean(array_list, axis=0)
@@ -621,6 +626,8 @@ def _get_coords_at_point(gt, lon, lat):
 
 def raster_query(longs, lats, rasters, titles=None):
     &#34;&#34;&#34;
+    DEPRECATED: Use extract_values_from_rasters instead.
+
     given a longitude,latitude value, return the value at that point of the
         first channel/band in the raster/tif.
 
@@ -650,6 +657,7 @@ def raster_query(longs, lats, rasters, titles=None):
         raster = rasterio.open(filepath)
         # Get the transformation crs data
         gt = raster.transform
+
         # This will only be the first band, usally multiband has same index.
         arr = raster.read(1)
 
@@ -689,6 +697,93 @@ def raster_query(longs, lats, rasters, titles=None):
         # dd the values at the points to the dataframe
         gdf[filepath] = values
         gdf = gdf.rename(columns={filepath: colname})
+
+    return gdf
+
+
+def extract_values_from_rasters(coords, raster_files, method = &#34;nearest&#34;):
+    &#34;&#34;&#34;
+    Extract values from a list of raster files at given coordinates using rioxarray.
+    Values will be extracted for all bands in each raster file.
+    Return geopandas DataFrame with extracted values and geometry.
+
+    Input:
+        coords: A list of tuples containing longitude and latitude coordinates.
+                Format: [(lng1, lat1), (lng2, lat2), ...]
+
+        raster_files: A list of raster file paths.
+                      Format: [&#34;path/to/raster1.tif&#34;, &#34;path/to/raster2.tif&#34;, ...]
+
+        method: The method to select values from raster files for 
+                inexact matches between input coords and raster coords:
+                 {&#34;nearest&#34;, &#34;pad&#34;, &#34;ffill&#34;, &#34;backfill&#34;, &#34;bfill&#34;}, optional
+            - nearest (Default): use nearest valid index value. 
+            - pad / ffill: propagate last valid index value forward
+            - backfill / bfill: propagate next valid index value backward
+            - None: only exact matches
+
+    Output:
+        A geopandas DataFrame containing the extracted values and geometry, where each row represents
+        a coordinate point and the columns represent the bands for each raster file.
+        Output column names are the raster file name plus the band name.
+    &#34;&#34;&#34;
+    all_coords_data = []
+    column_names = []
+
+    with spin(&#34;Extracting values from raster files...&#34;, &#34;blue&#34;) as s:
+        for raster_file in raster_files:
+            # Open the raster file with rioxarray
+            ds = rxr.open_rasterio(raster_file)
+            
+            # Extract values for all coordinates
+            coords_data = []
+            for lng, lat in coords:
+                # Select the nearest lat and lon coordinates from the dataset
+                data = ds.sel(x=lng, y=lat, method=method)
+                
+                # Convert the data to a numpy array and flatten it
+                data_array = data.values.flatten().tolist()
+                
+                # Add the extracted values to the list
+                coords_data.append(data_array)
+
+            # Concatenate the extracted values from all raster files
+            all_coords_data.append(coords_data)
+
+            # try to det the band names from the dataset, otherwise use the band number
+            try:
+                band_names = ds.attrs[&#39;long_name&#39;]
+                if isinstance(band_names, str):
+                    band_names = [band_names]
+                if isinstance(band_names, tuple):
+                    band_names = list(band_names)
+                if len(band_names) != len(ds.band.values.tolist()):
+                    band_names = ds.band.values.tolist()
+            except:
+                band_names = ds.band.values.tolist()
+            # get the raster name
+            raster_name = os.path.basename(raster_file).split(&#34;.&#34;)[0]
+            # Add the raster name to the band names
+            band_names = [f&#34;{raster_name}_{band_name}&#34; for band_name in band_names]
+
+            # Add the band names to the column names list
+            column_names.extend(band_names)
+
+    # Convert the data to a pandas DataFrame and include the column names
+    all_coords_data = pd.DataFrame(np.hstack(all_coords_data), columns=column_names)
+    
+    # Check for potential duplicate column names in all_coords_data
+    if all_coords_data.columns.duplicated().any():
+        print(&#34;Duplicate column names found. Please check the input raster files.&#34;)
+        # drop duplicate columns and leave only first occurence
+        all_coords_data = all_coords_data.loc[:,~all_coords_data.columns.duplicated()].copy()
+
+    # save all_coords_data with coords as geopackage with geopandas
+    gdf = gpd.GeoDataFrame(all_coords_data, geometry=gpd.points_from_xy(coords[:,0], coords[:,1]), crs=&#34;EPSG:4326&#34;)
+
+    # insert the coords into the dataframe
+    gdf.insert(0, &#39;Longitude&#39;, coords[:,0])
+    gdf.insert(1, &#39;Latitude&#39;, coords[:,1])
 
     return gdf
 
@@ -1072,7 +1167,9 @@ and writes results to new tif file(s).</p>
     # Stack all data/channels as a list of numpy arrays
     array_list = []
     for x in file_list:
-        array_list.extend(_read_file(x))
+        array_list.append(_read_file(x))
+
+    array_list = np.asarray(array_list)
 
     # Perform aggregation over channels axis
     mean_array = np.nanmean(array_list, axis=0)
@@ -1131,6 +1228,120 @@ pts: all values from array within region</p></div>
     pts = np.array(list(pts_iterator))
 
     return pts</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.utils.extract_values_from_rasters"><code class="name flex">
+<span>def <span class="ident">extract_values_from_rasters</span></span>(<span>coords, raster_files, method='nearest')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Extract values from a list of raster files at given coordinates using rioxarray.
+Values will be extracted for all bands in each raster file.
+Return geopandas DataFrame with extracted values and geometry.</p>
+<h2 id="input">Input</h2>
+<p>coords: A list of tuples containing longitude and latitude coordinates.
+Format: [(lng1, lat1), (lng2, lat2), &hellip;]</p>
+<p>raster_files: A list of raster file paths.
+Format: ["path/to/raster1.tif", "path/to/raster2.tif", &hellip;]</p>
+<p>method: The method to select values from raster files for
+inexact matches between input coords and raster coords:
+{"nearest", "pad", "ffill", "backfill", "bfill"}, optional
+- nearest (Default): use nearest valid index value.
+- pad / ffill: propagate last valid index value forward
+- backfill / bfill: propagate next valid index value backward
+- None: only exact matches</p>
+<h2 id="output">Output</h2>
+<p>A geopandas DataFrame containing the extracted values and geometry, where each row represents
+a coordinate point and the columns represent the bands for each raster file.
+Output column names are the raster file name plus the band name.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def extract_values_from_rasters(coords, raster_files, method = &#34;nearest&#34;):
+    &#34;&#34;&#34;
+    Extract values from a list of raster files at given coordinates using rioxarray.
+    Values will be extracted for all bands in each raster file.
+    Return geopandas DataFrame with extracted values and geometry.
+
+    Input:
+        coords: A list of tuples containing longitude and latitude coordinates.
+                Format: [(lng1, lat1), (lng2, lat2), ...]
+
+        raster_files: A list of raster file paths.
+                      Format: [&#34;path/to/raster1.tif&#34;, &#34;path/to/raster2.tif&#34;, ...]
+
+        method: The method to select values from raster files for 
+                inexact matches between input coords and raster coords:
+                 {&#34;nearest&#34;, &#34;pad&#34;, &#34;ffill&#34;, &#34;backfill&#34;, &#34;bfill&#34;}, optional
+            - nearest (Default): use nearest valid index value. 
+            - pad / ffill: propagate last valid index value forward
+            - backfill / bfill: propagate next valid index value backward
+            - None: only exact matches
+
+    Output:
+        A geopandas DataFrame containing the extracted values and geometry, where each row represents
+        a coordinate point and the columns represent the bands for each raster file.
+        Output column names are the raster file name plus the band name.
+    &#34;&#34;&#34;
+    all_coords_data = []
+    column_names = []
+
+    with spin(&#34;Extracting values from raster files...&#34;, &#34;blue&#34;) as s:
+        for raster_file in raster_files:
+            # Open the raster file with rioxarray
+            ds = rxr.open_rasterio(raster_file)
+            
+            # Extract values for all coordinates
+            coords_data = []
+            for lng, lat in coords:
+                # Select the nearest lat and lon coordinates from the dataset
+                data = ds.sel(x=lng, y=lat, method=method)
+                
+                # Convert the data to a numpy array and flatten it
+                data_array = data.values.flatten().tolist()
+                
+                # Add the extracted values to the list
+                coords_data.append(data_array)
+
+            # Concatenate the extracted values from all raster files
+            all_coords_data.append(coords_data)
+
+            # try to det the band names from the dataset, otherwise use the band number
+            try:
+                band_names = ds.attrs[&#39;long_name&#39;]
+                if isinstance(band_names, str):
+                    band_names = [band_names]
+                if isinstance(band_names, tuple):
+                    band_names = list(band_names)
+                if len(band_names) != len(ds.band.values.tolist()):
+                    band_names = ds.band.values.tolist()
+            except:
+                band_names = ds.band.values.tolist()
+            # get the raster name
+            raster_name = os.path.basename(raster_file).split(&#34;.&#34;)[0]
+            # Add the raster name to the band names
+            band_names = [f&#34;{raster_name}_{band_name}&#34; for band_name in band_names]
+
+            # Add the band names to the column names list
+            column_names.extend(band_names)
+
+    # Convert the data to a pandas DataFrame and include the column names
+    all_coords_data = pd.DataFrame(np.hstack(all_coords_data), columns=column_names)
+    
+    # Check for potential duplicate column names in all_coords_data
+    if all_coords_data.columns.duplicated().any():
+        print(&#34;Duplicate column names found. Please check the input raster files.&#34;)
+        # drop duplicate columns and leave only first occurence
+        all_coords_data = all_coords_data.loc[:,~all_coords_data.columns.duplicated()].copy()
+
+    # save all_coords_data with coords as geopackage with geopandas
+    gdf = gpd.GeoDataFrame(all_coords_data, geometry=gpd.points_from_xy(coords[:,0], coords[:,1]), crs=&#34;EPSG:4326&#34;)
+
+    # insert the coords into the dataframe
+    gdf.insert(0, &#39;Longitude&#39;, coords[:,0])
+    gdf.insert(1, &#39;Latitude&#39;, coords[:,1])
+
+    return gdf</code></pre>
 </details>
 </dd>
 <dt id="geodata_harvester.utils.init_logtable"><code class="name flex">
@@ -1381,7 +1592,8 @@ def points_in_circle(circle, arr):
 <span>def <span class="ident">raster_query</span></span>(<span>longs, lats, rasters, titles=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>given a longitude,latitude value, return the value at that point of the
+<div class="desc"><p>DEPRECATED: Use extract_values_from_rasters instead.</p>
+<p>given a longitude,latitude value, return the value at that point of the
 first channel/band in the raster/tif.</p>
 <p>INPUTS
 longs:list of longitudes
@@ -1397,6 +1609,8 @@ and columns are rasterfiles</p></div>
 </summary>
 <pre><code class="python">def raster_query(longs, lats, rasters, titles=None):
     &#34;&#34;&#34;
+    DEPRECATED: Use extract_values_from_rasters instead.
+
     given a longitude,latitude value, return the value at that point of the
         first channel/band in the raster/tif.
 
@@ -1426,6 +1640,7 @@ and columns are rasterfiles</p></div>
         raster = rasterio.open(filepath)
         # Get the transformation crs data
         gt = raster.transform
+
         # This will only be the first band, usally multiband has same index.
         arr = raster.read(1)
 
@@ -1841,10 +2056,11 @@ df_log: updated dataframe</p></div>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="geodata_harvester.utils.aggregate_multiband" href="#geodata_harvester.utils.aggregate_multiband">aggregate_multiband</a></code></li>
 <li><code><a title="geodata_harvester.utils.aggregate_rasters" href="#geodata_harvester.utils.aggregate_rasters">aggregate_rasters</a></code></li>
 <li><code><a title="geodata_harvester.utils.coreg_raster" href="#geodata_harvester.utils.coreg_raster">coreg_raster</a></code></li>
+<li><code><a title="geodata_harvester.utils.extract_values_from_rasters" href="#geodata_harvester.utils.extract_values_from_rasters">extract_values_from_rasters</a></code></li>
 <li><code><a title="geodata_harvester.utils.init_logtable" href="#geodata_harvester.utils.init_logtable">init_logtable</a></code></li>
 <li><code><a title="geodata_harvester.utils.msg_dl" href="#geodata_harvester.utils.msg_dl">msg_dl</a></code></li>
 <li><code><a title="geodata_harvester.utils.msg_err" href="#geodata_harvester.utils.msg_err">msg_err</a></code></li>

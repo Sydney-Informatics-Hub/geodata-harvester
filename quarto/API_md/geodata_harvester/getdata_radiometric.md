@@ -125,19 +125,3 @@ Functions
     Parameters
     ----------
     infname : str
-
-    
-`test_get_capabilities()`
-:   Test script to retrieve WCS capabilities
-
-    
-`test_get_radiometric_image()`
-:   Test script to retrieve and save image for one layer
-
-    
-`test_get_times()`
-:   Test script to retrieve available times for a layer
-
-    
-`test_times()`
-:   Check that there is only one time per layers.

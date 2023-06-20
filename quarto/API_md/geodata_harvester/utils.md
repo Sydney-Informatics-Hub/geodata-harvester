@@ -19,6 +19,7 @@ _get_coords_at_point (internal): Finds closest index of a point-location in an
     array (raster).
 raster_query: Given a longitude,latitude value, return the value at that point
     of a raster/tif.
+extract_values_from_rasters: Given a list of rasters, extract the values at coords.
 init_logtable: Stores metdata for each step of raster download and processing.
 update_logtable: Updates each the logtable with new information.
 
@@ -81,6 +82,32 @@ Functions
         pts: all values from array within region
 
     
+`extract_values_from_rasters(coords, raster_files, method='nearest')`
+:   Extract values from a list of raster files at given coordinates using rioxarray.
+    Values will be extracted for all bands in each raster file.
+    Return geopandas DataFrame with extracted values and geometry.
+    
+    Input:
+        coords: A list of tuples containing longitude and latitude coordinates.
+                Format: [(lng1, lat1), (lng2, lat2), ...]
+    
+        raster_files: A list of raster file paths.
+                      Format: ["path/to/raster1.tif", "path/to/raster2.tif", ...]
+    
+        method: The method to select values from raster files for 
+                inexact matches between input coords and raster coords:
+                 {"nearest", "pad", "ffill", "backfill", "bfill"}, optional
+            - nearest (Default): use nearest valid index value. 
+            - pad / ffill: propagate last valid index value forward
+            - backfill / bfill: propagate next valid index value backward
+            - None: only exact matches
+    
+    Output:
+        A geopandas DataFrame containing the extracted values and geometry, where each row represents
+        a coordinate point and the columns represent the bands for each raster file.
+        Output column names are the raster file name plus the band name.
+
+    
 `init_logtable()`
 :   Create a log table to store information from the raster download or processing.
     
@@ -140,7 +167,9 @@ Functions
 
     
 `raster_query(longs, lats, rasters, titles=None)`
-:   given a longitude,latitude value, return the value at that point of the
+:   DEPRECATED: Use extract_values_from_rasters instead.
+    
+    given a longitude,latitude value, return the value at that point of the
         first channel/band in the raster/tif.
     
     INPUTS

@@ -26,16 +26,75 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python"># Settings Reader
+<pre><code class="python"># Settings reader and handler
 
 import yaml
 import urllib
 import json
 import os
+import datetime
 from types import SimpleNamespace
+import geopandas as gpd
+from IPython.display import display, JSON
 
 # Defaul settings yaml file
 _fname_settings = &#34;settings/settings_v0.1_default.yaml&#34;
+
+
+def DateEncoder(obj):
+    &#34;&#34;&#34;
+    JSON encoder for datetime objects.
+    &#34;&#34;&#34;
+    if isinstance(obj, (datetime.datetime, datetime.date)):
+        return obj.strftime(&#39;%Y-%m-%d&#39;)
+
+
+def display_settings(fname_settings, print_option = &#34;json&#34;):
+    &#34;&#34;&#34;
+    Display settings from yaml file.
+
+    Input:
+        fname_settings: path and filename to settings file
+        print_option: &#34;display&#34; or &#34;json&#34; (default)
+    &#34;&#34;&#34;
+    # Load settings from yaml file
+    with open(fname_settings, &#34;r&#34;) as f:
+        settings = yaml.load(f, Loader=yaml.FullLoader)
+    # Print settings
+    if print_option == &#34;display&#34;:
+        display(JSON(settings))
+    elif print_option == &#34;json&#34;:
+        print(json.dumps(settings, indent=4, sort_keys=True, default=DateEncoder))
+    else:
+        print(&#34;print_option must be &#39;display&#39; or &#39;json&#39;&#34;)
+
+
+def check_bbox(settings):
+    &#34;&#34;&#34;
+    Check if bbox is valid. 
+    If no bbox is given, the bbox is calculated from the input points.
+
+    Input:
+        settings: settings namespace
+
+    Output:
+        settings: updated settings with bbox
+    &#34;&#34;&#34;
+    if (settings.target_bbox is None) | (settings.target_bbox == &#34;&#34;):
+        gdfpoints = gpd.read_file(settings.infile)
+        longs = gdfpoints[settings.colname_lng].astype(float)
+        lats = gdfpoints[settings.colname_lat].astype(float)
+        if settings.target_bbox is None:
+            settings.target_bbox = (
+                min(longs) - 0.05,
+                min(lats) - 0.05,
+                max(longs) + 0.05,
+                max(lats) + 0.05,
+            )
+    assert len(settings.target_bbox) == 4, &#34;There must be 4 values in bbox list&#34;
+    assert settings.target_bbox[2] &gt; settings.target_bbox[0], &#34;Bounding box[0] must be smaller than box[2]&#34;
+    assert settings.target_bbox[3] &gt; settings.target_bbox[1], &#34;Bounding box[1] must be smaller than box[3]&#34;
+    return settings
 
 
 def main(fname_settings=_fname_settings, to_namespace=True):
@@ -53,6 +112,13 @@ def main(fname_settings=_fname_settings, to_namespace=True):
     if to_namespace:
         settings = SimpleNamespace(**settings)
 
+    # Check if bbox is valid
+    settings = check_bbox(settings)
+
+    # convert dates to strings if not already
+    settings.date_min = str(settings.date_min)
+    settings.date_max = str(settings.date_max)
+
     return settings</code></pre>
 </details>
 </section>
@@ -63,6 +129,97 @@ def main(fname_settings=_fname_settings, to_namespace=True):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="geodata_harvester.settingshandler.DateEncoder"><code class="name flex">
+<span>def <span class="ident">DateEncoder</span></span>(<span>obj)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>JSON encoder for datetime objects.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def DateEncoder(obj):
+    &#34;&#34;&#34;
+    JSON encoder for datetime objects.
+    &#34;&#34;&#34;
+    if isinstance(obj, (datetime.datetime, datetime.date)):
+        return obj.strftime(&#39;%Y-%m-%d&#39;)</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.settingshandler.check_bbox"><code class="name flex">
+<span>def <span class="ident">check_bbox</span></span>(<span>settings)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Check if bbox is valid.
+If no bbox is given, the bbox is calculated from the input points.</p>
+<h2 id="input">Input</h2>
+<p>settings: settings namespace</p>
+<h2 id="output">Output</h2>
+<p>settings: updated settings with bbox</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_bbox(settings):
+    &#34;&#34;&#34;
+    Check if bbox is valid. 
+    If no bbox is given, the bbox is calculated from the input points.
+
+    Input:
+        settings: settings namespace
+
+    Output:
+        settings: updated settings with bbox
+    &#34;&#34;&#34;
+    if (settings.target_bbox is None) | (settings.target_bbox == &#34;&#34;):
+        gdfpoints = gpd.read_file(settings.infile)
+        longs = gdfpoints[settings.colname_lng].astype(float)
+        lats = gdfpoints[settings.colname_lat].astype(float)
+        if settings.target_bbox is None:
+            settings.target_bbox = (
+                min(longs) - 0.05,
+                min(lats) - 0.05,
+                max(longs) + 0.05,
+                max(lats) + 0.05,
+            )
+    assert len(settings.target_bbox) == 4, &#34;There must be 4 values in bbox list&#34;
+    assert settings.target_bbox[2] &gt; settings.target_bbox[0], &#34;Bounding box[0] must be smaller than box[2]&#34;
+    assert settings.target_bbox[3] &gt; settings.target_bbox[1], &#34;Bounding box[1] must be smaller than box[3]&#34;
+    return settings</code></pre>
+</details>
+</dd>
+<dt id="geodata_harvester.settingshandler.display_settings"><code class="name flex">
+<span>def <span class="ident">display_settings</span></span>(<span>fname_settings, print_option='json')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Display settings from yaml file.</p>
+<h2 id="input">Input</h2>
+<p>fname_settings: path and filename to settings file
+print_option: "display" or "json" (default)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display_settings(fname_settings, print_option = &#34;json&#34;):
+    &#34;&#34;&#34;
+    Display settings from yaml file.
+
+    Input:
+        fname_settings: path and filename to settings file
+        print_option: &#34;display&#34; or &#34;json&#34; (default)
+    &#34;&#34;&#34;
+    # Load settings from yaml file
+    with open(fname_settings, &#34;r&#34;) as f:
+        settings = yaml.load(f, Loader=yaml.FullLoader)
+    # Print settings
+    if print_option == &#34;display&#34;:
+        display(JSON(settings))
+    elif print_option == &#34;json&#34;:
+        print(json.dumps(settings, indent=4, sort_keys=True, default=DateEncoder))
+    else:
+        print(&#34;print_option must be &#39;display&#39; or &#39;json&#39;&#34;)</code></pre>
+</details>
+</dd>
 <dt id="geodata_harvester.settingshandler.main"><code class="name flex">
 <span>def <span class="ident">main</span></span>(<span>fname_settings='settings/settings_v0.1_default.yaml', to_namespace=True)</span>
 </code></dt>
@@ -89,6 +246,13 @@ def main(fname_settings=_fname_settings, to_namespace=True):
     if to_namespace:
         settings = SimpleNamespace(**settings)
 
+    # Check if bbox is valid
+    settings = check_bbox(settings)
+
+    # convert dates to strings if not already
+    settings.date_min = str(settings.date_min)
+    settings.date_max = str(settings.date_max)
+
     return settings</code></pre>
 </details>
 </dd>
@@ -110,6 +274,9 @@ def main(fname_settings=_fname_settings, to_namespace=True):
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="geodata_harvester.settingshandler.DateEncoder" href="#geodata_harvester.settingshandler.DateEncoder">DateEncoder</a></code></li>
+<li><code><a title="geodata_harvester.settingshandler.check_bbox" href="#geodata_harvester.settingshandler.check_bbox">check_bbox</a></code></li>
+<li><code><a title="geodata_harvester.settingshandler.display_settings" href="#geodata_harvester.settingshandler.display_settings">display_settings</a></code></li>
 <li><code><a title="geodata_harvester.settingshandler.main" href="#geodata_harvester.settingshandler.main">main</a></code></li>
 </ul>
 </li>
