@@ -8,16 +8,13 @@ tags:
 authors:
   - name: Sebastian Haan
     orcid: 0000-0002-5994-5637
-    equal-contrib: true
     corresponding: true
     affiliation: "1"
   - name: Januar Harianto
     orcid: 0000-0002-4803-108X
-    equal-contrib: true
     affiliation: "1"
   - name: Nathaniel Butterworth
     orcid: 0000-0002-1212-8816
-    equal-contrib: true
     affiliation: "1"
   - name: Thomas Bishop
     orcid: 0000-0002-6723-7323
@@ -25,13 +22,13 @@ authors:
 affiliations:
   - name: Sydney Informatics Hub, The University of Sydney, Australia
     index: 1
-date: 17 February 2023
+date: 21 June 2023
 bibliography: paper.bib
 
+author: Sebastian Haan, Januar Harianto, Nathaniel Butterworth, Thomas Bishop
 ---
-<!-- pandoc -V geometry:margin=1in -V fontsize:10pt --citeproc  -o paper.pdf paper.md -->
+<!-- pandoc -V geometry:margin=1in -V fontsize:10pt --citeproc --bibliography=paper.bib  -o paper.pdf paper.md -->
 <!--add "author: Sebastian Haan, Januar Harianto, Nathaniel Butterworth, Thomas Bishop" to meta for standard pandoc conversion --> 
-
 
 
 
@@ -42,9 +39,11 @@ bibliography: paper.bib
 The ``Geodata-Harvester`` is designed to be modular and extensible, offering multiple front-end notebooks and use case scenarios to encourage interaction and experimentation with the pipeline. With its connectivity support to the Google Earth Engine (GEE) API [@Gorelick:2017] and integrating the latest GEE add-ons [@Wu:2020; @Montero:2021; @Montero:2022], the software also enables users to perform petabyte-scale operations, including temporal cloud/shadow masking and automatic calculation of spectral indices.
 
 
-## Statement of need
+## Statement of Need
 
-There is an enormous amount of national/global space-time data that is free and accessible, such as numerous satellite platforms, weather, terrain, soil, and landscape data. Currently, a researcher must search through several places for these resources. This includes publication search engines, specialist aggregators or repositories, R/Python libraries, between statistical packages, GitHub, on the web and through personal contacts. Many data layers require a number of post-processing steps that a user can undertake to extract meaning, e.g. spatial alignment, temporal means, aggregating in time. The data would then be able to be selected and extracted in the desired format, and stored to either their local desktop, or virtual desktop with access to a high compute workspace. All of the above is a non-trivial task and the ideal experience for researchers would be to be able to find and extract key foundational datasets (such as climate, landscape, soil, and remote sensed data) at once given the required spatial, area and temporal range for their analysis. The ``Geodata-Harvester`` software allows researchers to jumpstart their analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes.
+There is an enormous amount of national/global space-time data that is free and accessible, such as numerous satellite platforms, weather, terrain, soil, and landscape data. Currently, a researcher must search through several places for these resources. This includes publication search engines, specialist aggregators or repositories, R/Python libraries, between statistical packages, GitHub, on the web and through personal contacts. Many data layers require a number of post-processing steps that a user can undertake to extract meaning, e.g. spatial alignment, temporal means, aggregating in time. The data would then be able to be selected and extracted in the desired format, and stored to either their local desktop, or virtual desktop with access to a high compute workspace. All of the above is a non-trivial task and the ideal experience for researchers would be to be able to find and extract key foundational datasets (such as climate, landscape, soil, and remote sensed data) at once given the required spatial, area and temporal range for their analysis.
+
+The need for a ``Geodata-Harvester`` emerges from the increasing demand for an extendable, automated, and reusable system for geo-spatial and environmental data extraction and machine learning model preparation. The ``Geodata-Harvester`` software allows researchers to jumpstart their analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes. Unlike geodata-handler packages such as `osgeo` libraries, `rasterio` [^1], `rioxarray`[^2], `pystack`[^3], `intake` plugins[^4], the Geodata-Harvester builds on top of these resources a cohesive workflow for automatic data extraction from multiple geospatial sources at once. Its unique features include reproducible workflows via YAML settings files, connectivity to a wide range of geodata APIs, automatic data retrieval and processing, and high-level integration of Google Earth Engine capabilities. The aim of this on-going project is to offer a flexible all-in-one solution, enabling efficient geospatial research and machine learning applications.
 
 
 ### Tutorials and Workshops
@@ -109,3 +108,8 @@ AgReFed is supported by the Australian Research Data Commons (ARDC) and the Aust
 
 
 # References
+
+[^1]: https://corteva.github.io/rioxarray/stable/
+[^2]: https://rasterio.readthedocs.io/en/latest/
+[^3]: https://pystac.readthedocs.io/en/stable/
+[^4]: https://intake.readthedocs.io/en/latest/
