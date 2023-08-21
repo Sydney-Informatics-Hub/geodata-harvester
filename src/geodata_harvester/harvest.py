@@ -284,6 +284,9 @@ def run(path_to_config, log_name="download_summary", preview=False, return_df=Fa
                 # replace values with nan_value with nan so that aggregation works properly
                 nan_value = xdr.attrs["_FillValue"]
                 xdr = xdr.where(xdr != nan_value, np.nan)
+                # Check other missing values (DEA)
+                nan_dea = -999.
+                xdr = xdr.where(xdr > nan_dea, np.nan)
 
                 """
                 Aggregate over temporal period by using median along the time dimension.
