@@ -1,6 +1,8 @@
 # Geodata-Harvester
 
-<h3><em>Automate geodata harvesting from the web and jumpstart your analysis with a ready-made set of spatiotemporal processed maps and data tables.</em></h3> 
+<h3>Automate geodata harvesting from the web and jumpstart your analysis with a ready-made set of spatiotemporal processed maps and data tables.</h3> 
+
+---
 
 <center><a><img src="quarto/images/dataharvester_logo.png" alt="Geodata-Harvester logo" width="100%"/></a></center>
 
@@ -11,7 +13,7 @@
 [![PyPI-Server](https://img.shields.io/pypi/v/geodata-harvester.svg)](https://pypi.org/project/geodata-harvester/)
 [![Conda
 Version](https://img.shields.io/conda/vn/conda-forge/geodata-harvester.svg)](https://anaconda.org/conda-forge/geodata-harvester)
-[![Monthly Downloads](https://pepy.tech/badge/geodata-harvester/month)](https://pepy.tech/project/geodata-harvester)
+[![Downloads](https://static.pepy.tech/badge/geodata-harvester)](https://pepy.tech/project/geodata-harvester)
 
 <!-- Badges end -->
 
