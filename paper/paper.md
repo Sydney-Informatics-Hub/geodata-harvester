@@ -33,14 +33,14 @@ bibliography: paper.bib
 
 # Summary
 
-``Geodata-Harvester`` is a user-friendly Python package that enables researchers with reusable workflows and software tools for automatic extraction, processing and analysis of geo-spatial and environmental data. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning models. All data layer maps are automatically extracted and aligned for a specific region and time period.
+``Geodata-Harvester`` is a user-friendly Python package that enables researchers with reusable workflows and software tools for automatic extraction, processing, and analysis of geo-spatial and environmental data. User provided data is auto-completed with a suitable set of spatial- and temporal-aligned covariates as a ready-made dataset for machine learning models. All data layer maps are automatically extracted and aligned for a specific region and time period.
 
 The ``Geodata-Harvester`` is designed to be modular and extensible, offering multiple front-end notebooks and use case scenarios to encourage interaction and experimentation with the pipeline. With its connectivity support to the Google Earth Engine (GEE) API [@Gorelick:2017] and integrating the latest GEE add-ons [@Wu:2020; @Montero:2021; @Montero:2022], the software also enables users to perform petabyte-scale operations, including temporal cloud/shadow masking and automatic calculation of spectral indices.
 
 
 ## Statement of Need
 
-There is an enormous amount of national/global space-time data that is free and accessible, such as numerous satellite platforms, weather, terrain, soil, and landscape data. Currently, a researcher must search through several places for these resources. This includes publication search engines, specialist aggregators or repositories, R/Python libraries, between statistical packages, GitHub, on the web and through personal contacts. Many data layers require a number of post-processing steps that a user can undertake to extract meaning, e.g., spatial alignment, temporal means, aggregating in time. The data are then able to be selected and extracted in the desired format, and stored to either their local desktop, or virtual desktop with access to a high compute workspace. All of the above is a non-trivial task and the ideal experience for researchers would be to be able to find and extract key foundational datasets (such as climate, landscape, soil, and remote sensed data) at once given the required spatial, area and temporal range for their analysis.
+There is an enormous amount of national/global space-time datasets that are free and accessible, such as numerous satellite platforms, weather, terrain, soil, and landscape data. Currently, a researcher must search through several places for these resources. This includes publication search engines, specialist aggregators or repositories, R/Python libraries, statistical packages, GitHub, on the web, and through personal contacts. Many data layers require a number of post-processing steps that a user can undertake to extract meaning, e.g., spatial alignment, temporal means, aggregation in time. The datasets are then able to be selected and extracted in the desired format, and stored to either their local desktop, or virtual desktop with access to a high compute workspace. All of the above is a non-trivial task and the ideal experience for researchers would be to be able to find and extract key foundational datasets (such as climate, landscape, soil, and remote sensing data) at once given the required spatial, area and temporal range for their analysis.
 
 The need for a ``Geodata-Harvester`` emerges from the increasing demand for an extendable, automated, and reusable system for geo-spatial and environmental data extraction and machine learning model preparation. The ``Geodata-Harvester`` software allows researchers to jumpstart their analysis with a ready-made set of spatial-temporal aligned raster maps and dataframes. Unlike geodata-handler packages such as `osgeo` libraries, `rasterio`[^1], `rioxarray`[^2], `pystack`[^3], `intake` plugins[^4], the Geodata-Harvester builds on top of these resources a cohesive workflow for automatic data extraction from multiple geospatial sources at once. Its unique features include reproducible workflows via YAML settings files, connectivity to a wide range of geodata APIs, automatic data retrieval and processing, and high-level integration of Google Earth Engine capabilities. The aim of this on-going project is to offer a flexible all-in-one solution, enabling efficient geospatial research and machine learning applications.
 
@@ -62,19 +62,19 @@ To get started, some example workflows and tutorials are provided as:
 
 ## Functionality and Key Features
 
-The main goal of the Data Harvester is to enable researchers with reusable workflows for automatic data extraction and processing:
+The main goal of ``Geodata-Harvester`` is to enable researchers with reusable workflows for automatic data extraction and processing:
 
 1. Retrieve: given set of locations, automatically access and download multiple data sources (APIs) from a diverse range of geospatial and soil data sources
-2. Process: Spatial and temporal processing, conversion to dataframes and custom raster-files
+2. Process: Spatial and temporal processing, conversion to DataFrames and custom raster-files
 3. Output: Ready-made dataset for machine learning (training set and prediction mapping)
 
-Below is a list of main features available for the ``Geodata-Harvester`` package. Please check the project Github webpage and notebooks for examples, data selection, and other settings.
+Below is a list of the main features available for the ``Geodata-Harvester`` package. Please check the project GitHub webpage and notebooks for examples, data selection, and other settings.
 
 - enabling reproducible workflows via YAML settings files
 - automatic data retrieval from geodata APIs for given locations and dates
 - automatic download and spatial-temporal processing of geo-spatial maps for user-specified bounding box, resolution, and time-scale
 - support for multiple temporal aggregation options and spatial-temporal buffer
-- automatic extraction of retrieved data into ready-made dataframes for ML training
+- automatic extraction of retrieved data into ready-made DataFrames for ML training
 - automatic generation of ready-made aligned maps and data for ML prediction models
 - visualisation of downloaded and aligned maps
 - support for saving and loading settings via interactive widgets
@@ -108,7 +108,7 @@ AgReFed is supported by the Australian Research Data Commons (ARDC) and the Aust
 
 # References
 
-[^1]: https://corteva.github.io/rioxarray/stable/
-[^2]: https://rasterio.readthedocs.io/en/latest/
-[^3]: https://pystac.readthedocs.io/en/stable/
-[^4]: https://intake.readthedocs.io/en/latest/
+[^1]: https://corteva.github.io/rioxarray/
+[^2]: https://rasterio.readthedocs.io
+[^3]: https://pystac.readthedocs.io
+[^4]: https://intake.readthedocs.io
