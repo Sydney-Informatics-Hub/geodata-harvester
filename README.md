@@ -14,6 +14,7 @@
 [![Conda
 Version](https://img.shields.io/conda/vn/conda-forge/geodata-harvester.svg)](https://anaconda.org/conda-forge/geodata-harvester)
 [![Downloads](https://static.pepy.tech/badge/geodata-harvester)](https://pepy.tech/project/geodata-harvester)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.05205/status.svg)](https://doi.org/10.21105/joss.05205)
 
 <!-- Badges end -->
 
